@@ -1,29 +1,58 @@
-# Dune Awakening Companion App
+# 🏜️ Dune Awakening Companion App
 
-A cross-platform companion application for managing characters, bases, and power countdowns in Dune Awakening.
+A cross-platform companion application for managing characters, bases, power countdowns, and taxes in **Dune Awakening**.
 
-![Platform](https://img.shields.io/badge/platform-Android%20%7C%20Linux%20%7C%20Windows%20%7C%20Mac-blue)
-![Flutter](https://img.shields.io/badge/flutter-3.x-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+[![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
+[![Flutter](https://img.shields.io/badge/flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0--beta-orange)](https://github.com/StarTuz/dune-awakening-companion/releases)
+
+> ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
 ---
 
 ## ✨ Features
 
 ### 🎮 Multi-Character Management
-- Track unlimited characters across all Dune Awakening servers
+- Track **unlimited characters** across all Dune Awakening servers
 - **Official Servers:** 227 worlds across 5 regions (North America, Europe, Asia, Oceania, South America)
 - **Private Servers:** Support for 5 major hosting providers (GPORTAL, BisectHosting, xREALM, 4NetPlayers, Nitrado)
 - Full character context: Name, Region, World, Sietch
+- **📸 Character Portraits:** Add custom images from in-game screenshots!
 
 ### 🏰 Unlimited Base Tracking
-- Manage unlimited bases per character
-- Individual power countdown tracking (Days, Hours, Minutes)
+- Manage **unlimited bases** per character
+- Individual power countdown tracking (Days/Hours/Minutes)
 - Color-coded status indicators:
-  - 🔴 **Red**: < 6 hours (Critical)
-  - 🟡 **Yellow**: < 24 hours (Warning)  
-  - 🟢 **Green**: > 24 hours (Safe)
+  - 🔴 **Red:** < 6 hours (Critical)
+  - 🟡 **Yellow:** < 24 hours (Warning)  
+  - 🟢 **Green:** > 24 hours (Safe)
 - Easy refuel updates via edit dialog
+
+### 💰 Advanced Tax Tracking
+- Complete tax management for **Advanced Fiefs**
+- **Tax Per Cycle** with built-in calculator (4,000 base + Stakes × 2,000)
+- **Smart Auto-Increment:** Detects missed tax cycles when editing
+- Separate tracking for:
+  - Current Owed (current cycle)
+  - Overdue Owed (grace period: < 14 days)
+  - Defaulted Owed (shields down: > 14 days)
+- Status badges: PAID / DUE / OVERDUE / DEFAULTED
+
+### 🔔 Notifications & System Tray
+- **Desktop:** System tray integration with right-click menu
+  - Show Window, Check Alerts, Toggle Notifications, Quit
+  - Window close minimizes to tray (doesn't quit)
+- **Mobile:** Background WorkManager checks
+- Configurable check intervals (15/30/60 minutes)
+- Power alerts (⚡ Power Critical!)
+- Tax alerts (💰 Tax Overdue!)
+
+### 📤 Data Management
+- **Export:** Backup all data to JSON files
+- **Import:** Restore from backups with Merge or Replace modes
+- Custom save/load locations via file picker
+- Platform-agnostic (works on all platforms)
 
 ### 🔔 Smart Alert System
 - Automatic alerts for bases expiring in < 48 hours
@@ -32,14 +61,15 @@ A cross-platform companion application for managing characters, bases, and power
 - Detailed alerts screen with:
   - Base severity labels (CRITICAL/WARNING)
   - Full character context
-  - Time remaining and expiration date
+  - Time remaining for both Power and Taxes
   - One-tap navigation to manage bases
 
 ### 📊 Dashboard Overview
-- Character count
-- Total bases
-- Bases expiring soon
-- Active alerts summary
+- Real-time statistics from database
+- Character and base counts
+- Expiring Soon count (< 48h)
+- Active Alerts count (< 24h or critical tax)
+- Pull-to-refresh support
 
 ### 🎨 Adaptive Design
 - **Desktop:** Side navigation rail
@@ -60,28 +90,34 @@ A cross-platform companion application for managing characters, bases, and power
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd "Dune Awakening Companion App."
+   git clone https://github.com/StarTuz/dune-awakening-companion.git
+   cd dune-awakening-companion
    ```
 
-2. **Install dependencies**
+2. **Switch to Beta branch** (latest development)
+   ```bash
+   git checkout Beta
+   ```
+
+3. **Install dependencies**
    ```bash
    flutter pub get
-   ```
-
-3. **Generate code** (models and providers)
-   ```bash
-   dart run build_runner build --delete-conflicting-outputs
    ```
 
 4. **Run the app**
    ```bash
    # Desktop (Linux)
    flutter run -d linux
-   
+
+   # Desktop (Windows)
+   flutter run -d windows
+
+   # Desktop (macOS)
+   flutter run -d macos
+
    # Android
    flutter run -d android
-   
+
    # Hot reload: press 'r'
    # Hot restart: press 'R'
    ```
@@ -96,6 +132,7 @@ A cross-platform companion application for managing characters, bases, and power
 2. Tap the **+** button
 3. Fill in character details:
    - Character name
+   - (Optional) Tap the circle to add a portrait
    - Select your region
    - Choose server type (Official or Private)
    - Select or enter your world/server name
@@ -109,6 +146,7 @@ A cross-platform companion application for managing characters, bases, and power
    - **Add Base:** Tap the floating **+** button
      - Enter base name
      - Set power countdown (Days/Hours/Minutes from in-game)
+     - (Optional) Enable Advanced Fief for tax tracking
    - **Edit Base:** Tap the edit (✏️) icon to update countdown after refueling
    - **Delete Base:** Tap the delete (🗑️) icon
 
@@ -117,8 +155,16 @@ A cross-platform companion application for managing characters, bases, and power
 1. Navigate to the **Alerts** screen
 2. View all bases expiring in the next 48 hours
 3. Alerts are sorted by urgency (most critical first)
-4. Tap any alert card to jump to the Characters screen
-5. Pull down or tap refresh icon to update
+4. Each alert shows both Power and Tax countdowns
+5. Tap any alert card to jump to the Characters screen
+
+### Backup & Restore
+
+1. Navigate to **Settings** screen
+2. **Export Data:** Creates a timestamped JSON backup
+3. **Import Data:** 
+   - **Merge:** Add backup data to existing data
+   - **Replace:** Clear all data, then import backup
 
 ---
 
@@ -126,58 +172,80 @@ A cross-platform companion application for managing characters, bases, and power
 
 ```
 lib/
-├── core/                   # Core functionality
-│   ├── database/          # SQLite + migrations
-│   └── utils/             # Constants, helpers
-├── features/              # Feature modules
-│   ├── characters/        # Character management
-│   ├── bases/            # Base tracking
-│   ├── alerts/           # Alert system
-│   ├── dashboard/        # Overview screen
-│   └── settings/         # App settings
-└── shared/               # Shared components
-    ├── navigation/       # Adaptive navigation
-    └── theme/           # Colors, styles
+├── core/                       # Core functionality
+│   ├── database/              # SQLite + migrations (v4)
+│   ├── services/              # Notifications, system tray, images
+│   ├── providers/             # Riverpod providers
+│   └── utils/                 # Constants, helpers
+├── features/                   # Feature modules
+│   ├── characters/            # Character management + portraits
+│   ├── bases/                 # Base tracking + tax system
+│   ├── alerts/                # Alert system
+│   ├── dashboard/             # Overview screen
+│   └── settings/              # Export/import, notifications
+├── shared/                     # Shared components
+│   ├── navigation/            # Adaptive navigation
+│   ├── theme/                 # Dune-themed colors
+│   └── widgets/               # Reusable UI components
+└── main.dart                   # App entry point
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework:** Flutter 3.x
-- **State Management:** Riverpod 2.x
-- **Database:** SQLite (sqflite + sqflite_common_ffi)
-- **Architecture:** Feature-first, Repository pattern
-- **Code Generation:** build_runner, json_serializable, riverpod_generator
+| Component | Technology |
+|-----------|------------|
+| **Framework** | Flutter 3.x |
+| **Language** | Dart |
+| **State Management** | Riverpod 2.x |
+| **Database** | SQLite (sqflite + sqflite_common_ffi) |
+| **Notifications** | flutter_local_notifications |
+| **System Tray** | tray_manager, window_manager |
+| **Architecture** | Feature-first, Repository pattern |
+| **Code Generation** | build_runner, json_serializable |
 
 ---
 
 ## 📚 Documentation
 
-- **[HANDOFF.md](./HANDOFF.md)** - Comprehensive technical documentation, architecture details, and future roadmap
-- **In-code documentation** - All models, providers, and complex methods are documented
+| Document | Description |
+|----------|-------------|
+| **[HANDOFF.md](./HANDOFF.md)** | Comprehensive technical documentation |
+| **[FAQ.md](./FAQ.md)** | Frequently asked questions |
+| **[NEXT_STEPS.md](./NEXT_STEPS.md)** | Development roadmap |
+| **[PLAN.md](./PLAN.md)** | Original architecture planning |
 
 ---
 
 ## 🔮 Roadmap
 
-### Planned Features
+### ✅ Completed (v1.0-beta)
 
-- [ ] **Tax Tracking** - Track tax due dates and estimated amounts per base
-- [ ] **Local Notifications** - Push notifications when bases enter danger zones
-- [ ] **Multi-Account Support** - Manage multiple game accounts
-- [ ] **Data Export/Import** - Backup and restore functionality
-- [ ] **Enhanced Dashboard** - Charts and analytics
-- [ ] **Theme Customization** - Multiple color schemes
-- [ ] **Alert Threshold Settings** - Customize warning times
+- [x] Multi-character management
+- [x] Unlimited base tracking
+- [x] Power countdown system (D/H/M)
+- [x] Tax tracking for Advanced Fiefs
+- [x] Character portraits
+- [x] Export/Import data backups
+- [x] Alert system (< 48h warning, < 24h critical)
+- [x] Notifications & System Tray
+- [x] Adaptive navigation
+- [x] Database v4 with migrations
 
-### Future Explorations
+### 🚧 In Progress
 
-- [ ] Cloud sync across devices
-- [ ] In-game overlay (if API becomes available)
-- [ ] Spice production calculator
-- [ ] Resource tracking
-- [ ] Guild/Sietch management tools
+- [ ] Multi-language support (i18n)
+- [ ] Cross-platform testing (Windows, macOS, Android)
+
+### 📋 Future Features
+
+- [ ] Quest Journal (tracking complex multi-step quests)
+- [ ] Theme Customization (multiple Dune-inspired themes)
+- [ ] Dashboard Charts & Analytics
+- [ ] Push Notification refinements
+- [ ] Cloud Sync (optional, opt-in)
+- [ ] Multi-Account Support
 
 ---
 
@@ -200,36 +268,57 @@ Contributions are welcome! Please read the contributing guidelines in [HANDOFF.m
 
 ## 🐛 Known Issues
 
-- None currently! 🎉
+- Linux: System tray tooltip not supported (gracefully handled)
+- Some deprecation warnings from external packages
 
-Please report any issues you encounter on the Issues page.
+Please report any issues you encounter on the [Issues page](https://github.com/StarTuz/dune-awakening-companion/issues).
 
 ---
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## ⚠️ Legal Disclaimer
+
+This is an **unofficial, fan-made** companion application.
+
+- **NOT** affiliated with Funcom
+- **NOT** endorsed or supported by Funcom
+- Funcom had **no input** in development
+- Dune Awakening is a trademark of **Funcom**
+- Dune and related elements are trademarks of **Herbert Properties LLC**
+
+Use at your own risk.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Dune Awakening community for game mechanics research
-- Flutter team for the amazing framework
-- Riverpod for powerful state management
-- All contributors and testers
+- 🙏 **Herbert Estate** for creating the incredible Dune universe
+- 🎮 **Funcom** for developing Dune Awakening
+- 🌟 **Dune Awakening community** for game mechanics research
+- 💙 **Flutter team** for the amazing framework
+- ⚡ **Riverpod** for powerful state management
+- 🤖 Created within **Google Antigravity IDE** with Claude Sonnet 4.5
 
 ---
 
 ## 📞 Support
 
 For questions, suggestions, or issues:
-- Open an issue on GitHub
-- Check [HANDOFF.md](./HANDOFF.md) for technical documentation
-- Review common issues section in handoff document
+- 📋 [Open an issue](https://github.com/StarTuz/dune-awakening-companion/issues)
+- 📖 Check [FAQ.md](./FAQ.md) for common questions
+- 📚 Review [HANDOFF.md](./HANDOFF.md) for technical documentation
 
 ---
 
+<div align="center">
+
 **Built with ❤️ for the Dune Awakening community**
 
-*May your bases never fall, and your spice always flow.* 🏜️
+*May your power stay charged and your taxes stay paid.* 🏜️
+
+</div>
