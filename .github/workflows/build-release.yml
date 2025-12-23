@@ -30,6 +30,9 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
       - name: Build Linux
         run: flutter build linux --release
 
@@ -58,6 +61,9 @@ jobs:
 
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Windows
         run: flutter build windows --release
@@ -88,13 +94,16 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
       - name: Build macOS
         run: flutter build macos --release
 
       - name: Create macOS zip
         run: |
           cd build/macos/Build/Products/Release
-          zip -r dune-awakening-companion-${{ github.ref_name }}-macos.zip "Dune Awakening Companion.app"
+          zip -r dune-awakening-companion-${{ github.ref_name }}-macos.zip "dune_awakening_companion.app"
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
@@ -122,6 +131,9 @@ jobs:
 
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Build Android APK
         run: flutter build apk --release
