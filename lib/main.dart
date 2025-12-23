@@ -65,8 +65,13 @@ void main(List<String> args) async {
       titleBarStyle: TitleBarStyle.normal,
     );
     
-    await windowManager.waitUntilReadyToShow(windowOptions, () async {
-      // Prevent X button from closing, minimize to tray instead
+    // Linux has issues with waitUntilReadyToShow due to 'first-frame' signal
+    // So we handle it differently per platform
+    if (Platform.isLinux) {
+      // For Linux, configure window directly without waiting for first-frame
+      await windowManager.setSize(windowOptions.size!);
+      await windowManager.setMinimumSize(windowOptions.minimumSize!);
+      await windowManager.center();
       await windowManager.setPreventClose(true);
       
       final startMinimized = await NotificationSettings.getStartMinimized();
@@ -76,7 +81,20 @@ void main(List<String> args) async {
         await windowManager.show();
         await windowManager.focus();
       }
-    });
+    } else {
+      // Windows/macOS: Use the standard approach
+      await windowManager.waitUntilReadyToShow(windowOptions, () async {
+        await windowManager.setPreventClose(true);
+        
+        final startMinimized = await NotificationSettings.getStartMinimized();
+        if (startMinimized) {
+          await windowManager.hide();
+        } else {
+          await windowManager.show();
+          await windowManager.focus();
+        }
+      });
+    }
   }
   
   runApp(
