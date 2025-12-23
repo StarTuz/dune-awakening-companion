@@ -515,9 +515,11 @@ class CharacterManagementScreen extends ConsumerWidget {
           TextButton(
             onPressed: () {
               final imageService = ref.read(imageServiceProvider);
+              final baseRepository = ref.read(baseRepositoryProvider);
               ref.read(charactersProvider.notifier).deleteCharacter(
                 character.id,
                 imageService,
+                baseRepository,
               );
               Navigator.of(context).pop();
             },

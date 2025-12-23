@@ -139,7 +139,7 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
     }
   }
 
-  Future<void> deleteCharacter(String id, dynamic imageService) async {
+  Future<void> deleteCharacter(String id, dynamic imageService, [dynamic baseRepository]) async {
     try {
       // Get character to check for portrait
       final character = await _repository.getById(id);
@@ -147,6 +147,14 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
       // Delete portrait if exists
       if (character?.portraitPath != null && imageService != null) {
         await imageService.deletePortrait(character!.portraitPath);
+      }
+      
+      // CASCADE DELETE: Delete all bases belonging to this character
+      if (baseRepository != null) {
+        final bases = await baseRepository.getByCharacterId(id);
+        for (final base in bases) {
+          await baseRepository.delete(base.id);
+        }
       }
       
       await _repository.delete(id);
