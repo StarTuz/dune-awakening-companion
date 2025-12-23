@@ -1,7 +1,33 @@
 # Dune Awakening Companion App - Handoff Document
 
-**Date:** December 21, 2024  
-**Status:** Core features complete, ready for testing and expansion
+**Date:** December 22, 2024  
+**Status:** v1.0.5-beta RELEASED - Cross-platform desktop builds available
+**Repository:** https://github.com/StarTuz/dune-awakening-companion
+
+---
+
+## 🚀 RELEASE STATUS
+
+### Latest Release: v1.0.5-beta
+
+**Download:** [GitHub Releases](https://github.com/StarTuz/dune-awakening-companion/releases/tag/v1.0.5-beta)
+
+| Platform | Status | File |
+|----------|--------|------|
+| 🐧 **Linux x64** | ✅ Tested | `dune-awakening-companion-v1.0.5-beta-linux-x64.tar.gz` |
+| 🪟 **Windows x64** | ⚠️ Untested | `dune-awakening-companion-v1.0.5-beta-windows-x64.zip` |
+| 🍎 **macOS** | ⚠️ Untested | `dune-awakening-companion-v1.0.5-beta-macos.zip` |
+| 🤖 **Android** | ❌ Disabled | SDK 35 compatibility issue with flutter_local_notifications |
+
+### CI/CD Pipeline ✅ WORKING
+
+Automated GitHub Actions workflow that:
+- Triggers on version tags (`v*`)
+- Builds Linux, Windows, macOS in parallel
+- Creates GitHub Release with attached binaries
+- Marks beta/alpha releases as pre-release
+
+**Workflow:** `.github/workflows/build-release.yml`
 
 ---
 
@@ -25,72 +51,129 @@ The Dune Awakening Companion App is a cross-platform Flutter application designe
   - 🟡 Yellow: < 24 hours (Warning)
   - 🟢 Green: > 24 hours (Safe)
 
+✅ **Tax Tracking for Advanced Fiefs**
+- Tax Per Cycle with built-in calculator
+- Smart Auto-Increment for missed tax cycles
+- Separate tracking for Current/Overdue/Defaulted
+- Status badges: PAID / DUE / OVERDUE / DEFAULTED
+
 ✅ **Smart Alert System**
 - Automatic alerts for bases expiring in < 48 hours
-- Visual alert icon with:
-  - Badge showing alert count
-  - Color indicating most urgent base (Red < 24h, Yellow < 48h)
-- Detailed alerts screen showing:
-  - Base name and severity
-  - Character context (name, region, world, sietch)
-  - Time remaining and expiration date
-  - One-tap navigation to manage bases
+- Visual alert icon with badge count and color
+- Detailed alerts screen with severity and countdown
+- One-tap navigation to manage bases
+
+✅ **Notifications & System Tray** ⭐ FIXED!
+- Cross-platform notification service (Desktop + Mobile)
+- System tray icon with right-click menu
+- Window close → Minimize to tray
+- **State sync between tray toggle and Settings UI** ✅ FIXED!
+- Configurable check intervals (15/30/60 min)
+
+✅ **Data Management (Export/Import)**
+- Export all data to JSON backup files
+- Import from backups with Merge or Replace options
+- Custom save/load locations via file picker
+- Platform-agnostic
+
+✅ **Character Portraits**
+- Add custom portraits to characters
+- Auto-resize to 512×512
+- CircleAvatar display in character list
+- Automatic cleanup on character delete
 
 ✅ **Adaptive Navigation**
 - Desktop: NavigationRail (side panel)
 - Mobile: BottomNavigationBar
-- Consistent across platforms
 
 ✅ **Database with Migrations**
 - SQLite with proper migration system
-- **Version 4 schema** with character/base support, tax tracking, and portrait support
+- Version 4 schema
 - Desktop (FFI) and mobile compatibility
 
-✅ **Data Management (Export/Import)** ⭐ NEW!
-- Export all data to JSON backup files
-- Import from backups with Merge or Replace options
-- Custom save/load locations via file picker
-- Validation and preview before import
-- Backup format: `dune_companion_backup_YYYYMMDD_HHMMSS.json`
-- Platform-agnostic (works on all platforms)
+---
 
-✅ **Character Portraits** ⭐ NEW!
-- Add custom portraits to characters
-- Auto-resize to 512×512 (accepts any size)
-- CircleAvatar display in character list
-- Portrait picker in Add/Edit dialogs
-- Automatic cleanup on character delete
-- JPEG optimization (quality 85)
-- Works with in-game screenshots!
+## 🔧 Session Work Completed (December 22, 2024)
 
-🚧 **Notifications & System Tray** ⚠️ IN PROGRESS (90% Complete)
-- ✅ Cross-platform notification service (Desktop + Mobile)
-- ✅ Background alert checking (timer-based desktop, WorkManager mobile)
-- ✅ System tray icon (Linux/Windows/macOS)
-- ✅ Right-click tray menu (Show Window, Check Alerts, Toggle Notifications, Quit)
-- ✅ Window close → Minimize to tray (doesn't quit)
-- ✅ Settings UI integration (enable/disable, intervals, warning levels)
-- ✅ Test notification button
-- ⚠️ **Known Issue:** Toggle from tray menu needs state sync fix
-- 📝 Power and Tax alert notifications fully implemented
-- 📝 Alert count badge in tray menu
+### Bug Fixes
 
-✅ **Settings Screen**
-- App version and build information
-- **Notification Settings** - Enable/disable, intervals, warning levels ⭐ NEW!
-- **Export Data** - Backup to custom location
-- **Import Data** - Restore from backup (Merge/Replace)
-- Data management (Clear All Data)
-- Legal disclaimers and copyright notices
-- Acknowledgments to Herbert Estate, Funcom, and community
-- MIT License viewer
+#### 1. Notification Toggle State Sync (HIGH PRIORITY) ✅ FIXED
 
-✅ **Dashboard**
-- Real-time statistics from database
-- Expiring Soon count (< 48h for power or tax)
-- Active Alerts count (< 24h power or critical tax)
-- Character and base counts
-- Pull-to-refresh support
+**Problem:** When toggling notifications via the system tray menu, the Settings UI switch did not update to reflect the change (and vice-versa).
+
+**Root Cause:** The `_NotificationSettingsWidget` in `settings_screen.dart` was a `StatefulWidget` maintaining its own local state, initialized only once in `initState()`. Changes from the system tray directly updated `SharedPreferences` but didn't trigger a UI rebuild.
+
+**Solution:** Implemented a Riverpod `StateNotifierProvider` as a single source of truth.
+
+**Files Created/Modified:**
+- **NEW:** `lib/core/providers/notification_settings_provider.dart`
+  - `NotificationSettingsState` - holds state
+  - `NotificationSettingsNotifier` - manages state and persists to SharedPreferences
+  - `notificationSettingsProvider` - the provider instance
+
+- **MODIFIED:** `lib/features/settings/screens/settings_screen.dart`
+  - Converted `_NotificationSettingsWidget` from `StatefulWidget` to `ConsumerWidget`
+  - Now uses `ref.watch(notificationSettingsProvider)` for state
+  - Removed unused `notification_settings.dart` import
+
+- **MODIFIED:** `lib/main.dart`
+  - Added global `ProviderContainer` for system tray access
+  - Updated `onToggleNotifications` callback to use provider
+  - Uses `UncontrolledProviderScope` to link widget tree
+
+#### 2. "Notifications Disabled" Popup Disappearing ✅ FIXED
+
+**Problem:** When disabling notifications via system tray, the feedback notification appeared briefly then vanished.
+
+**Root Cause:** `NotificationService.setNotificationsEnabled(false)` calls `cancelAllNotifications()`. The feedback was shown *before* the manager updated, causing immediate cancellation.
+
+**Solution:** Reordered logic in `main.dart` to call `manager.updateSettings()` first, then show feedback notification.
+
+### CI/CD Pipeline Implementation
+
+Created automated cross-platform build pipeline:
+
+#### Workflow: `.github/workflows/build-release.yml`
+
+**Features:**
+- Triggers on version tags (`v*`)
+- Manual trigger via `workflow_dispatch`
+- Parallel builds for Linux, Windows, macOS
+- Code generation step (`build_runner`)
+- Creates GitHub Release with binaries
+
+**Issues Resolved:**
+
+| Issue | Resolution |
+|-------|------------|
+| Missing platform configs | `flutter create --platforms=android,windows,macos .` |
+| Missing `.g.dart` files | Added `dart run build_runner build` step |
+| Linux missing system_tray deps | Added `libayatana-appindicator3-dev` to apt install |
+| Flutter 3.24 vs 3.27 API | Changed `CardThemeData` → `CardTheme`, `DialogThemeData` → `DialogTheme` |
+| Linux `fl_view_set_background_color` | Removed (3.27+ only API) |
+| Android SDK 35 conflict | Temporarily disabled Android build |
+
+### Documentation Updates
+
+- **README.md:** Complete rewrite with all v1.0-beta features
+- **RELEASE_NOTES_v1.0.0-beta.md:** Initial release notes
+- **RELEASE_NOTES_v1.0.5-beta.md:** Cross-platform release notes
+- Updated roadmap: Replaced "Multi-Account Support" with "Character Sorting"
+
+### Git History
+
+```
+efa08bb docs: Add v1.0.5-beta release notes
+2f45e3c fix(ci): Flutter 3.24 compatibility for Linux, disable Android
+3fbc0d8 fix: Flutter 3.24 compatibility and Android SDK version
+6887ef7 fix(ci): Add build_runner step to generate .g.dart files
+00b51d3 fix: Add missing platform configs and fix CI dependencies
+ab8d041 docs: Add v1.0.1-beta release notes for CI/CD test
+3ba331f ci: Add GitHub Actions workflow for cross-platform builds
+a42cb02 docs: Replace Multi-Account with Character Sorting in roadmap
+ebccb38 docs: Update README with complete v1.0-beta feature list
+30ab665 v1.0.0-beta: Complete app with notification sync fix
+```
 
 ---
 
@@ -105,518 +188,228 @@ lib/
 │   │   ├── app_database.dart          # Database initialization
 │   │   └── migrations/
 │   │       ├── migration_001_initial.dart
-│   │       └── migration_002_add_server_fields.dart
+│   │       ├── migration_002_add_server_fields.dart
+│   │       ├── migration_003_add_tax_fields.dart
+│   │       └── migration_004_add_portraits.dart
+│   ├── providers/
+│   │   ├── notification_settings_provider.dart  # ⭐ NEW!
+│   │   ├── notification_provider.dart
+│   │   ├── notification_manager_provider.dart
+│   │   └── ...
+│   ├── services/
+│   │   ├── notification_service.dart
+│   │   ├── notification_manager.dart
+│   │   ├── system_tray_service.dart
+│   │   └── image_service.dart
 │   └── utils/
-│       └── constants.dart              # Regions, worlds, providers
+│       └── constants.dart
 ├── features/
 │   ├── characters/
-│   │   ├── models/character.dart       # Character data model
-│   │   ├── providers/character_provider.dart
-│   │   ├── services/character_repository.dart
-│   │   └── screens/character_management_screen.dart
 │   ├── bases/
-│   │   ├── models/base.dart            # Base data model
-│   │   ├── providers/base_provider.dart
-│   │   ├── services/base_repository.dart
-│   │   └── (screens removed - managed per character)
 │   ├── alerts/
-│   │   └── screens/alerts_screen.dart  # Shows expiring bases
 │   ├── dashboard/
-│   │   └── screens/dashboard_screen.dart
 │   └── settings/
+│       ├── providers/import_export_provider.dart
+│       ├── services/
+│       │   ├── export_service.dart
+│       │   └── import_service.dart
 │       └── screens/settings_screen.dart
 └── shared/
-    ├── navigation/main_navigation.dart  # Adaptive nav
-    └── theme/app_colors.dart           # Dune-themed colors
+    ├── navigation/main_navigation.dart
+    └── theme/
+        ├── app_colors.dart
+        └── app_theme.dart
 ```
 
-### Data Models
+### Key Design Decisions
 
-**Character Model:**
+#### Centralized Notification State
+
 ```dart
-{
-  id: String (UUID)
-  name: String
-  region: String (North America, Europe, Asia, Oceania, South America)
-  serverType: String (Official, Private)
-  provider: String? (for private servers)
-  world: String (227 official worlds OR custom private name)
-  sietch: String
-  portraitPath: String? (path to character portrait image)
-  createdAt: DateTime
-  updatedAt: DateTime
+// lib/core/providers/notification_settings_provider.dart
+class NotificationSettingsState {
+  final bool enabled;
+  final int intervalMinutes;
+  final bool includeWarnings;
+  final bool startMinimized;
+  final bool isLoading;
+}
+
+class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsState> {
+  // Manages state and persists to SharedPreferences
+  Future<void> setEnabled(bool enabled) async {
+    await NotificationSettings.setNotificationsEnabled(enabled);
+    state = state.copyWith(enabled: enabled);
+  }
 }
 ```
 
-**Base Model:**
+#### Global ProviderContainer for System Tray
+
 ```dart
-{
-  id: String (UUID)
-  characterId: String (FK to Character)
-  name: String
-  powerExpirationTime: DateTime
-  createdAt: DateTime
-  updatedAt: DateTime
-  
-  // Tax Tracking (Advanced Fiefs)
-  isAdvancedFief: bool
-  taxPerCycle: int? (Solari)
-  nextTaxDueDate: DateTime?
-  currentOwed: int? (current cycle)
-  overdueOwed: int? (grace period)
-  defaultedOwed: int? (shields down)
-  
-  // Computed:
-  hoursRemaining: double (from powerExpirationTime)
-  totalTaxOwed: int (sum of all owed amounts)
-  daysUntilTax: double (from nextTaxDueDate)
-  taxStatus: TaxStatus (NONE, PAID, DUE, OVERDUE, DEFAULTED)
-  isTaxCritical: bool (defaulted or overdue)
+// lib/main.dart
+late final ProviderContainer globalContainer;
+
+void main() async {
+  globalContainer = ProviderContainer();
+  // ... initialization
+  runApp(UncontrolledProviderScope(
+    container: globalContainer,
+    child: const DuneAwakeningCompanionApp(),
+  ));
+}
+
+// In system tray callback:
+onToggleNotifications: () async {
+  final currentState = globalContainer.read(notificationSettingsProvider);
+  final newState = !currentState.enabled;
+  globalContainer.read(notificationSettingsProvider.notifier).setEnabled(newState);
+  // UI updates automatically!
 }
 ```
 
-### State Management
+---
 
-- **Riverpod** for state management
-- **AsyncValue** pattern for loading/error states
-- **StateNotifier** for complex state mutations
-- **FutureProvider** for one-time data loads (avoiding circular dependencies)
+## 🎯 Roadmap Status
+
+### ✅ Completed (v1.0.5-beta)
+
+| Feature | Status |
+|---------|--------|
+| Multi-character management | ✅ Complete |
+| Unlimited base tracking | ✅ Complete |
+| Power countdown (D/H/M) | ✅ Complete |
+| Tax tracking + auto-increment | ✅ Complete |
+| Character portraits | ✅ Complete |
+| Export/Import (JSON) | ✅ Complete |
+| Alert system | ✅ Complete |
+| Notifications & System Tray | ✅ Complete |
+| Tray ↔ Settings state sync | ✅ Fixed |
+| Dashboard statistics | ✅ Complete |
+| Adaptive navigation | ✅ Complete |
+| Database v4 + migrations | ✅ Complete |
+| Linux release | ✅ Tested |
+| Windows release | ✅ Built (Untested) |
+| macOS release | ✅ Built (Untested) |
+| CI/CD pipeline | ✅ Working |
+
+### 🚧 In Progress / Pending
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| Android build | ❌ Blocked | `flutter_local_notifications` SDK 35 issue |
+| Multi-language (i18n) | 📋 Planned | Next major feature |
+| Windows testing | ⚠️ Untested | Needs Windows machine |
+| macOS testing | ⚠️ Untested | Needs Mac |
+
+### 📋 Future Features
+
+| Feature | Priority |
+|---------|----------|
+| Character Sorting | Medium |
+| Quest Journal | Low |
+| Theme Customization | Low |
+| Dashboard Charts | Low |
+| Cloud Sync | Low |
 
 ---
 
-## 🎯 User Workflows
+## 🧪 Testing Status
 
-### Adding a Character
-1. Tap **+** button on Characters screen
-2. Enter character name
-3. Select Region (dropdown)
-4. Select Server Type (Official/Private)
-   - **Official:** Pick World from dropdown (auto-filtered by region)
-   - **Private:** Select Provider + manually enter World/Server Name
-5. Enter Sietch name
-6. Save
+### Platform Testing
 
-### Managing Bases
-1. Navigate to **Characters** screen
-2. Click **"Bases"** button on desired character card
-3. Dialog opens showing all bases for that character
-4. **Add Base:** Tap floating **+** button
-   - Enter base name
-   - Enter power countdown (Days/Hours/Minutes)
-5. **Edit Base:** Tap edit icon to update countdown after refueling
-6. **Delete Base:** Tap delete icon
+| Platform | Build | Run | Features | Notes |
+|----------|-------|-----|----------|-------|
+| 🐧 Linux | ✅ | ✅ | ✅ | Fully tested |
+| 🪟 Windows | ✅ | ⚠️ | ⚠️ | Build successful, needs Windows testing |
+| 🍎 macOS | ✅ | ⚠️ | ⚠️ | Build successful, needs Mac testing |
+| 🤖 Android | ❌ | ❌ | ❌ | SDK 35 compatibility issue |
 
-### Monitoring Alerts
-1. Navigate to **Alerts** screen
-2. See all bases expiring in < 48 hours, sorted by urgency
-3. Each alert shows:
-   - Severity badge (CRITICAL/WARNING)
-   - Base name
-   - Character context
-   - Time remaining
-4. Tap any alert card → navigates to Characters screen
-5. Pull-to-refresh or tap refresh icon to update
+### Wine Testing (Windows build on Linux)
 
----
+- **Result:** Executable runs but no window displays
+- **Cause:** Flutter uses DirectX/ANGLE for rendering, Wine can't handle it
+- **Conclusion:** Windows build is valid, just needs actual Windows to test
 
-## 🎨 Design Decisions
+### Feature Testing Checklist
 
-### Why Move Power Tracking to Bases?
-- **Original Issue:** Power was tracked per character, limiting to 1 countdown
-- **Solution:** Each base tracks its own power expiration
-- **Benefits:**
-  - Unlimited bases per character
-  - Accurate representation of game mechanics
-  - Cleaner character list UI
-
-### Why Remove Formal Alert System?
-- **Original Issue:** Complex alert management (acknowledge/dismiss) was overkill
-- **Solution:** Show all expiring bases directly (< 48 hours)
-- **Benefits:**
-  - Simpler UX
-  - No manual alert management
-  - Auto-updates as bases approach expiration
-
-### Server Type Distinction
-- **Official Servers:** Use curated list of 227 worlds across 5 regions
-- **Private Servers:** Provider selection + manual world entry
-- **Rationale:** Private server names are custom and unpredictable
-
-### Color Coding Strategy
-- **< 6 hours:** Red (Critical) - Immediate action needed
-- **< 24 hours:** Yellow (Warning) - Plan refuel soon
-- **< 48 hours:** Yellow (shown in alerts, advance warning)
-- **> 48 hours:** Green (Safe)
+- [x] Add/Edit/Delete characters
+- [x] Add/Edit/Delete bases
+- [x] Power countdown updates
+- [x] Tax auto-increment
+- [x] Alerts show correct bases
+- [x] Dashboard counts accurate
+- [x] Export to JSON
+- [x] Import with Merge/Replace
+- [x] Character portraits
+- [x] System tray integration
+- [x] Notification toggle sync ⭐ Fixed this session
+- [x] Minimize to tray
+- [ ] Windows full test
+- [ ] macOS full test
+- [ ] Android test (blocked)
 
 ---
 
-## 🔧 Technical Implementation Notes
-
-### Database Migrations
-- **Version 1:** Initial schema with server_id (deprecated)
-- **Version 2:** New schema with region/serverType/provider/world fields
-- **Version 3:** Tax tracking fields for Advanced Fiefs
-- **Version 4:** Character portrait support (portraitPath field) ⭐ NEW!
-- **Migration Strategy:** ALTER TABLE for compatible changes, table recreation for incompatible schema changes
-- **Important:** Migrations run automatically on app startup
-
-###Data Management (Export/Import) ⭐ **NEW - IMPLEMENTED**
-
-**Complete backup and restore system:**
-
-✅ **Export Service:**
-- Exports all characters and bases to JSON
-- Format: `{ version, exportDate, databaseVersion, characters[], bases[] }`
-- Pretty-printed JSON for readability
-- Custom save location via file picker
-- Timestamped filenames: `dune_companion_backup_YYYYMMDD_HHMMSS.json`
-- Platform-agnostic (Android, iOS, Linux, Windows, macOS)
-
-✅ **Import Service:**
-- Import from JSON backup files
-- **Two modes:**
-  - **Merge**: Add backup data to existing data
-  - **Replace**: Clear all data, then import backup
-- JSON validation (structure, version, data types)
-- Preview before import (shows character/base counts)
-- Transaction-based import (all-or-nothing)
-- Detailed error reporting
-- Auto-refresh UI after import
-
-✅ **User Experience:**
-- Export: File save dialog with suggested filename
-- Import: File picker → Preview → Choose mode → Confirmation
-- Replace mode has extra confirmation (warns about data deletion)
-- Progress indicators during export/import
-- Success messages with file paths
-- Comprehensive error handling
-
-✅ **Implementation:**
-```dart
-// Services
-lib/features/settings/services/export_service.dart
-lib/features/settings/services/import_service.dart
-
-// Providers
-lib/features/settings/providers/import_export_provider.dart
-```
-
-### Character Portraits ✅ **COMPLETE!**
-
-**Full CRUD implementation with automatic image optimization:**
-
-✅ **Database:**
-- Migration 004: Added `portraitPath` column to characters table
-- Character model updated with optional `portraitPath` field
-- CharacterRepository updated to save/load portrait paths
-- JSON serialization regenerated
-
-✅ **Image Service:**
-- Upload and process images
-- Auto-resize to 512×512 (square, optimized)
-- Convert to JPEG (quality 85)
-- Save to app documents/portraits folder
-- Validate images (size < 2MB, format check)
-- Delete portraits when character deleted
-
-✅ **UI Implementation:**
-- **Add Character Dialog**: Portrait picker with preview
-- **Edit Character Dialog**: Update/change/remove portrait
-- **Character List**: CircleAvatar display with portrait or fallback icon
-- **Delete Character**: Auto-cleanup of portrait files
-
-✅ **Packages:**
-- `file_picker` - Select images from storage
-- `image` - Process and resize images
-
-✅ **Features:**
-- Create: Add portrait when creating character
-- Read: Display portrait in character list
-- Update: Change/remove portrait when editing
-- Delete: Auto-delete portrait file on character delete
-- Any image size works - auto-optimized to 512×512
-
-**User Experience:**
-- In-game screenshots work perfectly
-- Any dimensions accepted (auto-resized)
-- Circular display in list (radius: 28px)
-- Larger preview in dialogs (radius: 50px)
-- Visual polish for v1.0!
-
-### Avoiding Riverpod Circular Dependencies
-- **Problem:** Using `ref.watch()` inside dialogs that modify the same provider causes circular dependency
-- **Solution:** Use `FutureBuilder` with `ref.read()` for one-time data loads in dialogs
-- **Example:** Base management dialog loads bases once, doesn't watch reactively
-
-### Desktop Database Initialization
-- Uses `sqflite_common_ffi` for desktop platforms
-- Initialized in `AppDatabase._initDatabase()` before opening DB
-- Database path determined by platform (Android/iOS/Desktop)
-
----
-
-## 🚀 Future Enhancements (Planned)
-
-### 💰 Tax Tracking Feature ⭐ **IMPLEMENTED**
-
-**Complete tax management system for Advanced Fiefs**
-
-✅ **Tax Data Model:**
-- Tax Per Cycle (Solari)
-- Next Tax Due Date (with D/H/M countdown)
-- Current Owed (current cycle)
-- Overdue Owed (grace period, < 14 days past due)
-- Defaulted Owed (shields down, > 14 days past due)
-- Tax Status: NONE, PAID, DUE, OVERDUE, DEFAULTED
-
-✅ **Smart Auto-Increment:**
-- Automatically detects missed tax cycles when editing base
-- Calculates owed amounts based on time elapsed
-- Moves amounts between Current → Overdue → Defaulted
-- Shows helper message: "⚠️ Tax overdue by X days! Auto-calculated amounts."
-- User can verify/edit for accuracy
-
-✅ **Tax Calculator:**
-- Formula: 4,000 base + (Stakes × 2,000)
-- Interactive stakes input → auto-calculates tax
-- Example: 2 stakes = 8,000 Solari per cycle
-
-✅ **Add/Edit Base Dialogs:**
-- Checkbox: "This is an Advanced Fief (pays taxes)"
-- Tax Per Cycle input with calculator helper
-- Tax Due In: [Days] [Hours] [Minutes] (matches power format)
-- Current/Overdue/Defaulted Owed inputs
-- All fields editable for manual accuracy
-
-✅ **Base Display (Characters → Bases):**
-- Power status with countdown
-- Tax status badge (PAID/DUE/OVERDUE/DEFAULTED)
-- Amount owed (if > 0)
-- Tax per cycle
-- Next due countdown
-
-✅ **Alerts Screen:**
-- Shows both "Time Remaining: Power" and "Time Remaining: Taxes"
-- Separate countdowns with color coding
-- Red (< 24h or overdue), Yellow (< 48h), Green (> 48h)
-- Includes tax due date
-
-✅ **Tax Cycle Logic:**
-- **14-day cycle** (standard Dune Awakening)
-- **14-day grace period** after due date
-- **28+ days overdue** → Defaulted (shields down)
-- Auto-calculates missed cycles on edit
-
----
-
-## 🎯 Future Enhancements (Roadmap)
-
-### **v1.1 - Data Portability** (Next Priority)
-**Goal:** Allow users to backup and share their data
-
-1. **📤 Export Feature**
-   - Export all characters and bases to JSON file
-   - Include timestamp in filename
-   - Save to downloads/documents folder
-   - Success notification with file location
-
-2. **📥 Import Feature**
-   - File picker to select backup JSON
-   - Validation before import
-   - Option to merge or replace existing data
-   - Import summary showing what was added
-
-3. **🧪 Testing**
-   - Test export on desktop and mobile
-   - Test import with various data sizes
-   - Verify data integrity after import/export cycle
-
-**Estimated Time:** 2-3 hours
-
----
-
-### **v1.2 - Customizable Settings** (Quality of Life)
-**Goal:** Let users customize thresholds and preferences
-
-1. **⚙️ Alert Thresholds**
-   - "Expiring Soon" threshold (default: 48h, range: 24-168h)
-   - "Critical Alert" threshold (default: 24h, range: 1-48h)
-   - Tax warning days (default: 1 day, range: 1-7 days)
-
-2. **🕒 Time & Format Preferences**
-   - 12-hour vs 24-hour clock
-   - Date format (MM/DD/YYYY, DD/MM/YYYY, YYYY-MM-DD)
-   - Time zone display
-
-3. **💰 Tax Defaults**
-   - Default tax cycle length (12-16 days)
-   - Default grace period (12-16 days)
-   - Auto-save preferences to database
-
-**Estimated Time:** 3-4 hours
-
----
-
-### **v2.0 - Notifications & Polish** (Major Update)
-**Goal:** Proactive alerts and enhanced UX
-
-1. **🔔 Local Notifications**
-   - Notify when power < threshold
-   - Notify when tax due < threshold  
-   - Notify when tax becomes overdue
-   - Platform-specific implementation (android/ios/desktop)
-
-2. **🎨 Theme Customization**
-   - Dark/Light mode toggle
-   - Accent color picker
-   - Dune-inspired color presets
-
-3. **🌍 Multi-Language Support**
-   - Internationalization (i18n) setup
-   - Strings externalization
-   - Priority languages: English, French, German, Spanish
-
-4. **📊 Enhanced Dashboard**
-   - Charts showing power distribution
-   - Tax liability timeline
-   - Next expiration preview
-   - Quick actions (add character/base)
-
-**Estimated Time:** 10-15 hours
-
----
-
-### **v3.0 - Advanced Features** (Long-term)
-**Goal:** Power user features and community integration
-
-1. **👥 Multi-Account Support**
-   - Manage multiple game accounts
-   - Switch between accounts
-   - Separate character lists per account
-   - Account-level settings
-
-2. **☁️ Cloud Sync** (Optional)
-   - Firebase or custom backend
-   - Sync across devices
-   - Conflict resolution
-   - Privacy considerations
-
-3. **📱 Widget Support**
-   - Home screen widget showing next expiration
-   - Quick glance at critical bases
-   - Platform-specific (Android/iOS)
-
-4. **🔗 Community Features**
-   - Share base configurations
-   - Import shared templates
-   - Community presets for common setups
-
-**Estimated Time:** 20-30 hours
-
----
-
-## 🚀 Immediate Next Steps (Start Here!)
-
-### **Priority 1: User Testing** ⭐
-- [ ] Test on real devices (Android, iOS, Linux, Windows)
-- [ ] Gather user feedback on UX
-- [ ] Fix any critical bugs discovered
-- [ ] Performance testing with many characters/bases
-
-### **Priority 2: Export/Import** (v1.1)
-- [ ] Implement JSON export functionality
-- [ ] Implement JSON import with validation
-- [ ] Add file picker integration
-- [ ] Test data portability
-
-### **Priority 3: Polish & Documentation**
-- [ ] Create user guide/tutorial
-- [ ] Record demo video/GIF
-- [ ] Prepare store listings (if publishing)
-- [ ] Add in-app help tooltips
-
-### **Priority 4: Customizable Settings** (v1.2)
-- [ ] Add threshold customization
-- [ ] Add time/date format options
-- [ ] Persist settings to database
-- [ ] Update UI to respect custom thresholds
-
----
-
-## 📋 Testing Checklist (Before v1.0 Release)
-
-### Core Functionality
-- [ ] Add/Edit/Delete characters
-- [ ] Add/Edit/Delete bases
-- [ ] Power countdown updates correctly
-- [ ] Tax auto-increment works
-- [ ] Alerts show correct bases
-- [ ] Dashboard counts accurate
-
-### Tax System
-- [ ] Tax calculator accurate
-- [ ] Auto-increment detects missed cycles
-- [ ] Grace period logic correct
-- [ ] Defaulted status shows shields down
-- [ ] Tax displays on all screens
-
-### Cross-Platform
-- [ ] Works on Android
-- [ ] Works on iOS
-- [ ] Works on Linux desktop
-- [ ] Works on Windows desktop
-- [ ] Navigation adapts correctly
-
-### Data Integrity
-- [ ] Database migrations work
-- [ ] Data persists after app restart
-- [ ] Clear All Data works safely
-- [ ] No data corruption
-
-### UI/UX
-- [ ] All text readable
-- [ ] Colors accessible (contrast)
-- [ ] Buttons responsive
-- [ ] Dialogs closeable
-- [ ] Error messages helpful
-
----
-
-## 🐛 Known Issues & Limitations
+## 🐛 Known Issues
 
 ### Current Issues
-1. ~~Database migration error on Android~~ ✅ **FIXED**
-2. ~~Circular dependency in base dialogs~~ ✅ **FIXED**
-3. ~~Missing refresh on alerts screen~~ ✅ **FIXED**
 
-### Limitations
-1. **No Background Sync:** App must be open to update countdowns (by design for battery)
-2. **Manual Time Entry:** Users must manually enter/update power countdowns from in-game
-3. **No In-Game Integration:** Cannot read data directly from game (API limitations)
-4. **Private Server Worlds:** Must be manually entered (no official list available)
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Linux tray tooltip not supported | Low | Gracefully handled |
+| Windows/macOS untested | Medium | Need testers |
+| Android build disabled | Medium | Package compatibility issue |
+
+### Resolved This Session
+
+| Issue | Resolution |
+|-------|------------|
+| Tray notification toggle not syncing with UI | Riverpod StateNotifierProvider |
+| "Notifications Disabled" popup disappearing | Reordered notification/update calls |
+| Flutter 3.24 API compatibility | Changed CardThemeData/DialogThemeData |
+| Missing .g.dart files in CI | Added build_runner step |
 
 ---
 
-## 🧪 Testing Checklist
+## 🚀 Release Process
 
-- [ ] Add character (Official server)
-- [ ] Add character (Private server)
-- [ ] Edit character details
-- [ ] Delete character
-- [ ] Add multiple bases to character
-- [ ] Edit base power countdown
-- [ ] Delete base
-- [ ] Verify countdown display format (Xd Xh Xm)
-- [ ] Check color coding (red/yellow/green)
-- [ ] Navigate to alerts screen
-- [ ] Verify alerts show bases < 48h
-- [ ] Test pull-to-refresh on alerts
-- [ ] Test navigation from alert card to characters
-- [ ] Verify alert icon badge count
-- [ ] Verify alert icon color changes (red/yellow/gray)
-- [ ] Test on mobile (bottom nav)
-- [ ] Test on desktop (side rail nav)
-- [ ] Test database persistence (close/reopen app)
+### Creating a New Release
+
+1. **Update version** in `pubspec.yaml`
+2. **Create release notes:** `RELEASE_NOTES_vX.Y.Z-beta.md`
+3. **Commit and push:**
+   ```bash
+   git add -A
+   git commit -m "release: vX.Y.Z-beta"
+   git push origin Beta
+   ```
+4. **Create and push tag:**
+   ```bash
+   git tag -a vX.Y.Z-beta -m "vX.Y.Z-beta: Description"
+   git push origin vX.Y.Z-beta
+   ```
+5. **Wait for CI** (~5-7 minutes)
+6. **Check release:** https://github.com/StarTuz/dune-awakening-companion/releases
+
+### CI/CD Configuration
+
+**File:** `.github/workflows/build-release.yml`
+
+```yaml
+# Triggers
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+# Jobs
+jobs:
+  build-linux:    # Ubuntu, tarball
+  build-windows:  # Windows, zip
+  build-macos:    # macOS, zip (.app bundle)
+  release:        # Creates GitHub Release
+```
 
 ---
 
@@ -624,24 +417,34 @@ lib/features/settings/providers/import_export_provider.dart
 
 ### Core
 - `flutter: sdk`
-- `flutter_riverpod: ^2.4.0` - State management
-- `riverpod_annotation: ^2.3.0` - Code generation
+- `flutter_riverpod: ^2.6.1`
+- `riverpod_annotation: ^2.6.1`
 
 ### Database
-- `sqflite: ^2.3.0` - SQLite (mobile)
-- `sqflite_common_ffi: ^2.3.0` - SQLite (desktop)
+- `sqflite: ^2.3.0`
+- `sqflite_common_ffi: ^2.3.0`
 - `path: ^1.8.3`
 - `path_provider: ^2.1.1`
 
+### Notifications & System Tray
+- `flutter_local_notifications: ^16.3.3`
+- `system_tray: (platform integration)`
+- `tray_manager: ^0.2.4`
+- `window_manager: ^0.3.9`
+- `workmanager: ^0.5.2` (mobile background)
+
 ### Utilities
-- `uuid: ^4.2.2` - ID generation
-- `intl: ^0.18.1` - Date formatting
-- `json_annotation: ^4.8.1` - JSON serialization
+- `uuid: ^4.2.2`
+- `intl: ^0.18.1`
+- `json_annotation: ^4.8.1`
+- `file_picker: ^6.2.1`
+- `image: (for portraits)`
+- `shared_preferences: (for settings)`
 
 ### Dev Dependencies
 - `build_runner: ^2.4.6`
-- `json_serializable: ^6.7.1`
-- `riverpod_generator: ^2.3.0`
+- `json_serializable: ^6.8.0`
+- `riverpod_generator: ^2.4.0`
 
 ---
 
@@ -658,186 +461,28 @@ dart run build_runner build --delete-conflicting-outputs
 # Run on desktop (Linux)
 flutter run -d linux
 
-# Run on mobile (Android)
-flutter run -d android
-
-# Hot reload: r
-# Hot restart: R (capital R) - use after database schema changes
+# Run on mobile (Android) - currently broken
+# flutter run -d android
 ```
 
 ### Production Build
 ```bash
-# Android APK
-flutter build apk --release
-
-# Linux Desktop
+# Linux
 flutter build linux --release
+# Output: build/linux/x64/release/bundle/
 
-# Install location for Linux binary:
-# build/linux/x64/release/bundle/
+# Windows (requires Windows machine)
+flutter build windows --release
+
+# macOS (requires Mac)
+flutter build macos --release
 ```
-
-### Database Management
-```bash
-# Location (Linux):
-~/.local/share/com.example.dune_awakening_companion/dune-awakening-companion/dune_companion.db
-
-# Delete to reset (during development):
-rm ~/.local/share/com.example.dune_awakening_companion/dune-awakening-companion/dune_companion.db
-
-# Then hot restart app to recreate with fresh schema
-```
-
----
-
-## 📝 Code Style & Patterns
-
-### Naming Conventions
-- **Providers:** `somethingProvider` (e.g., `charactersProvider`, `basesProvider`)
-- **Models:** PascalCase (e.g., `Character`, `Base`)
-- **Screens:** PascalCase with `Screen` suffix (e.g., `DashboardScreen`)
-- **Private methods:** `_methodName` (e.g., `_showAddDialog`)
-
-### File Organization
-- One widget/class per file (with exception of small helper widgets)
-- Group by feature, not by type
-- Keep related files close (model + provider + repository + screen)
-
-### State Management Pattern
-```dart
-// 1. Define provider
-final somethingProvider = StateNotifierProvider<SomethingNotifier, AsyncValue<List<Something>>>(...);
-
-// 2. Watch in widget
-final dataAsync = ref.watch(somethingProvider);
-
-// 3. Consume with .when()
-dataAsync.when(
-  data: (items) => ...,
-  loading: () => ...,
-  error: (error, stack) => ...,
-);
-
-// 4. Mutate state
-ref.read(somethingProvider.notifier).create(...);
-```
-
----
-
-## 🤝 Contributing
-
-### Before Making Changes
-1. Run `flutter analyze` to check for issues
-2. Ensure all existing tests pass
-3. Update this handoff document if architecture changes
-
-### Database Schema Changes
-1. Create new migration file: `migration_00X_description.dart`
-2. Increment version in `app_database.dart`
-3. Add migration to `_onUpgrade` method
-4. Test by deleting DB and hot restarting
-
-### Adding New Features
-1. Follow existing directory structure
-2. Create model → repository → provider → screen
-3. Use Riverpod for state management
-4. Add to navigation if needed
-5. Update handoff documentation
-
----
-
-## 📞 Support & Questions
-
-### Common Issues
-
-**Q: App shows error after adding character**  
-A: Delete database and hot restart. Schema mismatch from development.
-
-**Q: Bases not refreshing after edit**  
-A: We pop all dialogs after mutations. Reopen "Bases" dialog to see updates.
-
-**Q: Alert icon stuck in error state**  
-A: Tap refresh icon on alerts screen or pull-to-refresh.
-
-**Q: Private server world not in dropdown**  
-A: Correct! Private servers use manual entry (no official list exists).
-
----
-
-## 🎉 Project Status
-
-**Current Phase:** ✅ MVP + Tax + Export/Import Complete ⭐  
-**Next Phase:** 🎨 Complete Portraits → 🌍 Multi-Language (v1.0)  
-**Ready for:** Production testing, user feedback, feature expansion
-
-### Recently Completed (Dec 22, 2024): ⭐ NEW!
-
-✅ **Export/Import System**
-- Full data backup to JSON files
-- Restore from backups (Merge or Replace modes)
-- Custom save/load locations
-- Validation and preview
-- Platform-agnostic implementation
-- User-friendly dialogs and error handling
-
-✅ **Character Portraits** ⭐ NEW!
-- Add/Edit/Delete portraits for characters
-- Auto-resize to 512×512 (any source size accepted)
-- CircleAvatar display in character list
-- Portrait picker in Add/Edit dialogs
-- Automatic cleanup on character delete
-- JPEG optimization (quality 85)
-- Works with in-game screenshots!
-
-### Previously Completed (Dec 21, 2024):
-
-✅ **Tax Tracking System**
-- Full tax management for Advanced Fiefs
-- Smart auto-increment with missed cycle detection
-- Tax calculator (4,000 base + Stakes × 2,000)
-- Separate Power and Tax countdowns in Alerts
-- Color-coded status badges (PAID/DUE/OVERDUE/DEFAULTED)
-- Grace period handling (14 days)
-- Shields down detection (28+ days)
-
-✅ **Settings Screen**
-- Complete About section with version info
-- **Export/Import functionality** ⭐
-- Legal disclaimers (unofficial, fan-made)
-- Copyright notices (Funcom, Herbert Estate)
-- Acknowledgments to community and development tools
-- Clear All Data functionality
-- MIT License viewer
-
-✅ **Dashboard Enhancements**
-- Real-time counts from database
-- Expiring Soon: < 48h warning
-- Active Alerts: < 24h critical
-- Pull-to-refresh support
-
-### Core Features (Stable):
-✅ Multi-character management (unlimited characters)  
-✅ Multi-base tracking (unlimited bases per character)  
-✅ Power countdown system (D/H/M format)  
-✅ Tax tracking with auto-increment  
-✅ Smart alert system (< 48h warning, < 24h critical)  
-✅ **Data backup and restore** ⭐  
-✅ Adaptive navigation (desktop/mobile)  
-✅ Database migrations (v4)  
-✅ Professional settings with legal protection  
-
-**Last Updated:** December 22, 2024  
-**Version:** 1.0.0-beta  
-**Build:** Database v4, Tax Tracking, Export/Import, Portraits (In Progress)
 
 ---
 
 ## 📞 Contact & Support
 
-This is a community project. For issues, suggestions, or contributions:
-- Review the Testing Checklist above
-- Check the roadmap for planned features
-- Test on your platform and provide feedback
+**Repository:** https://github.com/StarTuz/dune-awakening-companion
 
 **Development Stack:**
 - Flutter (Dart)
@@ -850,6 +495,12 @@ This is a community project. For issues, suggestions, or contributions:
 - No Funcom affiliation
 - MIT License
 - Use at your own risk
+
+---
+
+**Last Updated:** December 22, 2024  
+**Version:** 1.0.5-beta  
+**Build:** Database v4, Full Feature Set, CI/CD Pipeline
 
 ---
 
