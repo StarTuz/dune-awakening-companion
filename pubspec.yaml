@@ -1,0 +1,65 @@
+name: dune_awakening_companion
+description: A cross-platform companion app for Dune Awakening that tracks power levels across multiple bases, characters, and servers.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Database
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0+1
+  path_provider: ^2.1.1
+  path: ^1.8.3
+
+  # Date/Time
+  intl: ^0.18.1
+
+  # Notifications
+  flutter_local_notifications: ^16.3.0
+
+  # System Tray (Desktop)
+  system_tray: ^2.0.3
+  tray_manager: ^0.2.1
+  window_manager: ^0.3.7
+
+  # Permissions (Mobile)
+  permission_handler: ^11.1.0
+
+  # Background Tasks (Mobile)
+  workmanager: ^0.5.2
+
+  # UI
+  flutter_svg: ^2.0.9
+
+  # Utilities
+  uuid: ^3.0.7
+  shared_preferences: ^2.2.2
+  json_annotation: ^4.8.1
+  file_picker: ^6.1.1
+  image: ^4.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  
+  # Code Generation
+  build_runner: ^2.4.7
+  riverpod_generator: ^2.3.9
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/app_icon.png
+
