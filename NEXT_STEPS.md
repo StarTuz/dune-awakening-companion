@@ -1,9 +1,9 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
 **Last Updated:** December 23, 2024  
-**Current Version:** v1.0.19-beta  
+**Current Version:** v1.0.24-beta  
 **Database Version:** v4  
-**Status:** ✅ ALL CORE FEATURES COMPLETE! | Notifications ✅ | Windows ✅ | Android ✅
+**Status:** ✅ ALL CORE FEATURES COMPLETE! | Icons ✅ | Notifications ✅ | Windows ✅ | Android ✅
 
 ---
 
@@ -18,6 +18,7 @@
 - ✅ Alert system (Expiring Soon < 48h, Critical < 24h)
 - ✅ **Export/Import System** (JSON backups, Merge/Replace modes) ⭐ NEW!
 - ✅ **Character Portraits** (Add/Edit/Delete with auto-optimization) ⭐ NEW!
+- ✅ **Custom App Icons** (Sandworm design across all platforms) ⭐ NEW!
 - ✅ Adaptive navigation (desktop/mobile)
 - ✅ Database v4 with migrations
 - ✅ Settings screen with legal disclaimers
@@ -25,15 +26,16 @@
 
 ### 🎯 Next Priorities (v1.1 Roadmap)
 
-**1. Custom App Icon** 🎨 (HIGH PRIORITY)
-- Replace default Flutter icon with Dune-themed icon
-- Required formats: `.ico` (Windows tray), `.png` (all platforms), `.icns` (macOS)
-- Sizes needed: 16x16, 32x32, 48x48, 64x64, 128x128, 256x256, 512x512, 1024x1024
-- Update: Windows executable icon, macOS app icon, Android launcher icon, Linux icon
-
-**2. Multi-Language Support** (Medium Priority)
+**1. Multi-Language Support** (Medium Priority)
 - Internationalization for global community
 - Target: English, Spanish, French, German, Ukrainian, Italian, Welsh
+
+**2. Polish & Refinements** (Lower Priority)
+- Custom notification sounds
+- Quiet hours (10 PM - 8 AM)
+- Per-base notification overrides
+- Notification history
+- Tray icon badge with alert count
 
 ---
 
