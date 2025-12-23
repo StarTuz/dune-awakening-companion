@@ -1,9 +1,9 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
-**Last Updated:** December 22, 2024  
-**Current Version:** 1.0.0-beta  
+**Last Updated:** December 23, 2024  
+**Current Version:** v1.0.19-beta  
 **Database Version:** v4  
-**Status:** Export/Import ✅ | Portraits ✅ | Notifications 🚧 (90% complete - toggle fix needed)
+**Status:** ✅ ALL CORE FEATURES COMPLETE! | Notifications ✅ | Windows ✅ | Android ✅
 
 ---
 
@@ -23,12 +23,17 @@
 - ✅ Settings screen with legal disclaimers
 - ✅ Dashboard with real-time statistics
 
-### 🚧 In Progress
-- **Notifications & System Tray** (90% complete)
-  - ✅ Infrastructure complete (all services implemented)
-  - ✅ System tray menu functional
-  - ✅ Settings UI integrated
-  - ⚠️ Toggle from tray menu needs state sync fix
+### 🎯 Next Priorities (v1.1 Roadmap)
+
+**1. Custom App Icon** 🎨 (HIGH PRIORITY)
+- Replace default Flutter icon with Dune-themed icon
+- Required formats: `.ico` (Windows tray), `.png` (all platforms), `.icns` (macOS)
+- Sizes needed: 16x16, 32x32, 48x48, 64x64, 128x128, 256x256, 512x512, 1024x1024
+- Update: Windows executable icon, macOS app icon, Android launcher icon, Linux icon
+
+**2. Multi-Language Support** (Medium Priority)
+- Internationalization for global community
+- Target: English, Spanish, French, German, Ukrainian, Italian, Welsh
 
 ---
 
@@ -143,10 +148,10 @@ Quality: 85% JPEG compression
 
 ---
 
-### **Step 1.6: Notifications & System Tray** 🚧 **IN PROGRESS** (90% Complete)
+### **Step 1.6: Notifications & System Tray** ✅ **COMPLETE!**
 **Goal:** Background notifications and system tray integration
 
-**Status:** Infrastructure ✅ | UI Integration ✅ | Bug Fixing 🚧
+**Status:** ✅ FULLY WORKING on all platforms!
 
 **Why This Feature:**
 - Core functionality for tracking app
@@ -178,36 +183,36 @@ Quality: 85% JPEG compression
 - ✅ Tax alert notifications (💰 Tax Overdue!)
 - ✅ Simple notification for app messages
 
-#### 🐛 Known Issues:
+#### ✅ Issues Fixed (v1.0.19-beta):
 
-**1. Toggle from Tray Menu** ⚠️ HIGH PRIORITY
-- **Problem:** State changes but UI doesn't reflect it immediately
-- **Impact:** User confusion - toggle appears not to work
-- **Workaround:** Use Settings screen toggle instead
-- **Fix Needed:** Proper state sync between tray menu and Settings screen
-- **Estimate:** 1-2 hours
+**1. Windows Notifications** ✅ FIXED
+- **Problem:** `LateInitializationError` when sending notifications
+- **Fix:** Added all 3 required params to `WindowsInitializationSettings`:
+  - `appName: 'Dune Awakening Companion'`
+  - `appUserModelId: 'com.example.dune_awakening_companion'`
+  - `guid: 'd5e8a7b3-4c2f-4a1e-9d3b-6f8c2e1a5b7d'`
 
-**2. Linux Tooltip Not Supported**
-- **Problem:** `tray_manager` doesn't implement `setToolTip` on Linux
+**2. Windows Tray Icon** ✅ FIXED
+- **Problem:** Icon not appearing in system tray
+- **Fix:** Windows requires `.ico` format, not `.png`
+- **Solution:** Added `assets/app_icon.ico` and platform-specific icon loading logic
+- **Upgraded:** `tray_manager` from 0.2.1 to 0.5.2
+
+**3. Windows Single Instance** ✅ FIXED
+- **Problem:** Multiple app instances could run simultaneously
+- **Fix:** Added `windows_single_instance` package
+- **Behavior:** Second launch brings existing window to front
+
+**4. Android SDK 35 Compatibility** ✅ FIXED
+- **Problem:** `flutter_local_notifications` ambiguity with Android SDK 35
+- **Fix:** Upgraded to v19.0.0 + `desugar_jdk_libs` v2.1.4
+- **Added:** `isCoreLibraryDesugaringEnabled = true` in build.gradle.kts
+
+**5. Linux Tooltip Not Supported**
 - **Status:** Gracefully handled with try-catch
-- **Impact:** No tooltip on hover (minor)
-- **Fix:** Works around missing API
+- **Impact:** No tooltip on hover (minor, not a bug)
 
-**3. System Tray Icon Missing**
-- **Problem:** Icon file path issue
-- **Status:** Fixed with temp directory approach
-- **Current:** Icon loads from `/tmp/dune_tray_icon.png`
-- **Future:** Add proper packaged icon
-
-#### 📋 Remaining Work:
-
-**Critical (Before v1.0):**
-- [ ] Fix toggle notification state sync (1-2 hours)
-- [ ] Test on Windows (icon paths, tray behavior)
-- [ ] Test on macOS (tray behavior, permissions)
-- [ ] Add proper app icon files (vs temporary generated icon)
-
-**Nice-to-Have (v1.1):**
+#### 📋 Remaining Work (v1.1):
 - [ ] Custom notification sounds
 - [ ] Quiet hours (e.g., 10 PM - 8 AM)
 - [ ] Per-base notification overrides
