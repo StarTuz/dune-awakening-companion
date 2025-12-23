@@ -556,11 +556,10 @@ QuestStep {
 
 **Ideas for future versions:**
 
-1. **Push Notifications**
-   - Notify when power < threshold
-   - Notify when tax due
-   - Notify before quest deadlines (if applicable)
-   - Platform-specific implementation
+1. **Push Notifications** ✅ COMPLETE (v1.0.24-beta)
+   - ✅ Notify when power < threshold
+   - ✅ Notify when tax due
+   - ✅ Platform-specific implementation (Desktop timer + Mobile WorkManager)
 
 2. **Theme Customization** ⭐ (Enhanced)
    **Goal:** Personalized visual experience with themed fonts
