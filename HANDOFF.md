@@ -14,7 +14,7 @@
 
 | Platform | Status | File | Note |
 |----------|--------|------|------|
-| 🐧 **Linux x64** | ✅ Tested | `...linux-x64.tar.gz` | Working |
+| 🐧 **Linux x64** | ✅ Tested | `...linux-x64.tar.gz` | Requires `libayatana-appindicator` |
 | 🪟 **Windows x64** | ✅ Tested | `...windows-x64.zip` | Notifications, Tray icon, Single instance all working! |
 | 🍎 **macOS** | ⚠️ Untested | `...macos.zip` | Builds successfully |
 | 🤖 **Android** | ✅ Tested | `...android.apk` | Working! |

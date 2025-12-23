@@ -39,7 +39,9 @@ jobs:
       - name: Create Linux tarball
         run: |
           cd build/linux/x64/release
-          tar -czvf dune-awakening-companion-${{ github.ref_name }}-linux-x64.tar.gz bundle/
+          # Rename 'bundle' to a more descriptive folder name
+          mv bundle dune-awakening-companion
+          tar -czvf dune-awakening-companion-${{ github.ref_name }}-linux-x64.tar.gz dune-awakening-companion/
 
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v4

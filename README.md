@@ -86,9 +86,28 @@ A cross-platform companion application for managing characters, bases, power cou
 | Platform | Instructions |
 |----------|--------------|
 | 🪟 **Windows** | Download the `.zip` file. Extract it and run `dune_awakening_companion.exe`. If it fails to open, run the included installer for Visual C++. |
-| 🐧 **Linux** | Download the `.tar.gz`. Extract it and run the binary in the `bundle` folder. |
+| 🐧 **Linux** | Download the `.tar.gz`. Extract and run `./dune_awakening_companion` from the extracted folder. **See Linux requirements below.** |
 | 🤖 **Android** | Download the `.apk` file and install it on your device. |
 | 🍎 **macOS** | Download the `.zip`, extract, and look for the `.app` file. |
+
+### 🐧 Linux Requirements
+
+The system tray feature requires `libayatana-appindicator`. Install it before running:
+
+**Arch Linux:**
+```bash
+sudo pacman -S libayatana-appindicator
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libayatana-appindicator3-1
+```
+
+**Fedora:**
+```bash
+sudo dnf install libayatana-appindicator-gtk3
+```
 
 ---
 
