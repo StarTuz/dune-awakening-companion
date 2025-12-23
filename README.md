@@ -85,6 +85,7 @@ A cross-platform companion application for managing characters, bases, power cou
 - Flutter SDK 3.x or higher
 - Dart 3.x or higher
 - For Linux desktop: `libsqlite3-dev`
+- For Windows desktop: [Microsoft Visual C++ Redistributable 2015-2022](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 ### Installation
 
