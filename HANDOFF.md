@@ -8,9 +8,9 @@
 
 ## 🚀 RELEASE STATUS
 
-### Latest Release: v1.0.13-beta
+### Latest Release: v1.0.14-beta
 
-**Download:** [GitHub Releases](https://github.com/StarTuz/dune-awakening-companion/releases/tag/v1.0.13-beta)
+**Download:** [GitHub Releases](https://github.com/StarTuz/dune-awakening-companion/releases/tag/v1.0.14-beta)
 
 | Platform | Status | File | Note |
 |----------|--------|------|------|
