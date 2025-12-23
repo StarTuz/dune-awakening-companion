@@ -26,6 +26,8 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
+    print('[NotificationService] Initializing...');
+    
     // Linux initialization
     const linuxSettings = LinuxInitializationSettings(
       defaultActionName: 'Open notification',
@@ -35,12 +37,14 @@ class NotificationService {
       android: androidSettings,
       iOS: iosSettings,
       linux: linuxSettings,
+      macOS: iosSettings, // Use Darwin settings for macOS too
     );
 
     await _notifications.initialize(
       initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
+    print('[NotificationService] Plugin initialized');
 
     // Request permissions (iOS/Android)
     if (Platform.isIOS || Platform.isAndroid) {
@@ -201,7 +205,15 @@ class NotificationService {
       linux: linuxDetails,
     );
 
-    await _notifications.show(id, title, body, details, payload: payload);
+    try {
+      print('[NotificationService] Showing notification: $title (ID: $id)');
+      await _notifications.show(id, title, body, details, payload: payload);
+      print('[NotificationService] Notification shown successfully');
+    } catch (e, stack) {
+      print('[NotificationService] Error showing notification: $e');
+      print(stack);
+      // Don't rethrow, just log, so the app doesn't crash
+    }
   }
 
   /// Show a simple notification (for non-alert messages)
