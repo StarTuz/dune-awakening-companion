@@ -68,6 +68,16 @@ jobs:
       - name: Build Windows
         run: flutter build windows --release
 
+      - name: Bundle VC++ Redistributable and README
+        run: |
+          cd build/windows/x64/runner/Release
+          
+          # Download VC++ Redistributable
+          Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "install_visual_c++_redist.exe"
+          
+          # Create README.txt
+          Set-Content -Path "README.txt" -Value "Dune Awakening Companion`r`n---------------------------`r`n`r`nIf the app fails to launch with 'MSVCP140.dll was not found',`r`nplease run 'install_visual_c++_redist.exe' included in this folder.`r`n`r`nThis is a standard Microsoft runtime required for Windows apps."
+
       - name: Create Windows zip
         run: |
           cd build/windows/x64/runner/Release
