@@ -79,23 +79,36 @@ A cross-platform companion application for managing characters, bases, power cou
 
 ---
 
-## 🚀 Getting Started
+## 📥 Download & Install
+
+**[👉 Get the Latest Release Here](https://github.com/StarTuz/dune-awakening-companion/releases/latest)**
+
+| Platform | Instructions |
+|----------|--------------|
+| 🪟 **Windows** | Download the `.zip` file. Extract it and run `dune_awakening_companion.exe`. If it fails to open, run the included installer for Visual C++. |
+| 🐧 **Linux** | Download the `.tar.gz`. Extract it and run the binary in the `bundle` folder. |
+| 🤖 **Android** | Download the `.apk` file and install it on your device. |
+| 🍎 **macOS** | Download the `.zip`, extract, and look for the `.app` file. |
+
+---
+
+## 🛠️ Building from Source (Developers)
 
 ### Prerequisites
 - Flutter SDK 3.x or higher
 - Dart 3.x or higher
 - For Linux desktop: `libsqlite3-dev`
-- For Windows desktop: [Microsoft Visual C++ Redistributable 2015-2022](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+- For Windows desktop: [Microsoft Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
-### Installation
+### Setup
 
-1. **Clone the repository**
+1. **Clone the repository** (Requires Git)
    ```bash
    git clone https://github.com/StarTuz/dune-awakening-companion.git
    cd dune-awakening-companion
    ```
 
-2. **Switch to Beta branch** (latest development)
+2. **Switch to Beta branch**
    ```bash
    git checkout Beta
    ```

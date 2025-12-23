@@ -36,6 +36,7 @@ class NotificationService {
     // Windows initialization
     const windowsSettings = WindowsInitializationSettings(
       appName: 'Dune Awakening Companion',
+      appUserModelId: 'com.example.dune_awakening_companion',
     );
 
     final initSettings = InitializationSettings(
