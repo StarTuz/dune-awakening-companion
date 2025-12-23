@@ -64,12 +64,12 @@ class CharacterManagementScreen extends ConsumerWidget {
                           const SizedBox(width: 8),
                           IconButton(
                             icon: const Icon(Icons.edit),
-                            color: DuneColors.sandBeige,
+                            color: DuneColors.primaryAccent,
                             onPressed: () => _showEditDialog(context, ref, character),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete),
-                            color: DuneColors.warning,
+                            color: DuneColors.error,
                             onPressed: () => _showDeleteDialog(context, ref, character),
                           ),
                         ],
@@ -619,13 +619,13 @@ class CharacterManagementScreen extends ConsumerWidget {
                           children: [
                             IconButton(
                               icon: const Icon(Icons.edit),
-                              color: DuneColors.sandBeige,
+                              color: DuneColors.primaryAccent,
                               tooltip: 'Update countdown',
                               onPressed: () => _showEditBaseDialog(dialogContext, ref, base),
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete),
-                              color: DuneColors.warning,
+                              color: DuneColors.error,
                               onPressed: () => _showDeleteBaseDialog(dialogContext, ref, base),
                             ),
                           ],
