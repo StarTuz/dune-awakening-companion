@@ -243,9 +243,9 @@ lib/
 - [ ] Quest Journal (tracking complex multi-step quests)
 - [ ] Theme Customization (multiple Dune-inspired themes)
 - [ ] Dashboard Charts & Analytics
+- [ ] Character Sorting (by server, urgency, name, last updated)
 - [ ] Push Notification refinements
 - [ ] Cloud Sync (optional, opt-in)
-- [ ] Multi-Account Support
 
 ---
 
