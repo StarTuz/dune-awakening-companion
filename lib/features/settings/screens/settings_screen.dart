@@ -433,10 +433,10 @@ class SettingsScreen extends ConsumerWidget {
 
   Future<void> _handleImport(BuildContext context, WidgetRef ref) async {
     try {
-      // Pick file
+      // Pick file - accept both ZIP (new) and JSON (legacy)
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['json'],
+        allowedExtensions: ['zip', 'json'],
         dialogTitle: 'Select Backup File',
       );
 
@@ -497,6 +497,16 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             Text('• ${preview['characterCount']} characters'),
             Text('• ${preview['baseCount']} bases'),
+            if ((preview['portraitCount'] ?? 0) > 0)
+              Text('• ${preview['portraitCount']} portraits'),
+            const SizedBox(height: 8),
+            Text(
+              'Format: ${preview['format'] == 'zip' ? 'ZIP (with portraits)' : 'Legacy JSON'}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[400],
+              ),
+            ),
             const SizedBox(height: 16),
             const Text(
               'Choose import mode:',
@@ -601,12 +611,15 @@ class SettingsScreen extends ConsumerWidget {
         ref.invalidate(basesProvider);
 
         if (!context.mounted) return;
+        final portraitMsg = result.portraitsImported > 0 
+            ? ', ${result.portraitsImported} portraits' 
+            : '';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               'Import successful!\n'
               '${result.charactersImported} characters, '
-              '${result.basesImported} bases imported',
+              '${result.basesImported} bases$portraitMsg imported',
             ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 4),

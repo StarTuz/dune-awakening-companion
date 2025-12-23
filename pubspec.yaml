@@ -47,6 +47,7 @@ dependencies:
   json_annotation: ^4.8.1
   file_picker: ^6.1.1
   image: ^4.1.3
+  archive: ^3.6.1  # ZIP archive support for export/import
 
 dev_dependencies:
   flutter_test:
