@@ -111,46 +111,15 @@ jobs:
           name: macos-build
           path: build/macos/Build/Products/Release/*.zip
 
-  build-android:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          channel: 'stable'
-
-      - name: Get dependencies
-        run: flutter pub get
-
-      - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      - name: Build Android APK
-        run: flutter build apk --release
-
-      - name: Rename APK
-        run: |
-          mv build/app/outputs/flutter-apk/app-release.apk \
-             build/app/outputs/flutter-apk/dune-awakening-companion-${{ github.ref_name }}-android.apk
-
-      - name: Upload Android artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-build
-          path: build/app/outputs/flutter-apk/*.apk
+  # Android build disabled temporarily due to flutter_local_notifications SDK 35 compatibility issue
+  # Will be re-enabled when the package is updated
+  # build-android:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     ... 
 
   release:
-    needs: [build-linux, build-windows, build-macos, build-android]
+    needs: [build-linux, build-windows, build-macos]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
@@ -178,6 +147,5 @@ jobs:
             artifacts/linux-build/*.tar.gz
             artifacts/windows-build/*.zip
             artifacts/macos-build/*.zip
-            artifacts/android-build/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
