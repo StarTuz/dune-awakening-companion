@@ -1,4 +1,4 @@
-# 🏜️ Dune Awakening Companion App
+# <img src="assets/app_icon.png" width="48" height="48" alt="App Icon" style="vertical-align: bottom;"> Dune Awakening Companion App
 
 A cross-platform companion application for managing characters, bases, power countdowns, and taxes in **Dune Awakening**.
 
