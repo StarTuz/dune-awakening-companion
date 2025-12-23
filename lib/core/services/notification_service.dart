@@ -33,11 +33,17 @@ class NotificationService {
       defaultActionName: 'Open notification',
     );
 
-    const initSettings = InitializationSettings(
+    // Windows initialization
+    const windowsSettings = WindowsInitializationSettings(
+      appName: 'Dune Awakening Companion',
+    );
+
+    final initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
       linux: linuxSettings,
-      macOS: iosSettings, // Use Darwin settings for macOS too
+      macOS: iosSettings,
+      windows: windowsSettings,
     );
 
     await _notifications.initialize(
