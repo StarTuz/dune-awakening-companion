@@ -60,21 +60,17 @@ class SystemTrayService with TrayListener, WindowListener {
 
   /// Prepare icon by copying to a temp location with absolute path
   Future<String> _prepareIcon() async {
-    if (Platform.isLinux || Platform.isMacOS) {
-      // Load icon from assets
-      final byteData = await rootBundle.load('assets/app_icon.png');
-      final bytes = byteData.buffer.asUint8List();
-      
-      // Write to temp directory
-      final tempDir = await getTemporaryDirectory();
-      final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
-      await iconFile.writeAsBytes(bytes);
-      
-      return iconFile.path;
-    } else {
-      // Windows uses ICO format
-      return 'assets/app_icon.ico';
-    }
+    // Load icon from assets (PNG works on all platforms with tray_manager)
+    final byteData = await rootBundle.load('assets/app_icon.png');
+    final bytes = byteData.buffer.asUint8List();
+    
+    // Write to temp directory with absolute path
+    final tempDir = await getTemporaryDirectory();
+    final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
+    await iconFile.writeAsBytes(bytes);
+    
+    print('[SystemTray] Icon prepared at: ${iconFile.path}');
+    return iconFile.path;
   }
 
   /// Update alert count badge
