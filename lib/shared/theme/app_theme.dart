@@ -36,7 +36,7 @@ class AppTheme {
       ),
 
       // Card
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: DuneColors.tertiaryBackground,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -197,7 +197,7 @@ class AppTheme {
       ),
 
       // Dialog
-      dialogTheme: DialogThemeData(
+      dialogTheme: DialogTheme(
         backgroundColor: DuneColors.secondaryBackground,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
