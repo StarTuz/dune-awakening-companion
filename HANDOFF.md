@@ -1,23 +1,23 @@
 # Dune Awakening Companion App - Handoff Document
 
-**Date:** December 22, 2024  
-**Status:** v1.0.11-beta RELEASED - Cross-platform builds (Android + Desktop)
+**Date:** December 23, 2024  
+**Status:** v1.0.19-beta RELEASED - All Platforms Working! 🎉  
 **Repository:** https://github.com/StarTuz/dune-awakening-companion
 
 ---
 
 ## 🚀 RELEASE STATUS
 
-### Latest Release: v1.0.14-beta
+### Latest Release: v1.0.19-beta
 
-**Download:** [GitHub Releases](https://github.com/StarTuz/dune-awakening-companion/releases/tag/v1.0.14-beta)
+**Download:** [GitHub Releases](https://github.com/StarTuz/dune-awakening-companion/releases/tag/v1.0.19-beta)
 
 | Platform | Status | File | Note |
 |----------|--------|------|------|
-| 🐧 **Linux x64** | ✅ Tested | `...linux-x64.tar.gz` | |
-| 🪟 **Windows x64** | ✅ Tested | `...windows-x64.zip` | Includes `install_visual_c++_redist.exe` |
-| 🍎 **macOS** | ⚠️ Untested | `...macos.zip` | |
-| 🤖 **Android** | ✅ Built | `...android.apk` | Fixed SDK 35 compatibility |
+| 🐧 **Linux x64** | ✅ Tested | `...linux-x64.tar.gz` | Working |
+| 🪟 **Windows x64** | ✅ Tested | `...windows-x64.zip` | Notifications, Tray icon, Single instance all working! |
+| 🍎 **macOS** | ⚠️ Untested | `...macos.zip` | Builds successfully |
+| 🤖 **Android** | ✅ Tested | `...android.apk` | Working! |
 
 ### CI/CD Pipeline ✅ WORKING
 
@@ -25,7 +25,7 @@ Automated GitHub Actions workflow that:
 - Triggers on version tags (`v*`)
 - Builds Linux, Windows, macOS, Android in parallel
 - **Windows:** Bundles VC++ Redistributable + README.txt inside zip
-- **Android:** Handles core library desugaring for SDK 35
+- **Android:** Handles core library desugaring (v2.1.4) for SDK 35
 - Creates GitHub Release with all binaries attached
 
 **Workflow:** `.github/workflows/build-release.yml`
@@ -59,12 +59,13 @@ The Dune Awakening Companion App is a cross-platform Flutter application designe
 - Visual alert icon with badge count and color
 - One-tap navigation to manage bases
 
-✅ **Notifications & System Tray** ⭐ FIXED!
+✅ **Notifications & System Tray** ⭐ ALL WORKING!
 - Cross-platform notification service (Desktop + Mobile)
 - System tray icon with right-click menu
 - Window close → Minimize to tray
-- **State sync between tray toggle and Settings UI** ✅ FIXED
-- **Windows Notifications** ✅ FIXED (Explicit initialization added)
+- **Windows Notifications** ✅ FIXED (appName, appUserModelId, guid)
+- **Windows Tray Icon** ✅ FIXED (Uses .ico format)
+- **Windows Single Instance** ✅ FIXED (Prevents multiple app instances)
 
 ✅ **Data Management (Export/Import)**
 - Export all data to JSON backup files
