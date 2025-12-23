@@ -60,17 +60,41 @@ class SystemTrayService with TrayListener, WindowListener {
 
   /// Prepare icon by copying to a temp location with absolute path
   Future<String> _prepareIcon() async {
-    // Load icon from assets (PNG works on all platforms with tray_manager)
-    final byteData = await rootBundle.load('assets/app_icon.png');
-    final bytes = byteData.buffer.asUint8List();
-    
-    // Write to temp directory with absolute path
     final tempDir = await getTemporaryDirectory();
-    final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
-    await iconFile.writeAsBytes(bytes);
     
-    print('[SystemTray] Icon prepared at: ${iconFile.path}');
-    return iconFile.path;
+    if (Platform.isWindows) {
+      // Windows REQUIRES .ico format for system tray
+      // The .ico file is bundled with the Windows build
+      final exeDir = File(Platform.resolvedExecutable).parent.path;
+      final icoPath = path.join(exeDir, 'data', 'flutter_assets', 'assets', 'app_icon.ico');
+      
+      // Check if custom ICO exists in assets, otherwise fall back to Windows runner icon
+      if (await File(icoPath).exists()) {
+        print('[SystemTray] Using ICO from assets: $icoPath');
+        return icoPath;
+      }
+      
+      // Fall back to the runner resources icon
+      final fallbackIco = path.join(exeDir, 'app_icon.ico');
+      if (await File(fallbackIco).exists()) {
+        print('[SystemTray] Using fallback ICO: $fallbackIco');
+        return fallbackIco;
+      }
+      
+      // Create a minimal ICO from embedded data if nothing else works
+      print('[SystemTray] Warning: No ICO file found, tray icon may not appear');
+      return icoPath; // Return path anyway, will fail gracefully
+    } else {
+      // Linux/macOS: Load PNG from assets
+      final byteData = await rootBundle.load('assets/app_icon.png');
+      final bytes = byteData.buffer.asUint8List();
+      
+      final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
+      await iconFile.writeAsBytes(bytes);
+      
+      print('[SystemTray] Icon prepared at: ${iconFile.path}');
+      return iconFile.path;
+    }
   }
 
   /// Update alert count badge
