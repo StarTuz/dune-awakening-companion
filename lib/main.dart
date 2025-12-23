@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:windows_single_instance/windows_single_instance.dart';
 import 'core/database/app_database.dart';
 import 'core/services/notification_manager.dart';
 import 'core/services/notification_service.dart';
@@ -22,8 +23,22 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 // This allows system tray callbacks to update Riverpod state
 late final ProviderContainer globalContainer;
 
-void main() async {
+void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Enforce single instance on Windows
+  // If another instance is already running, this will bring it to front and exit
+  if (Platform.isWindows) {
+    await WindowsSingleInstance.ensureSingleInstance(
+      args,
+      "dune_awakening_companion",
+      onSecondWindow: (args) {
+        // When a second instance tries to open, show the existing window
+        windowManager.show();
+        windowManager.focus();
+      },
+    );
+  }
   
   // Initialize database
   await AppDatabase.instance.initialize();
