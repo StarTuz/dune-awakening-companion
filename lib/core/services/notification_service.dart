@@ -34,9 +34,11 @@ class NotificationService {
     );
 
     // Windows initialization
+    // GUID generated for this app - required by Windows notification system
     const windowsSettings = WindowsInitializationSettings(
       appName: 'Dune Awakening Companion',
       appUserModelId: 'com.example.dune_awakening_companion',
+      guid: 'd5e8a7b3-4c2f-4a1e-9d3b-6f8c2e1a5b7d',
     );
 
     final initSettings = InitializationSettings(
