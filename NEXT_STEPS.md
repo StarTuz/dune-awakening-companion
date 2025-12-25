@@ -1,9 +1,9 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
-**Last Updated:** December 24, 2025  
-**Current Version:** v1.0.2  
-**Database Version:** v4  
-**Status:** ✅ v1.0 Feature Complete! | i18n ✅ | Export/Import ✅ | Portraits ✅ | Notifications ✅
+**Last Updated:** December 25, 2025  
+**Current Version:** v1.0.4  
+**Database Version:** v5  
+**Status:** ✅ v1.0 Feature Complete! | i18n ✅ | Export/Import ✅ | Portraits ✅ | Notifications ✅ | UI Polish ✅ | Themes ✅ | Accessibility ✅ | 🔮 Chapter 3 Assessed
 
 ---
 
@@ -34,18 +34,274 @@
 - [x] Notification history ✅ (with mark as read, clear)
 - [x] Tray icon badge with alert count ✅
 
-**2. Theme Customization** (Next Priority)
-- [ ] Light/Dark mode toggle
-- [ ] Multiple Dune-inspired themes (Atreides, Harkonnen, Fremen, Smuggler)
-- [ ] Custom accent color selection
-- [ ] Theme persistence
+**2. UI Polish** ✅ COMPLETED (December 25, 2025)
+- [x] Dune-themed TooltipTheme (spice gold accent, dark sand background)
+- [x] Full tooltip localization (3 tooltips → 7 languages)
+- [x] Consistent tooltip styling across app
+- [ ] 🐛 Linux system tray tooltip (see Known Issues)
 
-**3. Quest Journal** (After Chapter 3 Update)
-> ⏳ *Waiting for Chapter 3 release to see how quest mechanics change before implementation*
+**3. Theme Customization** ✅ COMPLETED (December 25, 2025)
+- [x] Light/Dark mode toggle
+- [x] Multiple Dune-inspired themes (5 factions: Desert, Atreides, Harkonnen, Fremen, Smuggler)
+- [x] Theme persistence (SharedPreferences)
+- [ ] ~~Custom accent color selection~~ (Deferred - faction themes provide enough variety)
+
+**4. Accessibility & Typography** ✅ COMPLETED (December 25, 2025)
+- [x] Font size slider (small/medium/large/xl)
+- [x] Font weight options (light/regular/bold)
+- [x] High contrast mode
+- [x] Reduced motion option
+
+**5. Quest Journal** (After Chapter 3 Update)
+> ⏳ *Chapter 3 details now known - ready for implementation planning!*
 - [ ] Quest list & management
 - [ ] Step-by-step progress tracking
 - [ ] Quest templates (e.g., The Planetologist)
 - [ ] Personal notes & annotations
+- [ ] **NEW:** Landsraad contract tracking (Chapter 3)
+- [ ] **NEW:** Challenge location progress (5 new test stations)
+
+**Quest Journal Specialty Theme** 📖 ⭐
+> *Applies only to quest screens for immersive journaling experience*
+- **Font:** Dancing Script or Satisfy (readable cursive)
+- **Fallback:** Caveat (if cursive too fancy)
+- **Colors:** Parchment yellow, brown ink tones
+- **Background:** Subtle paper texture
+- **Accents:** Aged paper aesthetic
+- **Purpose:** Quest tracking immersion without affecting app readability
+
+---
+
+## 🔮 Chapter 3 Compatibility Assessment (Early 2026)
+
+> **Assessment Date:** December 25, 2025  
+> **Chapter 3 Release:** Early 2026 (January-March)  
+> **PTC (Public Test Client):** Before official launch
+
+### 📰 What's Coming in Chapter 3
+
+Funcom has announced Chapter 3 as the **"biggest update yet"** for Dune Awakening. Here's what we know:
+
+#### 1. New Specialization System (500 Levels!)
+| Specialization | Focus | Levels |
+|----------------|-------|--------|
+| **Combat** | Fighting, boss encounters | 0-100 |
+| **Crafting** | Gear augmentation, crafting progression | 0-100 |
+| **Gathering** | Resource harvesting activities | 0-100 |
+| **Exploration** | Discovery, exploration missions | 0-100 |
+| **Sabotage** | Covert operations | 0-100 |
+
+Each tree has 100 levels for a **total of 500 levels** of progression.
+
+#### 2. Revamped Landsraad System
+- **Rebuilt from the ground up**
+- New repeatable **contract-based missions** (not delivery-based)
+- Mission types tied to the 5 specializations
+- Faction rank expansion (up to **level 20**)
+- Completing missions contributes to specialization progress
+
+#### 3. Expanded World & Content
+- **8 new overland maps** (1km × 1km each, activity-specific)
+- **5 new challenge locations/test stations** (adjustable difficulty)
+- **10 new POI locations** on overworld map
+- New boss encounters
+
+#### 4. Gear Augmentation System
+- New **Augmentation Station** crafting machine
+- Create mods for weapons and armor
+- Augmentations acquired from defeating bosses
+- Tied to crafting specialization
+
+#### 5. New Story Content
+- Main story continues from Chapter 2
+- Hours of new narrative content
+
+#### 6. Combat Improvements
+- Rapier weapon rework
+- **New weapons:** Pyro Rocket, Dual Blades
+
+#### 7. Associated DLC: "Raiders of the Broken Lands"
+- Optional paid DLC (cosmetic-focused)
+- 74 smuggler building pieces
+- 17 decorations
+- 3 armor sets, 2 weapon variants
+- Raider buggy skin, emotes
+
+---
+
+### 🎯 Impact Assessment on Companion App
+
+#### ✅ UNAFFECTED Features (Good News!)
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Base Tracking** | ✅ Unchanged | Core power/fuel mechanics stable |
+| **Tax System** | ✅ Unchanged | Advanced Fief taxes still relevant |
+| **Power Countdown** | ✅ Unchanged | D/H/M tracking still works |
+| **Character Management** | ✅ Unchanged | Servers/regions/portraits work |
+| **Export/Import** | ✅ Unchanged | JSON backup system stable |
+
+#### 🔴 HIGH IMPACT - New Features to Add
+| Feature | Priority | Description |
+|---------|----------|-------------|
+| **Specialization Tracker** | 🔴 HIGH | Track 5 specialization trees, 500 levels |
+| **Quest Journal** | 🔴 HIGH | Already planned - update for Landsraad contracts |
+| **Faction Progress** | 🟡 MEDIUM | Track faction ranks (now up to level 20) |
+| **Augmentation Tracker** | 🟡 MEDIUM | Track gear augmentations from bosses |
+
+---
+
+### 📋 Recommended New Features for Chapter 3
+
+#### **Feature 1: Specialization Progress Tracker** ⭐ HIGH PRIORITY
+**Goal:** Track the new 500-level specialization system
+
+**Data Model:**
+```dart
+CharacterSpecialization {
+  id: String
+  characterId: String
+  combatLevel: int (0-100)
+  craftingLevel: int (0-100)
+  gatheringLevel: int (0-100)
+  explorationLevel: int (0-100)
+  sabotageLevel: int (0-100)
+  totalLevel: int (computed, 0-500)
+  updatedAt: DateTime
+}
+```
+
+**UI Design:**
+- New "Specializations" tab on Character Detail screen
+- 5 progress bars with level indicators
+- Total level summary (e.g., "127/500")
+- Visual theme matching specialization type
+- Quick-edit buttons for each specialization
+
+**Database Migration 006:**
+```sql
+CREATE TABLE character_specializations (
+  id TEXT PRIMARY KEY,
+  character_id TEXT NOT NULL,
+  combat_level INTEGER DEFAULT 0,
+  crafting_level INTEGER DEFAULT 0,
+  gathering_level INTEGER DEFAULT 0,
+  exploration_level INTEGER DEFAULT 0,
+  sabotage_level INTEGER DEFAULT 0,
+  updated_at INTEGER NOT NULL,
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+);
+```
+
+**Estimated Time:** 4-6 hours
+
+---
+
+#### **Feature 2: Enhanced Quest Journal** ⭐ HIGH PRIORITY
+**Goal:** Track quests, Landsraad contracts, and challenge progress
+
+**Updates from Original Plan:**
+- Add **Landsraad Contract** quest type (repeatable)
+- Add **Challenge Location** quest type (5 test stations)
+- Track mission type (Combat/Crafting/Gathering/Exploration/Sabotage)
+- Link to specialization XP earned
+
+**Data Model Additions:**
+```dart
+Quest {
+  // ... existing fields from NEXT_STEPS.md plan ...
+  missionType: MissionType? (Combat, Crafting, Gathering, Exploration, Sabotage)
+  isLandsraadContract: bool
+  isRepeatable: bool
+  specializationXpGained: int?
+}
+
+ChallengeLocation {
+  id: String
+  characterId: String
+  name: String
+  difficultyLevel: int (1-10)
+  completionCount: int
+  bestTime: Duration?
+  bossesDefeated: List<String>
+  lastAttemptAt: DateTime?
+}
+```
+
+**Estimated Time:** 8-12 hours (full implementation)
+
+---
+
+#### **Feature 3: Faction Progress Tracker** 🟡 MEDIUM PRIORITY
+**Goal:** Track faction ranks and Landsraad standing
+
+**Data Model:**
+```dart
+FactionProgress {
+  id: String
+  characterId: String
+  factionName: String
+  currentRank: int (1-20)
+  reputationPoints: int?
+  contractsCompleted: int
+  updatedAt: DateTime
+}
+```
+
+**Estimated Time:** 3-4 hours
+
+---
+
+#### **Feature 4: Augmentation Tracker** 🟡 MEDIUM PRIORITY
+**Goal:** Track gear augmentations acquired from bosses
+
+**Data Model:**
+```dart
+Augmentation {
+  id: String
+  characterId: String
+  name: String
+  type: AugmentationType (Weapon/Armor)
+  rarity: AugmentationRarity
+  source: String (boss name)
+  appliedToGear: String?
+  stats: Map<String, dynamic>
+  acquiredAt: DateTime
+}
+```
+
+**Estimated Time:** 3-4 hours
+
+---
+
+### 🗓️ Development Timeline
+
+| Phase | Timing | Focus |
+|-------|--------|-------|
+| **Pre-PTC** | Now - Jan 2026 | Polish v1.0.x, plan data models, prepare architecture |
+| **PTC Testing** | Early 2026 | Test actual Chapter 3 mechanics, finalize designs |
+| **v1.1 Release** | With Chapter 3 | Specialization Tracker + enhanced Quest Journal |
+| **v1.2 Release** | Post-Chapter 3 | Faction Progress, Augmentation Tracker, polish |
+
+### 📦 Database Migration Plan
+
+| Migration | Contents | Timing |
+|-----------|----------|--------|
+| **Migration 006** | character_specializations table | v1.1 |
+| **Migration 007** | quests, quest_steps tables (enhanced) | v1.1 |
+| **Migration 008** | challenge_locations table | v1.1 |
+| **Migration 009** | faction_progress table | v1.2 |
+| **Migration 010** | augmentations table | v1.2 |
+
+### ✅ Pre-Chapter 3 Checklist
+
+Before Chapter 3 releases:
+- [ ] Finalize Specialization Tracker data model
+- [ ] Design specialization UI mockups
+- [ ] Prepare database migration 006
+- [ ] Update Character model for specialization reference
+- [ ] Test on PTC when available
+- [ ] Review community feedback on new systems
+- [ ] Update localization files for new features
 
 ---
 
@@ -1010,13 +1266,31 @@ Features:
 - (None currently - awaiting user testing feedback)
 
 ### Medium Priority
-- (None currently)
+
+#### 🐧 Linux System Tray Tooltip Not Working
+**Status:** Investigated, library limitation  
+**Affected:** Linux only (Windows/macOS work correctly)  
+**Root Cause:** `libayatana-appindicator` (v0.5.94) does not implement tooltip API
+
+**Technical Details:**
+- The `tray_manager` Flutter package uses `libayatana-appindicator` on Linux
+- This library has `app_indicator_set_title()` and `app_indicator_set_label()` but **no tooltip function**
+- Other apps (native GTK, Qt) use different APIs that support tooltips
+- Attempted workaround with `setTitle()` did not display tooltip on hover
+
+**Potential Future Solutions:**
+- [ ] Investigate `widget_tooltip` package for in-app rich tooltips
+- [ ] Consider forking `tray_manager` to use `GtkStatusIcon` (deprecated but has tooltips)
+- [ ] Wait for `libayatana-appindicator-glib` which may add tooltip support
+- [ ] Use StatusNotifierItem (SNI) directly with D-Bus tooltip property
+
+**Current Workaround:** Alert count is shown in the tray context menu ("Check Alerts (3)")
 
 ### Low Priority / Nice-to-Have
 - Add loading spinners for long operations
 - Add keyboard shortcuts for desktop
 - Improve error messages
-- Add tooltips for first-time users
+- ~~Add tooltips for first-time users~~ ✅ Dune-themed tooltips added
 
 ---
 

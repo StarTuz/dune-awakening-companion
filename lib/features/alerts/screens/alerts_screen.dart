@@ -32,7 +32,7 @@ class AlertsScreen extends ConsumerWidget {
               IconButton(
                 icon: const Icon(Icons.history),
                 onPressed: () => _showHistorySheet(context),
-                tooltip: 'Notification History',
+                tooltip: l10n.notificationHistoryTooltip,
               ),
               if (historyState.unreadCount > 0)
                 Positioned(

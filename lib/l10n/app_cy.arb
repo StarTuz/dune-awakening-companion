@@ -19,5 +19,8 @@
   "expiresLabel": "Dod i ben",
   "dueLabel": "Dyledus",
   "tapToManage": "Tapiwch i reoli canolfannau",
-  "loading": "Llwytho..."
+  "loading": "Llwytho...",
+  "notificationHistoryTooltip": "Hanes Hysbysiadau",
+  "addBaseTooltip": "Ychwanegu Canolfan",
+  "updateCountdownTooltip": "Diweddaru'r cyfrif i lawr"
 }

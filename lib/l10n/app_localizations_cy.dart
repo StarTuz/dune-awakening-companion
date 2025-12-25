@@ -71,4 +71,13 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get loading => 'Llwytho...';
+
+  @override
+  String get notificationHistoryTooltip => 'Hanes Hysbysiadau';
+
+  @override
+  String get addBaseTooltip => 'Ychwanegu Canolfan';
+
+  @override
+  String get updateCountdownTooltip => 'Diweddaru\'r cyfrif i lawr';
 }

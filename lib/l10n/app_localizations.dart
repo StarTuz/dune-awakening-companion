@@ -233,6 +233,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading...'**
   String get loading;
+
+  /// Tooltip for notification history button
+  ///
+  /// In en, this message translates to:
+  /// **'Notification History'**
+  String get notificationHistoryTooltip;
+
+  /// Tooltip for add base button
+  ///
+  /// In en, this message translates to:
+  /// **'Add Base'**
+  String get addBaseTooltip;
+
+  /// Tooltip for edit base button
+  ///
+  /// In en, this message translates to:
+  /// **'Update countdown'**
+  String get updateCountdownTooltip;
 }
 
 class _AppLocalizationsDelegate

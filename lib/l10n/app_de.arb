@@ -19,5 +19,8 @@
   "expiresLabel": "Läuft ab",
   "dueLabel": "Fällig",
   "tapToManage": "Tippen zum Verwalten",
-  "loading": "Wird geladen..."
+  "loading": "Wird geladen...",
+  "notificationHistoryTooltip": "Benachrichtigungsverlauf",
+  "addBaseTooltip": "Basis hinzufügen",
+  "updateCountdownTooltip": "Countdown aktualisieren"
 }

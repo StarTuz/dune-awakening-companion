@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/providers/notification_manager_provider.dart';
 import '../../../core/providers/notification_settings_provider.dart';
+import '../../../core/providers/theme_provider.dart';
+import '../../../core/providers/accessibility_provider.dart';
 import '../providers/import_export_provider.dart';
 import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
@@ -28,7 +30,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: 'Version',
-            subtitle: '1.0.3',
+            subtitle: '1.0.4',
           ),
           _buildInfoTile(
             icon: Icons.storage,
@@ -45,6 +47,13 @@ class SettingsScreen extends ConsumerWidget {
             title: 'Features',
             subtitle: 'Characters, Bases, Tax, Alerts, i18n, Export/Import',
           ),
+          
+          const Divider(height: 32),
+          
+          // Appearance Section
+          _buildSectionHeader(context, 'Appearance'),
+          _buildThemeToggle(context, ref),
+          _buildFactionSelector(context, ref),
           
           const Divider(height: 32),
           
@@ -74,6 +83,12 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: const Text('Delete all characters and bases'),
             onTap: () => _showClearDataDialog(context),
           ),
+          
+          const Divider(height: 32),
+          
+          // Accessibility Section
+          _buildSectionHeader(context, 'Accessibility'),
+          _buildAccessibilitySettings(context, ref),
           
           const Divider(height: 32),
           
@@ -296,6 +311,195 @@ class SettingsScreen extends ConsumerWidget {
       case 'cy': return 'Cymraeg';
       default: return 'English';
     }
+  }
+  Widget _buildThemeToggle(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    final isDarkMode = themeMode == ThemeMode.dark;
+    
+    return SwitchListTile(
+      secondary: Icon(
+        isDarkMode ? Icons.dark_mode : Icons.light_mode,
+        color: isDarkMode ? Colors.indigo : Colors.orange,
+      ),
+      title: const Text('Dark Mode'),
+      subtitle: Text(isDarkMode ? 'Desert Night theme' : 'Desert Day theme'),
+      value: isDarkMode,
+      onChanged: (value) {
+        ref.read(themeModeProvider.notifier).setThemeMode(
+          value ? ThemeMode.dark : ThemeMode.light,
+        );
+      },
+    );
+  }
+
+  Widget _buildFactionSelector(BuildContext context, WidgetRef ref) {
+    final currentFaction = ref.watch(factionThemeProvider);
+    
+    return ListTile(
+      leading: Icon(
+        _getFactionIcon(currentFaction),
+        color: _getFactionColor(currentFaction),
+      ),
+      title: const Text('Faction Theme'),
+      subtitle: Text(FactionThemeNotifier.getFactionDisplayName(currentFaction)),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () => _showFactionPicker(context, ref),
+    );
+  }
+
+  IconData _getFactionIcon(DuneFaction faction) {
+    switch (faction) {
+      case DuneFaction.desert:
+        return Icons.landscape;
+      case DuneFaction.atreides:
+        return Icons.shield; // Noble house
+      case DuneFaction.harkonnen:
+        return Icons.local_fire_department; // Brutal
+      case DuneFaction.fremen:
+        return Icons.remove_red_eye; // Blue eyes
+      case DuneFaction.smuggler:
+        return Icons.nights_stay; // Shadow
+    }
+  }
+
+  Color _getFactionColor(DuneFaction faction) {
+    switch (faction) {
+      case DuneFaction.desert:
+        return const Color(0xFFD4A574); // Spice gold
+      case DuneFaction.atreides:
+        return const Color(0xFF4A8C5A); // Green
+      case DuneFaction.harkonnen:
+        return const Color(0xFFC94A3A); // Red
+      case DuneFaction.fremen:
+        return const Color(0xFF4A7AC9); // Blue
+      case DuneFaction.smuggler:
+        return const Color(0xFF8A6AC9); // Purple
+    }
+  }
+
+  void _showFactionPicker(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                'Choose Your Faction',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const Divider(height: 1),
+            ...DuneFaction.values.map((faction) => ListTile(
+              leading: Icon(
+                _getFactionIcon(faction),
+                color: _getFactionColor(faction),
+              ),
+              title: Text(FactionThemeNotifier.getFactionDisplayName(faction)),
+              subtitle: Text(FactionThemeNotifier.getFactionDescription(faction)),
+              trailing: ref.watch(factionThemeProvider) == faction
+                  ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
+                  : null,
+              onTap: () {
+                ref.read(factionThemeProvider.notifier).setFaction(faction);
+                Navigator.of(context).pop();
+              },
+            )),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAccessibilitySettings(BuildContext context, WidgetRef ref) {
+    final settings = ref.watch(accessibilityProvider);
+    
+    return Column(
+      children: [
+        // Font Size Slider
+        ListTile(
+          leading: const Icon(Icons.text_fields),
+          title: const Text('Text Size'),
+          subtitle: Text(AccessibilitySettings.getFontSizeDisplayName(settings.fontSize)),
+          trailing: SizedBox(
+            width: 200,
+            child: Slider(
+              value: settings.fontSize.index.toDouble(),
+              min: 0,
+              max: (FontSizeOption.values.length - 1).toDouble(),
+              divisions: FontSizeOption.values.length - 1,
+              label: AccessibilitySettings.getFontSizeDisplayName(settings.fontSize),
+              onChanged: (value) {
+                ref.read(accessibilityProvider.notifier).setFontSize(
+                  FontSizeOption.values[value.round()],
+                );
+              },
+            ),
+          ),
+        ),
+        
+        // Font Weight Selector
+        ListTile(
+          leading: const Icon(Icons.format_bold),
+          title: const Text('Text Weight'),
+          subtitle: Text(AccessibilitySettings.getFontWeightDisplayName(settings.fontWeight)),
+          trailing: SegmentedButton<FontWeightOption>(
+            segments: const [
+              ButtonSegment(
+                value: FontWeightOption.light,
+                label: Text('Light'),
+              ),
+              ButtonSegment(
+                value: FontWeightOption.regular,
+                label: Text('Regular'),
+              ),
+              ButtonSegment(
+                value: FontWeightOption.bold,
+                label: Text('Bold'),
+              ),
+            ],
+            selected: {settings.fontWeight},
+            onSelectionChanged: (Set<FontWeightOption> selection) {
+              ref.read(accessibilityProvider.notifier).setFontWeight(
+                selection.first,
+              );
+            },
+          ),
+        ),
+        
+        // High Contrast Toggle
+        SwitchListTile(
+          secondary: const Icon(Icons.contrast),
+          title: const Text('High Contrast'),
+          subtitle: Text(settings.highContrast 
+              ? 'Enhanced color contrast' 
+              : 'Standard color contrast'),
+          value: settings.highContrast,
+          onChanged: (value) {
+            ref.read(accessibilityProvider.notifier).setHighContrast(value);
+          },
+        ),
+        
+        // Reduced Motion Toggle
+        SwitchListTile(
+          secondary: const Icon(Icons.animation),
+          title: const Text('Reduce Motion'),
+          subtitle: Text(settings.reducedMotion 
+              ? 'Animations disabled' 
+              : 'Animations enabled'),
+          value: settings.reducedMotion,
+          onChanged: (value) {
+            ref.read(accessibilityProvider.notifier).setReducedMotion(value);
+          },
+        ),
+      ],
+    );
   }
 
   Widget _buildNotificationSettings(BuildContext context, WidgetRef ref) {

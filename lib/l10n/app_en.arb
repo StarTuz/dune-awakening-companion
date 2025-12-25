@@ -82,5 +82,17 @@
   "loading": "Loading...",
   "@loading": {
     "description": "Loading text"
+  },
+  "notificationHistoryTooltip": "Notification History",
+  "@notificationHistoryTooltip": {
+    "description": "Tooltip for notification history button"
+  },
+  "addBaseTooltip": "Add Base",
+  "@addBaseTooltip": {
+    "description": "Tooltip for add base button"
+  },
+  "updateCountdownTooltip": "Update countdown",
+  "@updateCountdownTooltip": {
+    "description": "Tooltip for edit base button"
   }
 }

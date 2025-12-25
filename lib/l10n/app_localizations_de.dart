@@ -71,4 +71,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get loading => 'Wird geladen...';
+
+  @override
+  String get notificationHistoryTooltip => 'Benachrichtigungsverlauf';
+
+  @override
+  String get addBaseTooltip => 'Basis hinzufügen';
+
+  @override
+  String get updateCountdownTooltip => 'Countdown aktualisieren';
 }

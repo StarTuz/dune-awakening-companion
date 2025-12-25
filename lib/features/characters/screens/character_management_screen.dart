@@ -10,6 +10,7 @@ import '../../bases/providers/base_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/providers/image_service_provider.dart';
 import '../../../shared/theme/app_colors.dart';
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
 class CharacterManagementScreen extends ConsumerWidget {
   const CharacterManagementScreen({super.key});
@@ -546,7 +547,7 @@ class CharacterManagementScreen extends ConsumerWidget {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => _showAddBaseDialog(dialogContext, ref, character.id),
-              tooltip: 'Add Base',
+              tooltip: AppLocalizations.of(dialogContext)?.addBaseTooltip ?? 'Add Base',
               child: const Icon(Icons.add),
             ),
             body: FutureBuilder<List<Base>>(
@@ -622,7 +623,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                             IconButton(
                               icon: const Icon(Icons.edit),
                               color: DuneColors.primaryAccent,
-                              tooltip: 'Update countdown',
+                              tooltip: AppLocalizations.of(context)?.updateCountdownTooltip ?? 'Update countdown',
                               onPressed: () => _showEditBaseDialog(dialogContext, ref, base),
                             ),
                             IconButton(

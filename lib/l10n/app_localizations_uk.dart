@@ -71,4 +71,13 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get loading => 'Завантаження...';
+
+  @override
+  String get notificationHistoryTooltip => 'Історія сповіщень';
+
+  @override
+  String get addBaseTooltip => 'Додати базу';
+
+  @override
+  String get updateCountdownTooltip => 'Оновити зворотний відлік';
 }

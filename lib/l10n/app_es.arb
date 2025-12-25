@@ -19,5 +19,8 @@
   "expiresLabel": "Expira",
   "dueLabel": "Vence",
   "tapToManage": "Toca para gestionar las bases",
-  "loading": "Cargando..."
+  "loading": "Cargando...",
+  "notificationHistoryTooltip": "Historial de Notificaciones",
+  "addBaseTooltip": "Añadir Base",
+  "updateCountdownTooltip": "Actualizar cuenta regresiva"
 }

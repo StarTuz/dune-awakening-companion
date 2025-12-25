@@ -71,4 +71,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get loading => 'Cargando...';
+
+  @override
+  String get notificationHistoryTooltip => 'Historial de Notificaciones';
+
+  @override
+  String get addBaseTooltip => 'Añadir Base';
+
+  @override
+  String get updateCountdownTooltip => 'Actualizar cuenta regresiva';
 }

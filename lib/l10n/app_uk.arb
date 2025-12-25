@@ -19,5 +19,8 @@
   "expiresLabel": "Закінчується",
   "dueLabel": "Термін",
   "tapToManage": "Натисніть, щоб керувати базами",
-  "loading": "Завантаження..."
+  "loading": "Завантаження...",
+  "notificationHistoryTooltip": "Історія сповіщень",
+  "addBaseTooltip": "Додати базу",
+  "updateCountdownTooltip": "Оновити зворотний відлік"
 }

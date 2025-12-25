@@ -103,16 +103,27 @@ class SystemTrayService with TrayListener, WindowListener {
 
     _alertCount = count;
 
-    // Update tooltip (may not be supported on all platforms)
-    try {
-      final tooltip = count > 0
-          ? 'Dune Companion - $count alert${count == 1 ? '' : 's'}'
-          : 'Dune Companion';
+    final tooltipText = count > 0
+        ? 'Dune Companion - $count alert${count == 1 ? '' : 's'}'
+        : 'Dune Companion';
 
-      await trayManager.setToolTip(tooltip);
+    // Try setToolTip first (works on Windows/macOS)
+    try {
+      await trayManager.setToolTip(tooltipText);
     } catch (e) {
-      // setToolTip not supported on this platform, ignore
+      // setToolTip not supported on this platform
       print('[SystemTray] setToolTip not supported: $e');
+    }
+
+    // On Linux, also use setTitle as a workaround
+    // Some desktop environments (KDE, etc.) display the title on hover
+    if (Platform.isLinux) {
+      try {
+        await trayManager.setTitle(tooltipText);
+        print('[SystemTray] Linux: Using setTitle as tooltip workaround');
+      } catch (e) {
+        print('[SystemTray] setTitle failed: $e');
+      }
     }
 
     // Update menu to show count

@@ -71,4 +71,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get loading => 'Chargement...';
+
+  @override
+  String get notificationHistoryTooltip => 'Historique des Notifications';
+
+  @override
+  String get addBaseTooltip => 'Ajouter une Base';
+
+  @override
+  String get updateCountdownTooltip => 'Mettre à jour le compte à rebours';
 }

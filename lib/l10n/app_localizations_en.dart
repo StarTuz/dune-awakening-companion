@@ -70,4 +70,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loading => 'Loading...';
+
+  @override
+  String get notificationHistoryTooltip => 'Notification History';
+
+  @override
+  String get addBaseTooltip => 'Add Base';
+
+  @override
+  String get updateCountdownTooltip => 'Update countdown';
 }

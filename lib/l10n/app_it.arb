@@ -19,5 +19,8 @@
   "expiresLabel": "Scade",
   "dueLabel": "Scadenza",
   "tapToManage": "Tocca per gestire le basi",
-  "loading": "Caricamento..."
+  "loading": "Caricamento...",
+  "notificationHistoryTooltip": "Cronologia Notifiche",
+  "addBaseTooltip": "Aggiungi Base",
+  "updateCountdownTooltip": "Aggiorna conto alla rovescia"
 }
