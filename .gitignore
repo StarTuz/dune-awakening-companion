@@ -73,3 +73,9 @@ coverage/
 # Sound pack (optional download, not in repo)
 dune-sound-pack/
 dune-sound-pack-*.zip
+
+# Local cleanup
+.gemini/
+test/
+analysis_output.txt
+dune-awakening-companion.wiki/
