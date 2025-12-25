@@ -34,16 +34,18 @@
 - [x] Notification history ✅ (with mark as read, clear)
 - [x] Tray icon badge with alert count ✅
 
-**2. Quest Journal** (High Priority - Major Feature)
+**2. Theme Customization** (Next Priority)
+- [ ] Light/Dark mode toggle
+- [ ] Multiple Dune-inspired themes (Atreides, Harkonnen, Fremen, Smuggler)
+- [ ] Custom accent color selection
+- [ ] Theme persistence
+
+**3. Quest Journal** (After Chapter 3 Update)
+> ⏳ *Waiting for Chapter 3 release to see how quest mechanics change before implementation*
 - [ ] Quest list & management
 - [ ] Step-by-step progress tracking
 - [ ] Quest templates (e.g., The Planetologist)
 - [ ] Personal notes & annotations
-
-**3. Theme Customization** (Lower Priority)
-- [ ] Multiple Dune-inspired themes
-- [ ] Light/Dark mode toggle
-- [ ] Custom color selection
 
 ---
 
