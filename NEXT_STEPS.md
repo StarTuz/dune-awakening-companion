@@ -1,7 +1,7 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
 **Last Updated:** December 25, 2025  
-**Current Version:** v1.0.4  
+**Current Version:** v1.0.5  
 **Database Version:** v5  
 **Status:** ✅ v1.0 Feature Complete! | i18n ✅ | Export/Import ✅ | Portraits ✅ | Notifications ✅ | UI Polish ✅ | Themes ✅ | Accessibility ✅ | 🔮 Chapter 3 Assessed
 
