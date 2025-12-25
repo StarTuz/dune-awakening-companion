@@ -39,9 +39,11 @@ When you edit a base, the app automatically:
 
 ### Q: Will I get notifications when power or tax is running low?
 
-**A: Not yet.** Push notifications are planned for v2.0. For now:
-- Check the **Alerts** screen for bases expiring soon (< 48h)
-- The navigation icon shows a red badge when you have critical alerts (< 24h)
+**A: YES!** (v1.0.4+)
+- **Desktop:** Notifications appear in your system notification center
+- **Mobile:** Background notifications (check every 15-60 mins)
+- **Controls:** Customize sound, vibration, and quiet hours in Settings
+- **History:** View past alerts in the Notification History screen
 
 ---
 
@@ -414,9 +416,9 @@ Make it the last screen you check before closing the app – know what needs att
 
 ---
 
-**Last Updated:** December 22, 2024  
-**App Version:** 1.0.0-beta  
-**Database Version:** v4
+**Last Updated:** December 25, 2025  
+**App Version:** 1.0.5  
+**Database Version:** v5
 
 ---
 
