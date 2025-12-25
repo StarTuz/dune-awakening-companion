@@ -29,7 +29,7 @@
 
 **1. Notification Polish** (Medium Priority)
 - [ ] Custom notification sounds
-- [ ] Quiet hours (10 PM - 8 AM)
+- [x] Quiet hours (10 PM - 8 AM) ✅
 - [ ] Per-base notification overrides
 - [ ] Notification history
 - [ ] Tray icon badge with alert count

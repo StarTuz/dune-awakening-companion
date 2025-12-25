@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io';
+import 'notification_settings.dart';
 
 class NotificationService {
   static final NotificationService instance = NotificationService._internal();
@@ -191,6 +192,10 @@ class NotificationService {
     String channelId = 'critical_alerts',
     Importance importance = Importance.high,
   }) async {
+    // Load sound and vibration preferences
+    final soundEnabled = await NotificationSettings.getSoundEnabled();
+    final vibrationEnabled = await NotificationSettings.getVibrationEnabled();
+
     final androidDetails = AndroidNotificationDetails(
       channelId,
       channelId == 'critical_alerts' ? 'Critical Alerts' : 'Warning Alerts',
@@ -198,12 +203,16 @@ class NotificationService {
       importance: importance,
       priority: importance == Importance.high ? Priority.high : Priority.defaultPriority,
       ticker: 'Base Alert',
+      playSound: soundEnabled,
+      enableVibration: vibrationEnabled,
+      // Use silent mode if sound is disabled
+      silent: !soundEnabled && !vibrationEnabled,
     );
 
-    const iosDetails = DarwinNotificationDetails(
+    final iosDetails = DarwinNotificationDetails(
       presentAlert: true,
       presentBadge: true,
-      presentSound: true,
+      presentSound: soundEnabled,
     );
 
     const linuxDetails = LinuxNotificationDetails();
@@ -215,7 +224,7 @@ class NotificationService {
     );
 
     try {
-      print('[NotificationService] Showing notification: $title (ID: $id)');
+      print('[NotificationService] Showing notification: $title (ID: $id, sound: $soundEnabled, vibration: $vibrationEnabled)');
       await _notifications.show(id, title, body, details, payload: payload);
       print('[NotificationService] Notification shown successfully');
     } catch (e, stack) {

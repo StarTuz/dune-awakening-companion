@@ -765,6 +765,37 @@ class _NotificationSettingsWidget extends ConsumerWidget {
               : null,
         ),
 
+        // Sound Toggle
+        SwitchListTile(
+          secondary: const Icon(Icons.volume_up),
+          title: const Text('Notification Sound'),
+          subtitle: Text(settings.soundEnabled
+              ? 'Play sound with notifications'
+              : 'Silent notifications'),
+          value: settings.soundEnabled,
+          onChanged: settings.enabled
+              ? (value) async {
+                  await ref.read(notificationSettingsProvider.notifier).setSoundEnabled(value);
+                }
+              : null,
+        ),
+
+        // Vibration Toggle (Mobile only)
+        if (Platform.isAndroid || Platform.isIOS)
+          SwitchListTile(
+            secondary: const Icon(Icons.vibration),
+            title: const Text('Vibration'),
+            subtitle: Text(settings.vibrationEnabled
+                ? 'Vibrate with notifications'
+                : 'No vibration'),
+            value: settings.vibrationEnabled,
+            onChanged: settings.enabled
+                ? (value) async {
+                    await ref.read(notificationSettingsProvider.notifier).setVibrationEnabled(value);
+                  }
+                : null,
+          ),
+
         // Start Minimized (Desktop only)
         if (Platform.isLinux || Platform.isWindows || Platform.isMacOS)
           SwitchListTile(

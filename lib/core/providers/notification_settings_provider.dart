@@ -10,6 +10,8 @@ class NotificationSettingsState {
   final bool quietHoursEnabled;
   final int quietHoursStart; // minutes from midnight
   final int quietHoursEnd; // minutes from midnight
+  final bool soundEnabled;
+  final bool vibrationEnabled;
   final bool isLoading;
 
   const NotificationSettingsState({
@@ -20,6 +22,8 @@ class NotificationSettingsState {
     this.quietHoursEnabled = false,
     this.quietHoursStart = 1320, // 10 PM
     this.quietHoursEnd = 480, // 8 AM
+    this.soundEnabled = true,
+    this.vibrationEnabled = true,
     this.isLoading = true,
   });
 
@@ -31,6 +35,8 @@ class NotificationSettingsState {
     bool? quietHoursEnabled,
     int? quietHoursStart,
     int? quietHoursEnd,
+    bool? soundEnabled,
+    bool? vibrationEnabled,
     bool? isLoading,
   }) {
     return NotificationSettingsState(
@@ -41,6 +47,8 @@ class NotificationSettingsState {
       quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
       quietHoursStart: quietHoursStart ?? this.quietHoursStart,
       quietHoursEnd: quietHoursEnd ?? this.quietHoursEnd,
+      soundEnabled: soundEnabled ?? this.soundEnabled,
+      vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
       isLoading: isLoading ?? this.isLoading,
     );
   }
@@ -72,6 +80,8 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsSta
       quietHoursEnabled: settings['quietHoursEnabled'] as bool,
       quietHoursStart: settings['quietHoursStart'] as int,
       quietHoursEnd: settings['quietHoursEnd'] as int,
+      soundEnabled: settings['soundEnabled'] as bool,
+      vibrationEnabled: settings['vibrationEnabled'] as bool,
       isLoading: false,
     );
   }
@@ -121,6 +131,18 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsSta
   Future<void> setQuietHoursEnd(int minutes) async {
     await NotificationSettings.setQuietHoursEnd(minutes);
     state = state.copyWith(quietHoursEnd: minutes);
+  }
+
+  /// Set sound enabled
+  Future<void> setSoundEnabled(bool enabled) async {
+    await NotificationSettings.setSoundEnabled(enabled);
+    state = state.copyWith(soundEnabled: enabled);
+  }
+
+  /// Set vibration enabled
+  Future<void> setVibrationEnabled(bool enabled) async {
+    await NotificationSettings.setVibrationEnabled(enabled);
+    state = state.copyWith(vibrationEnabled: enabled);
   }
 }
 

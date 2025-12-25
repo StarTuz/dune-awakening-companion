@@ -9,6 +9,8 @@ class NotificationSettings {
   static const String _keyQuietHoursEnabled = 'quiet_hours_enabled';
   static const String _keyQuietHoursStart = 'quiet_hours_start'; // minutes from midnight
   static const String _keyQuietHoursEnd = 'quiet_hours_end'; // minutes from midnight
+  static const String _keySoundEnabled = 'notification_sound_enabled';
+  static const String _keyVibrationEnabled = 'notification_vibration_enabled';
 
   /// Check if notifications are enabled
   static Future<bool> getNotificationsEnabled() async {
@@ -125,6 +127,32 @@ class NotificationSettings {
     return '${displayHour.toString().padLeft(2, '0')}:${mins.toString().padLeft(2, '0')} $period';
   }
 
+  // ===== SOUND & VIBRATION =====
+
+  /// Check if notification sound is enabled
+  static Future<bool> getSoundEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keySoundEnabled) ?? true; // Default: enabled
+  }
+
+  /// Set notification sound enabled/disabled
+  static Future<void> setSoundEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keySoundEnabled, enabled);
+  }
+
+  /// Check if notification vibration is enabled
+  static Future<bool> getVibrationEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyVibrationEnabled) ?? true; // Default: enabled
+  }
+
+  /// Set notification vibration enabled/disabled
+  static Future<void> setVibrationEnabled(bool enabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyVibrationEnabled, enabled);
+  }
+
   /// Get all settings as a map
   static Future<Map<String, dynamic>> getAllSettings() async {
     return {
@@ -135,6 +163,8 @@ class NotificationSettings {
       'quietHoursEnabled': await getQuietHoursEnabled(),
       'quietHoursStart': await getQuietHoursStart(),
       'quietHoursEnd': await getQuietHoursEnd(),
+      'soundEnabled': await getSoundEnabled(),
+      'vibrationEnabled': await getVibrationEnabled(),
     };
   }
 }
