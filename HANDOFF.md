@@ -1,7 +1,7 @@
 # 🏜️ Dune Awakening Companion App - Handoff Document
 
 **Date:** December 25, 2025  
-**Version:** v1.0.5  
+**Version:** v1.0.6  
 **Status:** Stable Release  
 
 ---
@@ -24,6 +24,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 - ✅ Sound/Vibration toggles
 - ✅ Notification history with mark as read
 - ✅ Tray icon alert badge
+- ✅ Android UI Layout Fixes (Text Weight)
 
 ---
 
