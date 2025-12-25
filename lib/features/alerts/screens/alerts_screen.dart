@@ -128,8 +128,8 @@ class AlertsScreen extends ConsumerWidget {
                 final color = isCritical 
                     ? DuneColors.criticalPrimary 
                     : DuneColors.warningPrimary;
-                final severityLabel = isCritical ? 'CRITICAL' : 'WARNING';
-                final timeText = '${daysRemaining}d ${hoursRemaining}h ${minutesRemaining}m';
+                final severityLabel = isCritical ? l10n.severityCritical : l10n.severityWarning;
+                final timeText = '${daysRemaining}${l10n.daysAbbr} ${hoursRemaining}${l10n.hoursAbbr} ${minutesRemaining}${l10n.minutesAbbr}';
 
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
@@ -294,8 +294,8 @@ class AlertsScreen extends ConsumerWidget {
                                                 : Colors.green);
                                         
                                         final taxText = taxTotalHours >= 0
-                                            ? '${taxDays}d ${taxHours}h ${taxMinutes}m'
-                                            : 'Overdue: ${taxDays.abs()}d ${taxHours.abs()}h ${taxMinutes.abs()}m';
+                                            ? '${taxDays}${l10n.daysAbbr} ${taxHours}${l10n.hoursAbbr} ${taxMinutes}${l10n.minutesAbbr}'
+                                            : l10n.taxOverdue('${taxDays.abs()}${l10n.daysAbbr} ${taxHours.abs()}${l10n.hoursAbbr} ${taxMinutes.abs()}${l10n.minutesAbbr}');
                                         
                                         return Text(
                                           taxText,
@@ -403,9 +403,9 @@ class AlertsScreen extends ConsumerWidget {
                 children: [
                   const Icon(Icons.history),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Notification History',
-                    style: TextStyle(
+                  Text(
+                    l10n.notificationHistory,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),

@@ -11,6 +11,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final historyState = ref.watch(notificationHistoryProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     if (historyState.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -23,11 +24,11 @@ class NotificationHistoryWidget extends ConsumerWidget {
           children: [
             const Icon(Icons.error_outline, size: 48, color: Colors.red),
             const SizedBox(height: 16),
-            Text('Error loading history: ${historyState.error}'),
+            Text(l10n.errorLoadingHistory(historyState.error.toString())),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => ref.read(notificationHistoryProvider.notifier).loadHistory(),
-              child: const Text('Retry'),
+              child: Text(l10n.retry),
             ),
           ],
         ),
@@ -46,7 +47,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No notification history',
+              l10n.noHistoryTitle,
               style: TextStyle(
                 fontSize: 18,
                 color: AppColors.textSecondary,
@@ -54,7 +55,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Notifications will appear here when sent',
+              l10n.noHistorySubtitle,
               style: TextStyle(
                 fontSize: 14,
                 color: AppColors.textSecondary.withOpacity(0.7),
@@ -76,21 +77,21 @@ class NotificationHistoryWidget extends ConsumerWidget {
               children: [
                 if (historyState.unreadCount > 0)
                   Text(
-                    '${historyState.unreadCount} unread',
+                    l10n.entriesUnread(historyState.unreadCount),
                     style: TextStyle(
                       color: AppColors.primaryAccent,
                       fontWeight: FontWeight.bold,
                     ),
                   )
                 else
-                  const Text('All read'),
+                  Text(l10n.allRead),
                 Row(
                   children: [
                     if (historyState.unreadCount > 0)
                       TextButton.icon(
                         onPressed: () => ref.read(notificationHistoryProvider.notifier).markAllAsRead(),
                         icon: const Icon(Icons.done_all, size: 18),
-                        label: const Text('Mark all read'),
+                        label: Text(l10n.markAllRead),
                       ),
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.more_vert),
@@ -99,16 +100,16 @@ class NotificationHistoryWidget extends ConsumerWidget {
                           final confirm = await showDialog<bool>(
                             context: context,
                             builder: (ctx) => AlertDialog(
-                              title: const Text('Clear History'),
-                              content: const Text('Delete all notification history?'),
+                              title: Text(l10n.clearHistory),
+                              content: Text(l10n.clearHistoryMessage),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(ctx, false),
-                                  child: const Text('Cancel'),
+                                  child: Text(l10n.cancel),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(ctx, true),
-                                  child: const Text('Clear', style: TextStyle(color: Colors.red)),
+                                  child: Text(l10n.clear, style: const TextStyle(color: Colors.red)),
                                 ),
                               ],
                             ),
@@ -120,19 +121,19 @@ class NotificationHistoryWidget extends ConsumerWidget {
                           ref.read(notificationHistoryProvider.notifier).deleteOlderThan(7);
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Deleted notifications older than 7 days')),
+                              SnackBar(content: Text(l10n.deletedOldNotifications)),
                             );
                           }
                         }
                       },
                       itemBuilder: (ctx) => [
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'delete_old',
-                          child: Text('Delete older than 7 days'),
+                          child: Text(l10n.deleteOlderThan7Days),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: 'clear',
-                          child: Text('Clear all history', style: TextStyle(color: Colors.red)),
+                          child: Text(l10n.clearAllHistory, style: const TextStyle(color: Colors.red)),
                         ),
                       ],
                     ),

@@ -12,94 +12,97 @@ import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../../core/providers/language_provider.dart';
+import '../../../l10n/app_localizations.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(l10n.settingsTitle),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
           // App Information Section
-          _buildSectionHeader(context, 'About'),
+          _buildSectionHeader(context, l10n.sectionAbout),
           _buildInfoTile(
             icon: Icons.info_outline,
-            title: 'Version',
+            title: l10n.version,
             subtitle: '1.0.4',
           ),
           _buildInfoTile(
             icon: Icons.storage,
-            title: 'Database Version',
-            subtitle: 'v5 (Notification History)',
+            title: l10n.databaseVersion,
+            subtitle: 'v5',
           ),
           _buildInfoTile(
             icon: Icons.code,
-            title: 'Build',
+            title: l10n.build,
             subtitle: 'Flutter 3.38.x | Dart 3.8.x',
           ),
           _buildInfoTile(
             icon: Icons.build,
-            title: 'Features',
+            title: l10n.features,
             subtitle: 'Characters, Bases, Tax, Alerts, i18n, Export/Import',
           ),
           
           const Divider(height: 32),
           
           // Appearance Section
-          _buildSectionHeader(context, 'Appearance'),
+          _buildSectionHeader(context, l10n.sectionAppearance),
           _buildThemeToggle(context, ref),
           _buildFactionSelector(context, ref),
           
           const Divider(height: 32),
           
           // Language Section
-          _buildSectionHeader(context, 'Language'),
+          _buildSectionHeader(context, l10n.sectionLanguage),
           _buildLanguageSelector(context, ref),
           
           const Divider(height: 32),
 
           // Data Management Section
-          _buildSectionHeader(context, 'Data Management'),
+          _buildSectionHeader(context, l10n.sectionDataManagement),
           ListTile(
             leading: const Icon(Icons.download, color: Colors.blue),
-            title: const Text('Export Data'),
-            subtitle: const Text('Backup all characters and bases'),
+            title: Text(l10n.exportData),
+            subtitle: Text(l10n.exportDataDesc),
             onTap: () => _handleExport(context, ref),
           ),
           ListTile(
             leading: const Icon(Icons.upload, color: Colors.green),
-            title: const Text('Import Data'),
-            subtitle: const Text('Restore from backup'),
+            title: Text(l10n.importData),
+            subtitle: Text(l10n.importDataDesc),
             onTap: () => _handleImport(context, ref),
           ),
           ListTile(
             leading: const Icon(Icons.delete_forever, color: Colors.red),
-            title: const Text('Clear All Data'),
-            subtitle: const Text('Delete all characters and bases'),
+            title: Text(l10n.clearAllData),
+            subtitle: Text(l10n.clearAllDataDesc),
             onTap: () => _showClearDataDialog(context),
           ),
           
           const Divider(height: 32),
           
           // Accessibility Section
-          _buildSectionHeader(context, 'Accessibility'),
+          _buildSectionHeader(context, l10n.sectionAccessibility),
           _buildAccessibilitySettings(context, ref),
           
           const Divider(height: 32),
           
           // Notifications Section
-          _buildSectionHeader(context, 'Notifications'),
+          _buildSectionHeader(context, l10n.sectionNotifications),
           _buildNotificationSettings(context, ref),
           
           const Divider(height: 32),
           
           // Legal & Acknowledgments Section
-          _buildSectionHeader(context, 'Legal & Acknowledgments'),
+          _buildSectionHeader(context, l10n.sectionLegal),
           
           // Disclaimer
           Card(
@@ -114,7 +117,7 @@ class SettingsScreen extends ConsumerWidget {
                       Icon(Icons.warning_amber, color: Colors.orange[700]),
                       const SizedBox(width: 8),
                       Text(
-                        'Important Disclaimer',
+                        l10n.importantDisclaimer,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -124,12 +127,9 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    'This is an unofficial, fan-made companion application for Dune Awakening. '
-                    'It is NOT affiliated with, endorsed by, or supported by Funcom or any other official entity. '
-                    'Funcom has had no input in the development of this application. '
-                    'Use at your own risk.',
-                    style: TextStyle(fontSize: 13),
+                  Text(
+                    l10n.disclaimerText,
+                    style: const TextStyle(fontSize: 13),
                   ),
                 ],
               ),
@@ -146,12 +146,12 @@ class SettingsScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: const [
-                      Icon(Icons.copyright, size: 20),
-                      SizedBox(width: 8),
+                    children: [
+                      const Icon(Icons.copyright, size: 20),
+                      const SizedBox(width: 8),
                       Text(
-                        'Copyright Notices',
-                        style: TextStyle(
+                        l10n.copyrightNotices,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -159,12 +159,11 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    '© 2024 Dune Awakening Companion App\n\n'
-                    'Dune Awakening is a trademark of Funcom. All rights reserved.\n\n'
-                    'Dune and related elements are trademarks or registered trademarks '
-                    'of Herbert Properties LLC. All rights reserved.',
-                    style: TextStyle(fontSize: 13),
+                  Text(
+                    '${l10n.copyrightApp}\n\n'
+                    '${l10n.copyrightFuncom}\n\n'
+                    '${l10n.copyrightHerbert}',
+                    style: const TextStyle(fontSize: 13),
                   ),
                 ],
               ),
@@ -182,12 +181,12 @@ class SettingsScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: const [
-                      Icon(Icons.favorite, color: Colors.red, size: 20),
-                      SizedBox(width: 8),
+                    children: [
+                      const Icon(Icons.favorite, color: Colors.red, size: 20),
+                      const SizedBox(width: 8),
                       Text(
-                        'Special Thanks',
-                        style: TextStyle(
+                        l10n.specialThanks,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -195,15 +194,12 @@ class SettingsScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  const Text(
-                    '🙏 To the Herbert Estate for creating the incredible Dune universe '
-                    'that has inspired generations of fans.\n\n'
-                    '🎮 To Funcom for developing Dune Awakening and bringing Arrakis to life '
-                    'in an immersive gaming experience.\n\n'
-                    '🌟 To the Dune Awakening community for their passion and support.\n\n'
-                    '🤖 Created within Google Antigravity "Thinking Machine" IDE with human and '
-                    'Claude Sonnet 4.5 (who is keeping a watchful eye over you lot—no "Butlerian Jihad" thank you very much).',
-                    style: TextStyle(fontSize: 13),
+                  Text(
+                    '🙏 ${l10n.thanksHerbert}\n\n'
+                    '🎮 ${l10n.thanksFuncom}\n\n'
+                    '🌟 ${l10n.thanksCommunity}\n\n'
+                    '🤖 ${l10n.thanksAI}',
+                    style: const TextStyle(fontSize: 13),
                   ),
                 ],
               ),
@@ -215,8 +211,8 @@ class SettingsScreen extends ConsumerWidget {
           // License
           ListTile(
             leading: const Icon(Icons.description),
-            title: const Text('Open Source License'),
-            subtitle: const Text('MIT License'),
+            title: Text(l10n.openSourceLicense),
+            subtitle: Text(l10n.mitLicense),
             onTap: () => _showLicenseDialog(context),
           ),
           
@@ -225,7 +221,7 @@ class SettingsScreen extends ConsumerWidget {
           // Footer
           Center(
             child: Text(
-              'Made with ❤️ for Dune Awakening players',
+              l10n.madeWithLove,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[600],
@@ -236,7 +232,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              'v1.0.0-beta • Database v3',
+              'v1.0.4 • ${l10n.databaseVersion} v5',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey[500],
@@ -313,6 +309,7 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
   Widget _buildThemeToggle(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeProvider);
     final isDarkMode = themeMode == ThemeMode.dark;
     
@@ -321,8 +318,8 @@ class SettingsScreen extends ConsumerWidget {
         isDarkMode ? Icons.dark_mode : Icons.light_mode,
         color: isDarkMode ? Colors.indigo : Colors.orange,
       ),
-      title: const Text('Dark Mode'),
-      subtitle: Text(isDarkMode ? 'Desert Night theme' : 'Desert Day theme'),
+      title: Text(l10n.darkMode),
+      subtitle: Text(isDarkMode ? l10n.desertNightTheme : l10n.desertDayTheme),
       value: isDarkMode,
       onChanged: (value) {
         ref.read(themeModeProvider.notifier).setThemeMode(
@@ -333,6 +330,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Widget _buildFactionSelector(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final currentFaction = ref.watch(factionThemeProvider);
     
     return ListTile(
@@ -340,11 +338,43 @@ class SettingsScreen extends ConsumerWidget {
         _getFactionIcon(currentFaction),
         color: _getFactionColor(currentFaction),
       ),
-      title: const Text('Faction Theme'),
-      subtitle: Text(FactionThemeNotifier.getFactionDisplayName(currentFaction)),
+      title: Text(l10n.factionTheme),
+      subtitle: Text(_getLocalizedFactionName(context, currentFaction)),
       trailing: const Icon(Icons.chevron_right),
       onTap: () => _showFactionPicker(context, ref),
     );
+  }
+
+  String _getLocalizedFactionName(BuildContext context, DuneFaction faction) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (faction) {
+      case DuneFaction.desert:
+        return l10n.factionDesert;
+      case DuneFaction.atreides:
+        return l10n.factionAtreides;
+      case DuneFaction.harkonnen:
+        return l10n.factionHarkonnen;
+      case DuneFaction.fremen:
+        return l10n.factionFremen;
+      case DuneFaction.smuggler:
+        return l10n.factionSmuggler;
+    }
+  }
+
+  String _getLocalizedFactionDesc(BuildContext context, DuneFaction faction) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (faction) {
+      case DuneFaction.desert:
+        return l10n.factionDesertDesc;
+      case DuneFaction.atreides:
+        return l10n.factionAtreidesDesc;
+      case DuneFaction.harkonnen:
+        return l10n.factionHarkonnenDesc;
+      case DuneFaction.fremen:
+        return l10n.factionFremenDesc;
+      case DuneFaction.smuggler:
+        return l10n.factionSmugglerDesc;
+    }
   }
 
   IconData _getFactionIcon(DuneFaction faction) {
@@ -378,17 +408,18 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showFactionPicker(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Choose Your Faction',
-                style: TextStyle(
+                l10n.chooseFaction,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -400,8 +431,8 @@ class SettingsScreen extends ConsumerWidget {
                 _getFactionIcon(faction),
                 color: _getFactionColor(faction),
               ),
-              title: Text(FactionThemeNotifier.getFactionDisplayName(faction)),
-              subtitle: Text(FactionThemeNotifier.getFactionDescription(faction)),
+              title: Text(_getLocalizedFactionName(context, faction)),
+              subtitle: Text(_getLocalizedFactionDesc(context, faction)),
               trailing: ref.watch(factionThemeProvider) == faction
                   ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
                   : null,
@@ -419,14 +450,15 @@ class SettingsScreen extends ConsumerWidget {
 
   Widget _buildAccessibilitySettings(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(accessibilityProvider);
+    final l10n = AppLocalizations.of(context)!;
     
     return Column(
       children: [
         // Font Size Slider
         ListTile(
           leading: const Icon(Icons.text_fields),
-          title: const Text('Text Size'),
-          subtitle: Text(AccessibilitySettings.getFontSizeDisplayName(settings.fontSize)),
+          title: Text(l10n.textSize),
+          subtitle: Text(_getLocalizedFontSize(context, settings.fontSize)),
           trailing: SizedBox(
             width: 200,
             child: Slider(
@@ -434,7 +466,7 @@ class SettingsScreen extends ConsumerWidget {
               min: 0,
               max: (FontSizeOption.values.length - 1).toDouble(),
               divisions: FontSizeOption.values.length - 1,
-              label: AccessibilitySettings.getFontSizeDisplayName(settings.fontSize),
+              label: _getLocalizedFontSize(context, settings.fontSize),
               onChanged: (value) {
                 ref.read(accessibilityProvider.notifier).setFontSize(
                   FontSizeOption.values[value.round()],
@@ -447,21 +479,21 @@ class SettingsScreen extends ConsumerWidget {
         // Font Weight Selector
         ListTile(
           leading: const Icon(Icons.format_bold),
-          title: const Text('Text Weight'),
-          subtitle: Text(AccessibilitySettings.getFontWeightDisplayName(settings.fontWeight)),
+          title: Text(l10n.textWeight),
+          subtitle: Text(_getLocalizedFontWeight(context, settings.fontWeight)),
           trailing: SegmentedButton<FontWeightOption>(
-            segments: const [
+            segments: [
               ButtonSegment(
                 value: FontWeightOption.light,
-                label: Text('Light'),
+                label: Text(l10n.textWeightLight),
               ),
               ButtonSegment(
                 value: FontWeightOption.regular,
-                label: Text('Regular'),
+                label: Text(l10n.textWeightRegular),
               ),
               ButtonSegment(
                 value: FontWeightOption.bold,
-                label: Text('Bold'),
+                label: Text(l10n.textWeightBold),
               ),
             ],
             selected: {settings.fontWeight},
@@ -476,10 +508,10 @@ class SettingsScreen extends ConsumerWidget {
         // High Contrast Toggle
         SwitchListTile(
           secondary: const Icon(Icons.contrast),
-          title: const Text('High Contrast'),
+          title: Text(l10n.highContrast),
           subtitle: Text(settings.highContrast 
-              ? 'Enhanced color contrast' 
-              : 'Standard color contrast'),
+              ? l10n.highContrastEnabled 
+              : l10n.highContrastDisabled),
           value: settings.highContrast,
           onChanged: (value) {
             ref.read(accessibilityProvider.notifier).setHighContrast(value);
@@ -489,10 +521,10 @@ class SettingsScreen extends ConsumerWidget {
         // Reduced Motion Toggle
         SwitchListTile(
           secondary: const Icon(Icons.animation),
-          title: const Text('Reduce Motion'),
+          title: Text(l10n.reduceMotion),
           subtitle: Text(settings.reducedMotion 
-              ? 'Animations disabled' 
-              : 'Animations enabled'),
+              ? l10n.reduceMotionEnabled 
+              : l10n.reduceMotionDisabled),
           value: settings.reducedMotion,
           onChanged: (value) {
             ref.read(accessibilityProvider.notifier).setReducedMotion(value);
@@ -502,16 +534,43 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
+  String _getLocalizedFontSize(BuildContext context, FontSizeOption option) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (option) {
+      case FontSizeOption.small:
+        return l10n.textSizeSmall;
+      case FontSizeOption.medium:
+        return l10n.textSizeMedium;
+      case FontSizeOption.large:
+        return l10n.textSizeLarge;
+      case FontSizeOption.xl:
+        return l10n.textSizeXL;
+    }
+  }
+
+  String _getLocalizedFontWeight(BuildContext context, FontWeightOption option) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (option) {
+      case FontWeightOption.light:
+        return l10n.textWeightLight;
+      case FontWeightOption.regular:
+        return l10n.textWeightRegular;
+      case FontWeightOption.bold:
+        return l10n.textWeightBold;
+    }
+  }
+
   Widget _buildNotificationSettings(BuildContext context, WidgetRef ref) {
     return _NotificationSettingsWidget();
   }
 
   Future<void> _sendTestNotification(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     // Show loading indicator
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Checking for alerts...'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.checkingAlerts),
+        duration: const Duration(seconds: 2),
       ),
     );
 
@@ -521,9 +580,9 @@ class SettingsScreen extends ConsumerWidget {
       
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ Check complete! Notifications sent if bases need attention.'),
-            duration: Duration(seconds: 3),
+          SnackBar(
+            content: Text(l10n.checkComplete),
+            duration: const Duration(seconds: 3),
             backgroundColor: Colors.green,
           ),
         );
@@ -532,7 +591,7 @@ class SettingsScreen extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('❌ Error: $e'),
+            content: Text('${l10n.error}: $e'),
             duration: const Duration(seconds: 3),
             backgroundColor: Colors.red,
           ),
@@ -542,19 +601,16 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showClearDataDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Clear All Data?'),
-        content: const Text(
-          'This will permanently delete all characters, bases, and settings. '
-          'This action cannot be undone.\n\n'
-          'Are you sure you want to continue?',
-        ),
+        title: Text(l10n.clearAllData),
+        content: Text(l10n.clearDataConfirmDesc),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -567,8 +623,8 @@ class SettingsScreen extends ConsumerWidget {
                 
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('All data cleared successfully'),
+                    SnackBar(
+                      content: Text(l10n.dataCleared),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -577,7 +633,7 @@ class SettingsScreen extends ConsumerWidget {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Error clearing data: $e'),
+                      content: Text(l10n.errorClearingData(e.toString())),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -585,7 +641,7 @@ class SettingsScreen extends ConsumerWidget {
               }
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Delete Everything'),
+            child: Text(l10n.deleteEverything),
           ),
         ],
       ),
@@ -593,30 +649,21 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   void _showLicenseDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('MIT License'),
-        content: const SingleChildScrollView(
+        title: Text(l10n.mitLicense),
+        content: SingleChildScrollView(
           child: Text(
-            'Permission is hereby granted, free of charge, to any person obtaining a copy '
-            'of this software and associated documentation files (the "Software"), to deal '
-            'in the Software without restriction, including without limitation the rights '
-            'to use, copy, modify, merge, publish, distribute, sublicense, and/or sell '
-            'copies of the Software, and to permit persons to whom the Software is '
-            'furnished to do so, subject to the following conditions:\n\n'
-            'The above copyright notice and this permission notice shall be included in all '
-            'copies or substantial portions of the Software.\n\n'
-            'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR '
-            'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, '
-            'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.',
-            style: TextStyle(fontSize: 12),
+            l10n.mitLicenseBody,
+            style: const TextStyle(fontSize: 12),
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            child: Text(l10n.close),
           ),
         ],
       ),
@@ -624,23 +671,24 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _handleExport(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Show loading
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(strokeWidth: 2),
               ),
-              SizedBox(width: 16),
-              Text('Exporting data...'),
+              const SizedBox(width: 16),
+              Text(l10n.exportingData),
             ],
           ),
-          duration: Duration(seconds: 30),
+          duration: const Duration(seconds: 30),
         ),
       );
 
@@ -657,11 +705,11 @@ class SettingsScreen extends ConsumerWidget {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Data exported to:\n$filePath'),
+            content: Text(l10n.dataExportedTo(filePath)),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 5),
             action: SnackBarAction(
-              label: 'OK',
+              label: l10n.ok,
               textColor: Colors.white,
               onPressed: () {},
             ),
@@ -671,8 +719,8 @@ class SettingsScreen extends ConsumerWidget {
         // Failed
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Export failed. Please try again.'),
+          SnackBar(
+            content: Text(l10n.exportFailedTryAgain),
             backgroundColor: Colors.red,
           ),
         );
@@ -681,7 +729,7 @@ class SettingsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text('${l10n.error}: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -689,12 +737,13 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _handleImport(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Pick file - accept both ZIP (new) and JSON (legacy)
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['zip', 'json'],
-        dialogTitle: 'Select Backup File',
+        dialogTitle: l10n.importData,
       );
 
       if (result == null || result.files.single.path == null) {
@@ -711,8 +760,8 @@ class SettingsScreen extends ConsumerWidget {
       if (preview == null) {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Invalid backup file'),
+          SnackBar(
+            content: Text(l10n.importFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -726,7 +775,7 @@ class SettingsScreen extends ConsumerWidget {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error: $e'),
+          content: Text('${l10n.error}: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -739,49 +788,50 @@ class SettingsScreen extends ConsumerWidget {
     String filePath,
     Map<String, dynamic> preview,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Import Backup'),
+        title: Text(l10n.importBackup),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Backup contains:',
+              l10n.backupContains,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            Text('• ${preview['characterCount']} characters'),
-            Text('• ${preview['baseCount']} bases'),
+            Text('• ${l10n.charactersCount(preview['characterCount'] ?? 0)}'),
+            Text('• ${l10n.basesCount(preview['baseCount'] ?? 0)}'),
             if ((preview['portraitCount'] ?? 0) > 0)
-              Text('• ${preview['portraitCount']} portraits'),
+              Text('• ${l10n.portraitsCount(preview['portraitCount'] ?? 0)}'),
             const SizedBox(height: 8),
             Text(
-              'Format: ${preview['format'] == 'zip' ? 'ZIP (with portraits)' : 'Legacy JSON'}',
+              '${l10n.features}: ${preview['format'] == 'zip' ? l10n.formatZip : l10n.formatLegacyJson}',
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[400],
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Choose import mode:',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              l10n.chooseImportMode,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
               _performImport(context, ref, filePath, ImportMode.merge);
             },
-            child: const Text('Merge'),
+            child: Text(l10n.importMerge),
           ),
           TextButton(
             onPressed: () {
@@ -789,7 +839,7 @@ class SettingsScreen extends ConsumerWidget {
               _showReplaceConfirmation(context, ref, filePath);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.orange),
-            child: const Text('Replace'),
+            child: Text(l10n.importReplace),
           ),
         ],
       ),
@@ -801,19 +851,16 @@ class SettingsScreen extends ConsumerWidget {
     WidgetRef ref,
     String filePath,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Replace All Data?'),
-        content: const Text(
-          'This will DELETE all existing characters and bases, '
-          'then import the backup data.\n\n'
-          'This action cannot be undone!',
-        ),
+        title: Text(l10n.replaceAllDataTitle),
+        content: Text(l10n.replaceAllDataContent),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -821,7 +868,7 @@ class SettingsScreen extends ConsumerWidget {
               _performImport(context, ref, filePath, ImportMode.replace);
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Replace Everything'),
+            child: Text(l10n.replaceEverything),
           ),
         ],
       ),
@@ -834,23 +881,24 @@ class SettingsScreen extends ConsumerWidget {
     String filePath,
     ImportMode mode,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Show loading
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(strokeWidth: 2),
               ),
-              SizedBox(width: 16),
-              Text('Importing data...'),
+              const SizedBox(width: 16),
+              Text(l10n.importingData),
             ],
           ),
-          duration: Duration(seconds: 30),
+          duration: const Duration(seconds: 30),
         ),
       );
 
@@ -869,14 +917,17 @@ class SettingsScreen extends ConsumerWidget {
 
         if (!context.mounted) return;
         final portraitMsg = result.portraitsImported > 0 
-            ? ', ${result.portraitsImported} portraits' 
+            ? l10n.portraitsCount(result.portraitsImported)
             : '';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Import successful!\n'
-              '${result.charactersImported} characters, '
-              '${result.basesImported} bases$portraitMsg imported',
+              '${l10n.importSuccessful}\n' +
+              l10n.importSummary(
+                result.charactersImported, 
+                result.basesImported, 
+                portraitMsg.isNotEmpty ? ', $portraitMsg' : ''
+              ),
             ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 4),
@@ -909,6 +960,7 @@ class _NotificationSettingsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(notificationSettingsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     if (settings.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -919,10 +971,10 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Enable Notifications Toggle
         SwitchListTile(
           secondary: const Icon(Icons.notifications_active),
-          title: const Text('Enable Notifications'),
+          title: Text(l10n.enableNotifications),
           subtitle: Text(settings.enabled
-              ? 'Receive alerts for expiring bases'
-              : 'Notifications disabled'),
+              ? l10n.receiveAlertsForExpiring
+              : l10n.notificationsDisabledDesc),
           value: settings.enabled,
           onChanged: (value) async {
             // Update provider state (which also updates SharedPreferences)
@@ -936,8 +988,8 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Check Interval Dropdown
         ListTile(
           leading: const Icon(Icons.schedule),
-          title: const Text('Check Interval'),
-          subtitle: Text('Check every ${settings.intervalMinutes} minutes'),
+          title: Text(l10n.checkInterval),
+          subtitle: Text(l10n.checkEveryMinutes(settings.intervalMinutes)),
           trailing: DropdownButton<int>(
             value: settings.intervalMinutes,
             items: const [
@@ -960,10 +1012,10 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Include Warning Notifications Toggle
         SwitchListTile(
           secondary: const Icon(Icons.warning_amber),
-          title: const Text('Warning Notifications'),
+          title: Text(l10n.warningNotifications),
           subtitle: Text(settings.includeWarnings
-              ? 'Alert for < 48h (warnings + critical)'
-              : 'Alert for < 24h only (critical)'),
+              ? l10n.alertFor48h
+              : l10n.alertFor24hOnly),
           value: settings.includeWarnings,
           onChanged: settings.enabled
               ? (value) async {
@@ -977,10 +1029,10 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Sound Toggle
         SwitchListTile(
           secondary: const Icon(Icons.volume_up),
-          title: const Text('Notification Sound'),
+          title: Text(l10n.notificationSound),
           subtitle: Text(settings.soundEnabled
-              ? 'Play sound with notifications'
-              : 'Silent notifications'),
+              ? l10n.playSoundWithNotifications
+              : l10n.silentNotifications),
           value: settings.soundEnabled,
           onChanged: settings.enabled
               ? (value) async {
@@ -993,10 +1045,10 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         if (Platform.isAndroid || Platform.isIOS)
           SwitchListTile(
             secondary: const Icon(Icons.vibration),
-            title: const Text('Vibration'),
+            title: Text(l10n.vibration),
             subtitle: Text(settings.vibrationEnabled
-                ? 'Vibrate with notifications'
-                : 'No vibration'),
+                ? l10n.vibrateWithNotifications
+                : l10n.noVibration),
             value: settings.vibrationEnabled,
             onChanged: settings.enabled
                 ? (value) async {
@@ -1009,8 +1061,8 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         if (Platform.isLinux || Platform.isWindows || Platform.isMacOS)
           SwitchListTile(
             secondary: const Icon(Icons.minimize),
-            title: const Text('Start Minimized to Tray'),
-            subtitle: const Text('Launch app in system tray'),
+            title: Text(l10n.startMinimizedToTray),
+            subtitle: Text(l10n.launchAppInTray),
             value: settings.startMinimized,
             onChanged: (value) async {
               await ref.read(notificationSettingsProvider.notifier).setStartMinimized(value);
@@ -1022,10 +1074,10 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Quiet Hours Section
         SwitchListTile(
           secondary: const Icon(Icons.bedtime),
-          title: const Text('Quiet Hours'),
+          title: Text(l10n.quietHours),
           subtitle: Text(settings.quietHoursEnabled
-              ? 'No notifications ${settings.quietHoursStartString} - ${settings.quietHoursEndString}'
-              : 'Notifications always enabled'),
+              ? l10n.noNotificationsFromTo(settings.quietHoursStartString, settings.quietHoursEndString)
+              : l10n.notificationsAlwaysEnabled),
           value: settings.quietHoursEnabled,
           onChanged: settings.enabled
               ? (value) async {
@@ -1038,7 +1090,7 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         if (settings.quietHoursEnabled && settings.enabled) ...[
           ListTile(
             leading: const SizedBox(width: 24), // Align with icons above
-            title: const Text('Start Time'),
+            title: Text(l10n.startTime),
             trailing: TextButton(
               onPressed: () async {
                 final picked = await showTimePicker(
@@ -1064,7 +1116,7 @@ class _NotificationSettingsWidget extends ConsumerWidget {
           ),
           ListTile(
             leading: const SizedBox(width: 24),
-            title: const Text('End Time'),
+            title: Text(l10n.endTime),
             trailing: TextButton(
               onPressed: () async {
                 final picked = await showTimePicker(
@@ -1095,14 +1147,14 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         // Test Notification Button
         ListTile(
           leading: const Icon(Icons.notifications, color: Colors.blue),
-          title: const Text('Test Notification'),
-          subtitle: const Text('Send a test notification'),
+          title: Text(l10n.testNotification),
+          subtitle: Text(l10n.sendTestNotification),
           trailing: ElevatedButton.icon(
             onPressed: settings.enabled
                 ? () => _sendTestNotification(context, ref)
                 : null,
             icon: const Icon(Icons.send, size: 18),
-            label: const Text('Test'),
+            label: Text(l10n.test),
           ),
         ),
       ],
