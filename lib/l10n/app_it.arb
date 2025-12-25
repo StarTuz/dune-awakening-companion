@@ -44,7 +44,7 @@
   "tapToManage": "Tocca per gestire le basi di questo personaggio",
   "severityCritical": "CRITICO",
   "severityWarning": "AVVISO",
-  "taxOverdue": "Scaduto: {time}",
+  "taxOverdueLabel": "Scaduto: {time}",
   "daysAbbr": "g",
   "hoursAbbr": "o",
   "minutesAbbr": "m",
@@ -149,6 +149,7 @@
   
   "testAlerts": "Testa Avvisi",
   "checkingAlerts": "Controllo avvisi...",
+  "checkComplete": "✅ Controllo completato! Notifiche inviate se le basi richiedono attenzione.",
   
   "importantDisclaimer": "Avviso Importante",
   "disclaimerText": "Questa è un'app non ufficiale creata dai fan. NON affiliata, approvata o supportata da Funcom. Funcom non ha partecipato allo sviluppo. Dune Awakening è un marchio di Funcom. Dune e gli elementi correlati sono marchi di Herbert Properties LLC.",
@@ -180,6 +181,11 @@
   "editCharacter": "Modifica Personaggio",
   "deleteCharacter": "Elimina Personaggio",
   "deleteCharacterConfirm": "Eliminare questo personaggio? Questo eliminerà anche tutte le sue basi.",
+  "deleteCharacterMessage": "Sei sicuro di voler eliminare {name}?",
+  "characterBasesTitle": "{name} - Basi",
+  "noBasesMessage": "Nessuna base ancora. Aggiungine una con il pulsante +!",
+  "powerRemaining": "Energia: {time} rimanenti",
+  "powerExpired": "Energia: Scaduta",
   "noCharactersMessage": "Ancora nessun personaggio. Aggiungine uno per iniziare.",
   "basesButton": "Basi",
   
@@ -222,6 +228,23 @@
   "exportFailed": "Esportazione fallita",
   "importSuccess": "Dati importati con successo",
   "importFailed": "Importazione fallita",
+  "exportingData": "Esportazione dati...",
+  "dataExportedTo": "Dati esportati in:\n{path}",
+  "exportFailedTryAgain": "Esportazione fallita. Riprova.",
+  "importBackup": "Importa Backup",
+  "backupContains": "Il backup contiene:",
+  "charactersCount": "{count, plural, =1{1 personaggio} other{{count} personaggi}}",
+  "basesCount": "{count, plural, =1{1 base} other{{count} basi}}",
+  "portraitsCount": "{count, plural, =1{1 ritratto} other{{count} ritratti}}",
+  "formatZip": "ZIP (con ritratti)",
+  "formatLegacyJson": "JSON Legacy",
+  "chooseImportMode": "Scegli modalità importazione:",
+  "replaceAllDataTitle": "Sostituire tutti i dati?",
+  "replaceAllDataContent": "Questo ELIMINERÀ tutti i personaggi e le basi esistenti, quindi importerà i dati di backup.\n\nQuesta azione non può essere annullata!",
+  "replaceEverything": "Sostituisci tutto",
+  "importingData": "Importazione dati...",
+  "importSuccessful": "Importazione riuscita!",
+  "importSummary": "{characters} personaggi, {bases} basi{portraits} importati",
   
   "importMode": "Modalità Importazione",
   "importMerge": "Unisci",
@@ -232,6 +255,8 @@
   "clearDataConfirm": "Cancellare tutti i dati?",
   "clearDataConfirmDesc": "Questo eliminerà tutti i personaggi e le basi. Non può essere annullato.",
   "dataCleared": "Tutti i dati cancellati",
+  "deleteEverything": "Elimina tutto",
+  "errorClearingData": "Errore durante la cancellazione dei dati: {error}",
 
   "receiveAlertsForExpiring": "Ricevi avvisi per basi in scadenza",
   "notificationsDisabledDesc": "Notifiche disabilitate",
@@ -265,5 +290,6 @@
   "thanksAI": "Creato all'interno dell'IDE Google Antigravity \"Thinking Machine\" con esseri umani e Claude Sonnet 4.5 (che vi tiene d'occhio—niente \"Jihad Butleriano\" grazie mille).",
   "openSourceLicense": "Licenza Open Source",
   "mitLicense": "Licenza MIT",
+  "mitLicenseBody": "Con la presente viene concesso, gratuitamente, a chiunque ottenga una copia di questo software e dei file di documentazione associati (il \"Software\"), di trattare il Software senza restrizioni, inclusi, senza limitazioni, i diritti di utilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in sublicenza e/o vendere copie del Software, e di consentire alle persone a cui viene fornito il Software di farlo, fatte salve le seguenti condizioni:\n\nL'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutte le copie o parti sostanziali del Software.\n\nIL SOFTWARE VIENE FORNITO \"COSÌ COM'È\", SENZA GARANZIA DI ALCUN TIPO, ESPLICITA O IMPLICITA, COMPRESE MA NON LIMITATE ALLE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE.",
   "madeWithLove": "Fatto con ❤️ per i giocatori di Dune Awakening"
 }

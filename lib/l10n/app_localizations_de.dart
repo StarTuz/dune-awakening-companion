@@ -122,7 +122,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get severityWarning => 'WARNUNG';
 
   @override
-  String get taxOverdue => 'Steuern Überfällig!';
+  String taxOverdueLabel(String time) {
+    return 'Überfällig: $time';
+  }
 
   @override
   String get daysAbbr => 'T';
@@ -397,7 +399,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Check complete! Notifications sent if bases need attention.';
+      '✅ Prüfung abgeschlossen! Benachrichtigungen gesendet, wenn Basen Aufmerksamkeit benötigen.';
 
   @override
   String get importantDisclaimer => 'Wichtiger Hinweis';
@@ -597,6 +599,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get powerCritical => 'Energie Kritisch!';
 
   @override
+  String get taxOverdue => 'Steuern Überfällig!';
+
+  @override
   String get exportSuccess => 'Daten erfolgreich exportiert';
 
   @override
@@ -609,29 +614,30 @@ class AppLocalizationsDe extends AppLocalizations {
   String get importFailed => 'Import fehlgeschlagen';
 
   @override
-  String get exportingData => 'Exporting data...';
+  String get exportingData => 'Daten werden exportiert...';
 
   @override
   String dataExportedTo(String path) {
-    return 'Data exported to:\n$path';
+    return 'Daten exportiert nach:\n$path';
   }
 
   @override
-  String get exportFailedTryAgain => 'Export failed. Please try again.';
+  String get exportFailedTryAgain =>
+      'Export fehlgeschlagen. Bitte versuchen Sie es erneut.';
 
   @override
-  String get importBackup => 'Import Backup';
+  String get importBackup => 'Sicherung importieren';
 
   @override
-  String get backupContains => 'Backup contains:';
+  String get backupContains => 'Sicherung enthält:';
 
   @override
   String charactersCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count characters',
-      one: '1 character',
+      other: '$count Charaktere',
+      one: '1 Charakter',
     );
     return '$_temp0';
   }
@@ -641,8 +647,8 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count bases',
-      one: '1 base',
+      other: '$count Basen',
+      one: '1 Basis',
     );
     return '$_temp0';
   }
@@ -652,40 +658,40 @@ class AppLocalizationsDe extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count portraits',
-      one: '1 portrait',
+      other: '$count Portraits',
+      one: '1 Portrait',
     );
     return '$_temp0';
   }
 
   @override
-  String get formatZip => 'ZIP (with portraits)';
+  String get formatZip => 'ZIP (mit Portraits)';
 
   @override
-  String get formatLegacyJson => 'Legacy JSON';
+  String get formatLegacyJson => 'Veraltetes JSON';
 
   @override
-  String get chooseImportMode => 'Choose import mode:';
+  String get chooseImportMode => 'Importmodus wählen:';
 
   @override
-  String get replaceAllDataTitle => 'Replace All Data?';
+  String get replaceAllDataTitle => 'Alle Daten ersetzen?';
 
   @override
   String get replaceAllDataContent =>
-      'This will DELETE all existing characters and bases, then import the backup data.\n\nThis action cannot be undone!';
+      'Dies wird ALLE vorhandenen Charaktere und Basen LÖSCHEN und dann die Sicherungsdaten importieren.\n\nDiese Aktion kann nicht rückgängig gemacht werden!';
 
   @override
-  String get replaceEverything => 'Replace Everything';
+  String get replaceEverything => 'Alles ersetzen';
 
   @override
-  String get importingData => 'Importing data...';
+  String get importingData => 'Daten werden importiert...';
 
   @override
-  String get importSuccessful => 'Import successful!';
+  String get importSuccessful => 'Import erfolgreich!';
 
   @override
   String importSummary(int characters, int bases, String portraits) {
-    return '$characters characters, $bases bases$portraits imported';
+    return '$characters Charaktere, $bases Basen$portraits importiert';
   }
 
   @override
@@ -714,11 +720,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dataCleared => 'Alle Daten gelöscht';
 
   @override
-  String get deleteEverything => 'Delete Everything';
+  String get deleteEverything => 'Alles löschen';
 
   @override
   String errorClearingData(String error) {
-    return 'Error clearing data: $error';
+    return 'Fehler beim Löschen der Daten: $error';
   }
 
   @override
@@ -828,7 +834,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mitLicenseBody =>
-      'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.';
+      'Hiermit wird unentgeltlich jeder Person, die eine Kopie der Software und der zugehörigen Dokumentationsdateien (die \"Software\") erhält, die Erlaubnis erteilt, uneingeschränkt mit der Software zu handeln, einschließlich, aber nicht beschränkt auf das Recht, die Software zu verwenden, zu kopieren, zu ändern, zusammenzuführen, zu veröffentlichen, zu vertreiben, unterzulizenzieren und/oder Kopien der Software zu verkaufen, und Personen, denen die Software überlassen wird, dies zu gestatten, unter den folgenden Bedingungen:\n\nDer obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.\n\nDIE SOFTWARE WIRD \"WIE BESEHEN\" BEREITGESTELLT, OHNE JEGLICHE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GARANTIE, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT, DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG VON RECHTEN DRITTER.';
 
   @override
   String get madeWithLove => 'Mit ❤️ gemacht für Dune Awakening Spieler';

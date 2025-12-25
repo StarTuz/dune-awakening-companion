@@ -121,7 +121,9 @@ class AppLocalizationsCy extends AppLocalizations {
   String get severityWarning => 'RHYBUDD';
 
   @override
-  String get taxOverdue => 'Trethi\'n Hwyr!';
+  String taxOverdueLabel(String time) {
+    return 'Hwyr: $time';
+  }
 
   @override
   String get daysAbbr => 'd';
@@ -483,24 +485,25 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String deleteCharacterMessage(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Ydych chi\'n siŵr eich bod am ddileu $name?';
   }
 
   @override
   String characterBasesTitle(String name) {
-    return '$name - Bases';
+    return '$name - Canolfannau';
   }
 
   @override
-  String get noBasesMessage => 'No bases yet. Add one using the + button!';
+  String get noBasesMessage =>
+      'Dim canolfannau eto. Ychwanegwch un gyda\'r botwm +!';
 
   @override
   String powerRemaining(String time) {
-    return 'Power: $time remaining';
+    return 'Pŵer: $time yn weddill';
   }
 
   @override
-  String get powerExpired => 'Power: Expired';
+  String get powerExpired => 'Pŵer: Wedi dod i ben';
 
   @override
   String get noCharactersMessage =>
@@ -592,6 +595,9 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get powerCritical => 'Pŵer Critigol!';
+
+  @override
+  String get taxOverdue => 'Trethi\'n Hwyr!';
 
   @override
   String get exportSuccess => 'Data wedi\'i allforio\'n llwyddiannus';
@@ -826,7 +832,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get mitLicenseBody =>
-      'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.';
+      'Rhoddir caniatâd trwy hyn, yn rhad ac am ddim, i unrhyw berson sy\'n sicrhau copi o\'r feddalwedd hon a\'r ffeiliau dogfennaeth cysylltiedig (y \"Feddalwedd\"), i ymdrin â\'r Feddalwedd heb gyfyngiad, gan gynnwys heb gyfyngiad y hawliau i ddefnyddio, copïo, addasu, uno, cyhoeddi, dosbarthu, is-drwyddedu a/neu werthu copïau o\'r Feddalwedd, ac i ganiatáu i bersonau y darperir y Feddalwedd iddynt wneud hynny, yn ddarostyngedig i\'r amodau a ganlyn:\n\nBydd yr hysbysiad hawlfraint uchod a\'r hysbysiad caniatâd hwn yn cael eu cynnwys ym mhob copi neu rannau sylweddol o\'r Feddalwedd.\n\nDARPERIR Y FEDDALWEDD \"FEL Y MAE\", HEB WARANT O UNRHYW FATH, NAILL AI WEDI\'I MYNEGI NEU EI HYNGLYCH, GAN GYNNWYS OND HEB FOD YN GYFYNGEDIG I WARANTAU O FARCHNADWYEDD, FFITRWYDD AR GYFER PWRPAS ARBENNIG A HEB FOD YN TORRI HAWLFRAINT.';
 
   @override
   String get madeWithLove =>

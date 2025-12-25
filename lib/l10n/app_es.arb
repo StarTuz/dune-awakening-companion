@@ -44,7 +44,7 @@
   "tapToManage": "Toca para administrar las bases de este personaje",
   "severityCritical": "CRÍTICO",
   "severityWarning": "ADVERTENCIA",
-  "taxOverdue": "Vencido: {time}",
+  "taxOverdueLabel": "Vencido: {time}",
   "daysAbbr": "d",
   "hoursAbbr": "h",
   "minutesAbbr": "m",

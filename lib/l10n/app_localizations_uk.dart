@@ -87,7 +87,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get addBaseTooltip => 'Додати Базу';
 
   @override
-  String get updateCountdownTooltip => 'Оновити відлік';
+  String get updateCountdownTooltip => 'Оновити зворотний відлік';
 
   @override
   String get addCharacterTooltip => 'Додати Персонажа';
@@ -121,7 +121,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get severityWarning => 'ПОПЕРЕДЖЕННЯ';
 
   @override
-  String get taxOverdue => 'Прострочені Податки!';
+  String taxOverdueLabel(String time) {
+    return 'Прострочено: $time';
+  }
 
   @override
   String get daysAbbr => 'д';
@@ -395,7 +397,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Check complete! Notifications sent if bases need attention.';
+      '✅ Перевірку завершено! Сповіщення надіслано, якщо бази потребують уваги.';
 
   @override
   String get importantDisclaimer => 'Важливе Застереження';
@@ -593,6 +595,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get powerCritical => 'Критична Енергія!';
 
   @override
+  String get taxOverdue => 'Прострочені Податки!';
+
+  @override
   String get exportSuccess => 'Дані успішно експортовано';
 
   @override
@@ -605,29 +610,30 @@ class AppLocalizationsUk extends AppLocalizations {
   String get importFailed => 'Помилка імпорту';
 
   @override
-  String get exportingData => 'Exporting data...';
+  String get exportingData => 'Експорт даних...';
 
   @override
   String dataExportedTo(String path) {
-    return 'Data exported to:\n$path';
+    return 'Дані експортовано в:\n$path';
   }
 
   @override
-  String get exportFailedTryAgain => 'Export failed. Please try again.';
+  String get exportFailedTryAgain =>
+      'Експорт не вдався. Будь ласка, спробуйте ще раз.';
 
   @override
-  String get importBackup => 'Import Backup';
+  String get importBackup => 'Імпорт резервної копії';
 
   @override
-  String get backupContains => 'Backup contains:';
+  String get backupContains => 'Резервна копія містить:';
 
   @override
   String charactersCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count characters',
-      one: '1 character',
+      other: '$count персонажів',
+      one: '1 персонаж',
     );
     return '$_temp0';
   }
@@ -637,8 +643,8 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count bases',
-      one: '1 base',
+      other: '$count баз',
+      one: '1 база',
     );
     return '$_temp0';
   }
@@ -648,40 +654,40 @@ class AppLocalizationsUk extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count portraits',
-      one: '1 portrait',
+      other: '$count портретів',
+      one: '1 портрет',
     );
     return '$_temp0';
   }
 
   @override
-  String get formatZip => 'ZIP (with portraits)';
+  String get formatZip => 'ZIP (з портретами)';
 
   @override
-  String get formatLegacyJson => 'Legacy JSON';
+  String get formatLegacyJson => 'Застарілий JSON';
 
   @override
-  String get chooseImportMode => 'Choose import mode:';
+  String get chooseImportMode => 'Виберіть режим імпорту:';
 
   @override
-  String get replaceAllDataTitle => 'Replace All Data?';
+  String get replaceAllDataTitle => 'Замінити всі дані?';
 
   @override
   String get replaceAllDataContent =>
-      'This will DELETE all existing characters and bases, then import the backup data.\n\nThis action cannot be undone!';
+      'Це видалить ВСІХ існуючих персонажів і бази, а потім імпортує дані резервної копії.\n\nЦю дію не можна скасувати!';
 
   @override
-  String get replaceEverything => 'Replace Everything';
+  String get replaceEverything => 'Замінити все';
 
   @override
-  String get importingData => 'Importing data...';
+  String get importingData => 'Імпорт даних...';
 
   @override
-  String get importSuccessful => 'Import successful!';
+  String get importSuccessful => 'Імпорт успішний!';
 
   @override
   String importSummary(int characters, int bases, String portraits) {
-    return '$characters characters, $bases bases$portraits imported';
+    return '$characters персонажів, $bases баз$portraits імпортовано';
   }
 
   @override
@@ -710,11 +716,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get dataCleared => 'Усі дані очищено';
 
   @override
-  String get deleteEverything => 'Delete Everything';
+  String get deleteEverything => 'Видалити все';
 
   @override
   String errorClearingData(String error) {
-    return 'Error clearing data: $error';
+    return 'Помилка видалення даних: $error';
   }
 
   @override
@@ -823,7 +829,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get mitLicenseBody =>
-      'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.';
+      'Цим безоплатно надається дозвіл будь-якій особі, яка отримує копію цього програмного забезпечення та супровідних файлів документації («Програмне забезпечення»), працювати з Програмним забезпеченням без обмежень, включаючи, без обмежень, права на використання, копіювання, модифікацію, об\'єднання, публікацію, розповсюдження, субліцензування та/або продаж копій Програмного забезпечення, а також дозвіл особам, яким надається Програмне забезпечення, робити це за таких умов:\n\nВищезазначене повідомлення про авторські права та це повідомлення про дозвіл повинні бути включені у всі копії або значні частини Програмного забезпечення.\n\nПРОГРАМНЕ ЗАБЕЗПЕЧЕННЯ НАДАЄТЬСЯ «ЯК Є», БЕЗ ЖОДНИХ ГАРАНТІЙ, ЯВНИХ АБО НЕЯВНИХ, ВКЛЮЧАЮЧИ, АЛЕ НЕ ОБМЕЖУЮЧИСЬ ГАРАНТІЯМИ ПРИДАТНОСТІ ДЛЯ ПРОДАЖУ, ПРИДАТНОСТІ ДЛЯ ПЕВНОЇ МЕТИ ТА ВІДСУТНОСТІ ПОРУШЕНЬ.';
 
   @override
   String get madeWithLove => 'Зроблено з ❤️ для гравців Dune Awakening';

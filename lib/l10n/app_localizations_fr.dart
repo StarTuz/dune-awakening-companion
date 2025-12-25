@@ -121,7 +121,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get severityWarning => 'AVERTISSEMENT';
 
   @override
-  String get taxOverdue => 'Impôts en Retard !';
+  String taxOverdueLabel(String time) {
+    return 'En retard: $time';
+  }
 
   @override
   String get daysAbbr => 'j';
@@ -397,7 +399,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Check complete! Notifications sent if bases need attention.';
+      '✅ Vérification terminée ! Notifications envoyées si des bases nécessitent une attention.';
 
   @override
   String get importantDisclaimer => 'Avertissement Important';
@@ -597,6 +599,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get powerCritical => 'Énergie Critique !';
 
   @override
+  String get taxOverdue => 'Impôts en Retard !';
+
+  @override
   String get exportSuccess => 'Données exportées avec succès';
 
   @override
@@ -609,29 +614,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get importFailed => 'Échec de l\'importation';
 
   @override
-  String get exportingData => 'Exporting data...';
+  String get exportingData => 'Exportation des données...';
 
   @override
   String dataExportedTo(String path) {
-    return 'Data exported to:\n$path';
+    return 'Données exportées vers :\n$path';
   }
 
   @override
-  String get exportFailedTryAgain => 'Export failed. Please try again.';
+  String get exportFailedTryAgain =>
+      'L\'exportation a échoué. Veuillez réessayer.';
 
   @override
-  String get importBackup => 'Import Backup';
+  String get importBackup => 'Importer une sauvegarde';
 
   @override
-  String get backupContains => 'Backup contains:';
+  String get backupContains => 'La sauvegarde contient :';
 
   @override
   String charactersCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count characters',
-      one: '1 character',
+      other: '$count personnages',
+      one: '1 personnage',
     );
     return '$_temp0';
   }
@@ -659,33 +665,33 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get formatZip => 'ZIP (with portraits)';
+  String get formatZip => 'ZIP (avec portraits)';
 
   @override
-  String get formatLegacyJson => 'Legacy JSON';
+  String get formatLegacyJson => 'JSON hérité';
 
   @override
-  String get chooseImportMode => 'Choose import mode:';
+  String get chooseImportMode => 'Choisir le mode d\'importation :';
 
   @override
-  String get replaceAllDataTitle => 'Replace All Data?';
+  String get replaceAllDataTitle => 'Remplacer toutes les données ?';
 
   @override
   String get replaceAllDataContent =>
-      'This will DELETE all existing characters and bases, then import the backup data.\n\nThis action cannot be undone!';
+      'Cela supprimera TOUS les personnages et bases existants, puis importera les données de sauvegarde.\n\nCette action est irréversible !';
 
   @override
-  String get replaceEverything => 'Replace Everything';
+  String get replaceEverything => 'Tout remplacer';
 
   @override
-  String get importingData => 'Importing data...';
+  String get importingData => 'Importation des données...';
 
   @override
-  String get importSuccessful => 'Import successful!';
+  String get importSuccessful => 'Importation réussie !';
 
   @override
   String importSummary(int characters, int bases, String portraits) {
-    return '$characters characters, $bases bases$portraits imported';
+    return '$characters personnages, $bases bases$portraits importés';
   }
 
   @override
@@ -714,11 +720,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get dataCleared => 'Toutes les données effacées';
 
   @override
-  String get deleteEverything => 'Delete Everything';
+  String get deleteEverything => 'Tout supprimer';
 
   @override
   String errorClearingData(String error) {
-    return 'Error clearing data: $error';
+    return 'Erreur lors de la suppression des données : $error';
   }
 
   @override

@@ -84,8 +84,8 @@
   "severityWarning": "WARNING",
   "@severityWarning": {"description": "Warning severity label"},
   
-  "taxOverdue": "Overdue: {time}",
-  "@taxOverdue": {"description": "Label for overdue taxes with time", "placeholders": {"time": {"type": "String"}}},
+  "taxOverdueLabel": "Overdue: {time}",
+  "@taxOverdueLabel": {"description": "Label for overdue taxes with time", "placeholders": {"time": {"type": "String"}}},
   
   "daysAbbr": "d",
   "@daysAbbr": {"description": "Abbreviation for days"},

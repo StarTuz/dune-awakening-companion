@@ -295,7 +295,7 @@ class AlertsScreen extends ConsumerWidget {
                                         
                                         final taxText = taxTotalHours >= 0
                                             ? '${taxDays}${l10n.daysAbbr} ${taxHours}${l10n.hoursAbbr} ${taxMinutes}${l10n.minutesAbbr}'
-                                            : l10n.taxOverdue('${taxDays.abs()}${l10n.daysAbbr} ${taxHours.abs()}${l10n.hoursAbbr} ${taxMinutes.abs()}${l10n.minutesAbbr}');
+                                            : l10n.taxOverdueLabel('${taxDays.abs()}${l10n.daysAbbr} ${taxHours.abs()}${l10n.hoursAbbr} ${taxMinutes.abs()}${l10n.minutesAbbr}');
                                         
                                         return Text(
                                           taxText,
@@ -404,7 +404,7 @@ class AlertsScreen extends ConsumerWidget {
                   const Icon(Icons.history),
                   const SizedBox(width: 8),
                   Text(
-                    l10n.notificationHistory,
+                    AppLocalizations.of(context)!.notificationHistory,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

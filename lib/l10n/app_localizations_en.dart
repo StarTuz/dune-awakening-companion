@@ -120,7 +120,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get severityWarning => 'WARNING';
 
   @override
-  String get taxOverdue => 'Tax Overdue!';
+  String taxOverdueLabel(String time) {
+    return 'Overdue: $time';
+  }
 
   @override
   String get daysAbbr => 'd';
@@ -589,6 +591,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get powerCritical => 'Power Critical!';
+
+  @override
+  String get taxOverdue => 'Tax Overdue!';
 
   @override
   String get exportSuccess => 'Data exported successfully';

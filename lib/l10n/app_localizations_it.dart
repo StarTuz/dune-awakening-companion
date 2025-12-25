@@ -120,7 +120,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get severityWarning => 'AVVISO';
 
   @override
-  String get taxOverdue => 'Tasse Scadute!';
+  String taxOverdueLabel(String time) {
+    return 'Scaduto: $time';
+  }
 
   @override
   String get daysAbbr => 'g';
@@ -395,7 +397,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Check complete! Notifications sent if bases need attention.';
+      '✅ Controllo completato! Notifiche inviate se le basi richiedono attenzione.';
 
   @override
   String get importantDisclaimer => 'Avviso Importante';
@@ -482,24 +484,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String deleteCharacterMessage(String name) {
-    return 'Are you sure you want to delete $name?';
+    return 'Sei sicuro di voler eliminare $name?';
   }
 
   @override
   String characterBasesTitle(String name) {
-    return '$name - Bases';
+    return '$name - Basi';
   }
 
   @override
-  String get noBasesMessage => 'No bases yet. Add one using the + button!';
+  String get noBasesMessage =>
+      'Nessuna base ancora. Aggiungine una con il pulsante +!';
 
   @override
   String powerRemaining(String time) {
-    return 'Power: $time remaining';
+    return 'Energia: $time rimanenti';
   }
 
   @override
-  String get powerExpired => 'Power: Expired';
+  String get powerExpired => 'Energia: Scaduta';
 
   @override
   String get noCharactersMessage =>
@@ -594,6 +597,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get powerCritical => 'Energia Critica!';
 
   @override
+  String get taxOverdue => 'Tasse Scadute!';
+
+  @override
   String get exportSuccess => 'Dati esportati con successo';
 
   @override
@@ -606,29 +612,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get importFailed => 'Importazione fallita';
 
   @override
-  String get exportingData => 'Exporting data...';
+  String get exportingData => 'Esportazione dati...';
 
   @override
   String dataExportedTo(String path) {
-    return 'Data exported to:\n$path';
+    return 'Dati esportati in:\n$path';
   }
 
   @override
-  String get exportFailedTryAgain => 'Export failed. Please try again.';
+  String get exportFailedTryAgain => 'Esportazione fallita. Riprova.';
 
   @override
-  String get importBackup => 'Import Backup';
+  String get importBackup => 'Importa Backup';
 
   @override
-  String get backupContains => 'Backup contains:';
+  String get backupContains => 'Il backup contiene:';
 
   @override
   String charactersCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count characters',
-      one: '1 character',
+      other: '$count personaggi',
+      one: '1 personaggio',
     );
     return '$_temp0';
   }
@@ -638,7 +644,7 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count bases',
+      other: '$count basi',
       one: '1 base',
     );
     return '$_temp0';
@@ -649,40 +655,40 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count portraits',
-      one: '1 portrait',
+      other: '$count ritratti',
+      one: '1 ritratto',
     );
     return '$_temp0';
   }
 
   @override
-  String get formatZip => 'ZIP (with portraits)';
+  String get formatZip => 'ZIP (con ritratti)';
 
   @override
-  String get formatLegacyJson => 'Legacy JSON';
+  String get formatLegacyJson => 'JSON Legacy';
 
   @override
-  String get chooseImportMode => 'Choose import mode:';
+  String get chooseImportMode => 'Scegli modalità importazione:';
 
   @override
-  String get replaceAllDataTitle => 'Replace All Data?';
+  String get replaceAllDataTitle => 'Sostituire tutti i dati?';
 
   @override
   String get replaceAllDataContent =>
-      'This will DELETE all existing characters and bases, then import the backup data.\n\nThis action cannot be undone!';
+      'Questo ELIMINERÀ tutti i personaggi e le basi esistenti, quindi importerà i dati di backup.\n\nQuesta azione non può essere annullata!';
 
   @override
-  String get replaceEverything => 'Replace Everything';
+  String get replaceEverything => 'Sostituisci tutto';
 
   @override
-  String get importingData => 'Importing data...';
+  String get importingData => 'Importazione dati...';
 
   @override
-  String get importSuccessful => 'Import successful!';
+  String get importSuccessful => 'Importazione riuscita!';
 
   @override
   String importSummary(int characters, int bases, String portraits) {
-    return '$characters characters, $bases bases$portraits imported';
+    return '$characters personaggi, $bases basi$portraits importati';
   }
 
   @override
@@ -711,11 +717,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dataCleared => 'Tutti i dati cancellati';
 
   @override
-  String get deleteEverything => 'Delete Everything';
+  String get deleteEverything => 'Elimina tutto';
 
   @override
   String errorClearingData(String error) {
-    return 'Error clearing data: $error';
+    return 'Errore durante la cancellazione dei dati: $error';
   }
 
   @override
@@ -823,7 +829,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get mitLicenseBody =>
-      'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.';
+      'Con la presente viene concesso, gratuitamente, a chiunque ottenga una copia di questo software e dei file di documentazione associati (il \"Software\"), di trattare il Software senza restrizioni, inclusi, senza limitazioni, i diritti di utilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in sublicenza e/o vendere copie del Software, e di consentire alle persone a cui viene fornito il Software di farlo, fatte salve le seguenti condizioni:\n\nL\'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutte le copie o parti sostanziali del Software.\n\nIL SOFTWARE VIENE FORNITO \"COSÌ COM\'È\", SENZA GARANZIA DI ALCUN TIPO, ESPLICITA O IMPLICITA, COMPRESE MA NON LIMITATE ALLE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE.';
 
   @override
   String get madeWithLove => 'Fatto con ❤️ per i giocatori di Dune Awakening';

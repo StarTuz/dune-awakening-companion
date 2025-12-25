@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/notification_history_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../core/models/notification_history_entry.dart';
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
 /// Widget displaying notification history
 class NotificationHistoryWidget extends ConsumerWidget {
@@ -109,7 +110,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(ctx, true),
-                                  child: Text(l10n.clear, style: const TextStyle(color: Colors.red)),
+                                  child: Text(l10n.delete, style: const TextStyle(color: Colors.red)),
                                 ),
                               ],
                             ),

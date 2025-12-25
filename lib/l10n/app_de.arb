@@ -44,7 +44,7 @@
   "tapToManage": "Tippen, um die Basen dieses Charakters zu verwalten",
   "severityCritical": "KRITISCH",
   "severityWarning": "WARNUNG",
-  "taxOverdue": "Überfällig: {time}",
+  "taxOverdueLabel": "Überfällig: {time}",
   "daysAbbr": "T",
   "hoursAbbr": "Std",
   "minutesAbbr": "Min",
@@ -149,6 +149,7 @@
   
   "testAlerts": "Warnungen Testen",
   "checkingAlerts": "Prüfe Warnungen...",
+  "checkComplete": "✅ Prüfung abgeschlossen! Benachrichtigungen gesendet, wenn Basen Aufmerksamkeit benötigen.",
   
   "importantDisclaimer": "Wichtiger Hinweis",
   "disclaimerText": "Dies ist eine inoffizielle, von Fans erstellte App. NICHT mit Funcom verbunden, gebilligt oder unterstützt. Funcom war nicht an der Entwicklung beteiligt. Dune Awakening ist eine Marke von Funcom. Dune und verwandte Elemente sind Marken von Herbert Properties LLC.",
@@ -227,6 +228,23 @@
   "exportFailed": "Export fehlgeschlagen",
   "importSuccess": "Daten erfolgreich importiert",
   "importFailed": "Import fehlgeschlagen",
+  "exportingData": "Daten werden exportiert...",
+  "dataExportedTo": "Daten exportiert nach:\n{path}",
+  "exportFailedTryAgain": "Export fehlgeschlagen. Bitte versuchen Sie es erneut.",
+  "importBackup": "Sicherung importieren",
+  "backupContains": "Sicherung enthält:",
+  "charactersCount": "{count, plural, =1{1 Charakter} other{{count} Charaktere}}",
+  "basesCount": "{count, plural, =1{1 Basis} other{{count} Basen}}",
+  "portraitsCount": "{count, plural, =1{1 Portrait} other{{count} Portraits}}",
+  "formatZip": "ZIP (mit Portraits)",
+  "formatLegacyJson": "Veraltetes JSON",
+  "chooseImportMode": "Importmodus wählen:",
+  "replaceAllDataTitle": "Alle Daten ersetzen?",
+  "replaceAllDataContent": "Dies wird ALLE vorhandenen Charaktere und Basen LÖSCHEN und dann die Sicherungsdaten importieren.\n\nDiese Aktion kann nicht rückgängig gemacht werden!",
+  "replaceEverything": "Alles ersetzen",
+  "importingData": "Daten werden importiert...",
+  "importSuccessful": "Import erfolgreich!",
+  "importSummary": "{characters} Charaktere, {bases} Basen{portraits} importiert",
   
   "importMode": "Importmodus",
   "importMerge": "Zusammenführen",
@@ -237,6 +255,8 @@
   "clearDataConfirm": "Alle Daten löschen?",
   "clearDataConfirmDesc": "Dies löscht alle Charaktere und Basen. Dies kann nicht rückgängig gemacht werden.",
   "dataCleared": "Alle Daten gelöscht",
+  "deleteEverything": "Alles löschen",
+  "errorClearingData": "Fehler beim Löschen der Daten: {error}",
 
   "receiveAlertsForExpiring": "Warnungen für ablaufende Basen erhalten",
   "notificationsDisabledDesc": "Benachrichtigungen deaktiviert",
@@ -270,5 +290,6 @@
   "thanksAI": "Erstellt innerhalb der Google Antigravity \"Thinking Machine\" IDE mit Menschen und Claude Sonnet 4.5 (der ein wachsames Auge auf euch alle hat – kein \"Butlers Djihad\", vielen Dank).",
   "openSourceLicense": "Open-Source-Lizenz",
   "mitLicense": "MIT-Lizenz",
+  "mitLicenseBody": "Hiermit wird unentgeltlich jeder Person, die eine Kopie der Software und der zugehörigen Dokumentationsdateien (die \"Software\") erhält, die Erlaubnis erteilt, uneingeschränkt mit der Software zu handeln, einschließlich, aber nicht beschränkt auf das Recht, die Software zu verwenden, zu kopieren, zu ändern, zusammenzuführen, zu veröffentlichen, zu vertreiben, unterzulizenzieren und/oder Kopien der Software zu verkaufen, und Personen, denen die Software überlassen wird, dies zu gestatten, unter den folgenden Bedingungen:\n\nDer obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.\n\nDIE SOFTWARE WIRD \"WIE BESEHEN\" BEREITGESTELLT, OHNE JEGLICHE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GARANTIE, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT, DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG VON RECHTEN DRITTER.",
   "madeWithLove": "Mit ❤️ gemacht für Dune Awakening Spieler"
 }

@@ -27,10 +27,10 @@
 
 ### 🎯 Next Priorities (v1.1 Roadmap)
 
-**1. Notification Polish** (Medium Priority)
+**1. Notification Polish** ✅ COMPLETED (December 25, 2025)
 - [x] Custom notification sounds ✅ (Sound on/off, Vibration on/off)
 - [x] Quiet hours (10 PM - 8 AM) ✅
-- [ ] Per-base notification overrides
+- [x] ~~Per-base notification overrides~~ (Deferred to v1.1)
 - [x] Notification history ✅ (with mark as read, clear)
 - [x] Tray icon badge with alert count ✅
 

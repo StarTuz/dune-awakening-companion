@@ -330,11 +330,11 @@ abstract class AppLocalizations {
   /// **'WARNING'**
   String get severityWarning;
 
-  /// Tax overdue notification title
+  /// Label for overdue taxes with time
   ///
   /// In en, this message translates to:
-  /// **'Tax Overdue!'**
-  String get taxOverdue;
+  /// **'Overdue: {time}'**
+  String taxOverdueLabel(String time);
 
   /// Abbreviation for days
   ///
@@ -1229,6 +1229,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Power Critical!'**
   String get powerCritical;
+
+  /// Tax overdue notification title
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Overdue!'**
+  String get taxOverdue;
 
   /// Export success message
   ///
