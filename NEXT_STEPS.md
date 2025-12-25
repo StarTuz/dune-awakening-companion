@@ -28,7 +28,7 @@
 ### 🎯 Next Priorities (v1.1 Roadmap)
 
 **1. Notification Polish** (Medium Priority)
-- [ ] Custom notification sounds
+- [x] Custom notification sounds ✅ (Sound on/off, Vibration on/off)
 - [x] Quiet hours (10 PM - 8 AM) ✅
 - [ ] Per-base notification overrides
 - [ ] Notification history
