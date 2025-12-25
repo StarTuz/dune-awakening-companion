@@ -477,32 +477,42 @@ class SettingsScreen extends ConsumerWidget {
         ),
         
         // Font Weight Selector
-        ListTile(
-          leading: const Icon(Icons.format_bold),
-          title: Text(l10n.textWeight),
-          subtitle: Text(_getLocalizedFontWeight(context, settings.fontWeight)),
-          trailing: SegmentedButton<FontWeightOption>(
-            segments: [
-              ButtonSegment(
-                value: FontWeightOption.light,
-                label: Text(l10n.textWeightLight),
+        Column(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.format_bold),
+              title: Text(l10n.textWeight),
+              subtitle: Text(_getLocalizedFontWeight(context, settings.fontWeight)),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: SizedBox(
+                width: double.infinity,
+                child: SegmentedButton<FontWeightOption>(
+                  segments: [
+                    ButtonSegment(
+                      value: FontWeightOption.light,
+                      label: Text(l10n.textWeightLight),
+                    ),
+                    ButtonSegment(
+                      value: FontWeightOption.regular,
+                      label: Text(l10n.textWeightRegular),
+                    ),
+                    ButtonSegment(
+                      value: FontWeightOption.bold,
+                      label: Text(l10n.textWeightBold),
+                    ),
+                  ],
+                  selected: {settings.fontWeight},
+                  onSelectionChanged: (Set<FontWeightOption> selection) {
+                    ref.read(accessibilityProvider.notifier).setFontWeight(
+                          selection.first,
+                        );
+                  },
+                ),
               ),
-              ButtonSegment(
-                value: FontWeightOption.regular,
-                label: Text(l10n.textWeightRegular),
-              ),
-              ButtonSegment(
-                value: FontWeightOption.bold,
-                label: Text(l10n.textWeightBold),
-              ),
-            ],
-            selected: {settings.fontWeight},
-            onSelectionChanged: (Set<FontWeightOption> selection) {
-              ref.read(accessibilityProvider.notifier).setFontWeight(
-                selection.first,
-              );
-            },
-          ),
+            ),
+          ],
         ),
         
         // High Contrast Toggle
