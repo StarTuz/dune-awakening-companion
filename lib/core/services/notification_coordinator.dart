@@ -1,12 +1,16 @@
 import '../services/notification_service.dart';
 import '../services/notification_settings.dart';
 import '../services/alert_checker_service.dart';
+import '../repositories/notification_history_repository.dart';
+import '../models/notification_history_entry.dart';
 import 'dart:async';
 
 /// Coordinates alert checking and notification triggering
 class NotificationCoordinator {
   final NotificationService _notificationService;
   final AlertCheckerService _alertCheckerService;
+  final NotificationHistoryRepository _historyRepository = 
+      NotificationHistoryRepository.instance;
   
   Timer? _periodicTimer;
   bool _isRunning = false;
@@ -92,7 +96,20 @@ class NotificationCoordinator {
 
   /// Send notification for a specific alert
   Future<void> _sendNotificationForAlert(BaseAlert alert) async {
+    String title;
+    String body;
+    
     if (alert.type == AlertType.power) {
+      final hours = alert.timeRemaining.inHours;
+      final timeText = hours < 1
+          ? '${alert.timeRemaining.inMinutes} minutes'
+          : hours == 1 ? '1 hour' : '$hours hours';
+      
+      title = alert.severity == AlertSeverity.critical 
+          ? '⚡ Power Critical!' 
+          : '⚡ Power Running Low';
+      body = '${alert.base.name} (${alert.characterInfo}) - $timeText remaining';
+      
       await _notificationService.showPowerAlert(
         baseId: alert.base.id,
         baseName: alert.base.name,
@@ -100,20 +117,53 @@ class NotificationCoordinator {
         timeRemaining: alert.timeRemaining,
         isCritical: alert.severity == AlertSeverity.critical,
       );
-    } else if (alert.type == AlertType.tax) {
+    } else {
+      final isOverdue = alert.timeRemaining.isNegative;
+      final String timeText;
+      if (isOverdue) {
+        final days = alert.timeRemaining.inDays.abs();
+        timeText = days == 1 ? '1 day overdue' : '$days days overdue';
+      } else {
+        final hours = alert.timeRemaining.inHours;
+        timeText = hours < 24 ? '$hours hours' : '${alert.timeRemaining.inDays} days';
+      }
+      
+      title = isOverdue ? '💰 Tax Overdue!' : '💰 Tax Payment Due';
+      body = '${alert.base.name} (${alert.characterInfo}) - $timeText';
+      
       await _notificationService.showTaxAlert(
         baseId: alert.base.id,
         baseName: alert.base.name,
         characterInfo: alert.characterInfo,
         timeRemaining: alert.timeRemaining,
-        isOverdue: alert.timeRemaining.isNegative,
+        isOverdue: isOverdue,
       );
     }
+
+    // Save to history
+    final historyEntry = NotificationHistoryEntry(
+      type: alert.type == AlertType.power ? 'power' : 'tax',
+      title: title,
+      body: body,
+      baseId: alert.base.id,
+      baseName: alert.base.name,
+      characterName: alert.characterInfo,
+      severity: alert.severity == AlertSeverity.critical ? 'critical' : 'warning',
+      sentAt: DateTime.now(),
+    );
+    
+    await _historyRepository.addEntry(historyEntry);
+    print('[NotificationCoordinator] Saved notification to history');
   }
 
   /// Get current alert count
   Future<int> getAlertCount() async {
     return await _alertCheckerService.getCriticalAlertCount();
+  }
+
+  /// Get unread notification count
+  Future<int> getUnreadNotificationCount() async {
+    return await _historyRepository.getUnreadCount();
   }
 
   /// Dispose resources

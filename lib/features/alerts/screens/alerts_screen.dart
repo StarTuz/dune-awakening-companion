@@ -7,6 +7,8 @@ import '../../characters/models/character.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/navigation/main_navigation.dart';
+import '../widgets/notification_history_widget.dart';
+import '../providers/notification_history_provider.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
@@ -17,12 +19,43 @@ class AlertsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final basesAsync = ref.watch(basesProvider);
     final charactersAsync = ref.watch(charactersProvider);
+    final historyState = ref.watch(notificationHistoryProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.alertsTitle),
         actions: [
+          // History button with badge
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.history),
+                onPressed: () => _showHistorySheet(context),
+                tooltip: 'Notification History',
+              ),
+              if (historyState.unreadCount > 0)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: AppColors.criticalStatus,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      historyState.unreadCount > 9 ? '9+' : '${historyState.unreadCount}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () {
@@ -334,6 +367,63 @@ class AlertsScreen extends ConsumerWidget {
           ],
         )),
         error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
+        ),
+      ),
+    );
+  }
+
+  /// Show notification history in a bottom sheet
+  void _showHistorySheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.background,
+      builder: (ctx) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.5,
+        maxChildSize: 0.95,
+        expand: false,
+        builder: (ctx, scrollController) => Column(
+          children: [
+            // Handle bar
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[400],
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            // Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Icon(Icons.history),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Notification History',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
+            // History content
+            const Expanded(
+              child: NotificationHistoryWidget(),
+            ),
+          ],
         ),
       ),
     );

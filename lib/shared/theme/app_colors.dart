@@ -82,3 +82,22 @@ class DuneColors {
   }
 }
 
+/// Alias for backwards compatibility
+/// Some parts of the codebase use AppColors instead of DuneColors
+class AppColors {
+  // Background Colors
+  static const background = DuneColors.primaryBackground;
+  static const cardBackground = DuneColors.tertiaryBackground;
+  
+  // Text Colors
+  static const textPrimary = DuneColors.primaryText;
+  static const textSecondary = DuneColors.secondaryText;
+  
+  // Status Colors
+  static const criticalStatus = DuneColors.criticalPrimary;
+  static const warningYellow = DuneColors.warningPrimary;
+  static const safeGreen = DuneColors.success;
+  
+  // Accent Colors
+  static const primaryAccent = DuneColors.primaryAccent;
+}

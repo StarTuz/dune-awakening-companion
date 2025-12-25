@@ -7,6 +7,7 @@ import 'migrations/migration_001_initial.dart';
 import 'migrations/migration_002_add_server_fields.dart';
 import 'migrations/migration_003_add_tax_fields.dart';
 import 'migrations/migration_004_add_portraits.dart';
+import 'migrations/migration_005_add_notification_history.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -30,7 +31,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 4,
+      version: 5,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -68,6 +69,9 @@ class AppDatabase {
     if (version >= 4) {
       await Migration004AddPortraits.up(db);
     }
+    if (version >= 5) {
+      await Migration005AddNotificationHistory.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -79,6 +83,9 @@ class AppDatabase {
     }
     if (oldVersion < 4) {
       await Migration004AddPortraits.up(db);
+    }
+    if (oldVersion < 5) {
+      await Migration005AddNotificationHistory.up(db);
     }
   }
 
@@ -97,7 +104,7 @@ class AppDatabase {
     await db.transaction((txn) async {
       await txn.delete('characters');
       await txn.delete('bases');
+      await txn.delete('notification_history');
     });
   }
 }
-
