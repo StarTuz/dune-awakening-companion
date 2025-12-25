@@ -28,17 +28,22 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: 'Version',
-            subtitle: '1.0.0-beta',
+            subtitle: '1.0.3',
           ),
           _buildInfoTile(
             icon: Icons.storage,
             title: 'Database Version',
-            subtitle: 'v4 (Portraits & Notifications)',
+            subtitle: 'v5 (Notification History)',
           ),
           _buildInfoTile(
             icon: Icons.code,
             title: 'Build',
-            subtitle: 'Full Stack: Characters, Bases, Tax, Alerts, Notifications',
+            subtitle: 'Flutter 3.38.x | Dart 3.8.x',
+          ),
+          _buildInfoTile(
+            icon: Icons.build,
+            title: 'Features',
+            subtitle: 'Characters, Bases, Tax, Alerts, i18n, Export/Import',
           ),
           
           const Divider(height: 32),
