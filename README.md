@@ -3,9 +3,9 @@
 A cross-platform companion application for managing characters, bases, power countdowns, and taxes in **Dune Awakening**.
 
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
-[![Flutter](https://img.shields.io/badge/flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
+[![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.0.3-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -43,10 +43,15 @@ A cross-platform companion application for managing characters, bases, power cou
 - **Desktop:** System tray integration with right-click menu
   - Show Window, Check Alerts, Toggle Notifications, Quit
   - Window close minimizes to tray (doesn't quit)
+  - **Alert count badge** in tooltip and menu
 - **Mobile:** Background WorkManager checks
 - Configurable check intervals (15/30/60 minutes)
 - Power alerts (⚡ Power Critical!)
 - Tax alerts (💰 Tax Overdue!)
+- **🌙 Quiet Hours:** Customizable Do Not Disturb (default 10 PM - 8 AM)
+- **🔊 Sound/Vibration:** Toggle notification sounds and haptics
+- **📜 History:** View past notifications, mark as read, clear
+- **🎵 Optional Sound Pack:** Dune-themed notification sounds (see Releases)
 
 ### 📤 Data Management
 - **Export:** Backup all data to JSON files

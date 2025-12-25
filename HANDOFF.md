@@ -1,14 +1,14 @@
 # 🏜️ Dune Awakening Companion App - Handoff Document
 
-**Date:** December 24, 2025  
-**Version:** v1.0.2  
+**Date:** December 25, 2025  
+**Version:** v1.0.3  
 **Status:** Stable Release  
 
 ---
 
 ## 📋 Executive Summary
 
-The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases, power countdowns, and taxes in Dune Awakening. The v1.0.2 release includes multi-language support for 7 languages.
+The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases, power countdowns, and taxes in Dune Awakening. The v1.0.3 release adds comprehensive notification polish features.
 
 ### Key Achievements
 - ✅ Multi-character & multi-base management
@@ -20,6 +20,10 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 - ✅ Mobile background notifications
 - ✅ Multi-language support (EN, ES, FR, DE, UK, IT, CY)
 - ✅ Automated CI/CD pipeline
+- ✅ Quiet hours (Do Not Disturb)
+- ✅ Sound/Vibration toggles
+- ✅ Notification history with mark as read
+- ✅ Tray icon alert badge
 
 ---
 
@@ -29,7 +33,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 | Component | Version | Purpose |
 |-----------|---------|---------|
 | Flutter | 3.38.5 | Cross-platform UI framework |
-| Dart | 3.10.4 | Programming language |
+| Dart | 3.8.x | Programming language |
 | Riverpod | 2.6.1 | State management |
 | SQLite | sqflite 2.3.0 | Local database |
 | intl | 0.20.2 | Internationalization |
@@ -38,12 +42,14 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 ```
 lib/
 ├── core/                    # Core services & infrastructure
-│   ├── database/           # SQLite + migrations (v4)
+│   ├── database/           # SQLite + migrations (v5)
+│   ├── models/             # Core data models
 │   ├── providers/          # Riverpod providers
+│   ├── repositories/       # Data access layer
 │   ├── services/           # Notifications, system tray, images
 │   └── utils/              # Constants, helpers
 ├── features/               # Feature modules
-│   ├── alerts/             # Alert system
+│   ├── alerts/             # Alert system + notification history
 │   ├── bases/              # Base management
 │   ├── characters/         # Character management
 │   ├── dashboard/          # Overview screen
@@ -94,7 +100,7 @@ lib/
 
 ### Prerequisites
 - Flutter SDK 3.38.5+
-- Dart 3.10+
+- Dart 3.8+
 - For Linux: `sudo apt install libsqlite3-dev libayatana-appindicator3-dev`
 - For Android: Android SDK, Java 17
 
@@ -137,18 +143,22 @@ flutter build apk --release
 
 ### Release Process
 ```bash
-# 1. Make changes on Beta branch
-git checkout Beta
-# ... make changes ...
+# 1. Make changes on main branch
 git add . && git commit -m "feat: Your feature"
 
-# 2. Tag and push
-git tag v1.0.X
-git checkout main && git merge Beta
-git push origin main Beta --tags
+# 2. Bump version in pubspec.yaml and settings_screen.dart
 
-# 3. Wait for CI (8-10 min)
-# 4. Release appears at https://github.com/StarTuz/dune-awakening-companion/releases
+# 3. Create release notes
+# Create RELEASE_NOTES_vX.X.X.md
+
+# 4. Tag and push
+git tag vX.X.X
+git push origin main --tags
+
+# 5. Wait for CI (8-10 min)
+# 6. Release appears at https://github.com/StarTuz/dune-awakening-companion/releases
+
+# 7. Optional: Upload sound pack manually to release
 ```
 
 ### Important: Release Notes
@@ -172,6 +182,7 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 | workmanager | 0.6.0 | Background tasks (mobile) |
 | flutter_localizations | SDK | i18n support |
 | intl | 0.20.2 | Date/number formatting |
+| shared_preferences | 2.2.2 | Settings persistence |
 
 ### Dev
 | Package | Version | Purpose |
@@ -183,11 +194,12 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 
 ## 💾 Database
 
-### Version: 4
+### Version: 5
 
 ### Tables
 - `characters` - id, name, region, serverType, serverName, sietch, portraitPath
 - `bases` - id, characterId, name, powerExpiresAt, isAdvancedFief, taxPerCycle, etc.
+- `notification_history` - id, type, title, body, baseId, baseName, severity, sentAt, read
 
 ### Migrations
 Located in `lib/core/database/migrations/`
@@ -195,10 +207,20 @@ Located in `lib/core/database/migrations/`
 - `migration_002_*` - Add serverType
 - `migration_003_*` - Add tax fields
 - `migration_004_*` - Add portraitPath
+- `migration_005_*` - Add notification_history table
 
 ---
 
 ## 🔔 Notification System
+
+### Features
+| Feature | Description |
+|---------|-------------|
+| **Quiet Hours** | Customizable DND period (default: 10 PM - 8 AM) |
+| **Sound Toggle** | Enable/disable notification sounds |
+| **Vibration Toggle** | Enable/disable vibration (mobile) |
+| **History** | View past notifications, mark as read |
+| **Tray Badge** | Alert count in tooltip and menu |
 
 ### Desktop
 - **Timer-based:** Checks every 15/30/60 minutes (configurable)
@@ -209,10 +231,21 @@ Located in `lib/core/database/migrations/`
 - **WorkManager:** Background periodic tasks
 - **Push notifications:** Via `flutter_local_notifications`
 
-### Channels
+### Notification Channels
 - `critical_alerts` - Power < 24h or tax defaulted
 - `warning_alerts` - Power < 48h or tax overdue
 - `app_messages` - General notifications
+
+### Settings Persistence
+All notification settings stored in `SharedPreferences`:
+- `notifications_enabled`
+- `notification_interval_minutes`
+- `notifications_include_warnings`
+- `start_minimized_to_tray`
+- `quiet_hours_enabled`
+- `quiet_hours_start` / `quiet_hours_end`
+- `notification_sound_enabled`
+- `notification_vibration_enabled`
 
 ---
 
@@ -222,11 +255,15 @@ Located in `lib/core/database/migrations/`
 |------|---------|
 | `lib/main.dart` | App entry, initialization, MaterialApp |
 | `lib/core/database/app_database.dart` | SQLite setup + migrations |
-| `lib/features/settings/screens/settings_screen.dart` | Settings UI + language selector |
+| `lib/core/services/notification_coordinator.dart` | Alert checking & notification dispatch |
+| `lib/core/services/notification_settings.dart` | Settings persistence layer |
+| `lib/core/providers/notification_settings_provider.dart` | Settings state management |
+| `lib/features/alerts/screens/alerts_screen.dart` | Alerts UI + history button |
+| `lib/features/alerts/widgets/notification_history_widget.dart` | History list UI |
+| `lib/features/settings/screens/settings_screen.dart` | Settings UI + toggles |
 | `lib/core/providers/language_provider.dart` | Language state management |
 | `l10n.yaml` | Localization configuration |
 | `.github/workflows/build-release.yml` | CI/CD pipeline |
-| `linux/CMakeLists.txt` | Linux build config |
 
 ---
 
@@ -250,22 +287,38 @@ Located in `lib/core/database/migrations/`
 | `COLOR_SCHEME.md` | Dune theme colors |
 | `SECURITY_AUDIT.md` | Security review |
 | `SETUP.md` | Detailed setup instructions |
+| `docs/CUSTOM_SOUNDS.md` | Custom notification sounds guide |
 
 ---
 
 ## 🎯 Future Roadmap (v1.1+)
 
 ### Polish Items
-- [ ] Custom notification sounds
-- [ ] Quiet hours (10 PM - 8 AM)
+- [x] Custom notification sounds (Sound on/off, Vibration on/off) ✅
+- [x] Quiet hours (customizable) ✅
 - [ ] Per-base notification overrides
-- [ ] Notification history
-- [ ] Tray icon badge with alert count
+- [x] Notification history ✅
+- [x] Tray icon badge with alert count ✅
 
 ### Major Features
 - [ ] **Quest Journal** - Track multi-step quests with notes
 - [ ] **Theme Customization** - Multiple Dune-inspired themes
 - [ ] **Dashboard Charts** - Analytics and visualizations
+
+---
+
+## 🎵 Optional Sound Pack
+
+Available as separate download: `dune-sound-pack-v1.0.zip`
+
+Contains 10 Dune-themed notification sounds:
+- **Atreides** - Noble, dignified
+- **Fremen** - Mystical, desert winds
+- **Harkonnen** - Dark, industrial
+- **Shai-Hulud** - Deep, ominous
+- **Smugglers** - Gritty, underworld
+
+See `docs/CUSTOM_SOUNDS.md` for installation instructions.
 
 ---
 
@@ -277,4 +330,4 @@ Located in `lib/core/database/migrations/`
 
 ---
 
-*Generated December 24, 2025*
+*Generated December 25, 2025*
