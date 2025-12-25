@@ -1,186 +1,182 @@
-# 🔔 Adding Custom Notification Sounds
+# 🔔 Custom Notification Sounds Guide
 
-This guide explains how to add custom notification sounds to the Dune Awakening Companion App.
-
----
-
-## Overview
-
-Custom notification sounds require platform-specific setup since each platform handles audio assets differently.
-
-**Current Implementation:**
-- Sound toggle (on/off) ✅
-- Vibration toggle (on/off) ✅
-- Uses system default sounds
-
-**Future Enhancement:**
-- Custom Dune-themed sounds (sandworm rumble, spice harvester, etc.)
+This guide covers the optional Dune-themed notification sound pack and how to add custom sounds to the app.
 
 ---
 
-## Platform-Specific Instructions
+## 🎵 Optional Sound Pack (Recommended Approach)
 
-### Android
+The app ships **without bundled sounds** to keep the download size small. Users who want custom Dune-themed notification sounds can download an optional sound pack.
 
-**1. Add Sound Files**
+### For Users
 
-Place audio files in:
+1. Go to [Releases](https://github.com/StarTuz/dune-awakening-companion/releases)
+2. Download `dune-sound-pack-v1.0.zip`
+3. Extract to your device's notification sounds folder:
+   - **Android**: Copy `.ogg` files to `Ringtones` or `Notifications` folder
+   - **iOS**: Not supported (iOS doesn't allow custom notification sounds from downloads)
+   - **Linux**: Place in `~/.local/share/sounds/` or use system sound settings
+   - **Windows**: Place in `C:\Windows\Media\` or use system sound settings
+4. In Settings → Sound → Notification sound, select the Dune sound
+
+### For Developers
+
+**Creating the sound pack release:**
+
+1. Create a `sounds/` directory with the sound files
+2. Zip the folder: `zip -r dune-sound-pack-v1.0.zip sounds/`
+3. Upload to GitHub Releases alongside the app release
+
+**Sound pack structure:**
 ```
-android/app/src/main/res/raw/
-```
-
-Supported formats: `.mp3`, `.ogg`, `.wav`
-
-Naming convention: lowercase with underscores
-```
-android/app/src/main/res/raw/
-├── alert_critical.mp3
-├── alert_warning.mp3
-└── alert_tax.mp3
-```
-
-**2. Update Android Notification Channels**
-
-In `lib/core/services/notification_service.dart`, modify `_createAndroidChannels()`:
-
-```dart
-const criticalChannel = AndroidNotificationChannel(
-  'critical_alerts',
-  'Critical Alerts',
-  description: 'Urgent alerts for bases < 24 hours',
-  importance: Importance.high,
-  playSound: true,
-  sound: RawResourceAndroidNotificationSound('alert_critical'), // No extension!
-  enableVibration: true,
-);
+dune-sound-pack-v1.0.zip
+└── sounds/
+    ├── README.txt          # Installation instructions
+    ├── LICENSE.txt         # Sound licensing info
+    ├── alert_critical.ogg  # Urgent alert (< 24h)
+    ├── alert_warning.ogg   # Warning alert (< 48h)
+    ├── alert_tax.ogg       # Tax reminder
+    └── alert_test.ogg      # Test notification
 ```
 
-**3. Reference in Notification Details**
+---
 
-```dart
-final androidDetails = AndroidNotificationDetails(
-  channelId,
-  'Channel Name',
-  channelDescription: 'Description',
-  sound: RawResourceAndroidNotificationSound('alert_critical'),
-  playSound: soundEnabled,
-);
+## 🎨 Creating Dune-Themed Sounds
+
+### Option 1: AI Sound Generation (Easiest)
+
+**Tools:**
+- [ElevenLabs Sound Effects](https://elevenlabs.io/sound-effects) - Text-to-SFX AI
+- [Suno AI](https://suno.ai) - Music/sound generation
+- [Stable Audio](https://stableaudio.com) - AI audio generation
+
+**Prompts for Dune sounds:**
+```
+"Deep rumbling sandworm approaching, ominous desert vibration, 3 seconds"
+"Sci-fi alert tone, spice melange shimmer, crystalline, urgent, 2 seconds"
+"Ornithopter engine startup, futuristic helicopter, short burst"
+"Desert wind warning siren, Arrakis, dystopian, brief"
+"Fremen water ritual chime, mystical, notification sound"
 ```
 
-**Important Notes:**
-- Channel settings are cached! Users must reinstall app or clear data to hear new sounds
-- Sound file names must be lowercase
-- No file extension in the code reference
+### Option 2: Free Sound Libraries
+
+**Sources (check licenses!):**
+- [Freesound.org](https://freesound.org) - CC-licensed sounds
+- [Pixabay Audio](https://pixabay.com/sound-effects/) - Royalty-free
+- [Zapsplat](https://www.zapsplat.com) - Free with attribution
+- [BBC Sound Effects](https://sound-effects.bbcrewind.co.uk/) - Personal use
+
+**Search terms:**
+- "desert wind", "sand storm", "rumble"
+- "sci-fi alert", "futuristic notification", "spaceship beep"
+- "crystal chime", "mystical tone", "alien signal"
+- "industrial machinery", "mining equipment"
+
+### Option 3: Create from Scratch
+
+**Software:**
+- [Audacity](https://www.audacityteam.org/) - Free, open source
+- [LMMS](https://lmms.io/) - Free digital audio workstation
+- [GarageBand](https://www.apple.com/mac/garageband/) - macOS, free
+
+**Techniques for Dune vibes:**
+1. **Sandworm rumble**: Layer low bass tones (40-80Hz), add distortion, slow pitch bend
+2. **Spice shimmer**: High-frequency synthesizer, reverb, delay
+3. **Desert wind**: White noise + low-pass filter, volume automation
+4. **Fremen call**: Human voice pitch-shifted, added echo/reverb
+
+### Option 4: Commission/License
+
+- **Fiverr/Upwork**: Commission custom sounds ($20-100)
+- **Audio Jungle**: Licensed sound packs ($1-20)
+- **Epidemic Sound**: Subscription for commercial use
 
 ---
 
-### iOS / macOS
+## 📋 Sound Requirements
 
-**1. Add Sound Files to Xcode**
+### Technical Specs
 
-1. Open `ios/Runner.xcworkspace` in Xcode
-2. Right-click `Runner` folder → "Add Files to Runner..."
-3. Add your sound files (`.caf`, `.aiff`, `.wav`)
-4. Ensure "Copy items if needed" is checked
-5. Ensure "Add to targets: Runner" is checked
+| Platform | Format | Max Duration | Max Size |
+|----------|--------|--------------|----------|
+| Android | `.ogg`, `.mp3` | 30 sec | 1 MB |
+| iOS | `.caf`, `.aiff` | 30 sec | 5 sec recommended |
+| Linux | `.ogg`, `.wav` | No limit | Reasonable |
+| Windows | `.wav` | No limit | Reasonable |
 
-**2. Update Notification Details**
+### Recommended Settings
+- **Duration**: 1-3 seconds (short and punchy)
+- **Sample Rate**: 44.1 kHz
+- **Bit Depth**: 16-bit
+- **Channels**: Mono (saves space)
+- **Volume**: Normalized, not clipping
 
-```dart
-final iosDetails = DarwinNotificationDetails(
-  presentAlert: true,
-  presentBadge: true,
-  presentSound: soundEnabled,
-  sound: 'alert_critical.caf', // Include extension for iOS
-);
+### Converting Sounds
+
+**Using FFmpeg:**
+```bash
+# Convert to OGG (Android)
+ffmpeg -i input.mp3 -c:a libvorbis -q:a 5 output.ogg
+
+# Convert to CAF (iOS)
+afconvert input.mp3 output.caf -d ima4 -f caff
+
+# Trim to 3 seconds
+ffmpeg -i input.mp3 -t 3 output.mp3
+
+# Normalize volume
+ffmpeg -i input.mp3 -filter:a loudnorm output.mp3
 ```
 
-**Notes:**
-- iOS sound files must be < 30 seconds
-- Preferred format: `.caf` (Core Audio Format)
-- Convert with: `afconvert input.mp3 output.caf -d ima4 -f caff`
+---
+
+## 🎭 Sound Concepts for Dune
+
+| Alert Type | Mood | Sound Idea |
+|------------|------|------------|
+| **Critical** (< 24h) | Urgent, alarming | Deep sandworm rumble + warning tone |
+| **Warning** (< 48h) | Cautionary | Distant spice harvester, alert chime |
+| **Tax Due** | Reminder | Coin/credit sound, guild bell |
+| **Tax Overdue** | Urgent | Harkonnen danger signal |
+| **Test** | Neutral | Ornithopter blip, generic sci-fi |
+
+### Thematic Elements
+- **Sandworms**: Deep bass, rumbling, subsonic vibration
+- **Spice**: Crystalline, shimmering, otherworldly
+- **Fremen**: Tribal drums, breath sounds, whispers
+- **Technology**: Ornithopter sounds, shield hum, stillsuit beeps
+- **Desert**: Wind, sand movement, desolation
 
 ---
 
-### Linux
+## 📄 Licensing Considerations
 
-Linux notifications use the system theme's default sounds. Custom sounds require:
-- Using `libnotify` directly (bypassing flutter_local_notifications)
-- Or playing sounds separately via an audio package
+⚠️ **Important**: Dune is a copyrighted property. Your sounds should be:
 
-**Current approach:** Uses system default (no custom sound support)
+1. **Inspired by**, not copied from the movies/games
+2. **Original creations** or properly licensed
+3. **Not using** official Dune audio samples
+4. **Clearly labeled** as fan-made/unofficial
 
----
-
-### Windows
-
-Windows notifications support custom sounds but require:
-- `.wav` files added to the app bundle
-- Modifying the Windows notification plugin
-
-**Current approach:** Uses system default
+Recommended licenses for your sound pack:
+- **CC BY 4.0**: Attribution required
+- **CC0**: Public domain
+- **Custom**: "Free for personal use with Dune Awakening Companion"
 
 ---
 
-## Recommended Implementation Plan
+## 🚀 Future: Built-in Sound Support
 
-### Phase 1: Create Sound Assets
-1. Source or create Dune-themed sounds (< 5 seconds, royalty-free)
-2. Convert to appropriate formats:
-   - Android: `.ogg` or `.mp3`
-   - iOS: `.caf`
+If there's demand, future versions could include:
+1. In-app sound pack download (one-click from Settings)
+2. Sound picker UI to choose between installed sounds
+3. Preview button to hear sounds before selecting
+4. Custom sound upload from device
 
-### Phase 2: Add to Project
-1. Create `android/app/src/main/res/raw/` directory
-2. Add Android sounds
-3. Add iOS sounds via Xcode
-
-### Phase 3: Update Code
-1. Modify `_createAndroidChannels()` to reference custom sounds
-2. Update `_showNotification()` to use custom sounds
-3. Add UI picker for sound selection (optional)
-
-### Phase 4: Test
-1. Uninstall app (Android channels cache)
-2. Reinstall and test notifications
-3. Test on iOS simulator/device
-
----
-
-## Sound Ideas (Dune-themed)
-
-| Alert Type | Sound Idea |
-|------------|------------|
-| Critical (< 24h) | Deep sandworm rumble, urgent horn |
-| Warning (< 48h) | Spice harvester hum, distant call |
-| Tax Due | Coin/credit sound, Arrakis wind |
-| Test | Ornithopter startup |
-
----
-
-## Code Reference
-
-**File:** `lib/core/services/notification_service.dart`
-
-Key methods:
-- `_createAndroidChannels()` - Define channels with sounds
-- `_showNotification()` - Apply sound settings per notification
-
-**File:** `lib/core/services/notification_settings.dart`
-
-Key properties:
-- `soundEnabled` - Master sound toggle
-- (Future) `selectedSound` - Sound choice enum
-
----
-
-## Resources
-
-- [flutter_local_notifications docs](https://pub.dev/packages/flutter_local_notifications)
-- [Android notification sounds](https://developer.android.com/develop/ui/views/notifications/channels#importance)
-- [iOS sound requirements](https://developer.apple.com/documentation/usernotifications/unnotificationsound)
-- [Free sound resources](https://freesound.org/) (check licenses)
+For now, the optional download keeps the app lightweight.
 
 ---
 
 *Last Updated: December 24, 2025*
+
