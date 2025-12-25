@@ -121,6 +121,12 @@ Future<void> _initializeNotifications() async {
   final manager = NotificationManager(notificationService, coordinator);
   
   await manager.initialize();
+  
+  // Update tray badge with initial alert count (desktop only)
+  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+    final alertCount = await coordinator.getAlertCount();
+    await SystemTrayService.instance.updateAlertCount(alertCount);
+  }
 }
 
 /// Initialize system tray (desktop only)
@@ -155,6 +161,10 @@ Future<void> _initializeSystemTray() async {
         final coordinator = NotificationCoordinator(notificationService, alertChecker);
         final manager = NotificationManager(notificationService, coordinator);
         await manager.checkNow();
+        
+        // Update tray with current alert count
+        final alertCount = await coordinator.getAlertCount();
+        await trayService.updateAlertCount(alertCount);
       } catch (e) {
         print('[SystemTray] Check alerts error: $e');
       }
@@ -181,8 +191,9 @@ Future<void> _initializeSystemTray() async {
       
       await manager.updateSettings(enabled: newState);
       
-      // Update tray menu
-      await trayService.updateAlertCount(0);
+      // Update tray menu with actual alert count
+      final alertCount = newState ? await coordinator.getAlertCount() : 0;
+      await trayService.updateAlertCount(alertCount);
       
       // NOW show feedback notification AFTER manager updates
       // This ensures it won't be canceled by cancelAllNotifications()
