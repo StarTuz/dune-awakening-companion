@@ -69,3 +69,7 @@ coverage/
 *.tar.gz
 *.zip
 *.apk
+
+# Sound pack (optional download, not in repo)
+dune-sound-pack/
+dune-sound-pack-*.zip
