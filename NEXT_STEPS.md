@@ -27,16 +27,23 @@
 
 ### 🎯 Next Priorities (v1.1 Roadmap)
 
-**1. Multi-Language Support** (Medium Priority)
-- Internationalization for global community
-- Target: English, Spanish, French, German, Ukrainian, Italian, Welsh
+**1. Notification Polish** (Medium Priority)
+- [ ] Custom notification sounds
+- [ ] Quiet hours (10 PM - 8 AM)
+- [ ] Per-base notification overrides
+- [ ] Notification history
+- [ ] Tray icon badge with alert count
 
-**2. Polish & Refinements** (Lower Priority)
-- Custom notification sounds
-- Quiet hours (10 PM - 8 AM)
-- Per-base notification overrides
-- Notification history
-- Tray icon badge with alert count
+**2. Quest Journal** (High Priority - Major Feature)
+- [ ] Quest list & management
+- [ ] Step-by-step progress tracking
+- [ ] Quest templates (e.g., The Planetologist)
+- [ ] Personal notes & annotations
+
+**3. Theme Customization** (Lower Priority)
+- [ ] Multiple Dune-inspired themes
+- [ ] Light/Dark mode toggle
+- [ ] Custom color selection
 
 ---
 
