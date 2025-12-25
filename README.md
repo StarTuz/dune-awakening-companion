@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, power cou
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.3-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.0.4-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -89,11 +89,24 @@ A cross-platform companion application for managing characters, bases, power cou
 - **Persistence:** Remembers your preference across restarts
 - **Comprehensive:** Localized titles, alerts, messages, and dates
 
-### 🎨 Adaptive Design
-- **Desktop:** Side navigation rail
-- **Mobile:** Bottom navigation bar
-- Dune-themed color palette
-- Responsive layouts
+### 🎨 Themes & Appearance
+- **5 Faction Themes:**
+  - 🏜️ **Desert** (Default) - Warm sand & spice gold
+  - 🟢 **House Atreides** - Green & black (The Noble House)
+  - 🔴 **House Harkonnen** - Red & black (The Brutal Rulers)
+  - 🔵 **Fremen** - Tan & blue (Desert Warriors)
+  - 🟣 **Smuggler** - Purple & bronze (Shadow Traders)
+- **Light/Dark Mode:** Toggle between Desert Day and Desert Night
+- **Adaptive Navigation:**
+  - Desktop: Side navigation rail
+  - Mobile: Bottom navigation bar
+
+### ♿ Accessibility
+- **Text Size:** Slider from Small → Medium → Large → Extra Large
+- **Text Weight:** Choose Light / Regular / Bold
+- **High Contrast Mode:** Enhanced color contrast for better readability
+- **Reduce Motion:** Disable animations throughout the app
+- All settings persist between app restarts
 
 ---
 
@@ -271,7 +284,7 @@ lib/
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.0-beta)
+### ✅ Completed (v1.0.4)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
@@ -279,23 +292,22 @@ lib/
 - [x] Tax tracking for Advanced Fiefs
 - [x] Character portraits
 - [x] Export/Import data backups
-- [x] Alert system (< 48h warning, < 24h critical)
+- [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
 - [x] Adaptive navigation
-- [x] Database v4 with migrations
-- [x] Multi-language support (i18n)
-
-### 🚧 In Progress
-
-- [ ] Cross-platform testing (Windows, macOS, Android)
+- [x] Database v5 with migrations
+- [x] Multi-language support (7 languages)
+- [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
+- [x] **Light/Dark Mode Toggle**
+- [x] **Accessibility Features** (Text size, weight, contrast, motion)
+- [x] **Quiet Hours & Notification Controls**
+- [x] **Notification History**
 
 ### 📋 Future Features
 
 - [ ] Quest Journal (tracking complex multi-step quests)
-- [ ] Theme Customization (multiple Dune-inspired themes)
 - [ ] Dashboard Charts & Analytics
 - [ ] Character Sorting (by server, urgency, name, last updated)
-- [ ] Push Notification refinements
 - [ ] Cloud Sync (optional, opt-in)
 
 ---
