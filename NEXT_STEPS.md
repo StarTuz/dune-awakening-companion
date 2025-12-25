@@ -31,8 +31,8 @@
 - [x] Custom notification sounds ✅ (Sound on/off, Vibration on/off)
 - [x] Quiet hours (10 PM - 8 AM) ✅
 - [ ] Per-base notification overrides
-- [ ] Notification history
-- [ ] Tray icon badge with alert count
+- [x] Notification history ✅ (with mark as read, clear)
+- [x] Tray icon badge with alert count ✅
 
 **2. Quest Journal** (High Priority - Major Feature)
 - [ ] Quest list & management
