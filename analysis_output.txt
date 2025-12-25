@@ -1,0 +1,97 @@
+Analyzing Dune Awakening Companion App....                      
+
+   info • The import of 'package:sqflite/sqflite.dart' is unnecessary because all of the used elements are also provided by the import of 'package:sqflite_common_ffi/sqflite_ffi.dart' • lib/core/database/app_database.dart:1:8 • unnecessary_import
+   info • The imported package 'sqflite_common' isn't a dependency of the importing package • lib/core/database/migrations/migration_004_add_portraits.dart:1:8 • depend_on_referenced_packages
+   info • Don't invoke 'print' in production code • lib/core/services/background_worker_service.dart:135:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:14:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:22:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:49:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:65:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:82:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:96:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/image_service.dart:106:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_coordinator.dart:45:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_coordinator.dart:51:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_coordinator.dart:59:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_coordinator.dart:77:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_coordinator.dart:82:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_manager.dart:55:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_manager.dart:61:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:29:5 • avoid_print
+   info • Use 'const' with the constructor to improve performance • lib/core/services/notification_service.dart:44:26 • prefer_const_constructors
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:56:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:119:5 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:218:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:220:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:222:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/notification_service.dart:223:7 • avoid_print
+   info • Use 'const' for final variables initialized to a constant value • lib/core/services/notification_service.dart:234:5 • prefer_const_declarations
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:46:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:48:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:73:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:80:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:85:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:95:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/core/services/system_tray_service.dart:115:7 • avoid_print
+  error • Target of URI doesn't exist: 'package:flutter_gen/gen_l10n/app_localizations.dart' • lib/features/alerts/screens/alerts_screen.dart:11:8 • uri_does_not_exist
+  error • Undefined name 'AppLocalizations' • lib/features/alerts/screens/alerts_screen.dart:20:18 • undefined_identifier
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/alerts/screens/alerts_screen.dart:104:32 • deprecated_member_use
+   info • Don't use 'BuildContext's across async gaps • lib/features/bases/screens/base_management_screen.dart:137:23 • use_build_context_synchronously
+   info • Don't use 'BuildContext's across async gaps • lib/features/bases/screens/base_management_screen.dart:218:23 • use_build_context_synchronously
+   info • Use 'const' with the constructor to improve performance • lib/features/characters/screens/character_management_screen.dart:132:27 • prefer_const_constructors
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:164:19 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:184:19 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:205:21 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:220:21 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance • lib/features/characters/screens/character_management_screen.dart:336:27 • prefer_const_constructors
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:368:19 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:388:19 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:408:21 • deprecated_member_use
+   info • 'value' is deprecated and shouldn't be used. Use initialValue instead. This will set the initial value for the form field. This feature was deprecated after v3.33.0-1.0.pre • lib/features/characters/screens/character_management_screen.dart:422:21 • deprecated_member_use
+warning • The value of the local variable 'taxStatus' isn't used • lib/features/characters/screens/character_management_screen.dart:588:27 • unused_local_variable
+   info • Use 'const' for final variables initialized to a constant value • lib/features/characters/screens/character_management_screen.dart:929:9 • prefer_const_declarations
+   info • Use 'const' for final variables initialized to a constant value • lib/features/characters/screens/character_management_screen.dart:934:9 • prefer_const_declarations
+warning • The value of the local variable 'defaultedThreshold' isn't used • lib/features/characters/screens/character_management_screen.dart:935:15 • unused_local_variable
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/characters/screens/character_management_screen.dart:1054:46 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance • lib/features/characters/screens/character_management_screen.dart:1344:13 • prefer_const_constructors
+  error • Target of URI doesn't exist: 'package:flutter_gen/gen_l10n/app_localizations.dart' • lib/features/dashboard/screens/dashboard_screen.dart:7:8 • uri_does_not_exist
+  error • Undefined name 'AppLocalizations' • lib/features/dashboard/screens/dashboard_screen.dart:16:18 • undefined_identifier
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/providers/settings_provider.dart:24:15 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/features/settings/providers/settings_provider.dart:24:31 • prefer_const_literals_to_create_immutables
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/screens/settings_screen.dart:86:34 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:122:11 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:123:20 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:125:22 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/features/settings/screens/settings_screen.dart:127:27 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:128:19 • prefer_const_constructors
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss • lib/features/settings/screens/settings_screen.dart:158:32 • deprecated_member_use
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:159:20 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:161:22 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/features/settings/screens/settings_screen.dart:163:27 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:164:19 • prefer_const_constructors
+warning • The declaration '_sendTestNotification' isn't referenced • lib/features/settings/screens/settings_screen.dart:300:16 • unused_element
+   info • Local variables should be final • lib/features/settings/screens/settings_screen.dart:485:7 • prefer_final_locals
+   info • Use 'const' with the constructor to improve performance • lib/features/settings/screens/settings_screen.dart:541:13 • prefer_const_constructors
+   info • Don't invoke 'print' in production code • lib/features/settings/screens/settings_screen.dart:819:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/export_service.dart:101:7 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/import_service.dart:151:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/import_service.dart:165:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/import_service.dart:224:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/import_service.dart:235:11 • avoid_print
+   info • Don't invoke 'print' in production code • lib/features/settings/services/import_service.dart:347:7 • avoid_print
+   info • The imported package 'flutter_localizations' isn't a dependency of the importing package • lib/main.dart:20:8 • depend_on_referenced_packages
+  error • Target of URI doesn't exist: 'package:flutter_gen/gen_l10n/app_localizations.dart' • lib/main.dart:21:8 • uri_does_not_exist
+   info • Unnecessary use of double quotes • lib/main.dart:38:7 • prefer_single_quotes
+   info • Don't invoke 'print' in production code • lib/main.dart:159:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/main.dart:197:9 • avoid_print
+   info • Don't invoke 'print' in production code • lib/main.dart:200:7 • avoid_print
+  error • The values in a const list literal must be constants • lib/main.dart:224:9 • non_constant_list_element
+  error • Undefined name 'AppLocalizations' • lib/main.dart:224:9 • undefined_identifier
+  error • Undefined name 'AppLocalizations' • lib/main.dart:229:25 • undefined_identifier
+  error • Target of URI doesn't exist: 'package:flutter_gen/gen_l10n/app_localizations.dart' • lib/shared/navigation/main_navigation.dart:12:8 • uri_does_not_exist
+  error • Undefined name 'AppLocalizations' • lib/shared/navigation/main_navigation.dart:25:18 • undefined_identifier
+   info • Use 'const' with the constructor to improve performance • lib/shared/theme/app_theme.dart:11:20 • prefer_const_constructors
+   info • 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre • lib/shared/theme/app_theme.dart:15:9 • deprecated_member_use
+   info • 'onBackground' is deprecated and shouldn't be used. Use onSurface instead. This feature was deprecated after v3.18.0-0.1.pre • lib/shared/theme/app_theme.dart:20:9 • deprecated_member_use
+   info • Unnecessary 'const' keyword • lib/shared/theme/app_theme.dart:33:20 • unnecessary_const
+

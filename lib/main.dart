@@ -14,7 +14,11 @@ import 'core/providers/notification_settings_provider.dart';
 import 'features/bases/services/base_repository.dart';
 import 'features/characters/services/character_repository.dart';
 import 'shared/theme/app_theme.dart';
+import 'core/providers/language_provider.dart';
 import 'shared/navigation/main_navigation.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
 // Global key for navigation (needed for notification taps)
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -203,16 +207,26 @@ Future<void> _initializeSystemTray() async {
   );
 }
 
-class DuneAwakeningCompanionApp extends StatelessWidget {
+class DuneAwakeningCompanionApp extends ConsumerWidget {
   const DuneAwakeningCompanionApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(languageProvider);
+    
     return MaterialApp(
       title: 'Dune Awakening Companion',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.duneTheme,
       navigatorKey: navigatorKey, // For notification navigation
+      locale: locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       home: const MainNavigationScreen(),
     );
   }

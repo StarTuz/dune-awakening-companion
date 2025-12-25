@@ -71,6 +71,19 @@ A cross-platform companion application for managing characters, bases, power cou
 - Active Alerts count (< 24h or critical tax)
 - Pull-to-refresh support
 
+### 🌍 Multi-Language Support
+- **7 Languages Supported:**
+  - 🇬🇧 English
+  - 🇪🇸 Spanish
+  - 🇫🇷 French
+  - 🇩🇪 German
+  - 🇺🇦 Ukrainian
+  - 🇮🇹 Italian
+  - 🏴󠁧󠁢󠁷󠁬󠁳󠁿 Welsh
+- **Instant Switch:** Change languages instantly from Settings
+- **Persistence:** Remembers your preference across restarts
+- **Comprehensive:** Localized titles, alerts, messages, and dates
+
 ### 🎨 Adaptive Design
 - **Desktop:** Side navigation rail
 - **Mobile:** Bottom navigation bar
@@ -265,10 +278,10 @@ lib/
 - [x] Notifications & System Tray
 - [x] Adaptive navigation
 - [x] Database v4 with migrations
+- [x] Multi-language support (i18n)
 
 ### 🚧 In Progress
 
-- [ ] Multi-language support (i18n)
 - [ ] Cross-platform testing (Windows, macOS, Android)
 
 ### 📋 Future Features

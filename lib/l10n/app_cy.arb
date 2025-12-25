@@ -1,0 +1,23 @@
+{
+  "appTitle": "Dune Awakening Companion",
+  "dashboardTitle": "Dangosfwrdd",
+  "charactersTitle": "Cymeriadau",
+  "basesTitle": "Canolfannau",
+  "expiringSoonTitle": "Yn dod i ben cyn bo hir",
+  "activeAlertsTitle": "Rhybuddion Gweithredol",
+  "error": "Gwall",
+  "navDashboard": "Dangosfwrdd",
+  "navCharacters": "Cymeriadau",
+  "navAlerts": "Rhybuddion",
+  "navSettings": "Gosodiadau",
+  "alertsTitle": "Rhybuddion",
+  "refreshTooltip": "Adnewyddu",
+  "allBasesSafeTitle": "Mae pob canolfan yn ddiogel!",
+  "allBasesSafeMessage": "Nid oes unrhyw ganolfannau'n dod i ben yn y 48 awr nesaf.",
+  "timeRemainingPower": "Amser sy'n Weddill: Pŵer",
+  "timeRemainingTaxes": "Amser sy'n Weddill: Trethi",
+  "expiresLabel": "Dod i ben",
+  "dueLabel": "Dyledus",
+  "tapToManage": "Tapiwch i reoli canolfannau",
+  "loading": "Llwytho..."
+}

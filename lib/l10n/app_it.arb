@@ -1,0 +1,23 @@
+{
+  "appTitle": "Dune Awakening Companion",
+  "dashboardTitle": "Cruscotto",
+  "charactersTitle": "Personaggi",
+  "basesTitle": "Basi",
+  "expiringSoonTitle": "In Scadenza",
+  "activeAlertsTitle": "Avvisi Attivi",
+  "error": "Errore",
+  "navDashboard": "Cruscotto",
+  "navCharacters": "Personaggi",
+  "navAlerts": "Avvisi",
+  "navSettings": "Impostazioni",
+  "alertsTitle": "Avvisi",
+  "refreshTooltip": "Aggiorna",
+  "allBasesSafeTitle": "Tutte le basi sono al sicuro!",
+  "allBasesSafeMessage": "Nessuna base scade nelle prossime 48 ore.",
+  "timeRemainingPower": "Tempo Rimanente: Energia",
+  "timeRemainingTaxes": "Tempo Rimanente: Tasse",
+  "expiresLabel": "Scade",
+  "dueLabel": "Scadenza",
+  "tapToManage": "Tocca per gestire le basi",
+  "loading": "Caricamento..."
+}

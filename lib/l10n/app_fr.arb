@@ -1,0 +1,23 @@
+{
+  "appTitle": "Dune Awakening Companion",
+  "dashboardTitle": "Tableau de bord",
+  "charactersTitle": "Personnages",
+  "basesTitle": "Bases",
+  "expiringSoonTitle": "Expire Bientôt",
+  "activeAlertsTitle": "Alertes Actives",
+  "error": "Erreur",
+  "navDashboard": "Tableau de bord",
+  "navCharacters": "Personnages",
+  "navAlerts": "Alertes",
+  "navSettings": "Paramètres",
+  "alertsTitle": "Alertes",
+  "refreshTooltip": "Actualiser",
+  "allBasesSafeTitle": "Toutes les bases sont sûres !",
+  "allBasesSafeMessage": "Aucune base n'expire dans les prochaines 48 heures.",
+  "timeRemainingPower": "Temps Restant : Énergie",
+  "timeRemainingTaxes": "Temps Restant : Impôts",
+  "expiresLabel": "Expire",
+  "dueLabel": "Échéance",
+  "tapToManage": "Appuyez pour gérer les bases",
+  "loading": "Chargement..."
+}

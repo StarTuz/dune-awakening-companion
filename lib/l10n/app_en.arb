@@ -1,0 +1,86 @@
+{
+  "appTitle": "Dune Awakening Companion",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "dashboardTitle": "Dashboard",
+  "@dashboardTitle": {
+    "description": "Title for the dashboard screen"
+  },
+  "charactersTitle": "Characters",
+  "@charactersTitle": {
+    "description": "Title for the characters section/screen"
+  },
+  "basesTitle": "Bases",
+  "@basesTitle": {
+    "description": "Title for the bases section/screen"
+  },
+  "expiringSoonTitle": "Expiring Soon",
+  "@expiringSoonTitle": {
+    "description": "Title for the expiring soon section"
+  },
+  "activeAlertsTitle": "Active Alerts",
+  "@activeAlertsTitle": {
+    "description": "Title for the active alerts section"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error text"
+  },
+  "navDashboard": "Dashboard",
+  "@navDashboard": {
+    "description": "Navigation label for Dashboard"
+  },
+  "navCharacters": "Characters",
+  "@navCharacters": {
+    "description": "Navigation label for Characters"
+  },
+  "navAlerts": "Alerts",
+  "@navAlerts": {
+    "description": "Navigation label for Alerts"
+  },
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Navigation label for Settings"
+  },
+  "alertsTitle": "Alerts",
+  "@alertsTitle": {
+    "description": "Title for the alerts screen"
+  },
+  "refreshTooltip": "Refresh",
+  "@refreshTooltip": {
+    "description": "Tooltip for refresh button"
+  },
+  "allBasesSafeTitle": "All bases are safe!",
+  "@allBasesSafeTitle": {
+    "description": "Message when no alerts exist"
+  },
+  "allBasesSafeMessage": "No bases expire in the next 48 hours.",
+  "@allBasesSafeMessage": {
+    "description": "Subtitle when no alerts exist"
+  },
+  "timeRemainingPower": "Time Remaining: Power",
+  "@timeRemainingPower": {
+    "description": "Label for power time remaining"
+  },
+  "timeRemainingTaxes": "Time Remaining: Taxes",
+  "@timeRemainingTaxes": {
+    "description": "Label for tax time remaining"
+  },
+  "expiresLabel": "Expires",
+  "@expiresLabel": {
+    "description": "Label for expiration date"
+  },
+  "dueLabel": "Due",
+  "@dueLabel": {
+    "description": "Label for due date"
+  },
+  "tapToManage": "Tap to manage this character's bases",
+  "@tapToManage": {
+    "description": "Hint text on alert card"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading text"
+  }
+}

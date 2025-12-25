@@ -9,6 +9,8 @@ import '../../features/bases/providers/base_provider.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../theme/app_colors.dart';
 
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
+
 // Provider to track current navigation index
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
 
@@ -20,6 +22,7 @@ class MainNavigationScreen extends ConsumerWidget {
     final currentIndex = ref.watch(navigationIndexProvider);
     final activeAlertsAsync = ref.watch(activeAlertsProvider);
     final basesAsync = ref.watch(basesProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     final screens = [
       const DashboardScreen(),
@@ -72,15 +75,15 @@ class MainNavigationScreen extends ConsumerWidget {
               labelType: NavigationRailLabelType.none,
               minExtendedWidth: 200,
               destinations: [
-                const NavigationRailDestination(
-                  icon: Icon(Icons.dashboard_outlined),
-                  selectedIcon: Icon(Icons.dashboard),
-                  label: Text('Dashboard'),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.dashboard_outlined),
+                  selectedIcon: const Icon(Icons.dashboard),
+                  label: Text(l10n.navDashboard),
                 ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.person_outline),
-                  selectedIcon: Icon(Icons.person),
-                  label: Text('Characters'),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.person_outline),
+                  selectedIcon: const Icon(Icons.person),
+                  label: Text(l10n.navCharacters),
                 ),
                 NavigationRailDestination(
                   icon: Badge(
@@ -99,12 +102,12 @@ class MainNavigationScreen extends ConsumerWidget {
                       color: alertIconColor,
                     ),
                   ),
-                  label: const Text('Alerts'),
+                  label: Text(l10n.navAlerts),
                 ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.settings_outlined),
-                  selectedIcon: Icon(Icons.settings),
-                  label: Text('Settings'),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.settings_outlined),
+                  selectedIcon: const Icon(Icons.settings),
+                  label: Text(l10n.navSettings),
                 ),
               ],
             ),
@@ -132,13 +135,13 @@ class MainNavigationScreen extends ConsumerWidget {
           ref.read(navigationIndexProvider.notifier).state = index;
         },
         destinations: [
-          const NavigationDestination(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+          NavigationDestination(
+            icon: const Icon(Icons.dashboard),
+            label: l10n.navDashboard,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.person),
-            label: 'Characters',
+          NavigationDestination(
+            icon: const Icon(Icons.person),
+            label: l10n.navCharacters,
           ),
           NavigationDestination(
             icon: Badge(
@@ -149,11 +152,11 @@ class MainNavigationScreen extends ConsumerWidget {
                 color: alertIconColor,
               ),
             ),
-            label: 'Alerts',
+            label: l10n.navAlerts,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+          NavigationDestination(
+            icon: const Icon(Icons.settings),
+            label: l10n.navSettings,
           ),
         ],
       ),

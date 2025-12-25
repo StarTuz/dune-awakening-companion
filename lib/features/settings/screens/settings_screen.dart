@@ -9,6 +9,7 @@ import '../providers/import_export_provider.dart';
 import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../bases/providers/base_provider.dart';
+import '../../../core/providers/language_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -42,6 +43,12 @@ class SettingsScreen extends ConsumerWidget {
           
           const Divider(height: 32),
           
+          // Language Section
+          _buildSectionHeader(context, 'Language'),
+          _buildLanguageSelector(context, ref),
+          
+          const Divider(height: 32),
+
           // Data Management Section
           _buildSectionHeader(context, 'Data Management'),
           ListTile(
@@ -243,6 +250,47 @@ class SettingsScreen extends ConsumerWidget {
       title: Text(title),
       subtitle: Text(subtitle),
     );
+  }
+
+  Widget _buildLanguageSelector(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(languageProvider);
+    
+    return ListTile(
+      leading: const Icon(Icons.language),
+      title: const Text('Language'),
+      subtitle: Text(_getLanguageName(currentLocale.languageCode)),
+      trailing: DropdownButton<String>(
+        value: currentLocale.languageCode,
+        underline: const SizedBox(),
+        items: const [
+          DropdownMenuItem(value: 'en', child: Text('English')),
+          DropdownMenuItem(value: 'es', child: Text('Español')),
+          DropdownMenuItem(value: 'fr', child: Text('Français')),
+          DropdownMenuItem(value: 'de', child: Text('Deutsch')),
+          DropdownMenuItem(value: 'uk', child: Text('Українська')),
+          DropdownMenuItem(value: 'it', child: Text('Italiano')),
+          DropdownMenuItem(value: 'cy', child: Text('Cymraeg')),
+        ],
+        onChanged: (String? newValue) {
+          if (newValue != null) {
+            ref.read(languageProvider.notifier).setLanguage(Locale(newValue));
+          }
+        },
+      ),
+    );
+  }
+
+  String _getLanguageName(String code) {
+    switch (code) {
+      case 'en': return 'English';
+      case 'es': return 'Español';
+      case 'fr': return 'Français';
+      case 'de': return 'Deutsch';
+      case 'uk': return 'Українська';
+      case 'it': return 'Italiano';
+      case 'cy': return 'Cymraeg';
+      default: return 'English';
+    }
   }
 
   Widget _buildNotificationSettings(BuildContext context, WidgetRef ref) {

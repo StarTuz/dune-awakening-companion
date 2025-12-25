@@ -1,0 +1,23 @@
+{
+  "appTitle": "Dune Awakening Companion",
+  "dashboardTitle": "Приладна дошка",
+  "charactersTitle": "Персонажі",
+  "basesTitle": "Бази",
+  "expiringSoonTitle": "Скоро закінчується",
+  "activeAlertsTitle": "Активні сповіщення",
+  "error": "Помилка",
+  "navDashboard": "Дошка",
+  "navCharacters": "Персонажі",
+  "navAlerts": "Сповіщення",
+  "navSettings": "Налаштування",
+  "alertsTitle": "Сповіщення",
+  "refreshTooltip": "Оновити",
+  "allBasesSafeTitle": "Усі бази в безпеці!",
+  "allBasesSafeMessage": "Жодна база не закінчується протягом наступних 48 годин.",
+  "timeRemainingPower": "Час, що залишився: Енергія",
+  "timeRemainingTaxes": "Час, що залишився: Податки",
+  "expiresLabel": "Закінчується",
+  "dueLabel": "Термін",
+  "tapToManage": "Натисніть, щоб керувати базами",
+  "loading": "Завантаження..."
+}

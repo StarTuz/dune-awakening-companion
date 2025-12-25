@@ -8,6 +8,8 @@ import '../../characters/providers/character_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../../../shared/navigation/main_navigation.dart';
 
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
+
 class AlertsScreen extends ConsumerWidget {
   const AlertsScreen({super.key});
 
@@ -15,10 +17,11 @@ class AlertsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final basesAsync = ref.watch(basesProvider);
     final charactersAsync = ref.watch(charactersProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alerts'),
+        title: Text(l10n.alertsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -26,7 +29,7 @@ class AlertsScreen extends ConsumerWidget {
               ref.invalidate(basesProvider);
               ref.invalidate(charactersProvider);
             },
-            tooltip: 'Refresh',
+            tooltip: l10n.refreshTooltip,
           ),
         ],
       ),
@@ -49,18 +52,18 @@ class AlertsScreen extends ConsumerWidget {
             expiringBases.sort((a, b) => a.hoursRemaining.compareTo(b.hoursRemaining));
 
             if (expiringBases.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.check_circle_outline, size: 64, color: Colors.green),
-                    SizedBox(height: 16),
+                    const Icon(Icons.check_circle_outline, size: 64, color: Colors.green),
+                    const SizedBox(height: 16),
                     Text(
-                      'All bases are safe!',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      l10n.allBasesSafeTitle,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
-                    Text('No bases expire in the next 48 hours.'),
+                    const SizedBox(height: 8),
+                    Text(l10n.allBasesSafeMessage),
                   ],
                 ),
               );
@@ -190,7 +193,7 @@ class AlertsScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Time Remaining: Power',
+                                    l10n.timeRemainingPower,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.grey[600],
@@ -210,7 +213,7 @@ class AlertsScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'Expires',
+                                    l10n.expiresLabel,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.grey[600],
@@ -237,7 +240,7 @@ class AlertsScreen extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Time Remaining: Taxes',
+                                      l10n.timeRemainingTaxes,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[600],
@@ -277,7 +280,7 @@ class AlertsScreen extends ConsumerWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Due',
+                                      l10n.dueLabel,
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey[600],
@@ -297,7 +300,7 @@ class AlertsScreen extends ConsumerWidget {
                           ],
                           const SizedBox(height: 8),
                           Text(
-                            'Tap to manage this character\'s bases',
+                            l10n.tapToManage,
                             style: TextStyle(
                               fontSize: 11,
                               color: Colors.grey[500],
@@ -312,11 +315,25 @@ class AlertsScreen extends ConsumerWidget {
               },
             );
           },
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stack) => Center(child: Text('Error loading characters: $error')),
+          loading: () => Center(child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(l10n.loading),
+            ],
+          )),
+          error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text('Error loading bases: $error')),
+        loading: () => Center(child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(height: 16),
+            Text(l10n.loading),
+          ],
+        )),
+        error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
         ),
       ),
     );

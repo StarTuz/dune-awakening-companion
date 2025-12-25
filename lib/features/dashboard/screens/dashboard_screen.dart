@@ -4,6 +4,8 @@ import '../../characters/providers/character_provider.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
+
 class DashboardScreen extends ConsumerWidget {
   const DashboardScreen({super.key});
 
@@ -11,10 +13,11 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final charactersAsync = ref.watch(charactersProvider);
     final basesAsync = ref.watch(basesProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(l10n.dashboardTitle),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -30,20 +33,20 @@ class DashboardScreen extends ConsumerWidget {
               children: [
                 charactersAsync.when(
                   data: (characters) => _StatCard(
-                    title: 'Characters',
+                    title: l10n.charactersTitle,
                     value: characters.length.toString(),
                     icon: Icons.person,
                     color: DuneColors.primaryAccent,
                   ),
-                  loading: () => const _StatCard(
-                    title: 'Characters',
+                  loading: () => _StatCard(
+                    title: l10n.charactersTitle,
                     value: '...',
                     icon: Icons.person,
                     color: DuneColors.primaryAccent,
                   ),
-                  error: (_, __) => const _StatCard(
-                    title: 'Characters',
-                    value: 'Error',
+                  error: (_, __) => _StatCard(
+                    title: l10n.charactersTitle,
+                    value: l10n.error,
                     icon: Icons.person,
                     color: DuneColors.error,
                   ),
@@ -51,20 +54,20 @@ class DashboardScreen extends ConsumerWidget {
                 const SizedBox(height: 16),
                 basesAsync.when(
                   data: (bases) => _StatCard(
-                    title: 'Bases',
+                    title: l10n.basesTitle,
                     value: bases.length.toString(),
                     icon: Icons.home,
                     color: DuneColors.secondaryAccent,
                   ),
-                  loading: () => const _StatCard(
-                    title: 'Bases',
+                  loading: () => _StatCard(
+                    title: l10n.basesTitle,
                     value: '...',
                     icon: Icons.home,
                     color: DuneColors.secondaryAccent,
                   ),
-                  error: (_, __) => const _StatCard(
-                    title: 'Bases',
-                    value: 'Error',
+                  error: (_, __) => _StatCard(
+                    title: l10n.basesTitle,
+                    value: l10n.error,
                     icon: Icons.home,
                     color: DuneColors.error,
                   ),
@@ -90,21 +93,21 @@ class DashboardScreen extends ConsumerWidget {
                     }).length;
                     
                     return _StatCard(
-                      title: 'Expiring Soon',
+                      title: l10n.expiringSoonTitle,
                       value: expiringSoon.toString(),
                       icon: Icons.warning,
                       color: DuneColors.warningPrimary,
                     );
                   },
-                  loading: () => const _StatCard(
-                    title: 'Expiring Soon',
+                  loading: () => _StatCard(
+                    title: l10n.expiringSoonTitle,
                     value: '...',
                     icon: Icons.warning,
                     color: DuneColors.warningPrimary,
                   ),
-                  error: (_, __) => const _StatCard(
-                    title: 'Expiring Soon',
-                    value: 'Error',
+                  error: (_, __) => _StatCard(
+                    title: l10n.expiringSoonTitle,
+                    value: l10n.error,
                     icon: Icons.warning,
                     color: DuneColors.error,
                   ),
@@ -126,21 +129,21 @@ class DashboardScreen extends ConsumerWidget {
                     }).length;
                     
                     return _StatCard(
-                      title: 'Active Alerts',
+                      title: l10n.activeAlertsTitle,
                       value: criticalBases.toString(),
                       icon: Icons.notifications,
                       color: DuneColors.criticalPrimary,
                     );
                   },
-                  loading: () => const _StatCard(
-                    title: 'Active Alerts',
+                  loading: () => _StatCard(
+                    title: l10n.activeAlertsTitle,
                     value: '...',
                     icon: Icons.notifications,
                     color: DuneColors.criticalPrimary,
                   ),
-                  error: (_, __) => const _StatCard(
-                    title: 'Active Alerts',
-                    value: 'Error',
+                  error: (_, __) => _StatCard(
+                    title: l10n.activeAlertsTitle,
+                    value: l10n.error,
                     icon: Icons.notifications,
                     color: DuneColors.error,
                   ),
