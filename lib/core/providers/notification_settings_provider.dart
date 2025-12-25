@@ -7,6 +7,9 @@ class NotificationSettingsState {
   final int intervalMinutes;
   final bool includeWarnings;
   final bool startMinimized;
+  final bool quietHoursEnabled;
+  final int quietHoursStart; // minutes from midnight
+  final int quietHoursEnd; // minutes from midnight
   final bool isLoading;
 
   const NotificationSettingsState({
@@ -14,6 +17,9 @@ class NotificationSettingsState {
     this.intervalMinutes = 30,
     this.includeWarnings = false,
     this.startMinimized = false,
+    this.quietHoursEnabled = false,
+    this.quietHoursStart = 1320, // 10 PM
+    this.quietHoursEnd = 480, // 8 AM
     this.isLoading = true,
   });
 
@@ -22,6 +28,9 @@ class NotificationSettingsState {
     int? intervalMinutes,
     bool? includeWarnings,
     bool? startMinimized,
+    bool? quietHoursEnabled,
+    int? quietHoursStart,
+    int? quietHoursEnd,
     bool? isLoading,
   }) {
     return NotificationSettingsState(
@@ -29,9 +38,20 @@ class NotificationSettingsState {
       intervalMinutes: intervalMinutes ?? this.intervalMinutes,
       includeWarnings: includeWarnings ?? this.includeWarnings,
       startMinimized: startMinimized ?? this.startMinimized,
+      quietHoursEnabled: quietHoursEnabled ?? this.quietHoursEnabled,
+      quietHoursStart: quietHoursStart ?? this.quietHoursStart,
+      quietHoursEnd: quietHoursEnd ?? this.quietHoursEnd,
       isLoading: isLoading ?? this.isLoading,
     );
   }
+
+  /// Get quiet hours start as formatted string
+  String get quietHoursStartString => 
+      NotificationSettings.minutesToTimeString(quietHoursStart);
+
+  /// Get quiet hours end as formatted string
+  String get quietHoursEndString =>
+      NotificationSettings.minutesToTimeString(quietHoursEnd);
 }
 
 /// StateNotifier for notification settings
@@ -49,6 +69,9 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsSta
       intervalMinutes: settings['intervalMinutes'] as int,
       includeWarnings: settings['includeWarnings'] as bool,
       startMinimized: settings['startMinimized'] as bool,
+      quietHoursEnabled: settings['quietHoursEnabled'] as bool,
+      quietHoursStart: settings['quietHoursStart'] as int,
+      quietHoursEnd: settings['quietHoursEnd'] as int,
       isLoading: false,
     );
   }
@@ -80,6 +103,24 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsSta
   Future<void> setStartMinimized(bool minimized) async {
     await NotificationSettings.setStartMinimized(minimized);
     state = state.copyWith(startMinimized: minimized);
+  }
+
+  /// Set quiet hours enabled
+  Future<void> setQuietHoursEnabled(bool enabled) async {
+    await NotificationSettings.setQuietHoursEnabled(enabled);
+    state = state.copyWith(quietHoursEnabled: enabled);
+  }
+
+  /// Set quiet hours start time (minutes from midnight)
+  Future<void> setQuietHoursStart(int minutes) async {
+    await NotificationSettings.setQuietHoursStart(minutes);
+    state = state.copyWith(quietHoursStart: minutes);
+  }
+
+  /// Set quiet hours end time (minutes from midnight)
+  Future<void> setQuietHoursEnd(int minutes) async {
+    await NotificationSettings.setQuietHoursEnd(minutes);
+    state = state.copyWith(quietHoursEnd: minutes);
   }
 }
 

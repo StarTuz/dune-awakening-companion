@@ -777,6 +777,81 @@ class _NotificationSettingsWidget extends ConsumerWidget {
             },
           ),
 
+        const Divider(),
+
+        // Quiet Hours Section
+        SwitchListTile(
+          secondary: const Icon(Icons.bedtime),
+          title: const Text('Quiet Hours'),
+          subtitle: Text(settings.quietHoursEnabled
+              ? 'No notifications ${settings.quietHoursStartString} - ${settings.quietHoursEndString}'
+              : 'Notifications always enabled'),
+          value: settings.quietHoursEnabled,
+          onChanged: settings.enabled
+              ? (value) async {
+                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursEnabled(value);
+                }
+              : null,
+        ),
+
+        // Quiet Hours Time Pickers (only show when quiet hours enabled)
+        if (settings.quietHoursEnabled && settings.enabled) ...[
+          ListTile(
+            leading: const SizedBox(width: 24), // Align with icons above
+            title: const Text('Start Time'),
+            trailing: TextButton(
+              onPressed: () async {
+                final picked = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay(
+                    hour: settings.quietHoursStart ~/ 60,
+                    minute: settings.quietHoursStart % 60,
+                  ),
+                );
+                if (picked != null) {
+                  final minutes = picked.hour * 60 + picked.minute;
+                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursStart(minutes);
+                }
+              },
+              child: Text(
+                settings.quietHoursStartString,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const SizedBox(width: 24),
+            title: const Text('End Time'),
+            trailing: TextButton(
+              onPressed: () async {
+                final picked = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay(
+                    hour: settings.quietHoursEnd ~/ 60,
+                    minute: settings.quietHoursEnd % 60,
+                  ),
+                );
+                if (picked != null) {
+                  final minutes = picked.hour * 60 + picked.minute;
+                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursEnd(minutes);
+                }
+              },
+              child: Text(
+                settings.quietHoursEndString,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+          ),
+        ],
+
+        const Divider(),
+
         // Test Notification Button
         ListTile(
           leading: const Icon(Icons.notifications, color: Colors.blue),

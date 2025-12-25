@@ -1,4 +1,5 @@
 import '../services/notification_service.dart';
+import '../services/notification_settings.dart';
 import '../services/alert_checker_service.dart';
 import 'dart:async';
 
@@ -43,6 +44,13 @@ class NotificationCoordinator {
   /// Perform a single check and send notifications
   Future<void> checkAndNotify({bool includeWarnings = false}) async {
     print('[NotificationCoordinator] Starting alert check...');
+    
+    // Check if we're in quiet hours
+    final inQuietHours = await NotificationSettings.isInQuietHours();
+    if (inQuietHours) {
+      print('[NotificationCoordinator] Currently in quiet hours - skipping notifications');
+      return;
+    }
     
     final alerts = await _alertCheckerService.checkForAlerts(
       includeWarnings: includeWarnings,
