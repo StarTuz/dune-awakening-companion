@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, power cou
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.6-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.0.7-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 

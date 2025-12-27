@@ -1,7 +1,7 @@
 # 🏜️ Dune Awakening Companion App - Handoff Document
 
 **Date:** December 25, 2025  
-**Version:** v1.0.6  
+**Version:** v1.0.7  
 **Status:** Stable Release  
 
 ---

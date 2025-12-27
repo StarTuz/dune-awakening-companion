@@ -33,7 +33,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: l10n.version,
-            subtitle: '1.0.6',
+            subtitle: '1.0.7',
           ),
           _buildInfoTile(
             icon: Icons.storage,
