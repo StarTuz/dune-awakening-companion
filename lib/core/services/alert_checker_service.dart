@@ -89,36 +89,41 @@ class AlertCheckerService {
       }
 
       // Check tax if applicable
+      // Only alert if there's actual tax owed - don't alert for PAID status
       if (base.isAdvancedFief && base.taxPerCycle != null && base.nextTaxDueDate != null) {
         final taxRemaining = base.nextTaxDueDate!.difference(now);
+        final hasTaxOwed = base.totalTaxOwed > 0;
         
-        if (taxRemaining.isNegative) {
-          // Tax overdue
-          alerts.add(BaseAlert(
-            base: base,
-            character: character,
-            type: AlertType.tax,
-            severity: AlertSeverity.critical,
-            timeRemaining: taxRemaining,
-          ));
-        } else if (taxRemaining.inHours < 24) {
-          // Tax due soon (< 24h)
-          alerts.add(BaseAlert(
-            base: base,
-            character: character,
-            type: AlertType.tax,
-            severity: AlertSeverity.critical,
-            timeRemaining: taxRemaining,
-          ));
-        } else if (includeWarnings && taxRemaining.inHours < 48) {
-          // Tax warning (< 48h)
-          alerts.add(BaseAlert(
-            base: base,
-            character: character,
-            type: AlertType.tax,
-            severity: AlertSeverity.warning,
-            timeRemaining: taxRemaining,
-          ));
+        // Only generate alerts if there's actually tax owed
+        if (hasTaxOwed) {
+          if (taxRemaining.isNegative) {
+            // Tax overdue
+            alerts.add(BaseAlert(
+              base: base,
+              character: character,
+              type: AlertType.tax,
+              severity: AlertSeverity.critical,
+              timeRemaining: taxRemaining,
+            ));
+          } else if (taxRemaining.inHours < 24) {
+            // Tax due soon (< 24h)
+            alerts.add(BaseAlert(
+              base: base,
+              character: character,
+              type: AlertType.tax,
+              severity: AlertSeverity.critical,
+              timeRemaining: taxRemaining,
+            ));
+          } else if (includeWarnings && taxRemaining.inHours < 48) {
+            // Tax warning (< 48h)
+            alerts.add(BaseAlert(
+              base: base,
+              character: character,
+              type: AlertType.tax,
+              severity: AlertSeverity.warning,
+              timeRemaining: taxRemaining,
+            ));
+          }
         }
       }
     }

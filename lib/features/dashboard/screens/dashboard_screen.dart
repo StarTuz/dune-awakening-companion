@@ -73,7 +73,7 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Expiring Soon: Power < 48h OR Tax < 48h
+                // Expiring Soon: Power < 48h OR Tax < 48h (with actual tax owed)
                 basesAsync.when(
                   data: (bases) {
                     final now = DateTime.now();
@@ -82,9 +82,9 @@ class DashboardScreen extends ConsumerWidget {
                       final powerHours = base.powerExpirationTime.difference(now).inMinutes / 60.0;
                       final powerExpiring = powerHours < 48 && powerHours > 0;
                       
-                      // Tax expiring soon (if applicable)
+                      // Tax expiring soon (if applicable AND actually owed)
                       bool taxExpiring = false;
-                      if (base.isAdvancedFief && base.nextTaxDueDate != null) {
+                      if (base.isAdvancedFief && base.nextTaxDueDate != null && base.totalTaxOwed > 0) {
                         final taxHours = base.nextTaxDueDate!.difference(now).inMinutes / 60.0;
                         taxExpiring = taxHours < 48;
                       }
