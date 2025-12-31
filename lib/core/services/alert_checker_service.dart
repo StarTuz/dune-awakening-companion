@@ -90,14 +90,15 @@ class AlertCheckerService {
 
       // Check tax if applicable
       // Only alert if there's actual tax owed - don't alert for PAID status
-      if (base.isAdvancedFief && base.taxPerCycle != null && base.nextTaxDueDate != null) {
-        final taxRemaining = base.nextTaxDueDate!.difference(now);
+      // Uses effective values which auto-calculate missed cycles
+      if (base.isAdvancedFief && base.taxPerCycle != null && base.effectiveNextTaxDueDate != null) {
+        final taxRemaining = base.effectiveNextTaxDueDate!.difference(now);
         final hasTaxOwed = base.totalTaxOwed > 0;
         
         // Only generate alerts if there's actually tax owed
         if (hasTaxOwed) {
-          if (taxRemaining.isNegative) {
-            // Tax overdue
+          if (taxRemaining.isNegative || base.missedCycles > 0) {
+            // Tax overdue (any missed cycles counts as overdue)
             alerts.add(BaseAlert(
               base: base,
               character: character,

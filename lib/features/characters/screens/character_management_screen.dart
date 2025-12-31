@@ -1319,20 +1319,33 @@ class CharacterManagementScreen extends ConsumerWidget {
     final taxPerCycle = base.taxPerCycle ?? 0;
     
     // Calculate tax countdown in d/h/m format (matching power format)
+    // Logic: 
+    // - If money is owed, use stored date (shows how overdue you are)
+    // - If paid up (totalOwed = 0), use effective date (auto-rolled to next cycle)
     String? taxDueText;
-    if (base.nextTaxDueDate != null) {
+    final bool isPaidUp = totalOwed == 0;
+    final DateTime? displayDate = isPaidUp 
+        ? base.effectiveNextTaxDueDate  // Auto-roll when paid
+        : base.nextTaxDueDate;          // Show actual overdue when owing
+    
+    if (displayDate != null) {
       final now = DateTime.now();
-      final difference = base.nextTaxDueDate!.difference(now);
-      final days = difference.inDays;
-      final hours = difference.inHours % 24;
-      final minutes = difference.inMinutes % 60;
+      final difference = displayDate.difference(now);
+      final totalMinutes = difference.inMinutes;
       
-      if (difference.isNegative) {
-        // Overdue
-        taxDueText = 'Overdue by: ${days.abs()}d ${hours.abs()}h ${minutes.abs()}m';
+      if (totalMinutes >= 0) {
+        // Due date is in the future - show countdown
+        final days = difference.inDays;
+        final hours = (difference.inHours % 24);
+        final minutes = (difference.inMinutes % 60);
+        taxDueText = 'Due in: ${days}d ${hours}h ${minutes}m';
       } else {
-        // Upcoming
-        taxDueText = 'Next Due: ${days}d ${hours}h ${minutes}m';
+        // Due date is in the past - show how overdue
+        final absDifference = now.difference(displayDate);
+        final days = absDifference.inDays;
+        final hours = (absDifference.inHours % 24);
+        final minutes = (absDifference.inMinutes % 60);
+        taxDueText = 'Overdue by: ${days}d ${hours}h ${minutes}m';
       }
     }
     
@@ -1381,8 +1394,8 @@ class CharacterManagementScreen extends ConsumerWidget {
           Text(
             taxDueText,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: base.daysUntilTax < 0 ? taxColor : null,
-              fontWeight: base.daysUntilTax < 0 ? FontWeight.bold : null,
+              color: displayDate != null && displayDate.isBefore(DateTime.now()) ? taxColor : null,
+              fontWeight: displayDate != null && displayDate.isBefore(DateTime.now()) ? FontWeight.bold : null,
             ),
           ),
       ],

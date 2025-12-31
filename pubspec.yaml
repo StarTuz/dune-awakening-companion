@@ -1,7 +1,7 @@
 name: dune_awakening_companion
 description: A cross-platform companion app for Dune Awakening that tracks power levels across multiple bases, characters, and servers.
 publish_to: 'none'
-version: 1.0.7+7
+version: 1.0.8+8
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
