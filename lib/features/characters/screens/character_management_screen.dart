@@ -32,13 +32,15 @@ class CharacterManagementScreen extends ConsumerWidget {
                 itemCount: characters.length,
                 itemBuilder: (context, index) {
                   final character = characters[index];
-                  
-                  final serverInfo = character.serverType == 'Private' && character.provider != null
+
+                  final serverInfo = character.serverType == 'Private' &&
+                          character.provider != null
                       ? '${character.provider} - ${character.world}'
                       : character.world;
 
                   return Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 28,
@@ -50,28 +52,33 @@ class CharacterManagementScreen extends ConsumerWidget {
                             : null,
                       ),
                       title: Text(character.name),
-                      subtitle: Text('${character.region} - $serverInfo - ${character.sietch}'),
+                      subtitle: Text(
+                          '${character.region} - $serverInfo - ${character.sietch}'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ElevatedButton.icon(
-                            onPressed: () => _showBaseManagementDialog(context, ref, character),
+                            onPressed: () => _showBaseManagementDialog(
+                                context, ref, character),
                             icon: const Icon(Icons.home_work, size: 18),
                             label: const Text('Bases'),
                             style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
                             ),
                           ),
                           const SizedBox(width: 8),
                           IconButton(
                             icon: const Icon(Icons.edit),
                             color: DuneColors.primaryAccent,
-                            onPressed: () => _showEditDialog(context, ref, character),
+                            onPressed: () =>
+                                _showEditDialog(context, ref, character),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete),
                             color: DuneColors.error,
-                            onPressed: () => _showDeleteDialog(context, ref, character),
+                            onPressed: () =>
+                                _showDeleteDialog(context, ref, character),
                           ),
                         ],
                       ),
@@ -135,7 +142,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                             children: const [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait',
+                                  style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -163,7 +171,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Region'),
                   value: selectedRegion,
-                  items: AppConstants.regions.map<DropdownMenuItem<String>>((region) {
+                  items: AppConstants.regions
+                      .map<DropdownMenuItem<String>>((region) {
                     return DropdownMenuItem<String>(
                       value: region,
                       child: Text(region),
@@ -173,7 +182,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     setState(() {
                       selectedRegion = value;
                       selectedWorld = null;
-                      availableWorlds = value != null 
+                      availableWorlds = value != null
                           ? AppConstants.getWorldsForRegion(value)
                           : [];
                     });
@@ -183,7 +192,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Server Type'),
                   value: selectedServerType,
-                  items: AppConstants.serverTypes.map<DropdownMenuItem<String>>((type) {
+                  items: AppConstants.serverTypes
+                      .map<DropdownMenuItem<String>>((type) {
                     return DropdownMenuItem<String>(
                       value: type,
                       child: Text(type),
@@ -204,13 +214,15 @@ class CharacterManagementScreen extends ConsumerWidget {
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Provider'),
                     value: selectedProvider,
-                    items: AppConstants.privateProviders.map<DropdownMenuItem<String>>((provider) {
+                    items: AppConstants.privateProviders
+                        .map<DropdownMenuItem<String>>((provider) {
                       return DropdownMenuItem<String>(
                         value: provider,
                         child: Text(provider),
                       );
                     }).toList(),
-                    onChanged: (value) => setState(() => selectedProvider = value),
+                    onChanged: (value) =>
+                        setState(() => selectedProvider = value),
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -219,7 +231,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'World'),
                     value: selectedWorld,
-                    items: availableWorlds.map<DropdownMenuItem<String>>((world) {
+                    items:
+                        availableWorlds.map<DropdownMenuItem<String>>((world) {
                       return DropdownMenuItem<String>(
                         value: world,
                         child: Text(world),
@@ -255,19 +268,23 @@ class CharacterManagementScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
-                final worldValue = selectedServerType == AppConstants.serverTypeOfficial
-                    ? selectedWorld
-                    : worldController.text;
-                
+                final worldValue =
+                    selectedServerType == AppConstants.serverTypeOfficial
+                        ? selectedWorld
+                        : worldController.text;
+
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
-                    (selectedServerType == AppConstants.serverTypeOfficial 
-                        ? selectedWorld != null 
-                        : (worldController.text.isNotEmpty && selectedProvider != null)) &&
+                    (selectedServerType == AppConstants.serverTypeOfficial
+                        ? selectedWorld != null
+                        : (worldController.text.isNotEmpty &&
+                            selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
                   final imageService = ref.read(imageServiceProvider);
-                  ref.read(charactersProvider.notifier).createCharacterWithPortrait(
+                  ref
+                      .read(charactersProvider.notifier)
+                      .createCharacterWithPortrait(
                         nameController.text,
                         selectedRegion!,
                         selectedServerType!,
@@ -288,19 +305,26 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
-  void _showEditDialog(BuildContext context, WidgetRef ref, Character character) {
+  void _showEditDialog(
+      BuildContext context, WidgetRef ref, Character character) {
     final nameController = TextEditingController(text: character.name);
     final worldController = TextEditingController(
-      text: character.serverType == AppConstants.serverTypePrivate ? character.world : '',
+      text: character.serverType == AppConstants.serverTypePrivate
+          ? character.world
+          : '',
     );
     final sietchController = TextEditingController(text: character.sietch);
-    
+
     String? selectedRegion = character.region;
     String? selectedServerType = character.serverType;
     String? selectedProvider = character.provider;
-    String? selectedWorld = character.serverType == AppConstants.serverTypeOfficial ? character.world : null;
-    List<String> availableWorlds = AppConstants.getWorldsForRegion(character.region);
-    
+    String? selectedWorld =
+        character.serverType == AppConstants.serverTypeOfficial
+            ? character.world
+            : null;
+    List<String> availableWorlds =
+        AppConstants.getWorldsForRegion(character.region);
+
     // Portrait state - start with existing portrait
     String? selectedPortraitPath = character.portraitPath;
     bool portraitChanged = false;
@@ -339,7 +363,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                             children: const [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait',
+                                  style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -367,7 +392,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Region'),
                   value: selectedRegion,
-                  items: AppConstants.regions.map<DropdownMenuItem<String>>((region) {
+                  items: AppConstants.regions
+                      .map<DropdownMenuItem<String>>((region) {
                     return DropdownMenuItem<String>(
                       value: region,
                       child: Text(region),
@@ -377,7 +403,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     setState(() {
                       selectedRegion = value;
                       selectedWorld = null;
-                      availableWorlds = value != null 
+                      availableWorlds = value != null
                           ? AppConstants.getWorldsForRegion(value)
                           : [];
                     });
@@ -387,7 +413,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(labelText: 'Server Type'),
                   value: selectedServerType,
-                  items: AppConstants.serverTypes.map<DropdownMenuItem<String>>((type) {
+                  items: AppConstants.serverTypes
+                      .map<DropdownMenuItem<String>>((type) {
                     return DropdownMenuItem<String>(
                       value: type,
                       child: Text(type),
@@ -407,13 +434,15 @@ class CharacterManagementScreen extends ConsumerWidget {
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Provider'),
                     value: selectedProvider,
-                    items: AppConstants.privateProviders.map<DropdownMenuItem<String>>((provider) {
+                    items: AppConstants.privateProviders
+                        .map<DropdownMenuItem<String>>((provider) {
                       return DropdownMenuItem<String>(
                         value: provider,
                         child: Text(provider),
                       );
                     }).toList(),
-                    onChanged: (value) => setState(() => selectedProvider = value),
+                    onChanged: (value) =>
+                        setState(() => selectedProvider = value),
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -421,7 +450,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'World'),
                     value: selectedWorld,
-                    items: availableWorlds.map<DropdownMenuItem<String>>((world) {
+                    items:
+                        availableWorlds.map<DropdownMenuItem<String>>((world) {
                       return DropdownMenuItem<String>(
                         value: world,
                         child: Text(world),
@@ -455,18 +485,19 @@ class CharacterManagementScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
-                final worldValue = selectedServerType == AppConstants.serverTypeOfficial
-                    ? selectedWorld
-                    : worldController.text;
+                final worldValue =
+                    selectedServerType == AppConstants.serverTypeOfficial
+                        ? selectedWorld
+                        : worldController.text;
 
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
-                    (selectedServerType == AppConstants.serverTypeOfficial 
-                        ? selectedWorld != null 
-                        : (worldController.text.isNotEmpty && selectedProvider != null)) &&
+                    (selectedServerType == AppConstants.serverTypeOfficial
+                        ? selectedWorld != null
+                        : (worldController.text.isNotEmpty &&
+                            selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
-                  
                   final updatedCharacter = character.copyWith(
                     name: nameController.text,
                     region: selectedRegion,
@@ -480,17 +511,21 @@ class CharacterManagementScreen extends ConsumerWidget {
                   if (portraitChanged) {
                     // Portrait was changed, use special method
                     final imageService = ref.read(imageServiceProvider);
-                    ref.read(charactersProvider.notifier).updateCharacterWithPortrait(
-                      updatedCharacter,
-                      selectedPortraitPath,
-                      portraitChanged,
-                      imageService,
-                    );
+                    ref
+                        .read(charactersProvider.notifier)
+                        .updateCharacterWithPortrait(
+                          updatedCharacter,
+                          selectedPortraitPath,
+                          portraitChanged,
+                          imageService,
+                        );
                   } else {
                     // No portrait change, use regular update
-                    ref.read(charactersProvider.notifier).updateCharacter(updatedCharacter);
+                    ref
+                        .read(charactersProvider.notifier)
+                        .updateCharacter(updatedCharacter);
                   }
-                  
+
                   Navigator.of(context).pop();
                 }
               },
@@ -502,7 +537,8 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
-  void _showDeleteDialog(BuildContext context, WidgetRef ref, Character character) {
+  void _showDeleteDialog(
+      BuildContext context, WidgetRef ref, Character character) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -518,10 +554,10 @@ class CharacterManagementScreen extends ConsumerWidget {
               final imageService = ref.read(imageServiceProvider);
               final baseRepository = ref.read(baseRepositoryProvider);
               ref.read(charactersProvider.notifier).deleteCharacter(
-                character.id,
-                imageService,
-                baseRepository,
-              );
+                    character.id,
+                    imageService,
+                    baseRepository,
+                  );
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),
@@ -531,7 +567,8 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
-  void _showBaseManagementDialog(BuildContext context, WidgetRef ref, Character character) {
+  void _showBaseManagementDialog(
+      BuildContext context, WidgetRef ref, Character character) {
     showDialog(
       context: context,
       builder: (dialogContext) => Dialog(
@@ -546,29 +583,33 @@ class CharacterManagementScreen extends ConsumerWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton(
-              onPressed: () => _showAddBaseDialog(dialogContext, ref, character.id),
-              tooltip: AppLocalizations.of(dialogContext)?.addBaseTooltip ?? 'Add Base',
+              onPressed: () =>
+                  _showAddBaseDialog(dialogContext, ref, character.id),
+              tooltip: AppLocalizations.of(dialogContext)?.addBaseTooltip ??
+                  'Add Base',
               child: const Icon(Icons.add),
             ),
             body: FutureBuilder<List<Base>>(
-              future: ref.read(baseRepositoryProvider).getByCharacterId(character.id),
+              future: ref
+                  .read(baseRepositoryProvider)
+                  .getByCharacterId(character.id),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                
+
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
-                
+
                 final characterBases = snapshot.data ?? [];
-                
+
                 if (characterBases.isEmpty) {
                   return const Center(
                     child: Text('No bases yet. Add one using the + button!'),
                   );
                 }
-                
+
                 return ListView.builder(
                   itemCount: characterBases.length,
                   itemBuilder: (context, index) {
@@ -579,16 +620,17 @@ class CharacterManagementScreen extends ConsumerWidget {
                     final hoursRemaining = difference.inHours % 24;
                     final minutesRemaining = difference.inMinutes % 60;
                     final totalHours = difference.inMinutes / 60.0;
-                    
+
                     final statusColor = DuneColors.getStatusColor(totalHours);
                     final statusText = totalHours > 0
                         ? 'Power: ${daysRemaining}d ${hoursRemaining}h ${minutesRemaining}m remaining'
                         : 'Power: Expired';
-                    
+
                     // Tax calculations
                     final taxStatus = base.taxStatus;
-                    final hasTax = base.isAdvancedFief && base.taxPerCycle != null;
-                    
+                    final hasTax =
+                        base.isAdvancedFief && base.taxPerCycle != null;
+
                     return Card(
                       margin: const EdgeInsets.all(8),
                       child: ListTile(
@@ -623,13 +665,17 @@ class CharacterManagementScreen extends ConsumerWidget {
                             IconButton(
                               icon: const Icon(Icons.edit),
                               color: DuneColors.primaryAccent,
-                              tooltip: AppLocalizations.of(context)?.updateCountdownTooltip ?? 'Update countdown',
-                              onPressed: () => _showEditBaseDialog(dialogContext, ref, base),
+                              tooltip: AppLocalizations.of(context)
+                                      ?.updateCountdownTooltip ??
+                                  'Update countdown',
+                              onPressed: () =>
+                                  _showEditBaseDialog(dialogContext, ref, base),
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete),
                               color: DuneColors.error,
-                              onPressed: () => _showDeleteBaseDialog(dialogContext, ref, base),
+                              onPressed: () => _showDeleteBaseDialog(
+                                  dialogContext, ref, base),
                             ),
                           ],
                         ),
@@ -645,12 +691,13 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
-  void _showAddBaseDialog(BuildContext context, WidgetRef ref, String characterId) {
+  void _showAddBaseDialog(
+      BuildContext context, WidgetRef ref, String characterId) {
     final nameController = TextEditingController();
     final daysController = TextEditingController();
     final hoursController = TextEditingController();
     final minutesController = TextEditingController();
-    
+
     // Tax fields
     bool isAdvancedFief = false;
     final taxPerCycleController = TextEditingController();
@@ -753,11 +800,13 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('💡 Tax Calculator:', style: TextStyle(fontSize: 11)),
+                        const Text('💡 Tax Calculator:',
+                            style: TextStyle(fontSize: 11)),
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Text('4,000 base + ', style: TextStyle(fontSize: 11)),
+                            const Text('4,000 base + ',
+                                style: TextStyle(fontSize: 11)),
                             SizedBox(
                               width: 40,
                               child: TextField(
@@ -767,7 +816,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                                 decoration: const InputDecoration(
                                   hintText: '0',
                                   isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 4, vertical: 4),
                                 ),
                                 onChanged: (value) {
                                   final stakes = int.tryParse(value) ?? 0;
@@ -776,10 +826,14 @@ class CharacterManagementScreen extends ConsumerWidget {
                                 },
                               ),
                             ),
-                            const Text(' stakes × 2,000 = ', style: TextStyle(fontSize: 11)),
+                            const Text(' stakes × 2,000 = ',
+                                style: TextStyle(fontSize: 11)),
                             Text(
-                              taxPerCycleController.text.isEmpty ? '0' : taxPerCycleController.text,
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                              taxPerCycleController.text.isEmpty
+                                  ? '0'
+                                  : taxPerCycleController.text,
+                              style: const TextStyle(
+                                  fontSize: 11, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -787,7 +841,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Next Tax Due In:', style: TextStyle(fontSize: 12)),
+                  const Text('Next Tax Due In:',
+                      style: TextStyle(fontSize: 12)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -850,31 +905,41 @@ class CharacterManagementScreen extends ConsumerWidget {
                   final days = int.tryParse(daysController.text) ?? 0;
                   final hours = int.tryParse(hoursController.text) ?? 0;
                   final minutes = int.tryParse(minutesController.text) ?? 0;
-                  
+
                   final expirationTime = DateTime.now().add(
                     Duration(days: days, hours: hours, minutes: minutes),
                   );
-                  
+
                   // Parse tax fields
-                  final taxPerCycle = isAdvancedFief && taxPerCycleController.text.isNotEmpty
-                      ? int.tryParse(taxPerCycleController.text)
-                      : null;
+                  final taxPerCycle =
+                      isAdvancedFief && taxPerCycleController.text.isNotEmpty
+                          ? int.tryParse(taxPerCycleController.text)
+                          : null;
                   // Parse tax due date from days/hours/minutes
                   DateTime? nextTaxDueDate;
                   if (isAdvancedFief) {
-                    final taxDueDays = int.tryParse(taxDueDaysController.text) ?? 0;
-                    final taxDueHours = int.tryParse(taxDueHoursController.text) ?? 0;
-                    final taxDueMinutes = int.tryParse(taxDueMinutesController.text) ?? 0;
-                    
-                    if (taxDueDays > 0 || taxDueHours > 0 || taxDueMinutes > 0) {
+                    final taxDueDays =
+                        int.tryParse(taxDueDaysController.text) ?? 0;
+                    final taxDueHours =
+                        int.tryParse(taxDueHoursController.text) ?? 0;
+                    final taxDueMinutes =
+                        int.tryParse(taxDueMinutesController.text) ?? 0;
+
+                    if (taxDueDays > 0 ||
+                        taxDueHours > 0 ||
+                        taxDueMinutes > 0) {
                       nextTaxDueDate = DateTime.now().add(
-                        Duration(days: taxDueDays, hours: taxDueHours, minutes: taxDueMinutes),
+                        Duration(
+                            days: taxDueDays,
+                            hours: taxDueHours,
+                            minutes: taxDueMinutes),
                       );
                     }
                   }
-                  final currentOwed = isAdvancedFief && currentOwedController.text.isNotEmpty
-                      ? int.tryParse(currentOwedController.text)
-                      : null;
+                  final currentOwed =
+                      isAdvancedFief && currentOwedController.text.isNotEmpty
+                          ? int.tryParse(currentOwedController.text)
+                          : null;
 
                   ref.read(basesProvider.notifier).createBase(
                         characterId,
@@ -904,58 +969,73 @@ class CharacterManagementScreen extends ConsumerWidget {
     final daysRemaining = difference.inDays;
     final hoursRemaining = difference.inHours % 24;
     final minutesRemaining = difference.inMinutes % 60;
-    
-    final daysController = TextEditingController(text: daysRemaining.toString());
-    final hoursController = TextEditingController(text: hoursRemaining.toString());
-    final minutesController = TextEditingController(text: minutesRemaining.toString());
-    
+
+    final daysController =
+        TextEditingController(text: daysRemaining.toString());
+    final hoursController =
+        TextEditingController(text: hoursRemaining.toString());
+    final minutesController =
+        TextEditingController(text: minutesRemaining.toString());
+
     // Tax fields with existing values
     bool isAdvancedFief = base.isAdvancedFief;
     final taxPerCycleController = TextEditingController(
       text: base.taxPerCycle?.toString() ?? '',
     );
-    
+
     // AUTO-INCREMENT TAX CALCULATION
     int calculatedCurrentOwed = base.currentOwed ?? 0;
     int calculatedOverdueOwed = base.overdueOwed ?? 0;
     int calculatedDefaultedOwed = base.defaultedOwed ?? 0;
     String? taxAutoMessage;
-    
-    if (base.isAdvancedFief && base.nextTaxDueDate != null && base.taxPerCycle != null) {
+
+    if (base.isAdvancedFief &&
+        base.nextTaxDueDate != null &&
+        base.taxPerCycle != null) {
       final taxDueDate = base.nextTaxDueDate!;
       final daysPastDue = now.difference(taxDueDate).inDays;
-      
+
       if (daysPastDue > 0) {
         // Tax is overdue - calculate missed cycles
-        final cycleLength = 14; // Standard tax cycle
+        const cycleLength = 14; // Standard tax cycle
         final missedCycles = (daysPastDue / cycleLength).ceil();
         final totalNewTax = base.taxPerCycle! * missedCycles;
-        
+
         // Grace period logic
-        final gracePeriodDays = 14; // 14 days grace after due date
-        final defaultedThreshold = gracePeriodDays; // After grace = shields down
-        
+        const gracePeriodDays = 14; // 14 days grace after due date
+        final defaultedThreshold =
+            gracePeriodDays; // After grace = shields down
+
         if (daysPastDue <= gracePeriodDays) {
           // Within grace period - current becomes overdue, add new current
           calculatedOverdueOwed = calculatedOverdueOwed + calculatedCurrentOwed;
           calculatedCurrentOwed = totalNewTax;
-          taxAutoMessage = '⚠️ Tax overdue by $daysPastDue days! Moved previous amount to Overdue.';
+          taxAutoMessage =
+              '⚠️ Tax overdue by $daysPastDue days! Moved previous amount to Overdue.';
         } else if (daysPastDue <= (gracePeriodDays + cycleLength)) {
           // Past grace, within next cycle - everything to defaulted
-          calculatedDefaultedOwed = calculatedDefaultedOwed + calculatedOverdueOwed + calculatedCurrentOwed + totalNewTax;
+          calculatedDefaultedOwed = calculatedDefaultedOwed +
+              calculatedOverdueOwed +
+              calculatedCurrentOwed +
+              totalNewTax;
           calculatedOverdueOwed = 0;
           calculatedCurrentOwed = 0;
-          taxAutoMessage = '🚨 Grace period expired! Shields down! Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
+          taxAutoMessage =
+              '🚨 Grace period expired! Shields down! Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
         } else {
           // Way overdue - accumulate in defaulted
-          calculatedDefaultedOwed = calculatedDefaultedOwed + calculatedOverdueOwed + calculatedCurrentOwed + totalNewTax;
+          calculatedDefaultedOwed = calculatedDefaultedOwed +
+              calculatedOverdueOwed +
+              calculatedCurrentOwed +
+              totalNewTax;
           calculatedOverdueOwed = 0;
           calculatedCurrentOwed = 0;
-          taxAutoMessage = '🚨 $missedCycles cycles missed! All in Default. Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
+          taxAutoMessage =
+              '🚨 $missedCycles cycles missed! All in Default. Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
         }
       }
     }
-    
+
     // Calculate existing tax due date in d/h/m
     final taxDueDaysController = TextEditingController();
     final taxDueHoursController = TextEditingController();
@@ -966,7 +1046,7 @@ class CharacterManagementScreen extends ConsumerWidget {
       taxDueHoursController.text = (taxDifference.inHours % 24).toString();
       taxDueMinutesController.text = (taxDifference.inMinutes % 60).toString();
     }
-    
+
     final currentOwedController = TextEditingController(
       text: calculatedCurrentOwed.toString(),
     );
@@ -1091,11 +1171,13 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('💡 Tax Calculator:', style: TextStyle(fontSize: 11)),
+                        const Text('💡 Tax Calculator:',
+                            style: TextStyle(fontSize: 11)),
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Text('4,000 base + ', style: TextStyle(fontSize: 11)),
+                            const Text('4,000 base + ',
+                                style: TextStyle(fontSize: 11)),
                             SizedBox(
                               width: 40,
                               child: TextField(
@@ -1105,7 +1187,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                                 decoration: const InputDecoration(
                                   hintText: '0',
                                   isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 4, vertical: 4),
                                 ),
                                 onChanged: (value) {
                                   final stakes = int.tryParse(value) ?? 0;
@@ -1114,10 +1197,14 @@ class CharacterManagementScreen extends ConsumerWidget {
                                 },
                               ),
                             ),
-                            const Text(' stakes × 2,000 = ', style: TextStyle(fontSize: 11)),
+                            const Text(' stakes × 2,000 = ',
+                                style: TextStyle(fontSize: 11)),
                             Text(
-                              taxPerCycleController.text.isEmpty ? '0' : taxPerCycleController.text,
-                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                              taxPerCycleController.text.isEmpty
+                                  ? '0'
+                                  : taxPerCycleController.text,
+                              style: const TextStyle(
+                                  fontSize: 11, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -1125,7 +1212,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text('Next Tax Due In:', style: TextStyle(fontSize: 12)),
+                  const Text('Next Tax Due In:',
+                      style: TextStyle(fontSize: 12)),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -1205,39 +1293,51 @@ class CharacterManagementScreen extends ConsumerWidget {
                   final days = int.tryParse(daysController.text) ?? 0;
                   final hours = int.tryParse(hoursController.text) ?? 0;
                   final minutes = int.tryParse(minutesController.text) ?? 0;
-                  
+
                   final expirationTime = DateTime.now().add(
                     Duration(days: days, hours: hours, minutes: minutes),
                   );
-                  
+
                   // Parse tax fields
-                  final taxPerCycle = isAdvancedFief && taxPerCycleController.text.isNotEmpty
-                      ? int.tryParse(taxPerCycleController.text)
-                      : null;
-                  
+                  final taxPerCycle =
+                      isAdvancedFief && taxPerCycleController.text.isNotEmpty
+                          ? int.tryParse(taxPerCycleController.text)
+                          : null;
+
                   // Parse tax due date from days/hours/minutes
                   DateTime? nextTaxDueDate;
                   if (isAdvancedFief) {
-                    final taxDueDays = int.tryParse(taxDueDaysController.text) ?? 0;
-                    final taxDueHours = int.tryParse(taxDueHoursController.text) ?? 0;
-                    final taxDueMinutes = int.tryParse(taxDueMinutesController.text) ?? 0;
-                    
-                    if (taxDueDays > 0 || taxDueHours > 0 || taxDueMinutes > 0) {
+                    final taxDueDays =
+                        int.tryParse(taxDueDaysController.text) ?? 0;
+                    final taxDueHours =
+                        int.tryParse(taxDueHoursController.text) ?? 0;
+                    final taxDueMinutes =
+                        int.tryParse(taxDueMinutesController.text) ?? 0;
+
+                    if (taxDueDays > 0 ||
+                        taxDueHours > 0 ||
+                        taxDueMinutes > 0) {
                       nextTaxDueDate = DateTime.now().add(
-                        Duration(days: taxDueDays, hours: taxDueHours, minutes: taxDueMinutes),
+                        Duration(
+                            days: taxDueDays,
+                            hours: taxDueHours,
+                            minutes: taxDueMinutes),
                       );
                     }
                   }
-                  
-                  final currentOwed = isAdvancedFief && currentOwedController.text.isNotEmpty
-                      ? int.tryParse(currentOwedController.text)
-                      : null;
-                  final overdueOwed = isAdvancedFief && overdueOwedController.text.isNotEmpty
-                      ? int.tryParse(overdueOwedController.text)
-                      : null;
-                  final defaultedOwed = isAdvancedFief && defaultedOwedController.text.isNotEmpty
-                      ? int.tryParse(defaultedOwedController.text)
-                      : null;
+
+                  final currentOwed =
+                      isAdvancedFief && currentOwedController.text.isNotEmpty
+                          ? int.tryParse(currentOwedController.text)
+                          : null;
+                  final overdueOwed =
+                      isAdvancedFief && overdueOwedController.text.isNotEmpty
+                          ? int.tryParse(overdueOwedController.text)
+                          : null;
+                  final defaultedOwed =
+                      isAdvancedFief && defaultedOwedController.text.isNotEmpty
+                          ? int.tryParse(defaultedOwedController.text)
+                          : null;
 
                   ref.read(basesProvider.notifier).updateBase(
                         base.copyWith(
@@ -1277,7 +1377,9 @@ class CharacterManagementScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () {
-              ref.read(basesProvider.notifier).deleteBase(base.id, base.characterId);
+              ref
+                  .read(basesProvider.notifier)
+                  .deleteBase(base.id, base.characterId);
               Navigator.of(context).pop(); // Close delete dialog
               Navigator.of(context).pop(); // Close base management dialog
             },
@@ -1288,19 +1390,19 @@ class CharacterManagementScreen extends ConsumerWidget {
       ),
     );
   }
-  
+
   Widget _buildTaxDisplay(BuildContext context, Base base) {
     final taxStatus = base.taxStatus;
     Color taxColor;
     String taxLabel;
-    
+
     switch (taxStatus) {
       case TaxStatus.defaulted:
         taxColor = DuneColors.criticalPrimary;
         taxLabel = 'DEFAULTED - SHIELDS DOWN!';
         break;
       case TaxStatus.overdue:
-        taxColor = DuneColors.warningPrimary;
+        taxColor = DuneColors.criticalPrimary;
         taxLabel = 'OVERDUE';
         break;
       case TaxStatus.due:
@@ -1314,41 +1416,49 @@ class CharacterManagementScreen extends ConsumerWidget {
       case TaxStatus.none:
         return const SizedBox.shrink();
     }
-    
+
     final totalOwed = base.totalTaxOwed;
     final taxPerCycle = base.taxPerCycle ?? 0;
-    
-    // Calculate tax countdown in d/h/m format (matching power format)
-    // Logic: 
-    // - If money is owed, use stored date (shows how overdue you are)
-    // - If paid up (totalOwed = 0), use effective date (auto-rolled to next cycle)
+
+    // Determine which date to display based on status:
+    // - PAID: Show when NEXT payment is due (effectiveNextTaxDueDate)
+    // - DUE: Show time until due (effectiveNextTaxDueDate)
+    // - OVERDUE/DEFAULTED: Show how long overdue from original due date (nextTaxDueDate)
     String? taxDueText;
-    final bool isPaidUp = totalOwed == 0;
-    final DateTime? displayDate = isPaidUp 
-        ? base.effectiveNextTaxDueDate  // Auto-roll when paid
-        : base.nextTaxDueDate;          // Show actual overdue when owing
-    
-    if (displayDate != null) {
-      final now = DateTime.now();
-      final difference = displayDate.difference(now);
-      final totalMinutes = difference.inMinutes;
-      
-      if (totalMinutes >= 0) {
-        // Due date is in the future - show countdown
-        final days = difference.inDays;
-        final hours = (difference.inHours % 24);
-        final minutes = (difference.inMinutes % 60);
-        taxDueText = 'Due in: ${days}d ${hours}h ${minutes}m';
-      } else {
-        // Due date is in the past - show how overdue
-        final absDifference = now.difference(displayDate);
-        final days = absDifference.inDays;
-        final hours = (absDifference.inHours % 24);
-        final minutes = (absDifference.inMinutes % 60);
-        taxDueText = 'Overdue by: ${days}d ${hours}h ${minutes}m';
+    final DateTime? effectiveDate = base.effectiveNextTaxDueDate;
+    final DateTime? originalDate = base.nextTaxDueDate;
+
+    if (taxStatus == TaxStatus.paid || taxStatus == TaxStatus.due) {
+      // For PAID and DUE: show countdown to next/current due date
+      if (effectiveDate != null) {
+        final now = DateTime.now();
+        final difference = effectiveDate.difference(now);
+        final days = difference.inDays.abs();
+        final hours = (difference.inHours % 24).abs();
+        final minutes = (difference.inMinutes % 60).abs();
+
+        if (difference.inMinutes >= 0) {
+          final prefix = taxStatus == TaxStatus.paid ? 'Next Due' : 'Due in';
+          taxDueText = '$prefix: ${days}d ${hours}h ${minutes}m';
+        } else {
+          // Edge case: DUE but effective date is somehow past (shouldn't happen)
+          taxDueText = 'Due in: ${days}d ${hours}h ${minutes}m';
+        }
+      }
+    } else {
+      // For OVERDUE and DEFAULTED: show how long since original due date
+      if (originalDate != null) {
+        final now = DateTime.now();
+        final absDifference = now.difference(originalDate);
+        if (absDifference.inMinutes > 0) {
+          final days = absDifference.inDays;
+          final hours = (absDifference.inHours % 24);
+          final minutes = (absDifference.inMinutes % 60);
+          taxDueText = 'Overdue by: ${days}d ${hours}h ${minutes}m';
+        }
       }
     }
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1382,7 +1492,7 @@ class CharacterManagementScreen extends ConsumerWidget {
             'Amount Owed: ${totalOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari',
             style: TextStyle(
               color: taxColor,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w500,
               fontSize: 12,
             ),
           ),
@@ -1394,9 +1504,15 @@ class CharacterManagementScreen extends ConsumerWidget {
           Text(
             taxDueText,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: displayDate != null && displayDate.isBefore(DateTime.now()) ? taxColor : null,
-              fontWeight: displayDate != null && displayDate.isBefore(DateTime.now()) ? FontWeight.bold : null,
-            ),
+                  color: (taxStatus == TaxStatus.overdue ||
+                          taxStatus == TaxStatus.defaulted)
+                      ? taxColor
+                      : null,
+                  fontWeight: (taxStatus == TaxStatus.overdue ||
+                          taxStatus == TaxStatus.defaulted)
+                      ? FontWeight.bold
+                      : null,
+                ),
           ),
       ],
     );
