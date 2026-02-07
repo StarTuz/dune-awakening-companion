@@ -19,7 +19,7 @@ jobs:
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev libayatana-appindicator3-dev libfuse2 squashfs-tools
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev libayatana-appindicator3-dev libfuse2
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -43,35 +43,67 @@ jobs:
           mv bundle dune-awakening-companion
           tar -czvf dune-awakening-companion-${{ github.ref_name }}-linux-x64.tar.gz dune-awakening-companion/
 
-      - name: Install AppImage builder
+      - name: Build AppImage
         run: |
-          python3 -m pip install --user appimage-builder
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          # Download appimagetool
+          wget -q -O appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
 
-      - name: Prepare AppImage AppDir
-        run: |
+          # Assemble AppDir from the Flutter build output
           cd build/linux/x64/release
           rm -rf AppDir
-          mkdir -p AppDir
-          cp -r dune-awakening-companion/* AppDir/
+          mkdir -p AppDir/usr/bin
+          mkdir -p AppDir/usr/lib
           mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
+
+          # Copy the Flutter bundle contents
+          cp -r dune-awakening-companion/* AppDir/usr/bin/
+
+          # Move bundled libs to usr/lib so AppRun's LD_LIBRARY_PATH finds them
+          if [ -d AppDir/usr/bin/lib ]; then
+            mv AppDir/usr/bin/lib/* AppDir/usr/lib/
+            rmdir AppDir/usr/bin/lib
+          fi
+
+          # Copy icon
           cp ../../../../assets/app_icon.png \
             AppDir/usr/share/icons/hicolor/256x256/apps/dune_awakening_companion.png
+          cp ../../../../assets/app_icon.png AppDir/dune_awakening_companion.png
 
-      - name: Build AppImage
-        env:
-          APP_VERSION: ${{ github.ref_name }}
-          APPDIR_PATH: ${{ github.workspace }}/build/linux/x64/release/AppDir
-        run: |
-          appimage-builder --recipe appimage-builder.yml --skip-test
-          appimage_file=$(find . -name "*.AppImage" -print -quit)
-          if [[ -z "$appimage_file" ]]; then
-            echo "Error: No AppImage file found after build."
+          # Create .desktop file
+          cat > AppDir/dune_awakening_companion.desktop << 'DESKTOP'
+          [Desktop Entry]
+          Type=Application
+          Name=Dune Awakening Companion
+          Icon=dune_awakening_companion
+          Exec=dune_awakening_companion
+          Categories=Utility;
+          DESKTOP
+          # Strip leading whitespace from heredoc
+          sed -i 's/^          //' AppDir/dune_awakening_companion.desktop
+
+          # Create AppRun script
+          cat > AppDir/AppRun << 'APPRUN'
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "$0")")"
+          export LD_LIBRARY_PATH="$HERE/usr/lib:${LD_LIBRARY_PATH}"
+          exec "$HERE/usr/bin/dune_awakening_companion" "$@"
+          APPRUN
+          sed -i 's/^          //' AppDir/AppRun
+          chmod +x AppDir/AppRun
+
+          cd "$GITHUB_WORKSPACE"
+
+          # Build the AppImage
+          ARCH=x86_64 ./appimagetool build/linux/x64/release/AppDir \
+            "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage"
+
+          # Verify it was created
+          if [[ ! -f "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage" ]]; then
+            echo "Error: AppImage was not created."
             exit 1
           fi
-          echo "Found AppImage: $appimage_file"
-          mv "$appimage_file" \
-            "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage"
+          echo "AppImage built successfully."
 
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v4
