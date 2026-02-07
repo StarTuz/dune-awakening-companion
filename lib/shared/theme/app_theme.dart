@@ -8,7 +8,7 @@ class AppTheme {
       brightness: Brightness.dark,
       
       // Color Scheme
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: DuneColors.primaryAccent,
         secondary: DuneColors.secondaryAccent,
         surface: DuneColors.secondaryBackground,
@@ -30,7 +30,7 @@ class AppTheme {
         foregroundColor: DuneColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: DuneColors.primaryText,
         ),
       ),
@@ -251,7 +251,7 @@ class AppTheme {
       brightness: Brightness.light,
       
       // Color Scheme
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: DuneColorsLight.primaryAccent,
         secondary: DuneColorsLight.secondaryAccent,
         surface: DuneColorsLight.secondaryBackground,
@@ -522,7 +522,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: AtreidesColors.primaryAccent,
         secondary: AtreidesColors.secondaryAccent,
         surface: AtreidesColors.secondaryBackground,
@@ -602,7 +602,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: HarkonnenColors.primaryAccent,
         secondary: HarkonnenColors.secondaryAccent,
         surface: HarkonnenColors.secondaryBackground,
@@ -682,7 +682,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: FremenColors.primaryAccent,
         secondary: FremenColors.secondaryAccent,
         surface: FremenColors.secondaryBackground,
@@ -762,7 +762,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: SmugglerColors.primaryAccent,
         secondary: SmugglerColors.secondaryAccent,
         surface: SmugglerColors.secondaryBackground,

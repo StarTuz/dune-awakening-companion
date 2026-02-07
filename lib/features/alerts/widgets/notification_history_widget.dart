@@ -49,7 +49,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
             const SizedBox(height: 16),
             Text(
               l10n.noHistoryTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 color: AppColors.textSecondary,
               ),
@@ -79,7 +79,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
                 if (historyState.unreadCount > 0)
                   Text(
                     l10n.entriesUnread(historyState.unreadCount),
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: AppColors.primaryAccent,
                       fontWeight: FontWeight.bold,
                     ),
@@ -230,7 +230,7 @@ class _NotificationHistoryTile extends StatelessWidget {
                           Container(
                             width: 8,
                             height: 8,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: AppColors.primaryAccent,
                               shape: BoxShape.circle,
                             ),
@@ -240,7 +240,7 @@ class _NotificationHistoryTile extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       entry.body,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 13,
                         color: AppColors.textSecondary,
                       ),

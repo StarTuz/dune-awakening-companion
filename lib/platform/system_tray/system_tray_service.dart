@@ -24,11 +24,11 @@ class SystemTrayService {
       // For now, this is a placeholder
       _initialized = true;
       if (kDebugMode) {
-        print('System tray service initialized');
+        debugPrint('System tray service initialized');
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Failed to initialize system tray: $e');
+        debugPrint('Failed to initialize system tray: $e');
       }
     }
   }

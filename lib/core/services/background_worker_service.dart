@@ -1,5 +1,6 @@
-import 'package:workmanager/workmanager.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:workmanager/workmanager.dart';
 import '../database/app_database.dart';
 import '../../features/bases/services/base_repository.dart';
 import '../../features/characters/services/character_repository.dart';
@@ -132,7 +133,7 @@ void callbackDispatcher() {
 
       return Future.value(true);
     } catch (e) {
-      print('Background task error: $e');
+      debugPrint('Background task error: $e');
       return Future.value(false);
     }
   });

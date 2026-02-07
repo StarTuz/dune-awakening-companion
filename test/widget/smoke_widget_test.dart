@@ -1,0 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  testWidgets('widget smoke test', (tester) async {
+    await tester.pumpWidget(const Directionality(
+      textDirection: TextDirection.ltr,
+      child: SizedBox(),
+    ));
+
+    expect(find.byType(SizedBox), findsOneWidget);
+  });
+}

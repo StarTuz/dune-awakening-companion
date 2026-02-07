@@ -1,5 +1,6 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'notification_settings.dart';
 
 class NotificationService {
@@ -27,7 +28,7 @@ class NotificationService {
       requestSoundPermission: true,
     );
 
-    print('[NotificationService] Initializing...');
+    debugPrint('[NotificationService] Initializing...');
     
     // Linux initialization
     const linuxSettings = LinuxInitializationSettings(
@@ -42,7 +43,7 @@ class NotificationService {
       guid: 'd5e8a7b3-4c2f-4a1e-9d3b-6f8c2e1a5b7d',
     );
 
-    final initSettings = InitializationSettings(
+    const initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
       linux: linuxSettings,
@@ -54,7 +55,7 @@ class NotificationService {
       initSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
-    print('[NotificationService] Plugin initialized');
+    debugPrint('[NotificationService] Plugin initialized');
 
     // Request permissions (iOS/Android)
     if (Platform.isIOS || Platform.isAndroid) {
@@ -117,7 +118,7 @@ class NotificationService {
   /// Handle notification tap
   void _onNotificationTapped(NotificationResponse response) {
     // TODO: Navigate to specific screen based on payload
-    print('Notification tapped: ${response.payload}');
+    debugPrint('Notification tapped: ${response.payload}');
     // Will be implemented when we integrate with navigation
   }
 
@@ -224,12 +225,15 @@ class NotificationService {
     );
 
     try {
-      print('[NotificationService] Showing notification: $title (ID: $id, sound: $soundEnabled, vibration: $vibrationEnabled)');
+      debugPrint(
+        '[NotificationService] Showing notification: $title '
+        '(ID: $id, sound: $soundEnabled, vibration: $vibrationEnabled)',
+      );
       await _notifications.show(id, title, body, details, payload: payload);
-      print('[NotificationService] Notification shown successfully');
+      debugPrint('[NotificationService] Notification shown successfully');
     } catch (e, stack) {
-      print('[NotificationService] Error showing notification: $e');
-      print(stack);
+      debugPrint('[NotificationService] Error showing notification: $e');
+      debugPrint(stack.toString());
       // Don't rethrow, just log, so the app doesn't crash
     }
   }
@@ -240,7 +244,7 @@ class NotificationService {
     required String message,
   }) async {
     // Always show simple notifications (bypass _notificationsEnabled check)
-    final androidDetails = const AndroidNotificationDetails(
+    const androidDetails = AndroidNotificationDetails(
       'app_messages',
       'App Messages',
       channelDescription: 'General app notifications',
@@ -256,7 +260,7 @@ class NotificationService {
 
     const linuxDetails = LinuxNotificationDetails();
 
-    final details = NotificationDetails(
+    const details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
       linux: linuxDetails,

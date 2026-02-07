@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FLUTTER_VERSION: '3.38.5'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      COVERAGE_THRESHOLD: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev libayatana-appindicator3-dev
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: Cache pub packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-pub-
+
+      - name: Cache build artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            .dart_tool
+            build
+          key: ${{ runner.os }}-build-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: ${{ runner.os }}-build-
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Generate code
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Check formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Static analysis
+        run: flutter analyze
+
+      - name: Dependency report
+        run: bash scripts/ci/deps_audit.sh
+
+      - name: Run tests with coverage
+        run: flutter test --coverage
+
+      - name: Enforce coverage threshold
+        run: bash scripts/ci/check_coverage.sh
+
+      - name: Coverage summary
+        run: bash scripts/ci/coverage_summary.sh >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Generate SBOM
+        run: bash scripts/ci/sbom.sh
+
+      - name: SBOM summary
+        run: echo -e "## SBOM\n\n- File: build/sbom.json\n" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Dependency report summary
+        run: echo -e "## Dependencies\n\n- File: build/deps_outdated.json\n" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Code metrics (informational)
+        if: always()
+        run: bash scripts/ci/metrics.sh
+
+      - name: Build Linux (debug)
+        run: flutter build linux --debug

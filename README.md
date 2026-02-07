@@ -279,6 +279,24 @@ lib/
 | **[FAQ.md](./FAQ.md)** | Frequently asked questions |
 | **[NEXT_STEPS.md](./NEXT_STEPS.md)** | Development roadmap |
 | **[PLAN.md](./PLAN.md)** | Original architecture planning |
+| **[docs/CHAPTER3_RESEARCH.md](./docs/CHAPTER3_RESEARCH.md)** | Chapter 3 and early 2026 patch research |
+| **[docs/SIGNING_GUIDE.md](./docs/SIGNING_GUIDE.md)** | Release signing for all platforms |
+| **[docs/RELEASE_CHECKLIST.md](./docs/RELEASE_CHECKLIST.md)** | Pre-release checklist |
+| **[docs/RELEASE_NOTES_TEMPLATE.md](./docs/RELEASE_NOTES_TEMPLATE.md)** | Standardized release notes template |
+| **[docs/SECURITY_CHECKLIST.md](./docs/SECURITY_CHECKLIST.md)** | Ongoing security review checklist |
+| **[docs/ROADMAP_2026.md](./docs/ROADMAP_2026.md)** | 2026 engineering + product roadmap |
+| **[docs/ENGINEERING_TASKLIST.md](./docs/ENGINEERING_TASKLIST.md)** | Engineering tasks (100% complete) |
+
+---
+
+## Chapter 3 Research (Feb 2026)
+- Chapter 3 release date: Feb 3, 2026 (Funcom Developer Update).
+- Taxes removed: base taxes are eliminated starting Chapter 3.
+- Return packages: claimable after 28+ days of inactivity.
+- Endgame revamp: Landsraad redesign, Specializations, Augmentations.
+- New content: repeatable testing stations, new locations, new weapons.
+
+Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ---
 

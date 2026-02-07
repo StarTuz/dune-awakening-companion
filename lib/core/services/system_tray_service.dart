@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
@@ -43,9 +44,9 @@ class SystemTrayService with TrayListener, WindowListener {
       
       // Initialize tray manager with absolute path
       await trayManager.setIcon(iconPath);
-      print('[SystemTray] Icon set to: $iconPath');
+      debugPrint('[SystemTray] Icon set to: $iconPath');
     } catch (e) {
-      print('[SystemTray] Error setting icon: $e');
+      debugPrint('[SystemTray] Error setting icon: $e');
     }
 
     // Set up context menu
@@ -70,19 +71,19 @@ class SystemTrayService with TrayListener, WindowListener {
       
       // Check if custom ICO exists in assets, otherwise fall back to Windows runner icon
       if (await File(icoPath).exists()) {
-        print('[SystemTray] Using ICO from assets: $icoPath');
+        debugPrint('[SystemTray] Using ICO from assets: $icoPath');
         return icoPath;
       }
       
       // Fall back to the runner resources icon
       final fallbackIco = path.join(exeDir, 'app_icon.ico');
       if (await File(fallbackIco).exists()) {
-        print('[SystemTray] Using fallback ICO: $fallbackIco');
+        debugPrint('[SystemTray] Using fallback ICO: $fallbackIco');
         return fallbackIco;
       }
       
       // Create a minimal ICO from embedded data if nothing else works
-      print('[SystemTray] Warning: No ICO file found, tray icon may not appear');
+      debugPrint('[SystemTray] Warning: No ICO file found, tray icon may not appear');
       return icoPath; // Return path anyway, will fail gracefully
     } else {
       // Linux/macOS: Load PNG from assets
@@ -92,7 +93,7 @@ class SystemTrayService with TrayListener, WindowListener {
       final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
       await iconFile.writeAsBytes(bytes);
       
-      print('[SystemTray] Icon prepared at: ${iconFile.path}');
+      debugPrint('[SystemTray] Icon prepared at: ${iconFile.path}');
       return iconFile.path;
     }
   }
@@ -112,7 +113,7 @@ class SystemTrayService with TrayListener, WindowListener {
       await trayManager.setToolTip(tooltipText);
     } catch (e) {
       // setToolTip not supported on this platform
-      print('[SystemTray] setToolTip not supported: $e');
+      debugPrint('[SystemTray] setToolTip not supported: $e');
     }
 
     // On Linux, also use setTitle as a workaround
@@ -120,9 +121,9 @@ class SystemTrayService with TrayListener, WindowListener {
     if (Platform.isLinux) {
       try {
         await trayManager.setTitle(tooltipText);
-        print('[SystemTray] Linux: Using setTitle as tooltip workaround');
+        debugPrint('[SystemTray] Linux: Using setTitle as tooltip workaround');
       } catch (e) {
-        print('[SystemTray] setTitle failed: $e');
+        debugPrint('[SystemTray] setTitle failed: $e');
       }
     }
 

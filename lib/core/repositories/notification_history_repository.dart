@@ -24,7 +24,7 @@ class NotificationHistoryRepository {
       orderBy: 'sent_at DESC',
       limit: limit,
     );
-    return results.map((row) => NotificationHistoryEntry.fromMap(row)).toList();
+    return results.map(NotificationHistoryEntry.fromMap).toList();
   }
 
   /// Get unread notifications
@@ -36,7 +36,7 @@ class NotificationHistoryRepository {
       whereArgs: [0],
       orderBy: 'sent_at DESC',
     );
-    return results.map((row) => NotificationHistoryEntry.fromMap(row)).toList();
+    return results.map(NotificationHistoryEntry.fromMap).toList();
   }
 
   /// Get unread count

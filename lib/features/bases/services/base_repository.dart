@@ -9,7 +9,7 @@ class BaseRepository {
   Future<List<Base>> getAll() async {
     final db = await _database.database;
     final maps = await db.query('bases', orderBy: 'created_at DESC');
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<Base?> getById(String id) async {
@@ -32,7 +32,7 @@ class BaseRepository {
       whereArgs: [characterId],
       orderBy: 'power_expiration_time ASC',
     );
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<List<Base>> getExpiringSoon() async {
@@ -48,7 +48,7 @@ class BaseRepository {
       ],
       orderBy: 'power_expiration_time ASC',
     );
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<String> create(Base base) async {

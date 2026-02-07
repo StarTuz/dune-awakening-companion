@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:archive/archive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import '../../characters/models/character.dart';
@@ -148,7 +149,7 @@ class ImportService {
           await _characterRepository.create(character);
           charactersImported++;
         } catch (e) {
-          print('Error importing character: $e');
+          debugPrint('Error importing character: $e');
         }
       }
       
@@ -162,7 +163,7 @@ class ImportService {
           await _baseRepository.create(base);
           basesImported++;
         } catch (e) {
-          print('Error importing base: $e');
+          debugPrint('Error importing base: $e');
         }
       }
       
@@ -221,7 +222,7 @@ class ImportService {
           await _characterRepository.create(character);
           charactersImported++;
         } catch (e) {
-          print('Error importing character ${character.name}: $e');
+          debugPrint('Error importing character ${character.name}: $e');
         }
       }
 
@@ -232,7 +233,7 @@ class ImportService {
           await _baseRepository.create(base);
           basesImported++;
         } catch (e) {
-          print('Error importing base ${base.name}: $e');
+          debugPrint('Error importing base ${base.name}: $e');
         }
       }
 
@@ -344,7 +345,7 @@ class ImportService {
         'portraitCount': portraitCount ?? 0,
       };
     } catch (e) {
-      print('Error previewing import: $e');
+      debugPrint('Error previewing import: $e');
       return null;
     }
   }

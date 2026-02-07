@@ -11,7 +11,7 @@ class AlertRepository {
   Future<List<Alert>> getAll() async {
     final db = await _database.database;
     final maps = await db.query('alerts', orderBy: 'created_at DESC');
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<Alert?> getById(String id) async {
@@ -34,7 +34,7 @@ class AlertRepository {
       whereArgs: [baseId],
       orderBy: 'created_at DESC',
     );
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<List<Alert>> getActive() async {
@@ -44,7 +44,7 @@ class AlertRepository {
       where: 'acknowledged_at IS NULL AND dismissed_at IS NULL',
       orderBy: 'created_at DESC',
     );
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<String> create(Alert alert) async {

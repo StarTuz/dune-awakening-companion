@@ -11,9 +11,7 @@ final notificationManagerProvider = Provider<NotificationManager>((ref) {
   final manager = NotificationManager(notificationService, coordinator);
 
   // Clean up when provider is disposed
-  ref.onDispose(() {
-    manager.dispose();
-  });
+  ref.onDispose(manager.dispose);
 
   return manager;
 });

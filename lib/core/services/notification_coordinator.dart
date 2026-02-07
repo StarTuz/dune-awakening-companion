@@ -1,9 +1,10 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import '../services/notification_service.dart';
 import '../services/notification_settings.dart';
 import '../services/alert_checker_service.dart';
 import '../repositories/notification_history_repository.dart';
 import '../models/notification_history_entry.dart';
-import 'dart:async';
 
 /// Coordinates alert checking and notification triggering
 class NotificationCoordinator {
@@ -47,12 +48,14 @@ class NotificationCoordinator {
 
   /// Perform a single check and send notifications
   Future<void> checkAndNotify({bool includeWarnings = false}) async {
-    print('[NotificationCoordinator] Starting alert check...');
+    debugPrint('[NotificationCoordinator] Starting alert check...');
     
     // Check if we're in quiet hours
     final inQuietHours = await NotificationSettings.isInQuietHours();
     if (inQuietHours) {
-      print('[NotificationCoordinator] Currently in quiet hours - skipping notifications');
+      debugPrint(
+        '[NotificationCoordinator] Currently in quiet hours - skipping notifications',
+      );
       return;
     }
     
@@ -60,7 +63,7 @@ class NotificationCoordinator {
       includeWarnings: includeWarnings,
     );
 
-    print('[NotificationCoordinator] Found ${alerts.length} alerts');
+    debugPrint('[NotificationCoordinator] Found ${alerts.length} alerts');
 
     // Group alerts by base to avoid spam
     final Map<String, List<BaseAlert>> alertsByBase = {};
@@ -68,7 +71,9 @@ class NotificationCoordinator {
       alertsByBase.putIfAbsent(alert.base.id, () => []).add(alert);
     }
 
-    print('[NotificationCoordinator] Grouped into ${alertsByBase.length} bases');
+    debugPrint(
+      '[NotificationCoordinator] Grouped into ${alertsByBase.length} bases',
+    );
 
     // Send notifications (limit to avoid spam)
     int notificationCount = 0;
@@ -86,12 +91,14 @@ class NotificationCoordinator {
           ? criticalAlerts.first 
           : baseAlerts.first;
 
-      print('[NotificationCoordinator] Sending notification for ${alertToSend.base.name}');
+      debugPrint(
+        '[NotificationCoordinator] Sending notification for ${alertToSend.base.name}',
+      );
       await _sendNotificationForAlert(alertToSend);
       notificationCount++;
     }
 
-    print('[NotificationCoordinator] Sent $notificationCount notifications');
+    debugPrint('[NotificationCoordinator] Sent $notificationCount notifications');
   }
 
   /// Send notification for a specific alert
@@ -153,7 +160,7 @@ class NotificationCoordinator {
     );
     
     await _historyRepository.addEntry(historyEntry);
-    print('[NotificationCoordinator] Saved notification to history');
+    debugPrint('[NotificationCoordinator] Saved notification to history');
   }
 
   /// Get current alert count

@@ -21,7 +21,7 @@ class SettingsNotifier extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
     try {
       state = const AsyncValue.loading();
       // Load any saved settings
-      state = AsyncValue.data({});
+      state = const AsyncValue.data({});
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:archive/archive.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import '../../characters/services/character_repository.dart';
@@ -98,7 +99,7 @@ class ExportService {
 
       return outputPath;
     } catch (e) {
-      print('Error exporting data: $e');
+      debugPrint('Error exporting data: $e');
       return null;
     }
   }

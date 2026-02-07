@@ -137,13 +137,12 @@ class CharacterManagementScreen extends ConsumerWidget {
                         ? FileImage(File(selectedPortraitPath!))
                         : null,
                     child: selectedPortraitPath == null
-                        ? Column(
+                        ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait',
-                                  style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -358,13 +357,12 @@ class CharacterManagementScreen extends ConsumerWidget {
                         ? FileImage(File(selectedPortraitPath!))
                         : null,
                     child: selectedPortraitPath == null
-                        ? Column(
+                        ? const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait',
-                                  style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -627,7 +625,6 @@ class CharacterManagementScreen extends ConsumerWidget {
                         : 'Power: Expired';
 
                     // Tax calculations
-                    final taxStatus = base.taxStatus;
                     final hasTax =
                         base.isAdvancedFief && base.taxPerCycle != null;
 
@@ -1003,9 +1000,6 @@ class CharacterManagementScreen extends ConsumerWidget {
 
         // Grace period logic
         const gracePeriodDays = 14; // 14 days grace after due date
-        final defaultedThreshold =
-            gracePeriodDays; // After grace = shields down
-
         if (daysPastDue <= gracePeriodDays) {
           // Within grace period - current becomes overdue, add new current
           calculatedOverdueOwed = calculatedOverdueOwed + calculatedCurrentOwed;
@@ -1465,9 +1459,9 @@ class CharacterManagementScreen extends ConsumerWidget {
         Row(
           children: [
             const Text('💰 ', style: TextStyle(fontSize: 16)),
-            Text(
+            const Text(
               'Tax: ',
-              style: const TextStyle(fontWeight: FontWeight.w500),
+              style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

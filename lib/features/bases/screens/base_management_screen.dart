@@ -132,11 +132,13 @@ class BaseManagementScreen extends ConsumerWidget {
                     firstDate: DateTime.now(),
                     lastDate: DateTime.now().add(const Duration(days: 365)),
                   );
+                  if (!context.mounted) return;
                   if (date != null) {
                     final time = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.now(),
                     );
+                    if (!context.mounted) return;
                     if (time != null) {
                       selectedDate = DateTime(
                         date.year,
@@ -213,11 +215,13 @@ class BaseManagementScreen extends ConsumerWidget {
                     firstDate: DateTime.now(),
                     lastDate: DateTime.now().add(const Duration(days: 365)),
                   );
+                  if (!context.mounted) return;
                   if (date != null) {
                     final time = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.fromDateTime(selectedDate ?? DateTime.now()),
                     );
+                    if (!context.mounted) return;
                     if (time != null) {
                       selectedDate = DateTime(
                         date.year,
