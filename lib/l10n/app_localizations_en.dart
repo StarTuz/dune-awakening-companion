@@ -102,9 +102,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timeRemainingPower => 'Time Remaining: Power';
 
   @override
-  String get timeRemainingTaxes => 'Time Remaining: Taxes';
-
-  @override
   String get expiresLabel => 'Expires';
 
   @override
@@ -118,11 +115,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get severityWarning => 'WARNING';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Overdue: $time';
-  }
 
   @override
   String get daysAbbr => 'd';
@@ -521,12 +513,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get powerMinutes => 'Minutes';
 
   @override
-  String get advancedFief => 'Advanced Fief';
-
-  @override
-  String get advancedFiefDesc => 'Enable for tax tracking';
-
-  @override
   String get addBase => 'Add Base';
 
   @override
@@ -540,21 +526,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get power => 'Power';
-
-  @override
-  String get taxes => 'Taxes';
-
-  @override
-  String get taxPerCycle => 'Tax Per Cycle';
-
-  @override
-  String get currentOwed => 'Current Owed';
-
-  @override
-  String get overdueOwed => 'Overdue Owed';
-
-  @override
-  String get defaultedOwed => 'Defaulted Owed';
 
   @override
   String get statusPaid => 'PAID';
@@ -591,9 +562,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get powerCritical => 'Power Critical!';
-
-  @override
-  String get taxOverdue => 'Tax Overdue!';
 
   @override
   String get exportSuccess => 'Data exported successfully';

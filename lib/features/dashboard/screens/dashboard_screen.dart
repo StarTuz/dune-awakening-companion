@@ -78,18 +78,8 @@ class DashboardScreen extends ConsumerWidget {
                   data: (bases) {
                     final now = DateTime.now();
                     final expiringSoon = bases.where((base) {
-                      // Power expiring soon
                       final powerHours = base.powerExpirationTime.difference(now).inMinutes / 60.0;
-                      final powerExpiring = powerHours < 48 && powerHours > 0;
-                      
-                      // Tax expiring soon (if applicable AND actually owed)
-                      bool taxExpiring = false;
-                      if (base.isAdvancedFief && base.nextTaxDueDate != null && base.totalTaxOwed > 0) {
-                        final taxHours = base.nextTaxDueDate!.difference(now).inMinutes / 60.0;
-                        taxExpiring = taxHours < 48;
-                      }
-                      
-                      return powerExpiring || taxExpiring;
+                      return powerHours < 48 && powerHours > 0;
                     }).length;
                     
                     return _StatCard(
@@ -118,14 +108,8 @@ class DashboardScreen extends ConsumerWidget {
                   data: (bases) {
                     final now = DateTime.now();
                     final criticalBases = bases.where((base) {
-                      // Critical power (< 24 hours)
                       final powerHours = base.powerExpirationTime.difference(now).inMinutes / 60.0;
-                      final powerCritical = powerHours < 24;
-                      
-                      // Critical tax (overdue or defaulted)
-                      final taxCritical = base.isTaxCritical;
-                      
-                      return powerCritical || taxCritical;
+                      return powerHours < 24;
                     }).length;
                     
                     return _StatCard(

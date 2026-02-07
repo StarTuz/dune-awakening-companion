@@ -103,9 +103,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get timeRemainingPower => 'Залишок Часу: Енергія';
 
   @override
-  String get timeRemainingTaxes => 'Залишок Часу: Податки';
-
-  @override
   String get expiresLabel => 'Закінчується';
 
   @override
@@ -119,11 +116,6 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get severityWarning => 'ПОПЕРЕДЖЕННЯ';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Прострочено: $time';
-  }
 
   @override
   String get daysAbbr => 'д';
@@ -523,12 +515,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get powerMinutes => 'Хвилини';
 
   @override
-  String get advancedFief => 'Розширений Феод';
-
-  @override
-  String get advancedFiefDesc => 'Увімкнути для відстеження податків';
-
-  @override
   String get addBase => 'Додати Базу';
 
   @override
@@ -542,21 +528,6 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get power => 'Енергія';
-
-  @override
-  String get taxes => 'Податки';
-
-  @override
-  String get taxPerCycle => 'Податок за Цикл';
-
-  @override
-  String get currentOwed => 'Поточний Борг';
-
-  @override
-  String get overdueOwed => 'Прострочений Борг';
-
-  @override
-  String get defaultedOwed => 'Невиплачений Борг';
 
   @override
   String get statusPaid => 'СПЛАЧЕНО';
@@ -593,9 +564,6 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get powerCritical => 'Критична Енергія!';
-
-  @override
-  String get taxOverdue => 'Прострочені Податки!';
 
   @override
   String get exportSuccess => 'Дані успішно експортовано';

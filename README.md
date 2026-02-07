@@ -1,6 +1,6 @@
 # <img src="assets/app_icon.png" width="48" height="48" alt="App Icon" style="vertical-align: bottom;"> Dune Awakening Companion App
 
-A cross-platform companion application for managing characters, bases, power countdowns, and taxes in **Dune Awakening**.
+A cross-platform companion application for managing characters, bases, and power countdowns in **Dune Awakening**.
 
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
@@ -29,16 +29,6 @@ A cross-platform companion application for managing characters, bases, power cou
   - 🟢 **Green:** > 24 hours (Safe)
 - Easy refuel updates via edit dialog
 
-### 💰 Advanced Tax Tracking
-- Complete tax management for **Advanced Fiefs**
-- **Tax Per Cycle** with built-in calculator (4,000 base + Stakes × 2,000)
-- **Smart Auto-Increment:** Detects missed tax cycles when editing
-- Separate tracking for:
-  - Current Owed (current cycle)
-  - Overdue Owed (grace period: < 14 days)
-  - Defaulted Owed (shields down: > 14 days)
-- Status badges: PAID / DUE / OVERDUE / DEFAULTED
-
 ### 🔔 Notifications & System Tray
 - **Desktop:** System tray integration with right-click menu
   - Show Window, Check Alerts, Toggle Notifications, Quit
@@ -47,7 +37,6 @@ A cross-platform companion application for managing characters, bases, power cou
 - **Mobile:** Background WorkManager checks
 - Configurable check intervals (15/30/60 minutes)
 - Power alerts (⚡ Power Critical!)
-- Tax alerts (💰 Tax Overdue!)
 - **🌙 Quiet Hours:** Customizable Do Not Disturb (default 10 PM - 8 AM)
 - **🔊 Sound/Vibration:** Toggle notification sounds and haptics
 - **📜 History:** View past notifications, mark as read, clear
@@ -66,14 +55,14 @@ A cross-platform companion application for managing characters, bases, power cou
 - Detailed alerts screen with:
   - Base severity labels (CRITICAL/WARNING)
   - Full character context
-  - Time remaining for both Power and Taxes
+  - Time remaining for Power
   - One-tap navigation to manage bases
 
 ### 📊 Dashboard Overview
 - Real-time statistics from database
 - Character and base counts
 - Expiring Soon count (< 48h)
-- Active Alerts count (< 24h or critical tax)
+- Active Alerts count (< 24h)
 - Pull-to-refresh support
 
 ### 🌍 Multi-Language Support
@@ -291,7 +280,7 @@ lib/
 
 ## Chapter 3 Research (Feb 2026)
 - Chapter 3 release date: Feb 3, 2026 (Funcom Developer Update).
-- Taxes removed: base taxes are eliminated starting Chapter 3.
+- Taxes removed: base taxes were eliminated starting Chapter 3 (tax system removed from app).
 - Return packages: claimable after 28+ days of inactivity.
 - Endgame revamp: Landsraad redesign, Specializations, Augmentations.
 - New content: repeatable testing stations, new locations, new weapons.
@@ -307,7 +296,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Multi-character management
 - [x] Unlimited base tracking
 - [x] Power countdown system (D/H/M)
-- [x] Tax tracking for Advanced Fiefs
+- [x] ~~Tax tracking for Advanced Fiefs~~ (removed — Chapter 3 eliminated in-game taxes)
 - [x] Character portraits
 - [x] Export/Import data backups
 - [x] Alert system (<48h warning, <24h critical)
@@ -400,6 +389,6 @@ For questions, suggestions, or issues:
 
 **Built with ❤️ for the Dune Awakening community**
 
-*May your power stay charged and your taxes stay paid.* 🏜️
+*May your power stay charged.* 🏜️
 
 </div>

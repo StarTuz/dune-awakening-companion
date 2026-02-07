@@ -1,21 +1,21 @@
 # Engineering + Product Roadmap (2026)
 
-Last updated: 2026-02-06
+Last updated: 2026-02-07
 
 This roadmap aligns engineering maturity with product goals, with
 priority sequencing: CI/CD, testing, security, quality, release
 management, then product expansion.
 
-## Quick Wins (1-2 weeks)
+## Quick Wins (1-2 weeks) — COMPLETE
 Engineering:
-- Add PR CI workflow with analyze + test + build.
-- Add local CI script to mirror PR checks.
-- Add dependency auditing baseline.
-- Expand lint rules and analyzer gating.
+- ~~Add PR CI workflow with analyze + test + build.~~ Done.
+- ~~Add local CI script to mirror PR checks.~~ Done.
+- ~~Add dependency auditing baseline.~~ Done.
+- ~~Expand lint rules and analyzer gating.~~ Done.
 
 Product:
-- Update tax-related copy to reflect tax removal in Chapter 3.
-- Add Chapter 3 research link in docs for team alignment.
+- ~~Update tax-related copy to reflect tax removal in Chapter 3.~~ Done — tax system fully removed from code, UI, localization, and docs.
+- ~~Add Chapter 3 research link in docs for team alignment.~~ Done (`docs/CHAPTER3_RESEARCH.md`).
 
 ## Mid-Term (1-3 months)
 Engineering:

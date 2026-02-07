@@ -84,12 +84,6 @@ class BaseRepository {
       'power_expiration_time': base.powerExpirationTime.millisecondsSinceEpoch,
       'created_at': base.createdAt.millisecondsSinceEpoch,
       'updated_at': base.updatedAt.millisecondsSinceEpoch,
-      'is_advanced_fief': base.isAdvancedFief ? 1 : 0,
-      'tax_per_cycle': base.taxPerCycle,
-      'next_tax_due_date': base.nextTaxDueDate?.millisecondsSinceEpoch,
-      'current_owed': base.currentOwed,
-      'overdue_owed': base.overdueOwed,
-      'defaulted_owed': base.defaultedOwed,
     };
   }
 
@@ -107,14 +101,6 @@ class BaseRepository {
       updatedAt: DateTime.fromMillisecondsSinceEpoch(
         map['updated_at'] as int,
       ),
-      isAdvancedFief: (map['is_advanced_fief'] as int?) == 1,
-      taxPerCycle: map['tax_per_cycle'] as int?,
-      nextTaxDueDate: map['next_tax_due_date'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['next_tax_due_date'] as int)
-          : null,
-      currentOwed: map['current_owed'] as int?,
-      overdueOwed: map['overdue_owed'] as int?,
-      defaultedOwed: map['defaulted_owed'] as int?,
     );
   }
 }

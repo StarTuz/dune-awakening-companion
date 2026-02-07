@@ -103,9 +103,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get timeRemainingPower => 'Verbleibende Zeit: Energie';
 
   @override
-  String get timeRemainingTaxes => 'Verbleibende Zeit: Steuern';
-
-  @override
   String get expiresLabel => 'Läuft ab';
 
   @override
@@ -120,11 +117,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get severityWarning => 'WARNUNG';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Überfällig: $time';
-  }
 
   @override
   String get daysAbbr => 'T';
@@ -526,12 +518,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get powerMinutes => 'Minuten';
 
   @override
-  String get advancedFief => 'Erweitertes Lehen';
-
-  @override
-  String get advancedFiefDesc => 'Für Steuerverfolgung aktivieren';
-
-  @override
   String get addBase => 'Basis Hinzufügen';
 
   @override
@@ -545,21 +531,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get power => 'Energie';
-
-  @override
-  String get taxes => 'Steuern';
-
-  @override
-  String get taxPerCycle => 'Steuer Pro Zyklus';
-
-  @override
-  String get currentOwed => 'Aktuell Geschuldet';
-
-  @override
-  String get overdueOwed => 'Überfällig Geschuldet';
-
-  @override
-  String get defaultedOwed => 'Ausgefallen Geschuldet';
 
   @override
   String get statusPaid => 'BEZAHLT';
@@ -597,9 +568,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get powerCritical => 'Energie Kritisch!';
-
-  @override
-  String get taxOverdue => 'Steuern Überfällig!';
 
   @override
   String get exportSuccess => 'Daten erfolgreich exportiert';

@@ -1,7 +1,7 @@
 /// Model for a notification history entry
 class NotificationHistoryEntry {
   final int? id;
-  final String type; // 'power', 'tax'
+  final String type; // 'power'
   final String title;
   final String body;
   final String? baseId;
@@ -85,8 +85,6 @@ class NotificationHistoryEntry {
     switch (type) {
       case 'power':
         return '⚡';
-      case 'tax':
-        return '💰';
       default:
         return '🔔';
     }

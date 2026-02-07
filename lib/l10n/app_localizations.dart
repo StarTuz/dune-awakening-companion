@@ -294,12 +294,6 @@ abstract class AppLocalizations {
   /// **'Time Remaining: Power'**
   String get timeRemainingPower;
 
-  /// Label for tax time remaining
-  ///
-  /// In en, this message translates to:
-  /// **'Time Remaining: Taxes'**
-  String get timeRemainingTaxes;
-
   /// Label for expiration date
   ///
   /// In en, this message translates to:
@@ -329,12 +323,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WARNING'**
   String get severityWarning;
-
-  /// Label for overdue taxes with time
-  ///
-  /// In en, this message translates to:
-  /// **'Overdue: {time}'**
-  String taxOverdueLabel(String time);
 
   /// Abbreviation for days
   ///
@@ -1086,18 +1074,6 @@ abstract class AppLocalizations {
   /// **'Minutes'**
   String get powerMinutes;
 
-  /// Advanced fief toggle
-  ///
-  /// In en, this message translates to:
-  /// **'Advanced Fief'**
-  String get advancedFief;
-
-  /// Advanced fief description
-  ///
-  /// In en, this message translates to:
-  /// **'Enable for tax tracking'**
-  String get advancedFiefDesc;
-
   /// Add base button
   ///
   /// In en, this message translates to:
@@ -1127,36 +1103,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Power'**
   String get power;
-
-  /// Taxes label
-  ///
-  /// In en, this message translates to:
-  /// **'Taxes'**
-  String get taxes;
-
-  /// Tax per cycle label
-  ///
-  /// In en, this message translates to:
-  /// **'Tax Per Cycle'**
-  String get taxPerCycle;
-
-  /// Current owed label
-  ///
-  /// In en, this message translates to:
-  /// **'Current Owed'**
-  String get currentOwed;
-
-  /// Overdue owed label
-  ///
-  /// In en, this message translates to:
-  /// **'Overdue Owed'**
-  String get overdueOwed;
-
-  /// Defaulted owed label
-  ///
-  /// In en, this message translates to:
-  /// **'Defaulted Owed'**
-  String get defaultedOwed;
 
   /// Paid status
   ///
@@ -1229,12 +1175,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Power Critical!'**
   String get powerCritical;
-
-  /// Tax overdue notification title
-  ///
-  /// In en, this message translates to:
-  /// **'Tax Overdue!'**
-  String get taxOverdue;
 
   /// Export success message
   ///

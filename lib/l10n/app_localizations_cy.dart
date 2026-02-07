@@ -103,9 +103,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String get timeRemainingPower => 'Amser ar Ôl: Pŵer';
 
   @override
-  String get timeRemainingTaxes => 'Amser ar Ôl: Trethi';
-
-  @override
   String get expiresLabel => 'Yn Dod i Ben';
 
   @override
@@ -119,11 +116,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get severityWarning => 'RHYBUDD';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Hwyr: $time';
-  }
 
   @override
   String get daysAbbr => 'd';
@@ -525,12 +517,6 @@ class AppLocalizationsCy extends AppLocalizations {
   String get powerMinutes => 'Munudau';
 
   @override
-  String get advancedFief => 'Ffîff Uwch';
-
-  @override
-  String get advancedFiefDesc => 'Galluogi ar gyfer olrhain trethi';
-
-  @override
   String get addBase => 'Ychwanegu Canolfan';
 
   @override
@@ -544,21 +530,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get power => 'Pŵer';
-
-  @override
-  String get taxes => 'Trethi';
-
-  @override
-  String get taxPerCycle => 'Treth fesul Cylch';
-
-  @override
-  String get currentOwed => 'Dyled Gyfredol';
-
-  @override
-  String get overdueOwed => 'Dyled Hwyr';
-
-  @override
-  String get defaultedOwed => 'Dyled Ddiffygiol';
 
   @override
   String get statusPaid => 'TALWYD';
@@ -595,9 +566,6 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get powerCritical => 'Pŵer Critigol!';
-
-  @override
-  String get taxOverdue => 'Trethi\'n Hwyr!';
 
   @override
   String get exportSuccess => 'Data wedi\'i allforio\'n llwyddiannus';

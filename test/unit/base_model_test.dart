@@ -18,24 +18,18 @@ void main() {
     expect(base.hoursRemaining, greaterThan(0));
   });
 
-  test('Base missedCycles counts overdue tax cycles', () {
+  test('Base expired when power time is in the past', () {
     final now = DateTime.now();
     final base = Base(
       id: 'base-2',
       characterId: 'char-2',
-      name: 'Tax Base',
-      powerExpirationTime: now.add(const Duration(hours: 2)),
+      name: 'Expired Base',
+      powerExpirationTime: now.subtract(const Duration(hours: 2)),
       createdAt: now,
       updatedAt: now,
-      isAdvancedFief: true,
-      taxPerCycle: 100,
-      nextTaxDueDate: now.subtract(const Duration(days: 1)),
-      currentOwed: 50,
-      overdueOwed: 0,
-      defaultedOwed: 0,
     );
 
-    expect(base.missedCycles, 1);
-    expect(base.effectiveCurrentOwed, 100);
+    expect(base.isExpired, isTrue);
+    expect(base.hoursRemaining, lessThan(0));
   });
 }

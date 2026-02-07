@@ -39,11 +39,6 @@ void main() {
       expect(entry.iconEmoji, '⚡');
     });
 
-    test('returns money bag for tax', () {
-      final entry = _makeEntry(type: 'tax');
-      expect(entry.iconEmoji, '💰');
-    });
-
     test('returns bell for unknown type', () {
       final entry = _makeEntry(type: 'other');
       expect(entry.iconEmoji, '🔔');

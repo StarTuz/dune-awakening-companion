@@ -1,21 +1,17 @@
 {
   "@@locale": "de",
-  
   "appTitle": "Dune Awakening Begleiter",
   "navDashboard": "Übersicht",
   "navCharacters": "Charaktere",
   "navAlerts": "Warnungen",
   "navSettings": "Einstellungen",
-  
   "dashboardTitle": "Übersicht",
   "charactersTitle": "Charaktere",
   "basesTitle": "Basen",
   "alertsTitle": "Warnungen",
   "settingsTitle": "Einstellungen",
-  
   "expiringSoonTitle": "Läuft Bald Ab",
   "activeAlertsTitle": "Aktive Warnungen",
-  
   "error": "Fehler",
   "loading": "Laden...",
   "save": "Speichern",
@@ -27,28 +23,22 @@
   "yes": "Ja",
   "no": "Nein",
   "close": "Schließen",
-  
   "refreshTooltip": "Aktualisieren",
   "notificationHistoryTooltip": "Benachrichtigungsverlauf",
   "addBaseTooltip": "Basis hinzufügen",
   "updateCountdownTooltip": "Countdown aktualisieren",
   "addCharacterTooltip": "Charakter hinzufügen",
-  
   "allBasesSafeTitle": "Alle Basen sind sicher!",
   "allBasesSafeMessage": "Keine Basis läuft in den nächsten 48 Stunden ab.",
-  
   "timeRemainingPower": "Verbleibende Zeit: Energie",
-  "timeRemainingTaxes": "Verbleibende Zeit: Steuern",
   "expiresLabel": "Läuft ab",
   "dueLabel": "Fällig",
   "tapToManage": "Tippen, um die Basen dieses Charakters zu verwalten",
   "severityCritical": "KRITISCH",
   "severityWarning": "WARNUNG",
-  "taxOverdueLabel": "Überfällig: {time}",
   "daysAbbr": "T",
   "hoursAbbr": "Std",
   "minutesAbbr": "Min",
-  
   "sectionAbout": "Über",
   "sectionAppearance": "Erscheinungsbild",
   "sectionLanguage": "Sprache",
@@ -56,19 +46,15 @@
   "sectionAccessibility": "Barrierefreiheit",
   "sectionNotifications": "Benachrichtigungen",
   "sectionLegal": "Rechtliches & Danksagungen",
-  
   "version": "Version",
   "databaseVersion": "Datenbankversion",
   "build": "Build",
   "features": "Funktionen",
-  
   "darkMode": "Dunkelmodus",
   "desertNightTheme": "Wüstennacht-Thema",
   "desertDayTheme": "Wüstentag-Thema",
-  
   "factionTheme": "Fraktions-Thema",
   "chooseFaction": "Wähle Deine Fraktion",
-  
   "factionDesert": "Wüste (Standard)",
   "factionDesertDesc": "Warmer Sand & Gewürzgold",
   "factionAtreides": "Haus Atreides",
@@ -79,58 +65,46 @@
   "factionFremenDesc": "Sand & Blau - Die Wüstenkrieger",
   "factionSmuggler": "Schmuggler",
   "factionSmugglerDesc": "Lila & Bronze - Die Schattenhändler",
-  
   "language": "Sprache",
-  
   "exportData": "Daten Exportieren",
   "exportDataDesc": "Alle Charaktere und Basen sichern",
   "importData": "Daten Importieren",
   "importDataDesc": "Aus Sicherung wiederherstellen",
   "clearAllData": "Alle Daten Löschen",
   "clearAllDataDesc": "Alle Charaktere und Basen löschen",
-  
   "textSize": "Textgröße",
   "textSizeSmall": "Klein",
   "textSizeMedium": "Mittel",
   "textSizeLarge": "Groß",
   "textSizeXL": "Sehr Groß",
-  
   "textWeight": "Schriftstärke",
   "textWeightLight": "Leicht",
   "textWeightRegular": "Normal",
   "textWeightBold": "Fett",
-  
   "highContrast": "Hoher Kontrast",
   "highContrastEnabled": "Erhöhter Farbkontrast",
   "highContrastDisabled": "Standard-Farbkontrast",
-  
   "reduceMotion": "Bewegung Reduzieren",
   "reduceMotionEnabled": "Animationen deaktiviert",
   "reduceMotionDisabled": "Animationen aktiviert",
-  
   "notifications": "Benachrichtigungen",
   "enableNotifications": "Benachrichtigungen Aktivieren",
   "notificationsEnabled": "Warnungen werden gesendet",
   "notificationsDisabled": "Keine Warnungen werden gesendet",
-  
   "checkInterval": "Prüfintervall",
   "checkIntervalDesc": "Wie oft nach Warnungen prüfen",
   "minutes": "Minuten",
-  
   "quietHours": "Ruhezeiten",
   "quietHoursEnabled": "Nicht stören aktiviert",
   "quietHoursDisabled": "Benachrichtigungen zu jeder Zeit",
   "quietHoursStart": "Startzeit",
   "quietHoursEnd": "Endzeit",
-  
   "sound": "Ton",
   "soundEnabled": "Benachrichtigungstöne aktiviert",
   "soundDisabled": "Benachrichtigungstöne deaktiviert",
-  
   "vibration": "Vibration",
   "vibrationEnabled": "Haptisches Feedback aktiviert",
   "vibrationDisabled": "Haptisches Feedback deaktiviert",
-  
   "notificationHistory": "Benachrichtigungsverlauf",
   "viewHistory": "Verlauf Anzeigen",
   "clearHistory": "Verlauf Löschen",
@@ -146,20 +120,16 @@
   "deletedOldNotifications": "Benachrichtigungen älter als 7 Tage gelöscht",
   "errorLoadingHistory": "Fehler beim Laden des Verlaufs: {error}",
   "retry": "Wiederholen",
-  
   "testAlerts": "Warnungen Testen",
   "checkingAlerts": "Prüfe Warnungen...",
   "checkComplete": "✅ Prüfung abgeschlossen! Benachrichtigungen gesendet, wenn Basen Aufmerksamkeit benötigen.",
-  
   "importantDisclaimer": "Wichtiger Hinweis",
   "disclaimerText": "Dies ist eine inoffizielle, von Fans erstellte App. NICHT mit Funcom verbunden, gebilligt oder unterstützt. Funcom war nicht an der Entwicklung beteiligt. Dune Awakening ist eine Marke von Funcom. Dune und verwandte Elemente sind Marken von Herbert Properties LLC.",
-  
   "acknowledgments": "Danksagungen",
   "ackHerbert": "Herbert Estate für das Dune-Universum",
   "ackFuncom": "Funcom für Dune Awakening",
   "ackCommunity": "Dune Awakening Community",
   "ackFlutter": "Flutter Framework",
-  
   "characterName": "Charaktername",
   "enterCharacterName": "Charaktername eingeben",
   "provider": "Anbieter",
@@ -176,7 +146,6 @@
   "portrait": "Portrait",
   "addPortrait": "Portrait Hinzufügen",
   "removePortrait": "Portrait Entfernen",
-  
   "addCharacter": "Charakter Hinzufügen",
   "editCharacter": "Charakter Bearbeiten",
   "deleteCharacter": "Charakter Löschen",
@@ -188,26 +157,15 @@
   "powerExpired": "Energie: Abgelaufen",
   "noCharactersMessage": "Noch keine Charaktere. Füge einen hinzu, um loszulegen.",
   "basesButton": "Basen",
-  
   "baseName": "Basisname",
   "powerDays": "Tage",
   "powerHours": "Stunden",
   "powerMinutes": "Minuten",
-  "advancedFief": "Erweitertes Lehen",
-  "advancedFiefDesc": "Für Steuerverfolgung aktivieren",
-  
   "addBase": "Basis Hinzufügen",
   "editBase": "Basis Bearbeiten",
   "deleteBase": "Basis Löschen",
   "deleteBaseConfirm": "Diese Basis löschen?",
-  
   "power": "Energie",
-  "taxes": "Steuern",
-  "taxPerCycle": "Steuer Pro Zyklus",
-  "currentOwed": "Aktuell Geschuldet",
-  "overdueOwed": "Überfällig Geschuldet",
-  "defaultedOwed": "Ausgefallen Geschuldet",
-  
   "statusPaid": "BEZAHLT",
   "statusDue": "FÄLLIG",
   "statusOverdue": "ÜBERFÄLLIG",
@@ -215,15 +173,11 @@
   "statusCritical": "KRITISCH",
   "statusWarning": "WARNUNG",
   "statusSafe": "SICHER",
-  
   "noCharacters": "Noch keine Charaktere",
   "noCharactersDesc": "Tippe +, um deinen ersten Charakter hinzuzufügen",
   "noBases": "Noch keine Basen",
   "noBasesDesc": "Tippe +, um eine Basis hinzuzufügen",
-  
   "powerCritical": "Energie Kritisch!",
-  "taxOverdue": "Steuern Überfällig!",
-  
   "exportSuccess": "Daten erfolgreich exportiert",
   "exportFailed": "Export fehlgeschlagen",
   "importSuccess": "Daten erfolgreich importiert",
@@ -245,19 +199,16 @@
   "importingData": "Daten werden importiert...",
   "importSuccessful": "Import erfolgreich!",
   "importSummary": "{characters} Charaktere, {bases} Basen{portraits} importiert",
-  
   "importMode": "Importmodus",
   "importMerge": "Zusammenführen",
   "importMergeDesc": "Zu bestehenden Daten hinzufügen",
   "importReplace": "Ersetzen",
   "importReplaceDesc": "Alle Daten zuerst löschen",
-  
   "clearDataConfirm": "Alle Daten löschen?",
   "clearDataConfirmDesc": "Dies löscht alle Charaktere und Basen. Dies kann nicht rückgängig gemacht werden.",
   "dataCleared": "Alle Daten gelöscht",
   "deleteEverything": "Alles löschen",
   "errorClearingData": "Fehler beim Löschen der Daten: {error}",
-
   "receiveAlertsForExpiring": "Warnungen für ablaufende Basen erhalten",
   "notificationsDisabledDesc": "Benachrichtigungen deaktiviert",
   "checkEveryMinutes": "Alle {minutes} Minuten prüfen",
@@ -278,7 +229,6 @@
   "testNotification": "Testbenachrichtigung",
   "sendTestNotification": "Testbenachrichtigung senden",
   "test": "Testen",
-
   "copyrightNotices": "Urheberrechtshinweise",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Dune Awakening ist eine Marke von Funcom. Alle Rechte vorbehalten.",
