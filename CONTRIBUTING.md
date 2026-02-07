@@ -10,7 +10,12 @@ workflow, standards, and tools we use to keep the project at a high quality bar.
 1. Fork the repository and clone your fork.
 2. Install Flutter 3.38+ and Dart 3.8+.
 3. Run `flutter pub get` and `dart run build_runner build --delete-conflicting-outputs`.
-4. Run `bash scripts/ci/local.sh` to confirm your environment passes all checks.
+4. Install the Git pre-commit hook: `bash scripts/git/install-hooks.sh`
+5. Run `bash scripts/ci/local.sh` to confirm your environment passes all checks.
+
+> **Why the hook?** The pre-commit hook auto-formats staged Dart files so
+> formatting drift never reaches a commit — even for changes made outside
+> the IDE (merges, AI tools, terminal edits).
 
 ---
 
@@ -107,8 +112,10 @@ Squash-merge into `main` once CI is green and reviews are approved.
 
 ### Formatting
 
-- `dart format` is enforced by CI. Run it before committing or enable
-  format-on-save in your editor.
+- **Pre-commit hook** (installed via `bash scripts/git/install-hooks.sh`)
+  auto-formats staged Dart files on every commit. This is the primary guard.
+- `dart format` is also enforced by CI as a safety net.
+- Format-on-save is enabled in `.vscode/settings.json` for IDE edits.
 - Line length: 80 characters (Dart default).
 
 ### Testing
@@ -138,6 +145,9 @@ These are the same rules Qodo uses (from `.pr_agent.toml`):
 ## Useful Commands
 
 ```bash
+# Install Git hooks (do this once after cloning)
+bash scripts/git/install-hooks.sh
+
 # Full local CI (mirrors remote pipeline)
 bash scripts/ci/local.sh
 

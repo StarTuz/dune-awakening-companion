@@ -164,6 +164,16 @@ Qodo Merge (PR-Agent) runs automatically on PR open via `.pr_agent.toml`
 - Applied suggestions or a brief rationale for deferring them
 - Any added user-facing strings must be localized (ARB + `flutter gen-l10n`)
 
+### Git Pre-Commit Hook
+**Files:** `scripts/git/pre-commit`, `scripts/git/install-hooks.sh`
+
+Auto-formats staged Dart files on every commit to prevent formatting drift
+(especially from merges, AI tools, and terminal edits that bypass IDE
+format-on-save). Install once after cloning:
+```bash
+bash scripts/git/install-hooks.sh
+```
+
 ### Local CI (Parity Script)
 **File:** `scripts/ci/local.sh`
 
