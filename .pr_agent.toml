@@ -1,0 +1,49 @@
+# Qodo Merge (PR-Agent) Configuration
+# Docs: https://qodo-merge-docs.qodo.ai/usage-guide/configuration_options/
+
+[github_app]
+# Tools that run automatically when a PR is opened
+pr_commands = [
+    "/describe",
+    "/review",
+    "/improve",
+]
+
+[pr_reviewer]
+# Enable the PR quality score (1-10)
+require_score_review = true
+# Check if tests are included
+require_tests_review = true
+# Estimate review effort (1-5 label)
+require_estimate_effort_to_review = true
+# Flag security issues
+require_security_review = true
+# Scan for TODO/FIXME comments in changes
+require_todo_scan = true
+# Max findings to surface
+num_max_findings = 5
+# Project-specific review guidance
+extra_instructions = """\
+- This is a Flutter/Dart project using Riverpod for state management and SQLite for persistence.
+- Verify that new model fields are handled in copyWith, toJson/fromJson, and repository toMap/fromMap.
+- Flag any direct database access outside of repository classes.
+- Ensure new UI code supports both desktop (side rail) and mobile (bottom nav) layouts.
+- Check that new user-facing strings use localization (AppLocalizations) rather than hardcoded English.
+- Verify that new features have corresponding test coverage.
+"""
+
+[pr_description]
+# Auto-generate structured PR descriptions
+publish_labels = true
+
+[pr_code_suggestions]
+# Keep suggestions in table format (less noisy)
+commitable_code_suggestions = false
+# Focus on real problems, not style nits (the linter handles style)
+focus_only_on_problems = true
+# Project-specific suggestion guidance
+extra_instructions = """\
+- Prefer Riverpod providers over raw singletons.
+- Prefer const constructors where possible in Flutter widgets.
+- Flag any async operations without proper error handling.
+"""
