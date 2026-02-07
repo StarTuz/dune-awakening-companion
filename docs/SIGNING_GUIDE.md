@@ -321,7 +321,7 @@ signature-verified by the store infrastructure.
 # Build
 flutter build linux --release
 
-# Package as AppImage (if using appimage-builder)
+# Package as AppImage (via appimagetool in CI)
 # The AppImage spec supports optional GPG signing:
 gpg --detach-sign --armor dune-awakening-companion.AppImage
 ```

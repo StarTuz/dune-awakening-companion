@@ -40,8 +40,7 @@
 ## Technical Changes
 
 ### Key Files Changed
-- `appimage-builder.yml` — new AppImage build configuration
-- `.github/workflows/build-release.yml` — AppImage steps added to release pipeline
+- `.github/workflows/build-release.yml` — AppImage build with appimagetool
 - `.github/PULL_REQUEST_TEMPLATE.md` — new PR template with Qodo checklist
 - `CONTRIBUTING.md` — new contributor guide
 - `scripts/git/pre-commit` — formatting hook
