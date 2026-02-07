@@ -9,7 +9,7 @@ class DateUtils {
     final minutes = duration.inMinutes.remainder(60);
 
     final parts = <String>[];
-    
+
     if (days > 0) {
       parts.add('$days ${days == 1 ? 'day' : 'days'}');
     }
@@ -28,7 +28,7 @@ class DateUtils {
     if (hours < 0) {
       return 'Expired';
     }
-    
+
     final duration = Duration(minutes: (hours * 60).round());
     return formatDuration(duration);
   }
@@ -77,4 +77,3 @@ class DateUtils {
     }
   }
 }
-

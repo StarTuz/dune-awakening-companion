@@ -5,14 +5,14 @@ import 'package:flutter/foundation.dart';
 /// Handles minimize to tray functionality
 class SystemTrayService {
   static final SystemTrayService instance = SystemTrayService._internal();
-  
+
   SystemTrayService._internal();
 
   bool _initialized = false;
 
   Future<void> initialize() async {
     if (_initialized) return;
-    
+
     // Only initialize on desktop platforms
     if (!Platform.isLinux && !Platform.isWindows && !Platform.isMacOS) {
       return;
@@ -46,4 +46,3 @@ class SystemTrayService {
     exit(0);
   }
 }
-

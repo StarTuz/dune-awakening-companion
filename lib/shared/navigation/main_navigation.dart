@@ -32,7 +32,8 @@ class MainNavigationScreen extends ConsumerWidget {
     ];
 
     // Use NavigationRail for desktop, BottomNavigationBar for mobile
-    final isDesktop = Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+    final isDesktop =
+        Platform.isLinux || Platform.isWindows || Platform.isMacOS;
 
     // Get alert count
     final alertCount = activeAlertsAsync.maybeWhen(
@@ -44,7 +45,7 @@ class MainNavigationScreen extends ConsumerWidget {
     Color? alertIconColor;
     basesAsync.whenData((bases) {
       if (bases.isEmpty) return;
-      
+
       // Find minimum hours remaining across all bases
       double minHours = double.infinity;
       for (final base in bases) {
@@ -53,7 +54,7 @@ class MainNavigationScreen extends ConsumerWidget {
           minHours = hours;
         }
       }
-      
+
       // Color code: red < 24h, yellow < 48h
       if (minHours < 24) {
         alertIconColor = DuneColors.criticalPrimary; // Red

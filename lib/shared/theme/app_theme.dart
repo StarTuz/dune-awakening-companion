@@ -6,7 +6,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      
+
       // Color Scheme
       colorScheme: const ColorScheme.dark(
         primary: DuneColors.primaryAccent,
@@ -249,7 +249,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      
+
       // Color Scheme
       colorScheme: const ColorScheme.light(
         primary: DuneColorsLight.primaryAccent,
@@ -560,7 +560,8 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AtreidesColors.focusRing, width: 2),
+          borderSide:
+              const BorderSide(color: AtreidesColors.focusRing, width: 2),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -590,9 +591,11 @@ class AppTheme {
         decoration: BoxDecoration(
           color: AtreidesColors.quaternaryBackground,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AtreidesColors.primaryAccent.withOpacity(0.5)),
+          border:
+              Border.all(color: AtreidesColors.primaryAccent.withOpacity(0.5)),
         ),
-        textStyle: const TextStyle(color: AtreidesColors.primaryText, fontSize: 13),
+        textStyle:
+            const TextStyle(color: AtreidesColors.primaryText, fontSize: 13),
       ),
     );
   }
@@ -640,7 +643,8 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: HarkonnenColors.focusRing, width: 2),
+          borderSide:
+              const BorderSide(color: HarkonnenColors.focusRing, width: 2),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -670,9 +674,11 @@ class AppTheme {
         decoration: BoxDecoration(
           color: HarkonnenColors.quaternaryBackground,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: HarkonnenColors.primaryAccent.withOpacity(0.5)),
+          border:
+              Border.all(color: HarkonnenColors.primaryAccent.withOpacity(0.5)),
         ),
-        textStyle: const TextStyle(color: HarkonnenColors.primaryText, fontSize: 13),
+        textStyle:
+            const TextStyle(color: HarkonnenColors.primaryText, fontSize: 13),
       ),
     );
   }
@@ -750,9 +756,11 @@ class AppTheme {
         decoration: BoxDecoration(
           color: FremenColors.quaternaryBackground,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: FremenColors.primaryAccent.withOpacity(0.5)),
+          border:
+              Border.all(color: FremenColors.primaryAccent.withOpacity(0.5)),
         ),
-        textStyle: const TextStyle(color: FremenColors.primaryText, fontSize: 13),
+        textStyle:
+            const TextStyle(color: FremenColors.primaryText, fontSize: 13),
       ),
     );
   }
@@ -800,7 +808,8 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: SmugglerColors.focusRing, width: 2),
+          borderSide:
+              const BorderSide(color: SmugglerColors.focusRing, width: 2),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -830,9 +839,11 @@ class AppTheme {
         decoration: BoxDecoration(
           color: SmugglerColors.quaternaryBackground,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: SmugglerColors.primaryAccent.withOpacity(0.5)),
+          border:
+              Border.all(color: SmugglerColors.primaryAccent.withOpacity(0.5)),
         ),
-        textStyle: const TextStyle(color: SmugglerColors.primaryText, fontSize: 13),
+        textStyle:
+            const TextStyle(color: SmugglerColors.primaryText, fontSize: 13),
       ),
     );
   }

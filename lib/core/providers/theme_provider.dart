@@ -6,23 +6,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum DuneFaction {
   /// Default desert theme (current)
   desert,
+
   /// House Atreides - Green & Black
   atreides,
+
   /// House Harkonnen - Red & Black
   harkonnen,
+
   /// Fremen - Tan & Blue (stillsuit aesthetic)
   fremen,
+
   /// Smuggler - Purple & Bronze
   smuggler,
 }
 
 /// Theme mode provider - manages light/dark theme preference
-final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
   return ThemeModeNotifier();
 });
 
 /// Faction theme provider - manages which faction's color scheme to use
-final factionThemeProvider = StateNotifierProvider<FactionThemeNotifier, DuneFaction>((ref) {
+final factionThemeProvider =
+    StateNotifierProvider<FactionThemeNotifier, DuneFaction>((ref) {
   return FactionThemeNotifier();
 });
 

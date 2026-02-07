@@ -8,12 +8,14 @@ final baseRepositoryProvider = Provider<BaseRepository>((ref) {
   return BaseRepository(AppDatabase.instance);
 });
 
-final basesProvider = StateNotifierProvider<BaseNotifier, AsyncValue<List<Base>>>((ref) {
+final basesProvider =
+    StateNotifierProvider<BaseNotifier, AsyncValue<List<Base>>>((ref) {
   final repository = ref.watch(baseRepositoryProvider);
   return BaseNotifier(repository, ref);
 });
 
-final basesByCharacterProvider = FutureProvider.family<List<Base>, String>((ref, characterId) async {
+final basesByCharacterProvider =
+    FutureProvider.family<List<Base>, String>((ref, characterId) async {
   final repository = ref.watch(baseRepositoryProvider);
   return await repository.getByCharacterId(characterId);
 });
@@ -27,7 +29,8 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
   final BaseRepository _repository;
   final Ref _ref;
 
-  BaseNotifier(this._repository, this._ref) : super(const AsyncValue.loading()) {
+  BaseNotifier(this._repository, this._ref)
+      : super(const AsyncValue.loading()) {
     _loadBases();
   }
 

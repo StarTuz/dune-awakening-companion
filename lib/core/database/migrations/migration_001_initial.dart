@@ -109,4 +109,3 @@ class Migration001Initial {
     await db.execute('DROP TABLE IF EXISTS servers');
   }
 }
-

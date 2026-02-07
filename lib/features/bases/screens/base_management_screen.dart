@@ -109,7 +109,8 @@ class BaseManagementScreen extends ConsumerWidget {
                     child: Text(character.name),
                   );
                 }).toList(),
-                onChanged: (value) => setState(() => selectedCharacterId = value),
+                onChanged: (value) =>
+                    setState(() => selectedCharacterId = value),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -219,7 +220,8 @@ class BaseManagementScreen extends ConsumerWidget {
                   if (date != null) {
                     final time = await showTimePicker(
                       context: context,
-                      initialTime: TimeOfDay.fromDateTime(selectedDate ?? DateTime.now()),
+                      initialTime: TimeOfDay.fromDateTime(
+                          selectedDate ?? DateTime.now()),
                     );
                     if (!context.mounted) return;
                     if (time != null) {
@@ -276,7 +278,9 @@ class BaseManagementScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () {
-              ref.read(basesProvider.notifier).deleteBase(base.id, base.characterId);
+              ref
+                  .read(basesProvider.notifier)
+                  .deleteBase(base.id, base.characterId);
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),

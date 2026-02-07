@@ -20,7 +20,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.settingsTitle),
@@ -50,20 +50,20 @@ class SettingsScreen extends ConsumerWidget {
             title: l10n.features,
             subtitle: 'Characters, Bases, Tax, Alerts, i18n, Export/Import',
           ),
-          
+
           const Divider(height: 32),
-          
+
           // Appearance Section
           _buildSectionHeader(context, l10n.sectionAppearance),
           _buildThemeToggle(context, ref),
           _buildFactionSelector(context, ref),
-          
+
           const Divider(height: 32),
-          
+
           // Language Section
           _buildSectionHeader(context, l10n.sectionLanguage),
           _buildLanguageSelector(context, ref),
-          
+
           const Divider(height: 32),
 
           // Data Management Section
@@ -86,24 +86,24 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: Text(l10n.clearAllDataDesc),
             onTap: () => _showClearDataDialog(context),
           ),
-          
+
           const Divider(height: 32),
-          
+
           // Accessibility Section
           _buildSectionHeader(context, l10n.sectionAccessibility),
           _buildAccessibilitySettings(context, ref),
-          
+
           const Divider(height: 32),
-          
+
           // Notifications Section
           _buildSectionHeader(context, l10n.sectionNotifications),
           _buildNotificationSettings(context, ref),
-          
+
           const Divider(height: 32),
-          
+
           // Legal & Acknowledgments Section
           _buildSectionHeader(context, l10n.sectionLegal),
-          
+
           // Disclaimer
           Card(
             color: Colors.orange.withOpacity(0.1),
@@ -135,9 +135,9 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Copyright Notices
           Card(
             child: Padding(
@@ -169,9 +169,9 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Acknowledgments
           Card(
             color: Colors.blue.withOpacity(0.05),
@@ -205,9 +205,9 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // License
           ListTile(
             leading: const Icon(Icons.description),
@@ -215,9 +215,9 @@ class SettingsScreen extends ConsumerWidget {
             subtitle: Text(l10n.mitLicense),
             onTap: () => _showLicenseDialog(context),
           ),
-          
+
           const SizedBox(height: 32),
-          
+
           // Footer
           Center(
             child: Text(
@@ -270,7 +270,7 @@ class SettingsScreen extends ConsumerWidget {
 
   Widget _buildLanguageSelector(BuildContext context, WidgetRef ref) {
     final currentLocale = ref.watch(languageProvider);
-    
+
     return ListTile(
       leading: const Icon(Icons.language),
       title: const Text('Language'),
@@ -298,21 +298,30 @@ class SettingsScreen extends ConsumerWidget {
 
   String _getLanguageName(String code) {
     switch (code) {
-      case 'en': return 'English';
-      case 'es': return 'Español';
-      case 'fr': return 'Français';
-      case 'de': return 'Deutsch';
-      case 'uk': return 'Українська';
-      case 'it': return 'Italiano';
-      case 'cy': return 'Cymraeg';
-      default: return 'English';
+      case 'en':
+        return 'English';
+      case 'es':
+        return 'Español';
+      case 'fr':
+        return 'Français';
+      case 'de':
+        return 'Deutsch';
+      case 'uk':
+        return 'Українська';
+      case 'it':
+        return 'Italiano';
+      case 'cy':
+        return 'Cymraeg';
+      default:
+        return 'English';
     }
   }
+
   Widget _buildThemeToggle(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeProvider);
     final isDarkMode = themeMode == ThemeMode.dark;
-    
+
     return SwitchListTile(
       secondary: Icon(
         isDarkMode ? Icons.dark_mode : Icons.light_mode,
@@ -323,8 +332,8 @@ class SettingsScreen extends ConsumerWidget {
       value: isDarkMode,
       onChanged: (value) {
         ref.read(themeModeProvider.notifier).setThemeMode(
-          value ? ThemeMode.dark : ThemeMode.light,
-        );
+              value ? ThemeMode.dark : ThemeMode.light,
+            );
       },
     );
   }
@@ -332,7 +341,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget _buildFactionSelector(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final currentFaction = ref.watch(factionThemeProvider);
-    
+
     return ListTile(
       leading: Icon(
         _getFactionIcon(currentFaction),
@@ -427,20 +436,21 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const Divider(height: 1),
             ...DuneFaction.values.map((faction) => ListTile(
-              leading: Icon(
-                _getFactionIcon(faction),
-                color: _getFactionColor(faction),
-              ),
-              title: Text(_getLocalizedFactionName(context, faction)),
-              subtitle: Text(_getLocalizedFactionDesc(context, faction)),
-              trailing: ref.watch(factionThemeProvider) == faction
-                  ? Icon(Icons.check, color: Theme.of(context).colorScheme.primary)
-                  : null,
-              onTap: () {
-                ref.read(factionThemeProvider.notifier).setFaction(faction);
-                Navigator.of(context).pop();
-              },
-            )),
+                  leading: Icon(
+                    _getFactionIcon(faction),
+                    color: _getFactionColor(faction),
+                  ),
+                  title: Text(_getLocalizedFactionName(context, faction)),
+                  subtitle: Text(_getLocalizedFactionDesc(context, faction)),
+                  trailing: ref.watch(factionThemeProvider) == faction
+                      ? Icon(Icons.check,
+                          color: Theme.of(context).colorScheme.primary)
+                      : null,
+                  onTap: () {
+                    ref.read(factionThemeProvider.notifier).setFaction(faction);
+                    Navigator.of(context).pop();
+                  },
+                )),
             const SizedBox(height: 16),
           ],
         ),
@@ -451,7 +461,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget _buildAccessibilitySettings(BuildContext context, WidgetRef ref) {
     final settings = ref.watch(accessibilityProvider);
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Column(
       children: [
         // Font Size Slider
@@ -469,20 +479,21 @@ class SettingsScreen extends ConsumerWidget {
               label: _getLocalizedFontSize(context, settings.fontSize),
               onChanged: (value) {
                 ref.read(accessibilityProvider.notifier).setFontSize(
-                  FontSizeOption.values[value.round()],
-                );
+                      FontSizeOption.values[value.round()],
+                    );
               },
             ),
           ),
         ),
-        
+
         // Font Weight Selector
         Column(
           children: [
             ListTile(
               leading: const Icon(Icons.format_bold),
               title: Text(l10n.textWeight),
-              subtitle: Text(_getLocalizedFontWeight(context, settings.fontWeight)),
+              subtitle:
+                  Text(_getLocalizedFontWeight(context, settings.fontWeight)),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -514,26 +525,26 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ],
         ),
-        
+
         // High Contrast Toggle
         SwitchListTile(
           secondary: const Icon(Icons.contrast),
           title: Text(l10n.highContrast),
-          subtitle: Text(settings.highContrast 
-              ? l10n.highContrastEnabled 
+          subtitle: Text(settings.highContrast
+              ? l10n.highContrastEnabled
               : l10n.highContrastDisabled),
           value: settings.highContrast,
           onChanged: (value) {
             ref.read(accessibilityProvider.notifier).setHighContrast(value);
           },
         ),
-        
+
         // Reduced Motion Toggle
         SwitchListTile(
           secondary: const Icon(Icons.animation),
           title: Text(l10n.reduceMotion),
-          subtitle: Text(settings.reducedMotion 
-              ? l10n.reduceMotionEnabled 
+          subtitle: Text(settings.reducedMotion
+              ? l10n.reduceMotionEnabled
               : l10n.reduceMotionDisabled),
           value: settings.reducedMotion,
           onChanged: (value) {
@@ -558,7 +569,8 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
 
-  String _getLocalizedFontWeight(BuildContext context, FontWeightOption option) {
+  String _getLocalizedFontWeight(
+      BuildContext context, FontWeightOption option) {
     final l10n = AppLocalizations.of(context)!;
     switch (option) {
       case FontWeightOption.light:
@@ -590,11 +602,11 @@ class SettingsScreen extends ConsumerWidget {
             onPressed: () async {
               // Close confirmation dialog
               Navigator.of(context).pop();
-              
+
               // Clear database
               try {
                 await AppDatabase.instance.clearAllData();
-                
+
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -890,18 +902,14 @@ class SettingsScreen extends ConsumerWidget {
         ref.invalidate(basesProvider);
 
         if (!context.mounted) return;
-        final portraitMsg = result.portraitsImported > 0 
+        final portraitMsg = result.portraitsImported > 0
             ? l10n.portraitsCount(result.portraitsImported)
             : '';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               '${l10n.importSuccessful}\n'
-              '${l10n.importSummary(
-                result.charactersImported, 
-                result.basesImported, 
-                portraitMsg.isNotEmpty ? ', $portraitMsg' : ''
-              )}',
+              '${l10n.importSummary(result.charactersImported, result.basesImported, portraitMsg.isNotEmpty ? ', $portraitMsg' : '')}',
             ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 4),
@@ -952,7 +960,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
           value: settings.enabled,
           onChanged: (value) async {
             // Update provider state (which also updates SharedPreferences)
-            await ref.read(notificationSettingsProvider.notifier).setEnabled(value);
+            await ref
+                .read(notificationSettingsProvider.notifier)
+                .setEnabled(value);
             // Update the notification manager
             final manager = ref.read(notificationManagerProvider);
             await manager.updateSettings(enabled: value);
@@ -974,7 +984,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
             onChanged: settings.enabled
                 ? (value) async {
                     if (value != null) {
-                      await ref.read(notificationSettingsProvider.notifier).setInterval(value);
+                      await ref
+                          .read(notificationSettingsProvider.notifier)
+                          .setInterval(value);
                       final manager = ref.read(notificationManagerProvider);
                       await manager.updateSettings(intervalMinutes: value);
                     }
@@ -993,7 +1005,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
           value: settings.includeWarnings,
           onChanged: settings.enabled
               ? (value) async {
-                  await ref.read(notificationSettingsProvider.notifier).setIncludeWarnings(value);
+                  await ref
+                      .read(notificationSettingsProvider.notifier)
+                      .setIncludeWarnings(value);
                   final manager = ref.read(notificationManagerProvider);
                   await manager.updateSettings(includeWarnings: value);
                 }
@@ -1010,7 +1024,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
           value: settings.soundEnabled,
           onChanged: settings.enabled
               ? (value) async {
-                  await ref.read(notificationSettingsProvider.notifier).setSoundEnabled(value);
+                  await ref
+                      .read(notificationSettingsProvider.notifier)
+                      .setSoundEnabled(value);
                 }
               : null,
         ),
@@ -1026,7 +1042,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
             value: settings.vibrationEnabled,
             onChanged: settings.enabled
                 ? (value) async {
-                    await ref.read(notificationSettingsProvider.notifier).setVibrationEnabled(value);
+                    await ref
+                        .read(notificationSettingsProvider.notifier)
+                        .setVibrationEnabled(value);
                   }
                 : null,
           ),
@@ -1039,7 +1057,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
             subtitle: Text(l10n.launchAppInTray),
             value: settings.startMinimized,
             onChanged: (value) async {
-              await ref.read(notificationSettingsProvider.notifier).setStartMinimized(value);
+              await ref
+                  .read(notificationSettingsProvider.notifier)
+                  .setStartMinimized(value);
             },
           ),
 
@@ -1050,12 +1070,15 @@ class _NotificationSettingsWidget extends ConsumerWidget {
           secondary: const Icon(Icons.bedtime),
           title: Text(l10n.quietHours),
           subtitle: Text(settings.quietHoursEnabled
-              ? l10n.noNotificationsFromTo(settings.quietHoursStartString, settings.quietHoursEndString)
+              ? l10n.noNotificationsFromTo(
+                  settings.quietHoursStartString, settings.quietHoursEndString)
               : l10n.notificationsAlwaysEnabled),
           value: settings.quietHoursEnabled,
           onChanged: settings.enabled
               ? (value) async {
-                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursEnabled(value);
+                  await ref
+                      .read(notificationSettingsProvider.notifier)
+                      .setQuietHoursEnabled(value);
                 }
               : null,
         ),
@@ -1076,7 +1099,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
                 );
                 if (picked != null) {
                   final minutes = picked.hour * 60 + picked.minute;
-                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursStart(minutes);
+                  await ref
+                      .read(notificationSettingsProvider.notifier)
+                      .setQuietHoursStart(minutes);
                 }
               },
               child: Text(
@@ -1102,7 +1127,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
                 );
                 if (picked != null) {
                   final minutes = picked.hour * 60 + picked.minute;
-                  await ref.read(notificationSettingsProvider.notifier).setQuietHoursEnd(minutes);
+                  await ref
+                      .read(notificationSettingsProvider.notifier)
+                      .setQuietHoursEnd(minutes);
                 }
               },
               child: Text(
@@ -1135,7 +1162,8 @@ class _NotificationSettingsWidget extends ConsumerWidget {
     );
   }
 
-  Future<void> _sendTestNotification(BuildContext context, WidgetRef ref) async {
+  Future<void> _sendTestNotification(
+      BuildContext context, WidgetRef ref) async {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Checking for alerts...'),
@@ -1146,11 +1174,12 @@ class _NotificationSettingsWidget extends ConsumerWidget {
     try {
       final manager = ref.read(notificationManagerProvider);
       await manager.checkNow();
-      
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('✅ Check complete! Notifications sent if bases need attention.'),
+            content: Text(
+                '✅ Check complete! Notifications sent if bases need attention.'),
             duration: Duration(seconds: 3),
             backgroundColor: Colors.green,
           ),

@@ -7,7 +7,7 @@ class Migration002AddServerFields {
     // 2. Copy existing data
     // 3. Drop old table
     // 4. Rename new table
-    
+
     // Create new characters table with updated schema
     await db.execute('''
       CREATE TABLE characters_new (
@@ -22,17 +22,17 @@ class Migration002AddServerFields {
         updated_at INTEGER NOT NULL
       )
     ''');
-    
+
     // Copy existing data if any (unlikely on first run, but safe)
     // We'll skip copying since the old schema is incompatible
-    
+
     // Drop old table and indexes
     await db.execute('DROP INDEX IF EXISTS idx_characters_server_id');
     await db.execute('DROP TABLE IF EXISTS characters');
-    
+
     // Rename new table to characters
     await db.execute('ALTER TABLE characters_new RENAME TO characters');
-    
+
     // Create index for better query performance
     await db.execute('''
       CREATE INDEX IF NOT EXISTS idx_characters_region 

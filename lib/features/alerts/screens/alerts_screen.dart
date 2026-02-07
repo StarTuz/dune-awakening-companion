@@ -44,7 +44,9 @@ class AlertsScreen extends ConsumerWidget {
                       shape: BoxShape.circle,
                     ),
                     child: Text(
-                      historyState.unreadCount > 9 ? '9+' : '${historyState.unreadCount}',
+                      historyState.unreadCount > 9
+                          ? '9+'
+                          : '${historyState.unreadCount}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -73,215 +75,238 @@ class AlertsScreen extends ConsumerWidget {
           await Future.delayed(const Duration(milliseconds: 500));
         },
         child: basesAsync.when(
-        data: (bases) => charactersAsync.when(
-          data: (characters) {
-            // Filter bases that are expiring soon (< 48 hours)
-            final expiringBases = bases.where((base) {
-              return base.hoursRemaining < 48;
-            }).toList();
+          data: (bases) => charactersAsync.when(
+            data: (characters) {
+              // Filter bases that are expiring soon (< 48 hours)
+              final expiringBases = bases.where((base) {
+                return base.hoursRemaining < 48;
+              }).toList();
 
-            // Sort by most urgent first
-            expiringBases.sort((a, b) => a.hoursRemaining.compareTo(b.hoursRemaining));
+              // Sort by most urgent first
+              expiringBases
+                  .sort((a, b) => a.hoursRemaining.compareTo(b.hoursRemaining));
 
-            if (expiringBases.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.check_circle_outline, size: 64, color: Colors.green),
-                    const SizedBox(height: 16),
-                    Text(
-                      l10n.allBasesSafeTitle,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(l10n.allBasesSafeMessage),
-                  ],
-                ),
-              );
-            }
-
-            return ListView.builder(
-              itemCount: expiringBases.length,
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (context, index) {
-                final base = expiringBases[index];
-                
-                // Find the character for this base
-                Character? character;
-                try {
-                  character = characters.firstWhere((c) => c.id == base.characterId);
-                } catch (e) {
-                  return const SizedBox.shrink();
-                }
-
-                final now = DateTime.now();
-                final difference = base.powerExpirationTime.difference(now);
-                final daysRemaining = difference.inDays;
-                final hoursRemaining = difference.inHours % 24;
-                final minutesRemaining = difference.inMinutes % 60;
-                final totalHours = base.hoursRemaining;
-                
-                // Determine severity
-                final isCritical = totalHours < 24;
-                final color = isCritical 
-                    ? DuneColors.criticalPrimary 
-                    : DuneColors.warningPrimary;
-                final severityLabel = isCritical ? l10n.severityCritical : l10n.severityWarning;
-                final timeText = '$daysRemaining${l10n.daysAbbr} '
-                    '$hoursRemaining${l10n.hoursAbbr} '
-                    '$minutesRemaining${l10n.minutesAbbr}';
-
-                return Card(
-                  margin: const EdgeInsets.only(bottom: 12),
-                  elevation: 4,
-                  color: color.withOpacity(0.1),
-                  child: InkWell(
-                    onTap: () {
-                      // Navigate to Characters tab
-                      ref.read(navigationIndexProvider.notifier).state = 1;
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: color,
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  severityLabel,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  base.name,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Icon(Icons.person, size: 16, color: Colors.grey[600]),
-                              const SizedBox(width: 4),
-                              Text(
-                                character.name,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[700],
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(Icons.public, size: 16, color: Colors.grey[600]),
-                              const SizedBox(width: 4),
-                              Text(
-                                '${character.region} - ${character.world}',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(Icons.home, size: 16, color: Colors.grey[600]),
-                              const SizedBox(width: 4),
-                              Text(
-                                character.sietch,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Divider(height: 24),
-                          // Power Time Remaining
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    l10n.timeRemainingPower,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                  Text(
-                                    timeText,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: color,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    l10n.expiresLabel,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                  Text(
-                                    DateFormat('MMM d, HH:mm').format(base.powerExpirationTime),
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            l10n.tapToManage,
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Colors.grey[500],
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
+              if (expiringBases.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.check_circle_outline,
+                          size: 64, color: Colors.green),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.allBasesSafeTitle,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    ),
+                      const SizedBox(height: 8),
+                      Text(l10n.allBasesSafeMessage),
+                    ],
                   ),
                 );
-              },
-            );
-          },
-          loading: () => Center(child: Column(
+              }
+
+              return ListView.builder(
+                itemCount: expiringBases.length,
+                padding: const EdgeInsets.all(16),
+                itemBuilder: (context, index) {
+                  final base = expiringBases[index];
+
+                  // Find the character for this base
+                  Character? character;
+                  try {
+                    character =
+                        characters.firstWhere((c) => c.id == base.characterId);
+                  } catch (e) {
+                    return const SizedBox.shrink();
+                  }
+
+                  final now = DateTime.now();
+                  final difference = base.powerExpirationTime.difference(now);
+                  final daysRemaining = difference.inDays;
+                  final hoursRemaining = difference.inHours % 24;
+                  final minutesRemaining = difference.inMinutes % 60;
+                  final totalHours = base.hoursRemaining;
+
+                  // Determine severity
+                  final isCritical = totalHours < 24;
+                  final color = isCritical
+                      ? DuneColors.criticalPrimary
+                      : DuneColors.warningPrimary;
+                  final severityLabel =
+                      isCritical ? l10n.severityCritical : l10n.severityWarning;
+                  final timeText = '$daysRemaining${l10n.daysAbbr} '
+                      '$hoursRemaining${l10n.hoursAbbr} '
+                      '$minutesRemaining${l10n.minutesAbbr}';
+
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    elevation: 4,
+                    color: color.withOpacity(0.1),
+                    child: InkWell(
+                      onTap: () {
+                        // Navigate to Characters tab
+                        ref.read(navigationIndexProvider.notifier).state = 1;
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: color,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    severityLabel,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    base.name,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Icon(Icons.person,
+                                    size: 16, color: Colors.grey[600]),
+                                const SizedBox(width: 4),
+                                Text(
+                                  character.name,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(Icons.public,
+                                    size: 16, color: Colors.grey[600]),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${character.region} - ${character.world}',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Icon(Icons.home,
+                                    size: 16, color: Colors.grey[600]),
+                                const SizedBox(width: 4),
+                                Text(
+                                  character.sietch,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(height: 24),
+                            // Power Time Remaining
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      l10n.timeRemainingPower,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    Text(
+                                      timeText,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: color,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      l10n.expiresLabel,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat('MMM d, HH:mm')
+                                          .format(base.powerExpirationTime),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              l10n.tapToManage,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey[500],
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            loading: () => Center(
+                child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(l10n.loading),
+              ],
+            )),
+            error: (error, stack) =>
+                Center(child: Text('${l10n.error}: $error')),
+          ),
+          loading: () => Center(
+              child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const CircularProgressIndicator(),
@@ -290,16 +315,6 @@ class AlertsScreen extends ConsumerWidget {
             ],
           )),
           error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
-        ),
-        loading: () => Center(child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const CircularProgressIndicator(),
-            const SizedBox(height: 16),
-            Text(l10n.loading),
-          ],
-        )),
-        error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
         ),
       ),
     );

@@ -16,7 +16,10 @@ void main() {
 
   test('regions returns all keys from regionWorlds', () {
     final regions = AppConstants.regions;
-    expect(regions, containsAll(['North America', 'Europe', 'Asia', 'Oceania', 'South America']));
+    expect(
+        regions,
+        containsAll(
+            ['North America', 'Europe', 'Asia', 'Oceania', 'South America']));
   });
 
   test('getWorldsForRegion returns worlds for valid region', () {

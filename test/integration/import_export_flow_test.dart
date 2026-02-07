@@ -90,7 +90,8 @@ void main() {
           'id': 'imported-base-1',
           'characterId': 'imported-1',
           'name': 'Imported Base',
-          'powerExpirationTime': now.add(const Duration(hours: 48)).toIso8601String(),
+          'powerExpirationTime':
+              now.add(const Duration(hours: 48)).toIso8601String(),
           'createdAt': now.toIso8601String(),
           'updatedAt': now.toIso8601String(),
         },
@@ -98,9 +99,11 @@ void main() {
     };
 
     final jsonFile = File('${tempDir.path}/backup.json');
-    await jsonFile.writeAsString(const JsonEncoder.withIndent('  ').convert(exportData));
+    await jsonFile
+        .writeAsString(const JsonEncoder.withIndent('  ').convert(exportData));
 
-    final result = await importService.importData(jsonFile.path, ImportMode.merge);
+    final result =
+        await importService.importData(jsonFile.path, ImportMode.merge);
     expect(result.success, isTrue);
     expect(result.charactersImported, 1);
     expect(result.basesImported, 1);
@@ -149,7 +152,8 @@ void main() {
     final jsonFile = File('${tempDir.path}/replace.json');
     await jsonFile.writeAsString(json.encode(exportData));
 
-    final result = await importService.importData(jsonFile.path, ImportMode.replace);
+    final result =
+        await importService.importData(jsonFile.path, ImportMode.replace);
     expect(result.success, isTrue);
 
     final allChars = await characterRepo.getAll();
@@ -191,7 +195,8 @@ void main() {
     final zipFile = File('${tempDir.path}/backup.zip');
     await zipFile.writeAsBytes(zipData);
 
-    final result = await importService.importData(zipFile.path, ImportMode.replace);
+    final result =
+        await importService.importData(zipFile.path, ImportMode.replace);
     expect(result.success, isTrue);
     expect(result.charactersImported, 1);
   });
@@ -213,7 +218,8 @@ void main() {
     final badFile = File('${tempDir.path}/bad.json');
     await badFile.writeAsString(json.encode({'foo': 'bar'}));
 
-    final result = await importService.importData(badFile.path, ImportMode.merge);
+    final result =
+        await importService.importData(badFile.path, ImportMode.merge);
     expect(result.success, isFalse);
   });
 }

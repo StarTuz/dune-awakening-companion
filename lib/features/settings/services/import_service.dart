@@ -10,7 +10,7 @@ import '../../characters/services/character_repository.dart';
 import '../../bases/services/base_repository.dart';
 
 enum ImportMode {
-  merge,  // Add to existing data
+  merge, // Add to existing data
   replace // Clear existing data first
 }
 
@@ -73,7 +73,7 @@ class ImportService {
     try {
       final bytes = await zipFile.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
-      
+
       // Find data.json in archive
       final dataFile = archive.findFile('data.json');
       if (dataFile == null) {
@@ -84,56 +84,56 @@ class ImportService {
           basesImported: 0,
         );
       }
-      
+
       // Parse JSON data
       final jsonString = utf8.decode(dataFile.content as List<int>);
       final Map<String, dynamic> data = json.decode(jsonString);
-      
+
       // Validate structure
       final validation = _validateImportData(data);
       if (!validation.success) {
         return validation;
       }
-      
+
       // Get portraits directory
       final appDir = await getApplicationDocumentsDirectory();
       final portraitsDir = Directory(path.join(appDir.path, 'portraits'));
       if (!await portraitsDir.exists()) {
         await portraitsDir.create(recursive: true);
       }
-      
+
       // Extract portrait files and build mapping
       final portraitMappings = <String, String>{};
       int portraitsImported = 0;
-      
+
       for (final file in archive) {
         if (file.name.startsWith('portraits/') && file.isFile) {
           // Extract portrait
           final filename = path.basename(file.name);
           final newPath = path.join(portraitsDir.path, filename);
-          
+
           final outFile = File(newPath);
           await outFile.writeAsBytes(file.content as List<int>);
-          
+
           // Map archive path to new absolute path
           portraitMappings[file.name] = newPath;
           portraitsImported++;
         }
       }
-      
+
       // Handle import mode
       if (mode == ImportMode.replace) {
         await _clearAllData();
       }
-      
+
       // Parse and import characters with updated portrait paths
       final charactersJson = data['characters'] as List<dynamic>;
       int charactersImported = 0;
-      
+
       for (final charJson in charactersJson) {
         try {
           final charMap = charJson as Map<String, dynamic>;
-          
+
           // Update portrait path if it was in the archive
           if (charMap['portraitPath'] != null) {
             final archivePath = charMap['portraitPath'] as String;
@@ -144,7 +144,7 @@ class ImportService {
               charMap['portraitPath'] = null;
             }
           }
-          
+
           final character = Character.fromJson(charMap);
           await _characterRepository.create(character);
           charactersImported++;
@@ -152,11 +152,11 @@ class ImportService {
           debugPrint('Error importing character: $e');
         }
       }
-      
+
       // Import bases
       final basesJson = data['bases'] as List<dynamic>;
       int basesImported = 0;
-      
+
       for (final baseJson in basesJson) {
         try {
           final base = Base.fromJson(baseJson as Map<String, dynamic>);
@@ -166,7 +166,7 @@ class ImportService {
           debugPrint('Error importing base: $e');
         }
       }
-      
+
       return ImportResult(
         success: true,
         charactersImported: charactersImported,
@@ -205,7 +205,7 @@ class ImportService {
         charMap['portraitPath'] = null; // Clear invalid paths
         return Character.fromJson(charMap);
       }).toList();
-      
+
       final bases = basesJson
           .map((json) => Base.fromJson(json as Map<String, dynamic>))
           .toList();
@@ -316,13 +316,13 @@ class ImportService {
         // Handle ZIP preview
         final bytes = await file.readAsBytes();
         final archive = ZipDecoder().decodeBytes(bytes);
-        
+
         final dataFile = archive.findFile('data.json');
         if (dataFile == null) return null;
-        
+
         final jsonString = utf8.decode(dataFile.content as List<int>);
         data = json.decode(jsonString);
-        
+
         // Count portraits in archive
         portraitCount = archive.files
             .where((f) => f.name.startsWith('portraits/') && f.isFile)

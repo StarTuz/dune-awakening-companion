@@ -78,10 +78,12 @@ class DashboardScreen extends ConsumerWidget {
                   data: (bases) {
                     final now = DateTime.now();
                     final expiringSoon = bases.where((base) {
-                      final powerHours = base.powerExpirationTime.difference(now).inMinutes / 60.0;
+                      final powerHours =
+                          base.powerExpirationTime.difference(now).inMinutes /
+                              60.0;
                       return powerHours < 48 && powerHours > 0;
                     }).length;
-                    
+
                     return _StatCard(
                       title: l10n.expiringSoonTitle,
                       value: expiringSoon.toString(),
@@ -108,10 +110,12 @@ class DashboardScreen extends ConsumerWidget {
                   data: (bases) {
                     final now = DateTime.now();
                     final criticalBases = bases.where((base) {
-                      final powerHours = base.powerExpirationTime.difference(now).inMinutes / 60.0;
+                      final powerHours =
+                          base.powerExpirationTime.difference(now).inMinutes /
+                              60.0;
                       return powerHours < 24;
                     }).length;
-                    
+
                     return _StatCard(
                       title: l10n.activeAlertsTitle,
                       value: criticalBases.toString(),

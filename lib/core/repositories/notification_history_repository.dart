@@ -3,7 +3,7 @@ import '../models/notification_history_entry.dart';
 
 /// Repository for notification history operations
 class NotificationHistoryRepository {
-  static final NotificationHistoryRepository instance = 
+  static final NotificationHistoryRepository instance =
       NotificationHistoryRepository._internal();
 
   NotificationHistoryRepository._internal();
@@ -43,8 +43,7 @@ class NotificationHistoryRepository {
   Future<int> getUnreadCount() async {
     final db = await AppDatabase.instance.database;
     final result = await db.rawQuery(
-      'SELECT COUNT(*) as count FROM notification_history WHERE read = 0'
-    );
+        'SELECT COUNT(*) as count FROM notification_history WHERE read = 0');
     return result.first['count'] as int;
   }
 

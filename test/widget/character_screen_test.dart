@@ -53,7 +53,8 @@ void main() {
   }) {
     return ProviderScope(
       overrides: [
-        characterRepositoryProvider.overrideWithValue(_FakeCharacterRepo(characters)),
+        characterRepositoryProvider
+            .overrideWithValue(_FakeCharacterRepo(characters)),
         baseRepositoryProvider.overrideWithValue(_FakeBaseRepo()),
       ],
       child: const MaterialApp(
@@ -68,14 +69,32 @@ void main() {
     await tester.pumpWidget(buildCharacterScreen());
     await tester.pumpAndSettle();
 
-    expect(find.text('No characters yet. Add one to get started.'), findsOneWidget);
+    expect(find.text('No characters yet. Add one to get started.'),
+        findsOneWidget);
   });
 
   testWidgets('shows character list with names and details', (tester) async {
     await tester.pumpWidget(buildCharacterScreen(
       characters: [
-        Character(id: 'c1', name: 'Paul Atreides', region: 'NA', serverType: 'Official', world: 'Arrakis', sietch: 'Tabr', createdAt: now, updatedAt: now),
-        Character(id: 'c2', name: 'Chani', region: 'EU', serverType: 'Private', provider: 'GPORTAL', world: 'Custom World', sietch: 'Desert Wind', createdAt: now, updatedAt: now),
+        Character(
+            id: 'c1',
+            name: 'Paul Atreides',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+        Character(
+            id: 'c2',
+            name: 'Chani',
+            region: 'EU',
+            serverType: 'Private',
+            provider: 'GPORTAL',
+            world: 'Custom World',
+            sietch: 'Desert Wind',
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();
@@ -95,10 +114,19 @@ void main() {
     expect(find.byIcon(Icons.add), findsOneWidget);
   });
 
-  testWidgets('shows edit and delete buttons for each character', (tester) async {
+  testWidgets('shows edit and delete buttons for each character',
+      (tester) async {
     await tester.pumpWidget(buildCharacterScreen(
       characters: [
-        Character(id: 'c1', name: 'Paul', region: 'NA', serverType: 'Official', world: 'Arrakis', sietch: 'Tabr', createdAt: now, updatedAt: now),
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();

@@ -41,7 +41,7 @@ class SystemTrayService with TrayListener, WindowListener {
     try {
       // Copy icon to temp directory for tray_manager (Linux needs absolute path)
       final iconPath = await _prepareIcon();
-      
+
       // Initialize tray manager with absolute path
       await trayManager.setIcon(iconPath);
       debugPrint('[SystemTray] Icon set to: $iconPath');
@@ -62,37 +62,39 @@ class SystemTrayService with TrayListener, WindowListener {
   /// Prepare icon by copying to a temp location with absolute path
   Future<String> _prepareIcon() async {
     final tempDir = await getTemporaryDirectory();
-    
+
     if (Platform.isWindows) {
       // Windows REQUIRES .ico format for system tray
       // The .ico file is bundled with the Windows build
       final exeDir = File(Platform.resolvedExecutable).parent.path;
-      final icoPath = path.join(exeDir, 'data', 'flutter_assets', 'assets', 'app_icon.ico');
-      
+      final icoPath =
+          path.join(exeDir, 'data', 'flutter_assets', 'assets', 'app_icon.ico');
+
       // Check if custom ICO exists in assets, otherwise fall back to Windows runner icon
       if (await File(icoPath).exists()) {
         debugPrint('[SystemTray] Using ICO from assets: $icoPath');
         return icoPath;
       }
-      
+
       // Fall back to the runner resources icon
       final fallbackIco = path.join(exeDir, 'app_icon.ico');
       if (await File(fallbackIco).exists()) {
         debugPrint('[SystemTray] Using fallback ICO: $fallbackIco');
         return fallbackIco;
       }
-      
+
       // Create a minimal ICO from embedded data if nothing else works
-      debugPrint('[SystemTray] Warning: No ICO file found, tray icon may not appear');
+      debugPrint(
+          '[SystemTray] Warning: No ICO file found, tray icon may not appear');
       return icoPath; // Return path anyway, will fail gracefully
     } else {
       // Linux/macOS: Load PNG from assets
       final byteData = await rootBundle.load('assets/app_icon.png');
       final bytes = byteData.buffer.asUint8List();
-      
+
       final iconFile = File(path.join(tempDir.path, 'dune_tray_icon.png'));
       await iconFile.writeAsBytes(bytes);
-      
+
       debugPrint('[SystemTray] Icon prepared at: ${iconFile.path}');
       return iconFile.path;
     }
@@ -142,9 +144,8 @@ class SystemTrayService with TrayListener, WindowListener {
         MenuItem.separator(),
         MenuItem(
           key: 'check',
-          label: _alertCount > 0
-              ? 'Check Alerts ($_alertCount)'
-              : 'Check Alerts',
+          label:
+              _alertCount > 0 ? 'Check Alerts ($_alertCount)' : 'Check Alerts',
         ),
         MenuItem.separator(),
         MenuItem(

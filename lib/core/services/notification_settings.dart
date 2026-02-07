@@ -7,8 +7,10 @@ class NotificationSettings {
   static const String _keyIncludeWarnings = 'notifications_include_warnings';
   static const String _keyStartMinimized = 'start_minimized_to_tray';
   static const String _keyQuietHoursEnabled = 'quiet_hours_enabled';
-  static const String _keyQuietHoursStart = 'quiet_hours_start'; // minutes from midnight
-  static const String _keyQuietHoursEnd = 'quiet_hours_end'; // minutes from midnight
+  static const String _keyQuietHoursStart =
+      'quiet_hours_start'; // minutes from midnight
+  static const String _keyQuietHoursEnd =
+      'quiet_hours_end'; // minutes from midnight
   static const String _keySoundEnabled = 'notification_sound_enabled';
   static const String _keyVibrationEnabled = 'notification_vibration_enabled';
 
@@ -39,7 +41,8 @@ class NotificationSettings {
   /// Check if warning notifications (< 48h) are included
   static Future<bool> getIncludeWarnings() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyIncludeWarnings) ?? false; // Default: critical only
+    return prefs.getBool(_keyIncludeWarnings) ??
+        false; // Default: critical only
   }
 
   /// Set whether to include warning notifications

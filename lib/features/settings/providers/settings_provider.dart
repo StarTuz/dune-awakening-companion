@@ -5,7 +5,9 @@ final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository();
 });
 
-final settingsProvider = StateNotifierProvider<SettingsNotifier, AsyncValue<Map<String, dynamic>>>((ref) {
+final settingsProvider =
+    StateNotifierProvider<SettingsNotifier, AsyncValue<Map<String, dynamic>>>(
+        (ref) {
   final repository = ref.watch(settingsRepositoryProvider);
   return SettingsNotifier(repository);
 });

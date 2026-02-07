@@ -24,27 +24,29 @@ class ExportService {
 
       // Create archive
       final archive = Archive();
-      
+
       // Track portrait mappings (old path -> archive filename)
       final portraitMappings = <String, String>{};
-      
+
       // Add portrait files to archive
       for (final character in characters) {
         if (character.portraitPath != null) {
           final portraitFile = File(character.portraitPath!);
           if (await portraitFile.exists()) {
             final bytes = await portraitFile.readAsBytes();
-            final filename = 'portraits/${character.id}${path.extension(character.portraitPath!)}';
+            final filename =
+                'portraits/${character.id}${path.extension(character.portraitPath!)}';
             archive.addFile(ArchiveFile(filename, bytes.length, bytes));
             portraitMappings[character.portraitPath!] = filename;
           }
         }
       }
-      
+
       // Create export data with relative portrait paths
       final exportCharacters = characters.map((c) {
         final json = c.toJson();
-        if (c.portraitPath != null && portraitMappings.containsKey(c.portraitPath)) {
+        if (c.portraitPath != null &&
+            portraitMappings.containsKey(c.portraitPath)) {
           json['portraitPath'] = portraitMappings[c.portraitPath];
         }
         return json;
@@ -52,10 +54,10 @@ class ExportService {
 
       // Create JSON data
       final exportData = {
-        'version': '1.1.0',  // Bumped version for ZIP format
+        'version': '1.1.0', // Bumped version for ZIP format
         'exportDate': DateTime.now().toIso8601String(),
         'databaseVersion': 4,
-        'format': 'zip',  // New field to indicate format
+        'format': 'zip', // New field to indicate format
         'characters': exportCharacters,
         'bases': bases.map((b) => b.toJson()).toList(),
       };
@@ -108,7 +110,7 @@ class ExportService {
   Future<Map<String, int>> getExportStats() async {
     final characters = await _characterRepository.getAll();
     final bases = await _baseRepository.getAll();
-    
+
     // Count portraits
     int portraitCount = 0;
     for (final character in characters) {

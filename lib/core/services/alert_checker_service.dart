@@ -28,7 +28,7 @@ enum AlertType {
 
 enum AlertSeverity {
   critical, // < 24 hours or overdue
-  warning,  // < 48 hours
+  warning, // < 48 hours
 }
 
 /// Service to check for bases that need alerts
@@ -103,7 +103,7 @@ class AlertCheckerService {
     bool includeWarnings = false,
   }) async {
     final alerts = await checkForAlerts(includeWarnings: includeWarnings);
-    
+
     for (final alert in alerts) {
       onAlert(alert);
     }

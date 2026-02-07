@@ -31,7 +31,7 @@ late final ProviderContainer globalContainer;
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Enforce single instance on Windows
   // If another instance is already running, this will bring it to front and exit
   if (Platform.isWindows) {
@@ -45,23 +45,23 @@ void main(List<String> args) async {
       },
     );
   }
-  
+
   // Initialize database
   await AppDatabase.instance.initialize();
-  
+
   // Create global provider container BEFORE system tray init
   globalContainer = ProviderContainer();
-  
+
   // Initialize notification system
   await _initializeNotifications();
-  
+
   // Initialize system tray (desktop platforms)
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     await _initializeSystemTray();
-    
+
     // Initialize window manager
     await windowManager.ensureInitialized();
-    
+
     const windowOptions = WindowOptions(
       size: Size(1200, 800),
       minimumSize: Size(800, 600),
@@ -70,7 +70,7 @@ void main(List<String> args) async {
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
     );
-    
+
     // Linux has issues with waitUntilReadyToShow due to 'first-frame' signal
     // So we handle it differently per platform
     if (Platform.isLinux) {
@@ -79,7 +79,7 @@ void main(List<String> args) async {
       await windowManager.setMinimumSize(windowOptions.minimumSize!);
       await windowManager.center();
       await windowManager.setPreventClose(true);
-      
+
       final startMinimized = await NotificationSettings.getStartMinimized();
       if (startMinimized) {
         await windowManager.hide();
@@ -91,7 +91,7 @@ void main(List<String> args) async {
       // Windows/macOS: Use the standard approach
       await windowManager.waitUntilReadyToShow(windowOptions, () async {
         await windowManager.setPreventClose(true);
-        
+
         final startMinimized = await NotificationSettings.getStartMinimized();
         if (startMinimized) {
           await windowManager.hide();
@@ -102,7 +102,7 @@ void main(List<String> args) async {
       });
     }
   }
-  
+
   runApp(
     UncontrolledProviderScope(
       container: globalContainer,
@@ -116,14 +116,15 @@ Future<void> _initializeNotifications() async {
   final database = AppDatabase.instance;
   final baseRepository = BaseRepository(database);
   final characterRepository = CharacterRepository(database);
-  
+
   final notificationService = NotificationService.instance;
   final alertChecker = AlertCheckerService(baseRepository, characterRepository);
-  final coordinator = NotificationCoordinator(notificationService, alertChecker);
+  final coordinator =
+      NotificationCoordinator(notificationService, alertChecker);
   final manager = NotificationManager(notificationService, coordinator);
-  
+
   await manager.initialize();
-  
+
   // Update tray badge with initial alert count (desktop only)
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
     final alertCount = await coordinator.getAlertCount();
@@ -134,7 +135,7 @@ Future<void> _initializeNotifications() async {
 /// Initialize system tray (desktop only)
 Future<void> _initializeSystemTray() async {
   final trayService = SystemTrayService.instance;
-  
+
   await trayService.initialize(
     onShowWindow: () async {
       await windowManager.show();
@@ -144,26 +145,28 @@ Future<void> _initializeSystemTray() async {
       // Show window first
       await windowManager.show();
       await windowManager.focus();
-      
+
       // Then navigate to alerts screen using the navigator key
       // Wait a bit for window to be ready
       await Future.delayed(const Duration(milliseconds: 100));
-      
+
       // Navigate directly - MainNavigationScreen will handle tab switching
       // For now, just show the window and user can click Alerts tab
       // Later we can add proper deep linking
-      
+
       // Trigger immediate alert check
       try {
         final database = AppDatabase.instance;
         final baseRepository = BaseRepository(database);
         final characterRepository = CharacterRepository(database);
         final notificationService = NotificationService.instance;
-        final alertChecker = AlertCheckerService(baseRepository, characterRepository);
-        final coordinator = NotificationCoordinator(notificationService, alertChecker);
+        final alertChecker =
+            AlertCheckerService(baseRepository, characterRepository);
+        final coordinator =
+            NotificationCoordinator(notificationService, alertChecker);
         final manager = NotificationManager(notificationService, coordinator);
         await manager.checkNow();
-        
+
         // Update tray with current alert count
         final alertCount = await coordinator.getAlertCount();
         await trayService.updateAlertCount(alertCount);
@@ -175,11 +178,13 @@ Future<void> _initializeSystemTray() async {
       // Get current state from the Riverpod provider
       final currentState = globalContainer.read(notificationSettingsProvider);
       final newState = !currentState.enabled;
-      
+
       // Update via the provider notifier (this updates SharedPreferences AND Riverpod state)
       // The Settings UI watches this provider, so it will automatically update!
-      await globalContainer.read(notificationSettingsProvider.notifier).setEnabled(newState);
-      
+      await globalContainer
+          .read(notificationSettingsProvider.notifier)
+          .setEnabled(newState);
+
       // Update notification manager with new state FIRST
       // This is important because when disabling, the manager cancels all pending notifications
       // We need to do this BEFORE showing our feedback notification
@@ -187,29 +192,33 @@ Future<void> _initializeSystemTray() async {
       final database = AppDatabase.instance;
       final baseRepository = BaseRepository(database);
       final characterRepository = CharacterRepository(database);
-      final alertChecker = AlertCheckerService(baseRepository, characterRepository);
-      final coordinator = NotificationCoordinator(notificationService, alertChecker);
+      final alertChecker =
+          AlertCheckerService(baseRepository, characterRepository);
+      final coordinator =
+          NotificationCoordinator(notificationService, alertChecker);
       final manager = NotificationManager(notificationService, coordinator);
-      
+
       await manager.updateSettings(enabled: newState);
-      
+
       // Update tray menu with actual alert count
       final alertCount = newState ? await coordinator.getAlertCount() : 0;
       await trayService.updateAlertCount(alertCount);
-      
+
       // NOW show feedback notification AFTER manager updates
       // This ensures it won't be canceled by cancelAllNotifications()
       try {
         await notificationService.showSimpleNotification(
-          title: newState ? '🔔 Notifications Enabled' : '🔕 Notifications Disabled',
-          message: newState 
+          title: newState
+              ? '🔔 Notifications Enabled'
+              : '🔕 Notifications Disabled',
+          message: newState
               ? 'You will receive alerts for expiring bases'
               : 'Notification alerts have been turned off',
         );
       } catch (e) {
         debugPrint('[SystemTray] Feedback notification error: $e');
       }
-      
+
       debugPrint(
         '[SystemTray] Notifications toggled: $newState (UI should update automatically!)',
       );
@@ -231,15 +240,15 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final faction = ref.watch(factionThemeProvider);
     final accessibility = ref.watch(accessibilityProvider);
-    
+
     // Get base themes based on selected faction
     var darkTheme = AppTheme.getDarkThemeForFaction(faction);
     var lightTheme = AppTheme.getLightThemeForFaction(faction);
-    
+
     // Apply accessibility modifications
     darkTheme = _applyAccessibility(darkTheme, accessibility);
     lightTheme = _applyAccessibility(lightTheme, accessibility);
-    
+
     return MaterialApp(
       title: 'Dune Awakening Companion',
       debugShowCheckedModeBanner: false,
@@ -270,21 +279,23 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
   }
 
   /// Apply accessibility settings to a theme
-  ThemeData _applyAccessibility(ThemeData theme, AccessibilitySettings settings) {
+  ThemeData _applyAccessibility(
+      ThemeData theme, AccessibilitySettings settings) {
     var modifiedTheme = theme;
-    
+
     // Apply font weight to text theme
     if (settings.fontWeight != FontWeightOption.regular) {
       modifiedTheme = modifiedTheme.copyWith(
-        textTheme: _applyFontWeight(modifiedTheme.textTheme, settings.fontWeightValue),
+        textTheme:
+            _applyFontWeight(modifiedTheme.textTheme, settings.fontWeightValue),
       );
     }
-    
+
     // Apply high contrast modifications
     if (settings.highContrast) {
       modifiedTheme = _applyHighContrast(modifiedTheme);
     }
-    
+
     return modifiedTheme;
   }
 
@@ -312,7 +323,7 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
   /// Apply high contrast modifications to a theme
   ThemeData _applyHighContrast(ThemeData theme) {
     final isDark = theme.brightness == Brightness.dark;
-    
+
     if (isDark) {
       // Dark mode: Increase contrast with brighter text and stronger colors
       return theme.copyWith(
@@ -334,7 +345,8 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
           elevation: 4,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            side: BorderSide(color: theme.colorScheme.primary.withOpacity(0.5), width: 1),
+            side: BorderSide(
+                color: theme.colorScheme.primary.withOpacity(0.5), width: 1),
           ),
         ),
       );
@@ -367,8 +379,9 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
   /// Increase the brightness/saturation of a color for high contrast
   Color _increaseContrast(Color color) {
     final hsl = HSLColor.fromColor(color);
-    return hsl.withLightness((hsl.lightness + 0.15).clamp(0.0, 1.0))
-              .withSaturation((hsl.saturation + 0.1).clamp(0.0, 1.0))
-              .toColor();
+    return hsl
+        .withLightness((hsl.lightness + 0.15).clamp(0.0, 1.0))
+        .withSaturation((hsl.saturation + 0.1).clamp(0.0, 1.0))
+        .toColor();
   }
 }

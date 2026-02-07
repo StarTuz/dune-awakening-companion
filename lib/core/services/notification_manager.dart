@@ -57,7 +57,7 @@ class NotificationManager {
       '[NotificationManager] Updating settings: enabled=$enabled, '
       'interval=$intervalMinutes, warnings=$includeWarnings',
     );
-    
+
     // Save new settings
     if (enabled != null) {
       await NotificationSettings.setNotificationsEnabled(enabled);

@@ -66,7 +66,8 @@ void main() {
   }) {
     return ProviderScope(
       overrides: [
-        characterRepositoryProvider.overrideWithValue(_FakeCharacterRepo(characters)),
+        characterRepositoryProvider
+            .overrideWithValue(_FakeCharacterRepo(characters)),
         baseRepositoryProvider.overrideWithValue(_FakeBaseRepo(bases)),
         notificationHistoryProvider.overrideWith(
           (ref) => _FakeHistoryNotifier(const NotificationHistoryState(
@@ -87,10 +88,24 @@ void main() {
   testWidgets('shows "all safe" when no bases are expiring', (tester) async {
     await tester.pumpWidget(buildAlerts(
       characters: [
-        Character(id: 'c1', name: 'Paul', region: 'NA', serverType: 'Official', world: 'Arrakis', sietch: 'Tabr', createdAt: now, updatedAt: now),
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
       ],
       bases: [
-        Base(id: 'b1', characterId: 'c1', name: 'Safe Base', powerExpirationTime: now.add(const Duration(hours: 72)), createdAt: now, updatedAt: now),
+        Base(
+            id: 'b1',
+            characterId: 'c1',
+            name: 'Safe Base',
+            powerExpirationTime: now.add(const Duration(hours: 72)),
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();
@@ -106,10 +121,24 @@ void main() {
   testWidgets('shows alert card for base expiring within 48h', (tester) async {
     await tester.pumpWidget(buildAlerts(
       characters: [
-        Character(id: 'c1', name: 'Paul', region: 'NA', serverType: 'Official', world: 'Arrakis', sietch: 'Tabr', createdAt: now, updatedAt: now),
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
       ],
       bases: [
-        Base(id: 'b1', characterId: 'c1', name: 'Danger Base', powerExpirationTime: now.add(const Duration(hours: 6)), createdAt: now, updatedAt: now),
+        Base(
+            id: 'b1',
+            characterId: 'c1',
+            name: 'Danger Base',
+            powerExpirationTime: now.add(const Duration(hours: 6)),
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();

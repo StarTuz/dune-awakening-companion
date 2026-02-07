@@ -18,7 +18,7 @@ class ImageService {
 
       final bytes = await sourceFile.readAsBytes();
       final image = img.decodeImage(bytes);
-      
+
       if (image == null) {
         debugPrint('Failed to decode image');
         return null;
@@ -73,11 +73,11 @@ class ImageService {
     try {
       final appDir = await getApplicationDocumentsDirectory();
       final portraitsDir = Directory(path.join(appDir.path, 'portraits'));
-      
+
       if (!await portraitsDir.exists()) {
         await portraitsDir.create(recursive: true);
       }
-      
+
       return portraitsDir;
     } catch (e) {
       debugPrint('Error getting portraits directory: $e');
@@ -101,7 +101,7 @@ class ImageService {
       // Try to decode
       final imageBytes = await file.readAsBytes();
       final image = img.decodeImage(imageBytes);
-      
+
       return image != null;
     } catch (e) {
       debugPrint('Error validating image: $e');

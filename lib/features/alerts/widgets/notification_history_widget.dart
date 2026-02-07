@@ -28,7 +28,8 @@ class NotificationHistoryWidget extends ConsumerWidget {
             Text(l10n.errorLoadingHistory(historyState.error.toString())),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () => ref.read(notificationHistoryProvider.notifier).loadHistory(),
+              onPressed: () =>
+                  ref.read(notificationHistoryProvider.notifier).loadHistory(),
               child: Text(l10n.retry),
             ),
           ],
@@ -90,7 +91,9 @@ class NotificationHistoryWidget extends ConsumerWidget {
                   children: [
                     if (historyState.unreadCount > 0)
                       TextButton.icon(
-                        onPressed: () => ref.read(notificationHistoryProvider.notifier).markAllAsRead(),
+                        onPressed: () => ref
+                            .read(notificationHistoryProvider.notifier)
+                            .markAllAsRead(),
                         icon: const Icon(Icons.done_all, size: 18),
                         label: Text(l10n.markAllRead),
                       ),
@@ -110,19 +113,26 @@ class NotificationHistoryWidget extends ConsumerWidget {
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(ctx, true),
-                                  child: Text(l10n.delete, style: const TextStyle(color: Colors.red)),
+                                  child: Text(l10n.delete,
+                                      style:
+                                          const TextStyle(color: Colors.red)),
                                 ),
                               ],
                             ),
                           );
                           if (confirm == true) {
-                            ref.read(notificationHistoryProvider.notifier).clearHistory();
+                            ref
+                                .read(notificationHistoryProvider.notifier)
+                                .clearHistory();
                           }
                         } else if (value == 'delete_old') {
-                          ref.read(notificationHistoryProvider.notifier).deleteOlderThan(7);
+                          ref
+                              .read(notificationHistoryProvider.notifier)
+                              .deleteOlderThan(7);
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(l10n.deletedOldNotifications)),
+                              SnackBar(
+                                  content: Text(l10n.deletedOldNotifications)),
                             );
                           }
                         }
@@ -134,7 +144,8 @@ class NotificationHistoryWidget extends ConsumerWidget {
                         ),
                         PopupMenuItem(
                           value: 'clear',
-                          child: Text(l10n.clearAllHistory, style: const TextStyle(color: Colors.red)),
+                          child: Text(l10n.clearAllHistory,
+                              style: const TextStyle(color: Colors.red)),
                         ),
                       ],
                     ),
@@ -143,7 +154,7 @@ class NotificationHistoryWidget extends ConsumerWidget {
               ],
             ),
           ),
-        
+
         // History list
         Expanded(
           child: ListView.builder(
@@ -154,7 +165,9 @@ class NotificationHistoryWidget extends ConsumerWidget {
                 entry: entry,
                 onTap: () {
                   if (!entry.read && entry.id != null) {
-                    ref.read(notificationHistoryProvider.notifier).markAsRead(entry.id!);
+                    ref
+                        .read(notificationHistoryProvider.notifier)
+                        .markAsRead(entry.id!);
                   }
                 },
               );
@@ -178,11 +191,11 @@ class _NotificationHistoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCritical = entry.severity == 'critical';
-    
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      color: entry.read 
-          ? AppColors.cardBackground 
+      color: entry.read
+          ? AppColors.cardBackground
           : AppColors.cardBackground.withOpacity(0.9),
       child: InkWell(
         onTap: onTap,
@@ -196,7 +209,7 @@ class _NotificationHistoryTile extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isCritical 
+                  color: isCritical
                       ? AppColors.criticalStatus.withOpacity(0.2)
                       : AppColors.warningYellow.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
@@ -209,7 +222,7 @@ class _NotificationHistoryTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              
+
               // Content
               Expanded(
                 child: Column(
@@ -221,7 +234,9 @@ class _NotificationHistoryTile extends StatelessWidget {
                           child: Text(
                             entry.title,
                             style: TextStyle(
-                              fontWeight: entry.read ? FontWeight.normal : FontWeight.bold,
+                              fontWeight: entry.read
+                                  ? FontWeight.normal
+                                  : FontWeight.bold,
                               color: AppColors.textPrimary,
                             ),
                           ),
