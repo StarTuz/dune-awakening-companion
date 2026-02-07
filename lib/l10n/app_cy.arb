@@ -1,21 +1,17 @@
 {
   "@@locale": "cy",
-  
   "appTitle": "Cydymaith Dune Awakening",
   "navDashboard": "Dangosfwrdd",
   "navCharacters": "Cymeriadau",
   "navAlerts": "Rhybuddion",
   "navSettings": "Gosodiadau",
-  
   "dashboardTitle": "Dangosfwrdd",
   "charactersTitle": "Cymeriadau",
   "basesTitle": "Canolfannau",
   "alertsTitle": "Rhybuddion",
   "settingsTitle": "Gosodiadau",
-  
   "expiringSoonTitle": "Yn Dod i Ben yn Fuan",
   "activeAlertsTitle": "Rhybuddion Gweithredol",
-  
   "error": "Gwall",
   "loading": "Yn Llwytho...",
   "save": "Cadw",
@@ -27,28 +23,22 @@
   "yes": "Ie",
   "no": "Na",
   "close": "Cau",
-  
   "refreshTooltip": "Adnewyddu",
   "notificationHistoryTooltip": "Hanes Hysbysiadau",
   "addBaseTooltip": "Ychwanegu Canolfan",
   "updateCountdownTooltip": "Diweddaru cyfrif i lawr",
   "addCharacterTooltip": "Ychwanegu Cymeriad",
-  
   "allBasesSafeTitle": "Mae pob canolfan yn ddiogel!",
   "allBasesSafeMessage": "Nid oes unrhyw ganolfan yn dod i ben yn y 48 awr nesaf.",
-  
   "timeRemainingPower": "Amser ar Ôl: Pŵer",
-  "timeRemainingTaxes": "Amser ar Ôl: Trethi",
   "expiresLabel": "Yn Dod i Ben",
   "dueLabel": "Dyddiad Talu",
   "tapToManage": "Cyffyrddwch i reoli canolfannau'r cymeriad hwn",
   "severityCritical": "CRITIGOL",
   "severityWarning": "RHYBUDD",
-  "taxOverdueLabel": "Hwyr: {time}",
   "daysAbbr": "d",
   "hoursAbbr": "a",
   "minutesAbbr": "m",
-  
   "sectionAbout": "Amdanom",
   "sectionAppearance": "Ymddangosiad",
   "sectionLanguage": "Iaith",
@@ -56,19 +46,15 @@
   "sectionAccessibility": "Hygyrchedd",
   "sectionNotifications": "Hysbysiadau",
   "sectionLegal": "Cyfreithiol a Diolchiadau",
-  
   "version": "Fersiwn",
   "databaseVersion": "Fersiwn Cronfa Ddata",
   "build": "Build",
   "features": "Nodweddion",
-  
   "darkMode": "Modd Tywyll",
   "desertNightTheme": "Thema Nos y Diffwys",
   "desertDayTheme": "Thema Dydd y Diffwys",
-  
   "factionTheme": "Thema Carfan",
   "chooseFaction": "Dewiswch Eich Carfan",
-  
   "factionDesert": "Diffwys (Rhagosodedig)",
   "factionDesertDesc": "Tywod cynnes ac aur sbeisys",
   "factionAtreides": "Tŷ Atreides",
@@ -79,58 +65,46 @@
   "factionFremenDesc": "Tywod a glas - Rhyfelwyr y diffwys",
   "factionSmuggler": "Smyglwr",
   "factionSmugglerDesc": "Porffor ac efydd - Masnachwyr y cysgod",
-  
   "language": "Iaith",
-  
   "exportData": "Allforio Data",
   "exportDataDesc": "Gwneud copi wrth gefn o bob cymeriad a chanolfan",
   "importData": "Mewnforio Data",
   "importDataDesc": "Adfer o gopi wrth gefn",
   "clearAllData": "Clirio Pob Data",
   "clearAllDataDesc": "Dileu pob cymeriad a chanolfan",
-  
   "textSize": "Maint Testun",
   "textSizeSmall": "Bach",
   "textSizeMedium": "Canolig",
   "textSizeLarge": "Mawr",
   "textSizeXL": "Mawr Iawn",
-  
   "textWeight": "Trwch Testun",
   "textWeightLight": "Ysgafn",
   "textWeightRegular": "Rheolaidd",
   "textWeightBold": "Trwm",
-  
   "highContrast": "Cyferbyniad Uchel",
   "highContrastEnabled": "Cyferbyniad lliw gwell",
   "highContrastDisabled": "Cyferbyniad lliw safonol",
-  
   "reduceMotion": "Lleihau Symudiad",
   "reduceMotionEnabled": "Animeiddiadau wedi'u hanalluogi",
   "reduceMotionDisabled": "Animeiddiadau wedi'u galluogi",
-  
   "notifications": "Hysbysiadau",
   "enableNotifications": "Galluogi Hysbysiadau",
   "notificationsEnabled": "Bydd rhybuddion yn cael eu hanfon",
   "notificationsDisabled": "Ni fydd unrhyw rybuddion yn cael eu hanfon",
-  
   "checkInterval": "Cyfwng Gwirio",
   "checkIntervalDesc": "Pa mor aml i wirio am rybuddion",
   "minutes": "munud",
-  
   "quietHours": "Oriau Tawel",
   "quietHoursEnabled": "Peidiwch â tharfu wedi'i alluogi",
   "quietHoursDisabled": "Hysbysiadau ar bob adeg",
   "quietHoursStart": "Amser Dechrau",
   "quietHoursEnd": "Amser Gorffen",
-  
   "sound": "Sain",
   "soundEnabled": "Seiniau hysbysiadau wedi'u galluogi",
   "soundDisabled": "Seiniau hysbysiadau wedi'u hanalluogi",
-  
   "vibration": "Dirgryniad",
   "vibrationEnabled": "Adborth haptig wedi'i alluogi",
   "vibrationDisabled": "Adborth haptig wedi'i analluogi",
-  
   "notificationHistory": "Hanes Hysbysiadau",
   "viewHistory": "Gweld Hanes",
   "clearHistory": "Clirio Hanes",
@@ -146,20 +120,16 @@
   "deletedOldNotifications": "Dileu hysbysiadau hŷn na 7 diwrnod",
   "errorLoadingHistory": "Gwall wrth lwytho hanes: {error}",
   "retry": "Ailgynnig",
-  
   "testAlerts": "Profi Rhybuddion",
   "checkingAlerts": "Yn gwirio rhybuddion...",
   "checkComplete": "✅ Gwirio wedi'i gwblhau! Hysbysiadau wedi'u hanfon os oes angen sylw ar ganolfannau.",
-  
   "importantDisclaimer": "Ymwadiad Pwysig",
   "disclaimerText": "Ap answyddogol yw hwn a grëwyd gan gefnogwyr. NID yw'n gysylltiedig â, wedi'i gymeradwyo gan, na'i gefnogi gan Funcom. Nid oedd gan Funcom unrhyw fewnbwn yn y datblygiad. Mae Dune Awakening yn nod masnach Funcom. Mae Dune ac elfennau cysylltiedig yn nodau masnach Herbert Properties LLC.",
-  
   "acknowledgments": "Diolchiadau",
   "ackHerbert": "Herbert Estate am y bydysawd Dune",
   "ackFuncom": "Funcom am Dune Awakening",
   "ackCommunity": "Cymuned Dune Awakening",
   "ackFlutter": "Fframwaith Flutter",
-  
   "characterName": "Enw'r Cymeriad",
   "enterCharacterName": "Rhowch enw'r cymeriad",
   "provider": "Darparwr",
@@ -176,7 +146,6 @@
   "portrait": "Portread",
   "addPortrait": "Ychwanegu Portread",
   "removePortrait": "Dileu Portread",
-  
   "addCharacter": "Ychwanegu Cymeriad",
   "editCharacter": "Golygu Cymeriad",
   "deleteCharacter": "Dileu Cymeriad",
@@ -188,26 +157,15 @@
   "powerExpired": "Pŵer: Wedi dod i ben",
   "noCharactersMessage": "Dim cymeriadau eto. Ychwanegwch un i ddechrau.",
   "basesButton": "Canolfannau",
-  
   "baseName": "Enw Canolfan",
   "powerDays": "Diwrnodau",
   "powerHours": "Oriau",
   "powerMinutes": "Munudau",
-  "advancedFief": "Ffîff Uwch",
-  "advancedFiefDesc": "Galluogi ar gyfer olrhain trethi",
-  
   "addBase": "Ychwanegu Canolfan",
   "editBase": "Golygu Canolfan",
   "deleteBase": "Dileu Canolfan",
   "deleteBaseConfirm": "Dileu'r ganolfan hon?",
-  
   "power": "Pŵer",
-  "taxes": "Trethi",
-  "taxPerCycle": "Treth fesul Cylch",
-  "currentOwed": "Dyled Gyfredol",
-  "overdueOwed": "Dyled Hwyr",
-  "defaultedOwed": "Dyled Ddiffygiol",
-  
   "statusPaid": "TALWYD",
   "statusDue": "YN DDYLEDUS",
   "statusOverdue": "YN HWYR",
@@ -215,15 +173,11 @@
   "statusCritical": "CRITIGOL",
   "statusWarning": "RHYBUDD",
   "statusSafe": "DIOGEL",
-  
   "noCharacters": "Dim cymeriadau eto",
   "noCharactersDesc": "Tapiwch + i ychwanegu eich cymeriad cyntaf",
   "noBases": "Dim canolfannau eto",
   "noBasesDesc": "Tapiwch + i ychwanegu canolfan",
-  
   "powerCritical": "Pŵer Critigol!",
-  "taxOverdue": "Trethi'n Hwyr!",
-  
   "exportSuccess": "Data wedi'i allforio'n llwyddiannus",
   "exportFailed": "Allforio wedi methu",
   "importSuccess": "Data wedi'i fewnforio'n llwyddiannus",
@@ -245,19 +199,16 @@
   "importingData": "Wrthi'n mewnforio data...",
   "importSuccessful": "Mewnforio yn llwyddiannus!",
   "importSummary": "{characters} cymeriad, {bases} canolfan{portraits} wedi'u mewnforio",
-  
   "importMode": "Modd Mewnforio",
   "importMerge": "Cyfuno",
   "importMergeDesc": "Ychwanegu at data presennol",
   "importReplace": "Disodli",
   "importReplaceDesc": "Clirio'r holl ddata yn gyntaf",
-  
   "clearDataConfirm": "Clirio'r holl ddata?",
   "clearDataConfirmDesc": "Bydd hyn yn dileu pob cymeriad a chanolfan. Ni ellir dadwneud hyn.",
   "dataCleared": "Pob data wedi'i glirio",
   "deleteEverything": "Dileu Popeth",
   "errorClearingData": "Gwall wrth glirio data: {error}",
-
   "receiveAlertsForExpiring": "Derbyn rhybuddion ar gyfer canolfannau sy'n dod i ben",
   "notificationsDisabledDesc": "Hysbysiadau wedi'u hanalluogi",
   "checkEveryMinutes": "Gwirio bob {minutes} munud",
@@ -278,7 +229,6 @@
   "testNotification": "Profi Hysbysiad",
   "sendTestNotification": "Anfon hysbysiad prawf",
   "test": "Profi",
-
   "copyrightNotices": "Hysbysiadau Hawlfraint",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Mae Dune Awakening yn nod masnach Funcom. Cedwir pob hawl.",

@@ -103,9 +103,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get timeRemainingPower => 'Temps Restant : Énergie';
 
   @override
-  String get timeRemainingTaxes => 'Temps Restant : Impôts';
-
-  @override
   String get expiresLabel => 'Expire';
 
   @override
@@ -119,11 +116,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get severityWarning => 'AVERTISSEMENT';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'En retard: $time';
-  }
 
   @override
   String get daysAbbr => 'j';
@@ -526,12 +518,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get powerMinutes => 'Minutes';
 
   @override
-  String get advancedFief => 'Fief Avancé';
-
-  @override
-  String get advancedFiefDesc => 'Activer pour le suivi des impôts';
-
-  @override
   String get addBase => 'Ajouter une Base';
 
   @override
@@ -545,21 +531,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get power => 'Énergie';
-
-  @override
-  String get taxes => 'Impôts';
-
-  @override
-  String get taxPerCycle => 'Impôt par Cycle';
-
-  @override
-  String get currentOwed => 'Dû Actuel';
-
-  @override
-  String get overdueOwed => 'Dû en Retard';
-
-  @override
-  String get defaultedOwed => 'Dû en Défaut';
 
   @override
   String get statusPaid => 'PAYÉ';
@@ -597,9 +568,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get powerCritical => 'Énergie Critique !';
-
-  @override
-  String get taxOverdue => 'Impôts en Retard !';
 
   @override
   String get exportSuccess => 'Données exportées avec succès';

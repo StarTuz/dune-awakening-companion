@@ -103,9 +103,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get timeRemainingPower => 'Tiempo Restante: Energía';
 
   @override
-  String get timeRemainingTaxes => 'Tiempo Restante: Impuestos';
-
-  @override
   String get expiresLabel => 'Expira';
 
   @override
@@ -119,11 +116,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get severityWarning => 'ADVERTENCIA';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Vencido: $time';
-  }
 
   @override
   String get daysAbbr => 'd';
@@ -526,12 +518,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get powerMinutes => 'Minutos';
 
   @override
-  String get advancedFief => 'Feudo Avanzado';
-
-  @override
-  String get advancedFiefDesc => 'Activar para seguimiento de impuestos';
-
-  @override
   String get addBase => 'Agregar Base';
 
   @override
@@ -545,21 +531,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get power => 'Energía';
-
-  @override
-  String get taxes => 'Impuestos';
-
-  @override
-  String get taxPerCycle => 'Impuesto por Ciclo';
-
-  @override
-  String get currentOwed => 'Adeudo Actual';
-
-  @override
-  String get overdueOwed => 'Adeudo Vencido';
-
-  @override
-  String get defaultedOwed => 'Adeudo en Mora';
 
   @override
   String get statusPaid => 'PAGADO';
@@ -596,9 +567,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get powerCritical => '¡Energía Crítica!';
-
-  @override
-  String get taxOverdue => '¡Impuestos Vencidos!';
 
   @override
   String get exportSuccess => 'Datos exportados exitosamente';

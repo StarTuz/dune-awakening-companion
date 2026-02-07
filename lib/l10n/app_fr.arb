@@ -1,21 +1,17 @@
 {
   "@@locale": "fr",
-  
   "appTitle": "Compagnon Dune Awakening",
   "navDashboard": "Tableau de Bord",
   "navCharacters": "Personnages",
   "navAlerts": "Alertes",
   "navSettings": "Paramètres",
-  
   "dashboardTitle": "Tableau de Bord",
   "charactersTitle": "Personnages",
   "basesTitle": "Bases",
   "alertsTitle": "Alertes",
   "settingsTitle": "Paramètres",
-  
   "expiringSoonTitle": "Expiration Proche",
   "activeAlertsTitle": "Alertes Actives",
-  
   "error": "Erreur",
   "loading": "Chargement...",
   "save": "Enregistrer",
@@ -27,28 +23,22 @@
   "yes": "Oui",
   "no": "Non",
   "close": "Fermer",
-  
   "refreshTooltip": "Actualiser",
   "notificationHistoryTooltip": "Historique des Notifications",
   "addBaseTooltip": "Ajouter une Base",
   "updateCountdownTooltip": "Mettre à jour le compte à rebours",
   "addCharacterTooltip": "Ajouter un Personnage",
-  
   "allBasesSafeTitle": "Toutes les bases sont sécurisées !",
   "allBasesSafeMessage": "Aucune base n'expire dans les 48 prochaines heures.",
-  
   "timeRemainingPower": "Temps Restant : Énergie",
-  "timeRemainingTaxes": "Temps Restant : Impôts",
   "expiresLabel": "Expire",
   "dueLabel": "Échéance",
   "tapToManage": "Appuyez pour gérer les bases de ce personnage",
   "severityCritical": "CRITIQUE",
   "severityWarning": "AVERTISSEMENT",
-  "taxOverdueLabel": "En retard: {time}",
   "daysAbbr": "j",
   "hoursAbbr": "h",
   "minutesAbbr": "m",
-  
   "sectionAbout": "À Propos",
   "sectionAppearance": "Apparence",
   "sectionLanguage": "Langue",
@@ -56,19 +46,15 @@
   "sectionAccessibility": "Accessibilité",
   "sectionNotifications": "Notifications",
   "sectionLegal": "Mentions Légales",
-  
   "version": "Version",
   "databaseVersion": "Version de la Base de Données",
   "build": "Build",
   "features": "Fonctionnalités",
-  
   "darkMode": "Mode Sombre",
   "desertNightTheme": "Thème Nuit du Désert",
   "desertDayTheme": "Thème Jour du Désert",
-  
   "factionTheme": "Thème de Faction",
   "chooseFaction": "Choisissez Votre Faction",
-  
   "factionDesert": "Désert (Par défaut)",
   "factionDesertDesc": "Sable chaud et or d'épice",
   "factionAtreides": "Maison Atréides",
@@ -79,58 +65,46 @@
   "factionFremenDesc": "Sable et bleu - Les guerriers du désert",
   "factionSmuggler": "Contrebandier",
   "factionSmugglerDesc": "Violet et bronze - Les marchands de l'ombre",
-  
   "language": "Langue",
-  
   "exportData": "Exporter les Données",
   "exportDataDesc": "Sauvegarder tous les personnages et bases",
   "importData": "Importer les Données",
   "importDataDesc": "Restaurer depuis une sauvegarde",
   "clearAllData": "Effacer Toutes les Données",
   "clearAllDataDesc": "Supprimer tous les personnages et bases",
-  
   "textSize": "Taille du Texte",
   "textSizeSmall": "Petit",
   "textSizeMedium": "Moyen",
   "textSizeLarge": "Grand",
   "textSizeXL": "Très Grand",
-  
   "textWeight": "Épaisseur du Texte",
   "textWeightLight": "Léger",
   "textWeightRegular": "Normal",
   "textWeightBold": "Gras",
-  
   "highContrast": "Contraste Élevé",
   "highContrastEnabled": "Contraste des couleurs amélioré",
   "highContrastDisabled": "Contraste des couleurs standard",
-  
   "reduceMotion": "Réduire les Mouvements",
   "reduceMotionEnabled": "Animations désactivées",
   "reduceMotionDisabled": "Animations activées",
-  
   "notifications": "Notifications",
   "enableNotifications": "Activer les Notifications",
   "notificationsEnabled": "Les alertes seront envoyées",
   "notificationsDisabled": "Aucune alerte ne sera envoyée",
-  
   "checkInterval": "Intervalle de Vérification",
   "checkIntervalDesc": "Fréquence de vérification des alertes",
   "minutes": "minutes",
-  
   "quietHours": "Heures Silencieuses",
   "quietHoursEnabled": "Ne pas déranger activé",
   "quietHoursDisabled": "Notifications à toute heure",
   "quietHoursStart": "Heure de Début",
   "quietHoursEnd": "Heure de Fin",
-  
   "sound": "Son",
   "soundEnabled": "Sons de notification activés",
   "soundDisabled": "Sons de notification désactivés",
-  
   "vibration": "Vibration",
   "vibrationEnabled": "Retour haptique activé",
   "vibrationDisabled": "Retour haptique désactivé",
-  
   "notificationHistory": "Historique des Notifications",
   "viewHistory": "Voir l'Historique",
   "clearHistory": "Effacer l'Historique",
@@ -146,20 +120,16 @@
   "deletedOldNotifications": "Notifications de plus de 7 jours supprimées",
   "errorLoadingHistory": "Erreur de chargement de l'historique : {error}",
   "retry": "Réessayer",
-  
   "testAlerts": "Tester les Alertes",
   "checkingAlerts": "Vérification des alertes...",
   "checkComplete": "✅ Vérification terminée ! Notifications envoyées si des bases nécessitent une attention.",
-  
   "importantDisclaimer": "Avertissement Important",
   "disclaimerText": "Ceci est une application non officielle créée par des fans. NON affiliée, approuvée ou soutenue par Funcom. Funcom n'a pas participé au développement. Dune Awakening est une marque de Funcom. Dune et les éléments associés sont des marques de Herbert Properties LLC.",
-  
   "acknowledgments": "Remerciements",
   "ackHerbert": "Herbert Estate pour l'univers Dune",
   "ackFuncom": "Funcom pour Dune Awakening",
   "ackCommunity": "Communauté Dune Awakening",
   "ackFlutter": "Framework Flutter",
-  
   "characterName": "Nom du Personnage",
   "enterCharacterName": "Entrez le nom du personnage",
   "provider": "Fournisseur",
@@ -176,7 +146,6 @@
   "portrait": "Portrait",
   "addPortrait": "Ajouter un Portrait",
   "removePortrait": "Supprimer le Portrait",
-  
   "addCharacter": "Ajouter un Personnage",
   "editCharacter": "Modifier le Personnage",
   "deleteCharacter": "Supprimer le Personnage",
@@ -188,26 +157,15 @@
   "powerExpired": "Énergie : Expirée",
   "noCharactersMessage": "Aucun personnage pour l'instant. Ajoutez-en un pour commencer.",
   "basesButton": "Bases",
-  
   "baseName": "Nom de la Base",
   "powerDays": "Jours",
   "powerHours": "Heures",
   "powerMinutes": "Minutes",
-  "advancedFief": "Fief Avancé",
-  "advancedFiefDesc": "Activer pour le suivi des impôts",
-  
   "addBase": "Ajouter une Base",
   "editBase": "Modifier la Base",
   "deleteBase": "Supprimer la Base",
   "deleteBaseConfirm": "Supprimer cette base ?",
-  
   "power": "Énergie",
-  "taxes": "Impôts",
-  "taxPerCycle": "Impôt par Cycle",
-  "currentOwed": "Dû Actuel",
-  "overdueOwed": "Dû en Retard",
-  "defaultedOwed": "Dû en Défaut",
-  
   "statusPaid": "PAYÉ",
   "statusDue": "DÛ",
   "statusOverdue": "EN RETARD",
@@ -215,15 +173,11 @@
   "statusCritical": "CRITIQUE",
   "statusWarning": "ATTENTION",
   "statusSafe": "SÛR",
-  
   "noCharacters": "Aucun personnage",
   "noCharactersDesc": "Appuyez sur + pour ajouter votre premier personnage",
   "noBases": "Aucune base",
   "noBasesDesc": "Appuyez sur + pour ajouter une base",
-  
   "powerCritical": "Énergie Critique !",
-  "taxOverdue": "Impôts en Retard !",
-  
   "exportSuccess": "Données exportées avec succès",
   "exportFailed": "Échec de l'exportation",
   "importSuccess": "Données importées avec succès",
@@ -245,20 +199,16 @@
   "importingData": "Importation des données...",
   "importSuccessful": "Importation réussie !",
   "importSummary": "{characters} personnages, {bases} bases{portraits} importés",
-  
-  
   "importMode": "Mode d'Importation",
   "importMerge": "Fusionner",
   "importMergeDesc": "Ajouter aux données existantes",
   "importReplace": "Remplacer",
   "importReplaceDesc": "Effacer toutes les données d'abord",
-  
   "clearDataConfirm": "Effacer toutes les données ?",
   "clearDataConfirmDesc": "Cela supprimera tous les personnages et bases. Cette action est irréversible.",
   "dataCleared": "Toutes les données effacées",
   "deleteEverything": "Tout supprimer",
   "errorClearingData": "Erreur lors de la suppression des données : {error}",
-
   "receiveAlertsForExpiring": "Recevoir des alertes pour les bases expirant",
   "notificationsDisabledDesc": "Notifications désactivées",
   "checkEveryMinutes": "Vérifier toutes les {minutes} minutes",
@@ -279,7 +229,6 @@
   "testNotification": "Tester la Notification",
   "sendTestNotification": "Envoyer une notification de test",
   "test": "Tester",
-
   "copyrightNotices": "Mentions de Droit d'Auteur",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Dune Awakening est une marque déposée de Funcom. Tous droits réservés.",

@@ -624,10 +624,6 @@ class CharacterManagementScreen extends ConsumerWidget {
                         ? 'Power: ${daysRemaining}d ${hoursRemaining}h ${minutesRemaining}m remaining'
                         : 'Power: Expired';
 
-                    // Tax calculations
-                    final hasTax =
-                        base.isAdvancedFief && base.taxPerCycle != null;
-
                     return Card(
                       margin: const EdgeInsets.all(8),
                       child: ListTile(
@@ -647,13 +643,6 @@ class CharacterManagementScreen extends ConsumerWidget {
                               'Power Expires: ${DateFormat('yyyy-MM-dd HH:mm').format(base.powerExpirationTime)}',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-                            // Tax Information
-                            if (hasTax) ...[
-                              const SizedBox(height: 8),
-                              const Divider(height: 1),
-                              const SizedBox(height: 8),
-                              _buildTaxDisplay(context, base),
-                            ],
                           ],
                         ),
                         trailing: Row(
@@ -695,266 +684,92 @@ class CharacterManagementScreen extends ConsumerWidget {
     final hoursController = TextEditingController();
     final minutesController = TextEditingController();
 
-    // Tax fields
-    bool isAdvancedFief = false;
-    final taxPerCycleController = TextEditingController();
-    final taxDueDaysController = TextEditingController();
-    final taxDueHoursController = TextEditingController();
-    final taxDueMinutesController = TextEditingController();
-    final currentOwedController = TextEditingController(text: '0');
-    final stakesController = TextEditingController();
-
     showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Add Base'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Base Name',
-                    hintText: 'e.g., Main Base, Mining Outpost',
-                  ),
+      builder: (context) => AlertDialog(
+        title: const Text('Add Base'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Base Name',
+                  hintText: 'e.g., Main Base, Mining Outpost',
                 ),
-                const SizedBox(height: 16),
-                const Text('Power Down In:', style: TextStyle(fontSize: 12)),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: daysController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Days',
-                          hintText: '0',
-                        ),
+              ),
+              const SizedBox(height: 16),
+              const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: daysController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Days',
+                        hintText: '0',
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: hoursController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Hours',
-                          hintText: '0',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: minutesController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Minutes',
-                          hintText: '0',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(height: 32),
-                // Tax Section
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isAdvancedFief,
-                      onChanged: (value) {
-                        setState(() {
-                          isAdvancedFief = value ?? false;
-                        });
-                      },
-                    ),
-                    const Text('This is an Advanced Fief (pays taxes)'),
-                  ],
-                ),
-                if (isAdvancedFief) ...[
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: taxPerCycleController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Tax Per Cycle (Solari)',
-                      hintText: 'e.g., 8000',
-                      prefixText: '💰 ',
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  // Tax Calculator Helper
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('💡 Tax Calculator:',
-                            style: TextStyle(fontSize: 11)),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Text('4,000 base + ',
-                                style: TextStyle(fontSize: 11)),
-                            SizedBox(
-                              width: 40,
-                              child: TextField(
-                                controller: stakesController,
-                                keyboardType: TextInputType.number,
-                                style: const TextStyle(fontSize: 11),
-                                decoration: const InputDecoration(
-                                  hintText: '0',
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 4, vertical: 4),
-                                ),
-                                onChanged: (value) {
-                                  final stakes = int.tryParse(value) ?? 0;
-                                  final tax = 4000 + (stakes * 2000);
-                                  taxPerCycleController.text = tax.toString();
-                                },
-                              ),
-                            ),
-                            const Text(' stakes × 2,000 = ',
-                                style: TextStyle(fontSize: 11)),
-                            Text(
-                              taxPerCycleController.text.isEmpty
-                                  ? '0'
-                                  : taxPerCycleController.text,
-                              style: const TextStyle(
-                                  fontSize: 11, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: hoursController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Hours',
+                        hintText: '0',
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const Text('Next Tax Due In:',
-                      style: TextStyle(fontSize: 12)),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueDaysController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Days',
-                            hintText: '0',
-                          ),
-                        ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: minutesController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Minutes',
+                        hintText: '0',
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueHoursController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Hours',
-                            hintText: '0',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueMinutesController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Minutes',
-                            hintText: '0',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: currentOwedController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Current Amount Owed (Solari)',
-                      hintText: '0',
-                      helperText: 'Leave 0 if taxes are paid',
                     ),
                   ),
                 ],
-              ],
-            ),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                if (nameController.text.isNotEmpty) {
-                  final days = int.tryParse(daysController.text) ?? 0;
-                  final hours = int.tryParse(hoursController.text) ?? 0;
-                  final minutes = int.tryParse(minutesController.text) ?? 0;
-
-                  final expirationTime = DateTime.now().add(
-                    Duration(days: days, hours: hours, minutes: minutes),
-                  );
-
-                  // Parse tax fields
-                  final taxPerCycle =
-                      isAdvancedFief && taxPerCycleController.text.isNotEmpty
-                          ? int.tryParse(taxPerCycleController.text)
-                          : null;
-                  // Parse tax due date from days/hours/minutes
-                  DateTime? nextTaxDueDate;
-                  if (isAdvancedFief) {
-                    final taxDueDays =
-                        int.tryParse(taxDueDaysController.text) ?? 0;
-                    final taxDueHours =
-                        int.tryParse(taxDueHoursController.text) ?? 0;
-                    final taxDueMinutes =
-                        int.tryParse(taxDueMinutesController.text) ?? 0;
-
-                    if (taxDueDays > 0 ||
-                        taxDueHours > 0 ||
-                        taxDueMinutes > 0) {
-                      nextTaxDueDate = DateTime.now().add(
-                        Duration(
-                            days: taxDueDays,
-                            hours: taxDueHours,
-                            minutes: taxDueMinutes),
-                      );
-                    }
-                  }
-                  final currentOwed =
-                      isAdvancedFief && currentOwedController.text.isNotEmpty
-                          ? int.tryParse(currentOwedController.text)
-                          : null;
-
-                  ref.read(basesProvider.notifier).createBase(
-                        characterId,
-                        nameController.text,
-                        expirationTime,
-                        isAdvancedFief: isAdvancedFief,
-                        taxPerCycle: taxPerCycle,
-                        nextTaxDueDate: nextTaxDueDate,
-                        currentOwed: currentOwed,
-                      );
-                  Navigator.of(context).pop(); // Close add dialog
-                  Navigator.of(context).pop(); // Close base management dialog
-                }
-              },
-              child: const Text('Add'),
-            ),
-          ],
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (nameController.text.isNotEmpty) {
+                final days = int.tryParse(daysController.text) ?? 0;
+                final hours = int.tryParse(hoursController.text) ?? 0;
+                final minutes = int.tryParse(minutesController.text) ?? 0;
+
+                final expirationTime = DateTime.now().add(
+                  Duration(days: days, hours: hours, minutes: minutes),
+                );
+
+                ref.read(basesProvider.notifier).createBase(
+                      characterId,
+                      nameController.text,
+                      expirationTime,
+                    );
+                Navigator.of(context).pop(); // Close add dialog
+                Navigator.of(context).pop(); // Close base management dialog
+              }
+            },
+            child: const Text('Add'),
+          ),
+        ],
       ),
     );
   }
@@ -974,386 +789,90 @@ class CharacterManagementScreen extends ConsumerWidget {
     final minutesController =
         TextEditingController(text: minutesRemaining.toString());
 
-    // Tax fields with existing values
-    bool isAdvancedFief = base.isAdvancedFief;
-    final taxPerCycleController = TextEditingController(
-      text: base.taxPerCycle?.toString() ?? '',
-    );
-
-    // AUTO-INCREMENT TAX CALCULATION
-    int calculatedCurrentOwed = base.currentOwed ?? 0;
-    int calculatedOverdueOwed = base.overdueOwed ?? 0;
-    int calculatedDefaultedOwed = base.defaultedOwed ?? 0;
-    String? taxAutoMessage;
-
-    if (base.isAdvancedFief &&
-        base.nextTaxDueDate != null &&
-        base.taxPerCycle != null) {
-      final taxDueDate = base.nextTaxDueDate!;
-      final daysPastDue = now.difference(taxDueDate).inDays;
-
-      if (daysPastDue > 0) {
-        // Tax is overdue - calculate missed cycles
-        const cycleLength = 14; // Standard tax cycle
-        final missedCycles = (daysPastDue / cycleLength).ceil();
-        final totalNewTax = base.taxPerCycle! * missedCycles;
-
-        // Grace period logic
-        const gracePeriodDays = 14; // 14 days grace after due date
-        if (daysPastDue <= gracePeriodDays) {
-          // Within grace period - current becomes overdue, add new current
-          calculatedOverdueOwed = calculatedOverdueOwed + calculatedCurrentOwed;
-          calculatedCurrentOwed = totalNewTax;
-          taxAutoMessage =
-              '⚠️ Tax overdue by $daysPastDue days! Moved previous amount to Overdue.';
-        } else if (daysPastDue <= (gracePeriodDays + cycleLength)) {
-          // Past grace, within next cycle - everything to defaulted
-          calculatedDefaultedOwed = calculatedDefaultedOwed +
-              calculatedOverdueOwed +
-              calculatedCurrentOwed +
-              totalNewTax;
-          calculatedOverdueOwed = 0;
-          calculatedCurrentOwed = 0;
-          taxAutoMessage =
-              '🚨 Grace period expired! Shields down! Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
-        } else {
-          // Way overdue - accumulate in defaulted
-          calculatedDefaultedOwed = calculatedDefaultedOwed +
-              calculatedOverdueOwed +
-              calculatedCurrentOwed +
-              totalNewTax;
-          calculatedOverdueOwed = 0;
-          calculatedCurrentOwed = 0;
-          taxAutoMessage =
-              '🚨 $missedCycles cycles missed! All in Default. Total: ${calculatedDefaultedOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari';
-        }
-      }
-    }
-
-    // Calculate existing tax due date in d/h/m
-    final taxDueDaysController = TextEditingController();
-    final taxDueHoursController = TextEditingController();
-    final taxDueMinutesController = TextEditingController();
-    if (base.nextTaxDueDate != null) {
-      final taxDifference = base.nextTaxDueDate!.difference(now);
-      taxDueDaysController.text = taxDifference.inDays.toString();
-      taxDueHoursController.text = (taxDifference.inHours % 24).toString();
-      taxDueMinutesController.text = (taxDifference.inMinutes % 60).toString();
-    }
-
-    final currentOwedController = TextEditingController(
-      text: calculatedCurrentOwed.toString(),
-    );
-    final overdueOwedController = TextEditingController(
-      text: calculatedOverdueOwed.toString(),
-    );
-    final defaultedOwedController = TextEditingController(
-      text: calculatedDefaultedOwed.toString(),
-    );
-    final stakesController = TextEditingController();
-
     showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setState) => AlertDialog(
-          title: const Text('Edit Base'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Base Name',
-                  ),
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Base'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Base Name',
                 ),
-                const SizedBox(height: 16),
-                const Text('Power Down In:', style: TextStyle(fontSize: 12)),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: daysController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Days',
-                        ),
+              ),
+              const SizedBox(height: 16),
+              const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: daysController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Days',
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: hoursController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Hours',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: minutesController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          labelText: 'Minutes',
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(height: 32),
-                // Tax Section
-                Row(
-                  children: [
-                    Checkbox(
-                      value: isAdvancedFief,
-                      onChanged: (value) {
-                        setState(() {
-                          isAdvancedFief = value ?? false;
-                        });
-                      },
-                    ),
-                    const Text('This is an Advanced Fief (pays taxes)'),
-                  ],
-                ),
-                if (isAdvancedFief) ...[
-                  // Auto-increment helper message
-                  if (taxAutoMessage != null) ...[
-                    const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.orange.withOpacity(0.2),
-                        border: Border.all(color: Colors.orange, width: 2),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              taxAutoMessage,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: taxPerCycleController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Tax Per Cycle (Solari)',
-                      prefixText: '💰 ',
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  // Tax Calculator Helper
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('💡 Tax Calculator:',
-                            style: TextStyle(fontSize: 11)),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            const Text('4,000 base + ',
-                                style: TextStyle(fontSize: 11)),
-                            SizedBox(
-                              width: 40,
-                              child: TextField(
-                                controller: stakesController,
-                                keyboardType: TextInputType.number,
-                                style: const TextStyle(fontSize: 11),
-                                decoration: const InputDecoration(
-                                  hintText: '0',
-                                  isDense: true,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 4, vertical: 4),
-                                ),
-                                onChanged: (value) {
-                                  final stakes = int.tryParse(value) ?? 0;
-                                  final tax = 4000 + (stakes * 2000);
-                                  taxPerCycleController.text = tax.toString();
-                                },
-                              ),
-                            ),
-                            const Text(' stakes × 2,000 = ',
-                                style: TextStyle(fontSize: 11)),
-                            Text(
-                              taxPerCycleController.text.isEmpty
-                                  ? '0'
-                                  : taxPerCycleController.text,
-                              style: const TextStyle(
-                                  fontSize: 11, fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text('Next Tax Due In:',
-                      style: TextStyle(fontSize: 12)),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueDaysController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Days',
-                            hintText: '0',
-                          ),
-                        ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: hoursController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Hours',
                       ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueHoursController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Hours',
-                            hintText: '0',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: taxDueMinutesController,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            labelText: 'Minutes',
-                            hintText: '0',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: currentOwedController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Current Amount Owed (Solari)',
-                      helperText: 'Current cycle tax owed',
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: overdueOwedController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Overdue Amount (Solari)',
-                      helperText: 'Past cycles (grace period)',
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: defaultedOwedController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'Defaulted Amount (Solari)',
-                      helperText: 'After grace - shields down!',
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: minutesController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Minutes',
+                      ),
                     ),
                   ),
                 ],
-              ],
-            ),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                if (nameController.text.isNotEmpty) {
-                  final days = int.tryParse(daysController.text) ?? 0;
-                  final hours = int.tryParse(hoursController.text) ?? 0;
-                  final minutes = int.tryParse(minutesController.text) ?? 0;
-
-                  final expirationTime = DateTime.now().add(
-                    Duration(days: days, hours: hours, minutes: minutes),
-                  );
-
-                  // Parse tax fields
-                  final taxPerCycle =
-                      isAdvancedFief && taxPerCycleController.text.isNotEmpty
-                          ? int.tryParse(taxPerCycleController.text)
-                          : null;
-
-                  // Parse tax due date from days/hours/minutes
-                  DateTime? nextTaxDueDate;
-                  if (isAdvancedFief) {
-                    final taxDueDays =
-                        int.tryParse(taxDueDaysController.text) ?? 0;
-                    final taxDueHours =
-                        int.tryParse(taxDueHoursController.text) ?? 0;
-                    final taxDueMinutes =
-                        int.tryParse(taxDueMinutesController.text) ?? 0;
-
-                    if (taxDueDays > 0 ||
-                        taxDueHours > 0 ||
-                        taxDueMinutes > 0) {
-                      nextTaxDueDate = DateTime.now().add(
-                        Duration(
-                            days: taxDueDays,
-                            hours: taxDueHours,
-                            minutes: taxDueMinutes),
-                      );
-                    }
-                  }
-
-                  final currentOwed =
-                      isAdvancedFief && currentOwedController.text.isNotEmpty
-                          ? int.tryParse(currentOwedController.text)
-                          : null;
-                  final overdueOwed =
-                      isAdvancedFief && overdueOwedController.text.isNotEmpty
-                          ? int.tryParse(overdueOwedController.text)
-                          : null;
-                  final defaultedOwed =
-                      isAdvancedFief && defaultedOwedController.text.isNotEmpty
-                          ? int.tryParse(defaultedOwedController.text)
-                          : null;
-
-                  ref.read(basesProvider.notifier).updateBase(
-                        base.copyWith(
-                          name: nameController.text,
-                          powerExpirationTime: expirationTime,
-                          updatedAt: DateTime.now(),
-                          isAdvancedFief: isAdvancedFief,
-                          taxPerCycle: taxPerCycle,
-                          nextTaxDueDate: nextTaxDueDate,
-                          currentOwed: currentOwed,
-                          overdueOwed: overdueOwed,
-                          defaultedOwed: defaultedOwed,
-                        ),
-                      );
-                  Navigator.of(context).pop(); // Close edit dialog
-                  Navigator.of(context).pop(); // Close base management dialog
-                }
-              },
-              child: const Text('Save'),
-            ),
-          ],
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (nameController.text.isNotEmpty) {
+                final days = int.tryParse(daysController.text) ?? 0;
+                final hours = int.tryParse(hoursController.text) ?? 0;
+                final minutes = int.tryParse(minutesController.text) ?? 0;
+
+                final expirationTime = DateTime.now().add(
+                  Duration(days: days, hours: hours, minutes: minutes),
+                );
+
+                ref.read(basesProvider.notifier).updateBase(
+                      base.copyWith(
+                        name: nameController.text,
+                        powerExpirationTime: expirationTime,
+                        updatedAt: DateTime.now(),
+                      ),
+                    );
+                Navigator.of(context).pop(); // Close edit dialog
+                Navigator.of(context).pop(); // Close base management dialog
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
       ),
     );
   }
@@ -1385,130 +904,4 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildTaxDisplay(BuildContext context, Base base) {
-    final taxStatus = base.taxStatus;
-    Color taxColor;
-    String taxLabel;
-
-    switch (taxStatus) {
-      case TaxStatus.defaulted:
-        taxColor = DuneColors.criticalPrimary;
-        taxLabel = 'DEFAULTED - SHIELDS DOWN!';
-        break;
-      case TaxStatus.overdue:
-        taxColor = DuneColors.criticalPrimary;
-        taxLabel = 'OVERDUE';
-        break;
-      case TaxStatus.due:
-        taxColor = DuneColors.warningPrimary;
-        taxLabel = 'DUE';
-        break;
-      case TaxStatus.paid:
-        taxColor = Colors.green;
-        taxLabel = 'PAID';
-        break;
-      case TaxStatus.none:
-        return const SizedBox.shrink();
-    }
-
-    final totalOwed = base.totalTaxOwed;
-    final taxPerCycle = base.taxPerCycle ?? 0;
-
-    // Determine which date to display based on status:
-    // - PAID: Show when NEXT payment is due (effectiveNextTaxDueDate)
-    // - DUE: Show time until due (effectiveNextTaxDueDate)
-    // - OVERDUE/DEFAULTED: Show how long overdue from original due date (nextTaxDueDate)
-    String? taxDueText;
-    final DateTime? effectiveDate = base.effectiveNextTaxDueDate;
-    final DateTime? originalDate = base.nextTaxDueDate;
-
-    if (taxStatus == TaxStatus.paid || taxStatus == TaxStatus.due) {
-      // For PAID and DUE: show countdown to next/current due date
-      if (effectiveDate != null) {
-        final now = DateTime.now();
-        final difference = effectiveDate.difference(now);
-        final days = difference.inDays.abs();
-        final hours = (difference.inHours % 24).abs();
-        final minutes = (difference.inMinutes % 60).abs();
-
-        if (difference.inMinutes >= 0) {
-          final prefix = taxStatus == TaxStatus.paid ? 'Next Due' : 'Due in';
-          taxDueText = '$prefix: ${days}d ${hours}h ${minutes}m';
-        } else {
-          // Edge case: DUE but effective date is somehow past (shouldn't happen)
-          taxDueText = 'Due in: ${days}d ${hours}h ${minutes}m';
-        }
-      }
-    } else {
-      // For OVERDUE and DEFAULTED: show how long since original due date
-      if (originalDate != null) {
-        final now = DateTime.now();
-        final absDifference = now.difference(originalDate);
-        if (absDifference.inMinutes > 0) {
-          final days = absDifference.inDays;
-          final hours = (absDifference.inHours % 24);
-          final minutes = (absDifference.inMinutes % 60);
-          taxDueText = 'Overdue by: ${days}d ${hours}h ${minutes}m';
-        }
-      }
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Text('💰 ', style: TextStyle(fontSize: 16)),
-            const Text(
-              'Tax: ',
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: taxColor,
-                borderRadius: BorderRadius.circular(3),
-              ),
-              child: Text(
-                taxLabel,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 4),
-        if (totalOwed > 0)
-          Text(
-            'Amount Owed: ${totalOwed.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari',
-            style: TextStyle(
-              color: taxColor,
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-            ),
-          ),
-        Text(
-          'Tax Per Cycle: ${taxPerCycle.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} Solari',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        if (taxDueText != null)
-          Text(
-            taxDueText,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: (taxStatus == TaxStatus.overdue ||
-                          taxStatus == TaxStatus.defaulted)
-                      ? taxColor
-                      : null,
-                  fontWeight: (taxStatus == TaxStatus.overdue ||
-                          taxStatus == TaxStatus.defaulted)
-                      ? FontWeight.bold
-                      : null,
-                ),
-          ),
-      ],
-    );
-  }
 }

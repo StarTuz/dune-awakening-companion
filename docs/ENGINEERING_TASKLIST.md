@@ -1,6 +1,6 @@
 # Engineering Task List
 
-Last updated: 2026-02-06
+Last updated: 2026-02-07
 
 This is a concrete task list derived from the housekeeping assessment.
 Status: **100% Complete**
@@ -17,8 +17,8 @@ Status: **100% Complete**
 - [x] Add widget tests for Dashboard, Characters, Alerts, Settings screens (6 widget test files).
 - [x] Add integration tests for character/base flow and import/export (3 integration test files).
 - [x] Define smoke tests for release gating.
-- [x] Add coverage reporting and thresholds (15% gate, currently 18.93%).
-- **Total: 72 tests passing across 19 test files.**
+- [x] Add coverage reporting and thresholds (15% gate, currently 19.83%).
+- **Total: 71 tests passing across 19 test files.**
 
 ## Security and Pen-Test Readiness
 - [x] Add dependency audit step (`scripts/ci/deps_audit.sh`).
@@ -37,6 +37,23 @@ Status: **100% Complete**
 - [x] Add signing guidance for all platforms (`docs/SIGNING_GUIDE.md`).
 - [x] Standardize release notes template (`docs/RELEASE_NOTES_TEMPLATE.md`).
 - [x] Add performance regression baseline (`scripts/ci/perf_baseline.sh`).
+
+## Tax System Removal (Chapter 3)
+- [x] Remove tax fields, constants, enum, and computed getters from `Base` model.
+- [x] Remove tax mapping from `BaseRepository` (`_toMap` / `_fromMap`).
+- [x] Remove tax params from `BaseProvider.createBase()`.
+- [x] Remove `AlertType.tax` and tax alert logic from `AlertCheckerService`.
+- [x] Remove `showTaxAlert` from `NotificationService` and tax branch from `NotificationCoordinator`.
+- [x] Remove ~600 lines of tax UI from `CharacterManagementScreen` (Advanced Fief checkbox, tax calculator, tax inputs, `_buildTaxDisplay`).
+- [x] Remove tax countdown section from `AlertsScreen`.
+- [x] Simplify `DashboardScreen` stats to power-only.
+- [x] Remove tax icon case from `NotificationHistoryEntry`.
+- [x] Remove ~10 tax localization keys from all 7 ARB files.
+- [x] Regenerate code (`build_runner` + `flutter gen-l10n`).
+- [x] Update tests (remove tax assertions, fix Base constructors).
+- [x] Update documentation (`README.md`, `HANDOFF.md`, `NEXT_STEPS.md`).
+- [x] Verify: 0 analyzer issues, 71/71 tests pass, 19.83% coverage (above 15% gate).
+- **Note:** Database migration_003 columns retained (nullable, harmless). Old exports with tax fields still import fine (unknown keys silently dropped).
 
 ## Summary of Deliverables
 

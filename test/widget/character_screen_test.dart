@@ -28,10 +28,9 @@ class _FakeCharacterRepo implements CharacterRepository {
 }
 
 class _FakeBaseRepo implements BaseRepository {
-  final List<Base> data;
-  _FakeBaseRepo([this.data = const []]);
+  _FakeBaseRepo();
   @override
-  Future<List<Base>> getAll() async => data;
+  Future<List<Base>> getAll() async => [];
   @override
   Future<Base?> getById(String id) async => null;
   @override

@@ -14,8 +14,6 @@
 - ✅ Multi-character management across servers
 - ✅ Unlimited base tracking per character
 - ✅ Power countdown system (Days/Hours/Minutes)
-- ✅ Complete tax tracking for Advanced Fiefs
-- ✅ Smart auto-increment for missed tax cycles
 - ✅ Alert system (Expiring Soon < 48h, Critical < 24h)
 - ✅ **Export/Import System** (JSON backups, Merge/Replace modes)
 - ✅ **Character Portraits** (Add/Edit/Delete with auto-optimization)
@@ -136,7 +134,7 @@ Each tree has 100 levels for a **total of 500 levels** of progression.
 | Feature | Status | Notes |
 |---------|--------|-------|
 | **Base Tracking** | ✅ Unchanged | Core power/fuel mechanics stable |
-| **Tax System** | ✅ Unchanged | Advanced Fief taxes still relevant |
+| **Tax System** | ❌ Removed | Taxes eliminated in Chapter 3 — tax code removed from app |
 | **Power Countdown** | ✅ Unchanged | D/H/M tracking still works |
 | **Character Management** | ✅ Unchanged | Servers/regions/portraits work |
 | **Export/Import** | ✅ Unchanged | JSON backup system stable |
@@ -449,7 +447,7 @@ Quality: 85% JPEG compression
 - ✅ Settings UI: Enable/disable, intervals, warning levels
 - ✅ Test notification button in Settings
 - ✅ Power alert notifications (⚡ Power Critical!)
-- ✅ Tax alert notifications (💰 Tax Overdue!)
+- ~~✅ Tax alert notifications~~ (removed — Chapter 3 eliminated taxes)
 - ✅ Simple notification for app messages
 
 #### ✅ Issues Fixed (v1.0.19-beta):
@@ -825,7 +823,7 @@ QuestStep {
 
 1. **Push Notifications** ✅ COMPLETE (v1.0.24-beta)
    - ✅ Notify when power < threshold
-   - ✅ Notify when tax due
+   - ~~✅ Notify when tax due~~ (removed — Chapter 3)
    - ✅ Platform-specific implementation (Desktop timer + Mobile WorkManager)
 
 2. **Theme Customization** ⭐ (Enhanced)
@@ -980,7 +978,7 @@ QuestStep {
 
 3. **Dashboard Charts & Analytics**
    - Power status distribution (pie chart)
-   - Tax liability timeline (bar chart)
+   - Resource usage timeline (bar chart)
    - Quest completion rate
    - Time played per character
    - Resource usage patterns
@@ -1095,7 +1093,7 @@ QuestStep {
    **Character Detail Screen:**
    ```
    Tabs:
-   - Overview (bases, power, tax)
+   - Overview (bases, power)
    - Biography
    - Journal
    - [Character Sheet] (if RPG mode enabled)
@@ -1211,7 +1209,7 @@ QuestStep {
 
 8. **Guild/Clan Management**
    - Track guild members' bases
-   - Shared tax pools
+   - Shared resource pools
    - Coordinate defense schedules
    - Guild calendar for events
 
@@ -1238,7 +1236,7 @@ QuestStep {
 Features:
 - Customizable alert thresholds
 - Time/date format preferences
-- Tax cycle defaults
+- Alert cycle defaults
 - Persistent settings in database
 
 ### **v2.0 - Notifications & Polish** (Month 2)
@@ -1309,12 +1307,12 @@ Features:
 
 3. **Calendar View**
    - Visual timeline of power expirations
-   - Tax due dates on calendar
+   - Event dates on calendar
    - Export to ICS format
 
 4. **Analytics**
    - Track refuel frequency
-   - Tax payment history
+   - Power refuel history
    - Resource usage patterns
 
 5. **Integration Ideas**
@@ -1406,4 +1404,4 @@ Before v1.1:
 
 **Questions?** Review HANDOFF.md for full technical details.
 
-**May your power stay charged and your taxes stay paid!** 🌟
+**May your power stay charged!** 🌟

@@ -149,40 +149,6 @@ class NotificationService {
     );
   }
 
-  /// Show a tax alert notification
-  Future<void> showTaxAlert({
-    required String baseId,
-    required String baseName,
-    required String characterInfo,
-    required Duration timeRemaining,
-    required bool isOverdue,
-  }) async {
-    if (!_notificationsEnabled) return;
-
-    final String timeText;
-    if (isOverdue) {
-      final days = timeRemaining.inDays.abs();
-      timeText = days == 1 ? '1 day overdue' : '$days days overdue';
-    } else {
-      final hours = timeRemaining.inHours;
-      timeText = hours < 1
-          ? '${timeRemaining.inMinutes} minutes'
-          : hours == 1
-              ? '1 hour'
-              : hours < 24
-                  ? '$hours hours'
-                  : '${timeRemaining.inDays} days';
-    }
-
-    await _showNotification(
-      id: baseId.hashCode + 1000, // Offset to avoid ID collision with power alerts
-      title: isOverdue ? '💰 Tax Overdue!' : '💰 Tax Payment Due',
-      body: '$baseName ($characterInfo) - $timeText',
-      payload: 'tax:$baseId',
-      channelId: 'critical_alerts',
-      importance: Importance.high,
-    );
-  }
 
   /// Internal method to show notification
   Future<void> _showNotification({

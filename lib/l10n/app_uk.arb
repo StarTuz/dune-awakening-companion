@@ -1,21 +1,17 @@
 {
   "@@locale": "uk",
-  
   "appTitle": "Dune Awakening Компаньйон",
   "navDashboard": "Панель",
   "navCharacters": "Персонажі",
   "navAlerts": "Сповіщення",
   "navSettings": "Налаштування",
-  
   "dashboardTitle": "Панель",
   "charactersTitle": "Персонажі",
   "basesTitle": "Бази",
   "alertsTitle": "Сповіщення",
   "settingsTitle": "Налаштування",
-  
   "expiringSoonTitle": "Скоро Закінчується",
   "activeAlertsTitle": "Активні Сповіщення",
-  
   "error": "Помилка",
   "loading": "Завантаження...",
   "save": "Зберегти",
@@ -27,28 +23,22 @@
   "yes": "Так",
   "no": "Ні",
   "close": "Закрити",
-  
   "refreshTooltip": "Оновити",
   "notificationHistoryTooltip": "Історія Сповіщень",
   "addBaseTooltip": "Додати Базу",
   "updateCountdownTooltip": "Оновити зворотний відлік",
   "addCharacterTooltip": "Додати Персонажа",
-  
   "allBasesSafeTitle": "Усі бази в безпеці!",
   "allBasesSafeMessage": "Жодна база не закінчується протягом 48 годин.",
-  
   "timeRemainingPower": "Залишок Часу: Енергія",
-  "timeRemainingTaxes": "Залишок Часу: Податки",
   "expiresLabel": "Закінчується",
   "dueLabel": "Термін",
   "tapToManage": "Натисніть для керування базами цього персонажа",
   "severityCritical": "КРИТИЧНО",
   "severityWarning": "ПОПЕРЕДЖЕННЯ",
-  "taxOverdueLabel": "Прострочено: {time}",
   "daysAbbr": "д",
   "hoursAbbr": "г",
   "minutesAbbr": "х",
-  
   "sectionAbout": "Про Програму",
   "sectionAppearance": "Вигляд",
   "sectionLanguage": "Мова",
@@ -56,19 +46,15 @@
   "sectionAccessibility": "Доступність",
   "sectionNotifications": "Сповіщення",
   "sectionLegal": "Правова Інформація",
-  
   "version": "Версія",
   "databaseVersion": "Версія Бази Даних",
   "build": "Збірка",
   "features": "Функції",
-  
   "darkMode": "Темний Режим",
   "desertNightTheme": "Тема Нічної Пустелі",
   "desertDayTheme": "Тема Денної Пустелі",
-  
   "factionTheme": "Тема Фракції",
   "chooseFaction": "Оберіть Свою Фракцію",
-  
   "factionDesert": "Пустеля (За замовчуванням)",
   "factionDesertDesc": "Теплий пісок та золото спецій",
   "factionAtreides": "Дім Атрейдесів",
@@ -79,58 +65,46 @@
   "factionFremenDesc": "Пісок і синій - Воїни пустелі",
   "factionSmuggler": "Контрабандист",
   "factionSmugglerDesc": "Фіолетовий і бронза - Тіньові торговці",
-  
   "language": "Мова",
-  
   "exportData": "Експортувати Дані",
   "exportDataDesc": "Створити резервну копію персонажів і баз",
   "importData": "Імпортувати Дані",
   "importDataDesc": "Відновити з резервної копії",
   "clearAllData": "Очистити Всі Дані",
   "clearAllDataDesc": "Видалити всіх персонажів і бази",
-  
   "textSize": "Розмір Тексту",
   "textSizeSmall": "Малий",
   "textSizeMedium": "Середній",
   "textSizeLarge": "Великий",
   "textSizeXL": "Дуже Великий",
-  
   "textWeight": "Товщина Тексту",
   "textWeightLight": "Тонкий",
   "textWeightRegular": "Звичайний",
   "textWeightBold": "Жирний",
-  
   "highContrast": "Високий Контраст",
   "highContrastEnabled": "Покращений контраст кольорів",
   "highContrastDisabled": "Стандартний контраст кольорів",
-  
   "reduceMotion": "Зменшити Рух",
   "reduceMotionEnabled": "Анімації вимкнено",
   "reduceMotionDisabled": "Анімації увімкнено",
-  
   "notifications": "Сповіщення",
   "enableNotifications": "Увімкнути Сповіщення",
   "notificationsEnabled": "Сповіщення надсилатимуться",
   "notificationsDisabled": "Сповіщення не надсилатимуться",
-  
   "checkInterval": "Інтервал Перевірки",
   "checkIntervalDesc": "Як часто перевіряти сповіщення",
   "minutes": "хвилин",
-  
   "quietHours": "Тихий Режим",
   "quietHoursEnabled": "Не турбувати увімкнено",
   "quietHoursDisabled": "Сповіщення цілодобово",
   "quietHoursStart": "Час Початку",
   "quietHoursEnd": "Час Закінчення",
-  
   "sound": "Звук",
   "soundEnabled": "Звуки сповіщень увімкнено",
   "soundDisabled": "Звуки сповіщень вимкнено",
-  
   "vibration": "Вібрація",
   "vibrationEnabled": "Тактильний відгук увімкнено",
   "vibrationDisabled": "Тактильний відгук вимкнено",
-  
   "notificationHistory": "Історія Сповіщень",
   "viewHistory": "Переглянути Історію",
   "clearHistory": "Очистити Історію",
@@ -146,20 +120,16 @@
   "deletedOldNotifications": "Видалено сповіщення старіші за 7 днів",
   "errorLoadingHistory": "Помилка завантаження історії: {error}",
   "retry": "Повторити",
-  
   "testAlerts": "Тестувати Сповіщення",
   "checkingAlerts": "Перевірка сповіщень...",
   "checkComplete": "✅ Перевірку завершено! Сповіщення надіслано, якщо бази потребують уваги.",
-  
   "importantDisclaimer": "Важливе Застереження",
   "disclaimerText": "Це неофіційний додаток, створений фанатами. НЕ пов'язаний з Funcom, не схвалений і не підтримується ними. Funcom не брав участі в розробці. Dune Awakening є торговою маркою Funcom. Dune та пов'язані елементи є торговими марками Herbert Properties LLC.",
-  
   "acknowledgments": "Подяки",
   "ackHerbert": "Herbert Estate за всесвіт Дюни",
   "ackFuncom": "Funcom за Dune Awakening",
   "ackCommunity": "Спільнота Dune Awakening",
   "ackFlutter": "Фреймворк Flutter",
-  
   "characterName": "Ім'я Персонажа",
   "enterCharacterName": "Введіть ім'я персонажа",
   "provider": "Провайдер",
@@ -176,7 +146,6 @@
   "portrait": "Портрет",
   "addPortrait": "Додати Портрет",
   "removePortrait": "Видалити Портрет",
-  
   "addCharacter": "Додати Персонажа",
   "editCharacter": "Редагувати Персонажа",
   "deleteCharacter": "Видалити Персонажа",
@@ -188,26 +157,15 @@
   "powerExpired": "Енергія: Вичерпано",
   "noCharactersMessage": "Персонажів ще немає. Додайте одного, щоб почати.",
   "basesButton": "Бази",
-  
   "baseName": "Назва Бази",
   "powerDays": "Дні",
   "powerHours": "Години",
   "powerMinutes": "Хвилини",
-  "advancedFief": "Розширений Феод",
-  "advancedFiefDesc": "Увімкнути для відстеження податків",
-  
   "addBase": "Додати Базу",
   "editBase": "Редагувати Базу",
   "deleteBase": "Видалити Базу",
   "deleteBaseConfirm": "Видалити цю базу?",
-  
   "power": "Енергія",
-  "taxes": "Податки",
-  "taxPerCycle": "Податок за Цикл",
-  "currentOwed": "Поточний Борг",
-  "overdueOwed": "Прострочений Борг",
-  "defaultedOwed": "Невиплачений Борг",
-  
   "statusPaid": "СПЛАЧЕНО",
   "statusDue": "ДО СПЛАТИ",
   "statusOverdue": "ПРОСТРОЧЕНО",
@@ -215,15 +173,11 @@
   "statusCritical": "КРИТИЧНО",
   "statusWarning": "УВАГА",
   "statusSafe": "БЕЗПЕЧНО",
-  
   "noCharacters": "Ще немає персонажів",
   "noCharactersDesc": "Натисніть +, щоб додати першого персонажа",
   "noBases": "Ще немає баз",
   "noBasesDesc": "Натисніть +, щоб додати базу",
-  
   "powerCritical": "Критична Енергія!",
-  "taxOverdue": "Прострочені Податки!",
-  
   "exportSuccess": "Дані успішно експортовано",
   "exportFailed": "Помилка експорту",
   "importSuccess": "Дані успішно імпортовано",
@@ -245,19 +199,16 @@
   "importingData": "Імпорт даних...",
   "importSuccessful": "Імпорт успішний!",
   "importSummary": "{characters} персонажів, {bases} баз{portraits} імпортовано",
-  
   "importMode": "Режим Імпорту",
   "importMerge": "Об'єднати",
   "importMergeDesc": "Додати до існуючих даних",
   "importReplace": "Замінити",
   "importReplaceDesc": "Спочатку очистити всі дані",
-  
   "clearDataConfirm": "Очистити всі дані?",
   "clearDataConfirmDesc": "Це видалить усіх персонажів і бази. Цю дію неможливо скасувати.",
   "dataCleared": "Усі дані очищено",
   "deleteEverything": "Видалити все",
   "errorClearingData": "Помилка видалення даних: {error}",
-
   "receiveAlertsForExpiring": "Отримувати сповіщення про бази, що закінчуються",
   "notificationsDisabledDesc": "Сповіщення вимкнено",
   "checkEveryMinutes": "Перевіряти кожні {minutes} хвилин",
@@ -278,7 +229,6 @@
   "testNotification": "Тестове Сповіщення",
   "sendTestNotification": "Надіслати тестове сповіщення",
   "test": "Тестувати",
-
   "copyrightNotices": "Зауваження щодо авторських прав",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Dune Awakening є торговою маркою Funcom. Усі права захищені.",

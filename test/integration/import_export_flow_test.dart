@@ -93,7 +93,6 @@ void main() {
           'powerExpirationTime': now.add(const Duration(hours: 48)).toIso8601String(),
           'createdAt': now.toIso8601String(),
           'updatedAt': now.toIso8601String(),
-          'isAdvancedFief': false,
         },
       ],
     };

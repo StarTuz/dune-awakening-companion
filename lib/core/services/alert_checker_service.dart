@@ -24,7 +24,6 @@ class BaseAlert {
 
 enum AlertType {
   power,
-  tax,
 }
 
 enum AlertSeverity {
@@ -86,46 +85,6 @@ class AlertCheckerService {
           severity: AlertSeverity.warning,
           timeRemaining: powerRemaining,
         ));
-      }
-
-      // Check tax if applicable
-      // Only alert if there's actual tax owed - don't alert for PAID status
-      // Uses effective values which auto-calculate missed cycles
-      if (base.isAdvancedFief && base.taxPerCycle != null && base.effectiveNextTaxDueDate != null) {
-        final taxRemaining = base.effectiveNextTaxDueDate!.difference(now);
-        final hasTaxOwed = base.totalTaxOwed > 0;
-        
-        // Only generate alerts if there's actually tax owed
-        if (hasTaxOwed) {
-          if (taxRemaining.isNegative || base.missedCycles > 0) {
-            // Tax overdue (any missed cycles counts as overdue)
-            alerts.add(BaseAlert(
-              base: base,
-              character: character,
-              type: AlertType.tax,
-              severity: AlertSeverity.critical,
-              timeRemaining: taxRemaining,
-            ));
-          } else if (taxRemaining.inHours < 24) {
-            // Tax due soon (< 24h)
-            alerts.add(BaseAlert(
-              base: base,
-              character: character,
-              type: AlertType.tax,
-              severity: AlertSeverity.critical,
-              timeRemaining: taxRemaining,
-            ));
-          } else if (includeWarnings && taxRemaining.inHours < 48) {
-            // Tax warning (< 48h)
-            alerts.add(BaseAlert(
-              base: base,
-              character: character,
-              type: AlertType.tax,
-              severity: AlertSeverity.warning,
-              timeRemaining: taxRemaining,
-            ));
-          }
-        }
       }
     }
 

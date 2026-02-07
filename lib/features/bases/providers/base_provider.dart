@@ -44,14 +44,8 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
   Future<void> createBase(
     String characterId,
     String name,
-    DateTime powerExpirationTime, {
-    bool isAdvancedFief = false,
-    int? taxPerCycle,
-    DateTime? nextTaxDueDate,
-    int? currentOwed,
-    int? overdueOwed,
-    int? defaultedOwed,
-  }) async {
+    DateTime powerExpirationTime,
+  ) async {
     try {
       final base = Base(
         id: const Uuid().v4(),
@@ -60,12 +54,6 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
         powerExpirationTime: powerExpirationTime,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        isAdvancedFief: isAdvancedFief,
-        taxPerCycle: taxPerCycle,
-        nextTaxDueDate: nextTaxDueDate,
-        currentOwed: currentOwed,
-        overdueOwed: overdueOwed,
-        defaultedOwed: defaultedOwed,
       );
       await _repository.create(base);
       _ref.invalidate(basesByCharacterProvider(characterId));

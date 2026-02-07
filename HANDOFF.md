@@ -8,12 +8,11 @@
 
 ## 📋 Executive Summary
 
-The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases, power countdowns, and taxes in Dune Awakening. The v1.0.3 release adds comprehensive notification polish features.
+The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases and power countdowns in Dune Awakening.
 
 ### Key Achievements
 - ✅ Multi-character & multi-base management
 - ✅ Power countdown with visual alerts
-- ✅ Tax tracking for Advanced Fiefs
 - ✅ Export/Import data backups
 - ✅ Character portraits
 - ✅ Desktop system tray integration
@@ -237,14 +236,14 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 
 ### Tables
 - `characters` - id, name, region, serverType, serverName, sietch, portraitPath
-- `bases` - id, characterId, name, powerExpiresAt, isAdvancedFief, taxPerCycle, etc.
+- `bases` - id, characterId, name, powerExpiresAt (tax columns from migration_003 still exist but are ignored)
 - `notification_history` - id, type, title, body, baseId, baseName, severity, sentAt, read
 
 ### Migrations
 Located in `lib/core/database/migrations/`
 - `migration_001_*` - Initial schema
 - `migration_002_*` - Add serverType
-- `migration_003_*` - Add tax fields
+- `migration_003_*` - Add tax fields (columns retained but no longer read/written — tax removed in Chapter 3)
 - `migration_004_*` - Add portraitPath
 - `migration_005_*` - Add notification_history table
 

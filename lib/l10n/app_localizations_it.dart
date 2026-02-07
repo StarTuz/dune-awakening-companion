@@ -102,9 +102,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get timeRemainingPower => 'Tempo Rimanente: Energia';
 
   @override
-  String get timeRemainingTaxes => 'Tempo Rimanente: Tasse';
-
-  @override
   String get expiresLabel => 'Scade';
 
   @override
@@ -118,11 +115,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get severityWarning => 'AVVISO';
-
-  @override
-  String taxOverdueLabel(String time) {
-    return 'Scaduto: $time';
-  }
 
   @override
   String get daysAbbr => 'g';
@@ -524,12 +516,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get powerMinutes => 'Minuti';
 
   @override
-  String get advancedFief => 'Feudo Avanzato';
-
-  @override
-  String get advancedFiefDesc => 'Abilita per tracciamento tasse';
-
-  @override
   String get addBase => 'Aggiungi Base';
 
   @override
@@ -543,21 +529,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get power => 'Energia';
-
-  @override
-  String get taxes => 'Tasse';
-
-  @override
-  String get taxPerCycle => 'Tassa per Ciclo';
-
-  @override
-  String get currentOwed => 'Dovuto Attuale';
-
-  @override
-  String get overdueOwed => 'Dovuto Scaduto';
-
-  @override
-  String get defaultedOwed => 'Dovuto Insoluto';
 
   @override
   String get statusPaid => 'PAGATO';
@@ -595,9 +566,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get powerCritical => 'Energia Critica!';
-
-  @override
-  String get taxOverdue => 'Tasse Scadute!';
 
   @override
   String get exportSuccess => 'Dati esportati con successo';

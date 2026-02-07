@@ -118,14 +118,6 @@ void callbackDispatcher() {
               timeRemaining: alert.timeRemaining,
               isCritical: true,
             );
-          } else if (alert.type == AlertType.tax) {
-            await notificationService.showTaxAlert(
-              baseId: alert.base.id,
-              baseName: alert.base.name,
-              characterInfo: alert.characterInfo,
-              timeRemaining: alert.timeRemaining,
-              isOverdue: alert.timeRemaining.isNegative,
-            );
           }
           sentCount++;
         }
