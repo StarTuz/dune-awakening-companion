@@ -61,6 +61,7 @@ Scroll down to **Assets** to download.
 | Platform | File |
 |----------|------|
 | Linux x64 | `dune-awakening-companion-vX.X.X-linux-x64.tar.gz` |
+| Linux x64 (AppImage) | `dune-awakening-companion-vX.X.X-linux-x64.AppImage` |
 | Windows x64 | `dune-awakening-companion-vX.X.X-windows-x64.zip` |
 | macOS | `dune-awakening-companion-vX.X.X-macos.zip` |
 | Android | `dune-awakening-companion-vX.X.X-android.apk` |

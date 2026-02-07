@@ -989,20 +989,14 @@ QuestStep {
    - Quest progress widget
    - Platform-specific (Android/iOS)
 
-5. **Multi-Account Support**
-   - Manage multiple game accounts
-   - Switch between accounts easily
-   - Separate character lists per account
-   - Account-level settings and preferences
-
-6. **Cloud Sync** (Optional, privacy concerns)
+5. **Cloud Sync** (Optional, privacy concerns)
    - Firebase or custom backend
    - Sync across devices
    - Conflict resolution
    - End-to-end encryption
    - Opt-in only
 
-7. **RPG Elements & Storytelling** 📖 ⭐ (Fan Favorite!)
+6. **RPG Elements & Storytelling** 📖 ⭐ (Fan Favorite!)
    **Goal:** Bring characters to life through creative storytelling
    
    **The Lore:**
@@ -1252,7 +1246,6 @@ Features:
 **Time Estimate:** 20-30 hours
 
 Features:
-- Multi-account support
 - Cloud sync (optional)
 - Home screen widgets
 - Community features

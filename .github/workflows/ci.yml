@@ -72,10 +72,16 @@ jobs:
         run: bash scripts/ci/sbom.sh
 
       - name: SBOM summary
-        run: echo -e "## SBOM\n\n- File: build/sbom.json\n" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo "## SBOM" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- File: build/sbom.json" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Dependency report summary
-        run: echo -e "## Dependencies\n\n- File: build/deps_outdated.json\n" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo "## Dependencies" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- File: build/deps_outdated.json" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Code metrics (informational)
         if: always()

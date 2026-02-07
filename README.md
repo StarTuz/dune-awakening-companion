@@ -106,7 +106,7 @@ A cross-platform companion application for managing characters, bases, and power
 | Platform | Instructions |
 |----------|--------------|
 | 🪟 **Windows** | Download the `.zip` file. Extract it and run `dune_awakening_companion.exe`. If it fails to open, run the included installer for Visual C++. |
-| 🐧 **Linux** | Download the `.tar.gz`. Extract and run `./dune_awakening_companion` from the extracted folder. **See Linux requirements below.** |
+| 🐧 **Linux** | Download the `.tar.gz` (extract and run `./dune_awakening_companion`) or the `.AppImage` (chmod +x and run). **See Linux requirements below.** |
 | 🤖 **Android** | Download the `.apk` file and install it on your device. |
 | 🍎 **macOS** | Download the `.zip`, extract, and look for the `.app` file. |
 
@@ -127,6 +127,26 @@ sudo apt-get install libayatana-appindicator3-1
 **Fedora:**
 ```bash
 sudo dnf install libayatana-appindicator-gtk3
+```
+
+**AppImage (FUSE):**
+
+Some distros require FUSE to run AppImages. If the AppImage does not launch,
+install FUSE and try again:
+
+**Arch Linux:**
+```bash
+sudo pacman -S fuse2
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libfuse2
+```
+
+**Fedora:**
+```bash
+sudo dnf install fuse
 ```
 
 ---
