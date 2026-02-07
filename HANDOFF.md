@@ -156,6 +156,14 @@ flutter build apk --release
 - SBOM generation (`scripts/ci/sbom.sh`)
 - `flutter build linux --debug`
 
+### Qodo Merge Review (Required)
+Qodo Merge (PR-Agent) runs automatically on PR open via `.pr_agent.toml`
+(`/describe`, `/review`, `/improve`). Every PR must include:
+
+- A link to the Qodo review output in the PR description or comments
+- Applied suggestions or a brief rationale for deferring them
+- Any added user-facing strings must be localized (ARB + `flutter gen-l10n`)
+
 ### Local CI (Parity Script)
 **File:** `scripts/ci/local.sh`
 
