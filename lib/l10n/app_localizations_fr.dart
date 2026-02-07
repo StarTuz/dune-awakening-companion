@@ -391,7 +391,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Vérification terminée ! Notifications envoyées si des bases nécessitent une attention.';
+      '✅ Vérification terminée ! Des notifications ont été envoyées si des bases nécessitent une attention.';
 
   @override
   String get importantDisclaimer => 'Avertissement Important';
@@ -509,6 +509,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get baseName => 'Nom de la Base';
 
   @override
+  String get baseNameHint => 'ex. Base principale, Avant-poste minier';
+
+  @override
+  String get powerDownInLabel => 'Coupure d\'énergie dans :';
+
+  @override
   String get powerDays => 'Jours';
 
   @override
@@ -516,6 +522,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get powerMinutes => 'Minutes';
+
+  @override
+  String get notificationsEnabledTitle => '🔔 Notifications activées';
+
+  @override
+  String get notificationsDisabledTitle => '🔕 Notifications désactivées';
+
+  @override
+  String get notificationsEnabledMessage =>
+      'Vous recevrez des alertes pour les bases qui expirent';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Les alertes de notification ont été désactivées';
 
   @override
   String get addBase => 'Ajouter une Base';
@@ -693,6 +713,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String errorClearingData(String error) {
     return 'Erreur lors de la suppression des données : $error';
+  }
+
+  @override
+  String errorCreatingCharacter(String error) {
+    return 'Erreur lors de la création du personnage : $error';
+  }
+
+  @override
+  String errorAddingBase(String error) {
+    return 'Erreur lors de l\'ajout de la base : $error';
+  }
+
+  @override
+  String errorCheckingAlerts(String error) {
+    return '❌ Erreur : $error';
   }
 
   @override

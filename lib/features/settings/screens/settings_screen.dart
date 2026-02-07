@@ -2,13 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
-import '../../../core/database/app_database.dart';
 import '../../../core/providers/notification_manager_provider.dart';
 import '../../../core/providers/notification_settings_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/accessibility_provider.dart';
 import '../providers/import_export_provider.dart';
-import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../../core/providers/language_provider.dart';
@@ -84,7 +82,7 @@ class SettingsScreen extends ConsumerWidget {
             leading: const Icon(Icons.delete_forever, color: Colors.red),
             title: Text(l10n.clearAllData),
             subtitle: Text(l10n.clearAllDataDesc),
-            onTap: () => _showClearDataDialog(context),
+            onTap: () => _showClearDataDialog(context, ref),
           ),
 
           const Divider(height: 32),
@@ -586,7 +584,7 @@ class SettingsScreen extends ConsumerWidget {
     return _NotificationSettingsWidget();
   }
 
-  void _showClearDataDialog(BuildContext context) {
+  void _showClearDataDialog(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
@@ -605,7 +603,8 @@ class SettingsScreen extends ConsumerWidget {
 
               // Clear database
               try {
-                await AppDatabase.instance.clearAllData();
+                final importService = ref.read(importServiceProvider);
+                await importService.clearAllData();
 
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -1164,10 +1163,11 @@ class _NotificationSettingsWidget extends ConsumerWidget {
 
   Future<void> _sendTestNotification(
       BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Checking for alerts...'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(l10n.checkingAlerts),
+        duration: const Duration(seconds: 2),
       ),
     );
 
@@ -1177,10 +1177,9 @@ class _NotificationSettingsWidget extends ConsumerWidget {
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-                '✅ Check complete! Notifications sent if bases need attention.'),
-            duration: Duration(seconds: 3),
+          SnackBar(
+            content: Text(l10n.checkComplete),
+            duration: const Duration(seconds: 3),
             backgroundColor: Colors.green,
           ),
         );
@@ -1190,7 +1189,7 @@ class _NotificationSettingsWidget extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('❌ Error: $e'),
+            content: Text(l10n.errorCheckingAlerts(e.toString())),
             duration: const Duration(seconds: 3),
             backgroundColor: Colors.red,
           ),

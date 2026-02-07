@@ -387,11 +387,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get testAlerts => 'Warnungen Testen';
 
   @override
-  String get checkingAlerts => 'Prüfe Warnungen...';
+  String get checkingAlerts => 'Warnungen werden geprüft...';
 
   @override
   String get checkComplete =>
-      '✅ Prüfung abgeschlossen! Benachrichtigungen gesendet, wenn Basen Aufmerksamkeit benötigen.';
+      '✅ Prüfung abgeschlossen! Benachrichtigungen wurden gesendet, wenn Basen Aufmerksamkeit benötigen.';
 
   @override
   String get importantDisclaimer => 'Wichtiger Hinweis';
@@ -509,6 +509,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get baseName => 'Basisname';
 
   @override
+  String get baseNameHint => 'z. B. Hauptbasis, Bergbau-Außenposten';
+
+  @override
+  String get powerDownInLabel => 'Energie endet in:';
+
+  @override
   String get powerDays => 'Tage';
 
   @override
@@ -516,6 +522,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get powerMinutes => 'Minuten';
+
+  @override
+  String get notificationsEnabledTitle => '🔔 Benachrichtigungen aktiviert';
+
+  @override
+  String get notificationsDisabledTitle => '🔕 Benachrichtigungen deaktiviert';
+
+  @override
+  String get notificationsEnabledMessage =>
+      'Du erhältst Warnungen für ablaufende Basen';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Benachrichtigungsalarme wurden deaktiviert';
 
   @override
   String get addBase => 'Basis Hinzufügen';
@@ -693,6 +713,21 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String errorClearingData(String error) {
     return 'Fehler beim Löschen der Daten: $error';
+  }
+
+  @override
+  String errorCreatingCharacter(String error) {
+    return 'Fehler beim Erstellen des Charakters: $error';
+  }
+
+  @override
+  String errorAddingBase(String error) {
+    return 'Fehler beim Hinzufügen der Basis: $error';
+  }
+
+  @override
+  String errorCheckingAlerts(String error) {
+    return '❌ Fehler: $error';
   }
 
   @override

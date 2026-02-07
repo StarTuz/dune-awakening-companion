@@ -38,7 +38,10 @@ time_cmd() {
   shift
   local start end elapsed
   start=$(date +%s%3N)
-  "$@" > /dev/null 2>&1 || true
+  if ! "$@" > /dev/null 2>&1; then
+    echo "Error: Command failed for '$label'" >&2
+    exit 1
+  fi
   end=$(date +%s%3N)
   elapsed=$(( end - start ))
   echo "$elapsed"

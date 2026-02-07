@@ -504,6 +504,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get baseName => 'Base Name';
 
   @override
+  String get baseNameHint => 'e.g., Main Base, Mining Outpost';
+
+  @override
+  String get powerDownInLabel => 'Power Down In:';
+
+  @override
   String get powerDays => 'Days';
 
   @override
@@ -511,6 +517,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get powerMinutes => 'Minutes';
+
+  @override
+  String get notificationsEnabledTitle => '🔔 Notifications Enabled';
+
+  @override
+  String get notificationsDisabledTitle => '🔕 Notifications Disabled';
+
+  @override
+  String get notificationsEnabledMessage =>
+      'You will receive alerts for expiring bases';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Notification alerts have been turned off';
 
   @override
   String get addBase => 'Add Base';
@@ -686,6 +706,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String errorClearingData(String error) {
     return 'Error clearing data: $error';
+  }
+
+  @override
+  String errorCreatingCharacter(String error) {
+    return 'Error creating character: $error';
+  }
+
+  @override
+  String errorAddingBase(String error) {
+    return 'Error adding base: $error';
+  }
+
+  @override
+  String errorCheckingAlerts(String error) {
+    return '❌ Error: $error';
   }
 
   @override

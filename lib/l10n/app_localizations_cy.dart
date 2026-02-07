@@ -390,7 +390,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get checkComplete =>
-      '✅ Gwirio wedi\'i gwblhau! Hysbysiadau wedi\'u hanfon os oes angen sylw ar ganolfannau.';
+      '✅ Wedi gorffen gwirio! Anfonwyd hysbysiadau os oes angen sylw ar fasau.';
 
   @override
   String get importantDisclaimer => 'Ymwadiad Pwysig';
@@ -508,6 +508,12 @@ class AppLocalizationsCy extends AppLocalizations {
   String get baseName => 'Enw Canolfan';
 
   @override
+  String get baseNameHint => 'e.e., Prif Fas, Allbost Fwyngloddio';
+
+  @override
+  String get powerDownInLabel => 'Pŵer yn rhedeg allan mewn:';
+
+  @override
   String get powerDays => 'Diwrnodau';
 
   @override
@@ -515,6 +521,20 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get powerMinutes => 'Munudau';
+
+  @override
+  String get notificationsEnabledTitle => '🔔 Hysbysiadau wedi\'u galluogi';
+
+  @override
+  String get notificationsDisabledTitle => '🔕 Hysbysiadau wedi\'u hanalluogi';
+
+  @override
+  String get notificationsEnabledMessage =>
+      'Byddwch yn cael rhybuddion am fasau sy\'n dod i ben';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Mae rhybuddion hysbysu wedi\'u diffodd';
 
   @override
   String get addBase => 'Ychwanegu Canolfan';
@@ -691,6 +711,21 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String errorClearingData(String error) {
     return 'Gwall wrth glirio data: $error';
+  }
+
+  @override
+  String errorCreatingCharacter(String error) {
+    return 'Gwall wrth greu cymeriad: $error';
+  }
+
+  @override
+  String errorAddingBase(String error) {
+    return 'Gwall wrth ychwanegu sylfaen: $error';
+  }
+
+  @override
+  String errorCheckingAlerts(String error) {
+    return '❌ Gwall: $error';
   }
 
   @override

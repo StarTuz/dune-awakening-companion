@@ -506,6 +506,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get baseName => 'Назва Бази';
 
   @override
+  String get baseNameHint => 'напр., Основна база, Шахтарський форпост';
+
+  @override
+  String get powerDownInLabel => 'Енергія закінчиться через:';
+
+  @override
   String get powerDays => 'Дні';
 
   @override
@@ -513,6 +519,20 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get powerMinutes => 'Хвилини';
+
+  @override
+  String get notificationsEnabledTitle => '🔔 Сповіщення увімкнено';
+
+  @override
+  String get notificationsDisabledTitle => '🔕 Сповіщення вимкнено';
+
+  @override
+  String get notificationsEnabledMessage =>
+      'Ви отримуватимете сповіщення про бази, що спливають';
+
+  @override
+  String get notificationsDisabledMessage =>
+      'Сповіщення про оповіщення вимкнено';
 
   @override
   String get addBase => 'Додати Базу';
@@ -689,6 +709,21 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String errorClearingData(String error) {
     return 'Помилка видалення даних: $error';
+  }
+
+  @override
+  String errorCreatingCharacter(String error) {
+    return 'Помилка створення персонажа: $error';
+  }
+
+  @override
+  String errorAddingBase(String error) {
+    return 'Помилка додавання бази: $error';
+  }
+
+  @override
+  String errorCheckingAlerts(String error) {
+    return '❌ Помилка: $error';
   }
 
   @override

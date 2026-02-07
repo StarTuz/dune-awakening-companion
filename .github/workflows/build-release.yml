@@ -64,13 +64,13 @@ jobs:
           APPDIR_PATH: ${{ github.workspace }}/build/linux/x64/release/AppDir
         run: |
           appimage-builder --recipe appimage-builder.yml --skip-test
-          appimage_file=()
-          if compgen -G "*.AppImage" > /dev/null; then
-            appimage_file=(*.AppImage)
-          elif compgen -G "dist/*.AppImage" > /dev/null; then
-            appimage_file=(dist/*.AppImage)
+          appimage_file=$(find . -name "*.AppImage" -print -quit)
+          if [[ -z "$appimage_file" ]]; then
+            echo "Error: No AppImage file found after build."
+            exit 1
           fi
-          mv "${appimage_file[0]}" \
+          echo "Found AppImage: $appimage_file"
+          mv "$appimage_file" \
             "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage"
 
       - name: Upload Linux artifact
