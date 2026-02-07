@@ -49,46 +49,37 @@ jobs:
           wget -q -O appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
 
-          # Assemble AppDir from the Flutter build output
+          # Assemble AppDir — keep the Flutter bundle intact so the
+          # executable can find lib/ and data/ via its built-in rpath.
           cd build/linux/x64/release
           rm -rf AppDir
-          mkdir -p AppDir/usr/bin
-          mkdir -p AppDir/usr/lib
           mkdir -p AppDir/usr/share/icons/hicolor/256x256/apps
 
-          # Copy the Flutter bundle contents
-          cp -r dune-awakening-companion/* AppDir/usr/bin/
+          # Copy the entire Flutter bundle as-is
+          cp -r dune-awakening-companion AppDir/app
 
-          # Move bundled libs to usr/lib so AppRun's LD_LIBRARY_PATH finds them
-          if [ -d AppDir/usr/bin/lib ]; then
-            mv AppDir/usr/bin/lib/* AppDir/usr/lib/
-            rmdir AppDir/usr/bin/lib
-          fi
-
-          # Copy icon
+          # Icon
           cp ../../../../assets/app_icon.png \
             AppDir/usr/share/icons/hicolor/256x256/apps/dune_awakening_companion.png
           cp ../../../../assets/app_icon.png AppDir/dune_awakening_companion.png
 
-          # Create .desktop file
-          cat > AppDir/dune_awakening_companion.desktop << 'DESKTOP'
+          # .desktop file (must not have leading whitespace)
+          cat > AppDir/dune_awakening_companion.desktop <<'EOF'
           [Desktop Entry]
           Type=Application
           Name=Dune Awakening Companion
           Icon=dune_awakening_companion
           Exec=dune_awakening_companion
           Categories=Utility;
-          DESKTOP
-          # Strip leading whitespace from heredoc
+          EOF
           sed -i 's/^          //' AppDir/dune_awakening_companion.desktop
 
-          # Create AppRun script
-          cat > AppDir/AppRun << 'APPRUN'
+          # AppRun — launch the executable from the intact bundle
+          cat > AppDir/AppRun <<'EOF'
           #!/bin/bash
           HERE="$(dirname "$(readlink -f "$0")")"
-          export LD_LIBRARY_PATH="$HERE/usr/lib:${LD_LIBRARY_PATH}"
-          exec "$HERE/usr/bin/dune_awakening_companion" "$@"
-          APPRUN
+          exec "$HERE/app/dune_awakening_companion" "$@"
+          EOF
           sed -i 's/^          //' AppDir/AppRun
           chmod +x AppDir/AppRun
 
@@ -98,7 +89,7 @@ jobs:
           ARCH=x86_64 ./appimagetool build/linux/x64/release/AppDir \
             "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage"
 
-          # Verify it was created
+          # Verify
           if [[ ! -f "build/linux/x64/release/dune-awakening-companion-${{ github.ref_name }}-linux-x64.AppImage" ]]; then
             echo "Error: AppImage was not created."
             exit 1
