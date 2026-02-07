@@ -717,8 +717,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(l10n.powerDownInLabel,
-                  style: const TextStyle(fontSize: 12)),
+              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -831,8 +830,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                 decoration: InputDecoration(labelText: l10n.baseName),
               ),
               const SizedBox(height: 16),
-              Text(l10n.powerDownInLabel,
-                  style: const TextStyle(fontSize: 12)),
+              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -856,8 +854,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: minutesController,
                       keyboardType: TextInputType.number,
-                      decoration:
-                          InputDecoration(labelText: l10n.powerMinutes),
+                      decoration: InputDecoration(labelText: l10n.powerMinutes),
                     ),
                   ),
                 ],

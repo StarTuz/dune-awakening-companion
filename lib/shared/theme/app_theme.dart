@@ -540,7 +540,7 @@ class AppTheme {
         foregroundColor: AtreidesColors.primaryText,
         elevation: 0,
         centerTitle: true,
-      iconTheme: const IconThemeData(color: AtreidesColors.primaryText),
+        iconTheme: const IconThemeData(color: AtreidesColors.primaryText),
       ),
       cardTheme: CardThemeData(
         color: AtreidesColors.tertiaryBackground,
