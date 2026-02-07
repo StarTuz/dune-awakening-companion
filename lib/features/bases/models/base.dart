@@ -24,7 +24,7 @@ class Base implements BaseModel {
   });
 
   factory Base.fromJson(Map<String, dynamic> json) => _$BaseFromJson(json);
-  
+
   @override
   Map<String, dynamic> toJson() => _$BaseToJson(this);
 

@@ -18,7 +18,7 @@ class Server implements BaseModel {
   });
 
   factory Server.fromJson(Map<String, dynamic> json) => _$ServerFromJson(json);
-  
+
   @override
   Map<String, dynamic> toJson() => _$ServerToJson(this);
 
@@ -34,4 +34,3 @@ class Server implements BaseModel {
     );
   }
 }
-

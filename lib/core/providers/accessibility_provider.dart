@@ -4,17 +4,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Font size scale options
 enum FontSizeOption {
-  small,   // 0.85
-  medium,  // 1.0 (default)
-  large,   // 1.15
-  xl,      // 1.3
+  small, // 0.85
+  medium, // 1.0 (default)
+  large, // 1.15
+  xl, // 1.3
 }
 
 /// Font weight options
 enum FontWeightOption {
-  light,   // FontWeight.w300
+  light, // FontWeight.w300
   regular, // FontWeight.w400 (default)
-  bold,    // FontWeight.w600
+  bold, // FontWeight.w600
 }
 
 /// Accessibility settings state
@@ -99,7 +99,8 @@ class AccessibilitySettings {
 }
 
 /// Accessibility settings provider
-final accessibilityProvider = StateNotifierProvider<AccessibilityNotifier, AccessibilitySettings>((ref) {
+final accessibilityProvider =
+    StateNotifierProvider<AccessibilityNotifier, AccessibilitySettings>((ref) {
   return AccessibilityNotifier();
 });
 
@@ -117,15 +118,19 @@ class AccessibilityNotifier extends StateNotifier<AccessibilitySettings> {
   /// Load saved settings from SharedPreferences
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    
-    final fontSizeIndex = prefs.getInt(_kFontSizeKey) ?? FontSizeOption.medium.index;
-    final fontWeightIndex = prefs.getInt(_kFontWeightKey) ?? FontWeightOption.regular.index;
+
+    final fontSizeIndex =
+        prefs.getInt(_kFontSizeKey) ?? FontSizeOption.medium.index;
+    final fontWeightIndex =
+        prefs.getInt(_kFontWeightKey) ?? FontWeightOption.regular.index;
     final highContrast = prefs.getBool(_kHighContrastKey) ?? false;
     final reducedMotion = prefs.getBool(_kReducedMotionKey) ?? false;
 
     state = AccessibilitySettings(
-      fontSize: FontSizeOption.values[fontSizeIndex.clamp(0, FontSizeOption.values.length - 1)],
-      fontWeight: FontWeightOption.values[fontWeightIndex.clamp(0, FontWeightOption.values.length - 1)],
+      fontSize: FontSizeOption
+          .values[fontSizeIndex.clamp(0, FontSizeOption.values.length - 1)],
+      fontWeight: FontWeightOption
+          .values[fontWeightIndex.clamp(0, FontWeightOption.values.length - 1)],
       highContrast: highContrast,
       reducedMotion: reducedMotion,
     );

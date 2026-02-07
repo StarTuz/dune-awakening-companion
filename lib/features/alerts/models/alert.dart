@@ -24,7 +24,7 @@ class Alert implements BaseModel {
   });
 
   factory Alert.fromJson(Map<String, dynamic> json) => _$AlertFromJson(json);
-  
+
   @override
   Map<String, dynamic> toJson() => _$AlertToJson(this);
 
@@ -50,4 +50,3 @@ class Alert implements BaseModel {
     );
   }
 }
-

@@ -142,7 +142,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                             children: [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait',
+                                  style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -362,7 +363,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                             children: [
                               Icon(Icons.add_a_photo, size: 32),
                               SizedBox(height: 4),
-                              Text('Add Portrait', style: TextStyle(fontSize: 10)),
+                              Text('Add Portrait',
+                                  style: TextStyle(fontSize: 10)),
                             ],
                           )
                         : null,
@@ -903,5 +905,4 @@ class CharacterManagementScreen extends ConsumerWidget {
       ),
     );
   }
-
 }

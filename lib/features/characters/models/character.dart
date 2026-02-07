@@ -10,7 +10,8 @@ class Character implements BaseModel {
   final String name;
   final String region;
   final String serverType; // 'Official' or 'Private'
-  final String? provider; // Only for private servers (GPORTAL, BisectHosting, etc.)
+  final String?
+      provider; // Only for private servers (GPORTAL, BisectHosting, etc.)
   final String world;
   final String sietch;
   final String? portraitPath; // Path to character portrait image
@@ -31,8 +32,9 @@ class Character implements BaseModel {
     required this.updatedAt,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
-  
+  factory Character.fromJson(Map<String, dynamic> json) =>
+      _$CharacterFromJson(json);
+
   @override
   Map<String, dynamic> toJson() => _$CharacterToJson(this);
 
@@ -62,5 +64,3 @@ class Character implements BaseModel {
     );
   }
 }
-
-

@@ -21,8 +21,9 @@ class FakeCharacterRepository implements CharacterRepository {
   @override
   Future<List<Character>> getAll() async => data;
   @override
-  Future<Character?> getById(String id) async =>
-      data.cast<Character?>().firstWhere((c) => c?.id == id, orElse: () => null);
+  Future<Character?> getById(String id) async => data
+      .cast<Character?>()
+      .firstWhere((c) => c?.id == id, orElse: () => null);
   @override
   Future<List<Character>> getByServerId(String serverId) async => [];
   @override
@@ -83,11 +84,33 @@ void main() {
   testWidgets('shows correct character and base counts', (tester) async {
     await tester.pumpWidget(buildDashboard(
       characters: [
-        Character(id: 'c1', name: 'Paul', region: 'NA', serverType: 'Official', world: 'Arrakis', sietch: 'Tabr', createdAt: now, updatedAt: now),
-        Character(id: 'c2', name: 'Chani', region: 'EU', serverType: 'Official', world: 'Caladan', sietch: 'Tabr', createdAt: now, updatedAt: now),
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+        Character(
+            id: 'c2',
+            name: 'Chani',
+            region: 'EU',
+            serverType: 'Official',
+            world: 'Caladan',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
       ],
       bases: [
-        Base(id: 'b1', characterId: 'c1', name: 'Safe Base', powerExpirationTime: now.add(const Duration(hours: 72)), createdAt: now, updatedAt: now),
+        Base(
+            id: 'b1',
+            characterId: 'c1',
+            name: 'Safe Base',
+            powerExpirationTime: now.add(const Duration(hours: 72)),
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();

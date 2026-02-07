@@ -5,7 +5,8 @@ void main() {
   group('formatDuration', () {
     test('formats days, hours, minutes', () {
       expect(
-        DateUtils.formatDuration(const Duration(days: 2, hours: 5, minutes: 30)),
+        DateUtils.formatDuration(
+            const Duration(days: 2, hours: 5, minutes: 30)),
         '2 days, 5 hours, 30 minutes',
       );
     });

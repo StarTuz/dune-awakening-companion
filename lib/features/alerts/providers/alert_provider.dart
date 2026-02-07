@@ -9,11 +9,13 @@ final alertRepositoryProvider = Provider<AlertRepository>((ref) {
   return AlertRepository(AppDatabase.instance);
 });
 
-final alertSettingsRepositoryProvider = Provider<AlertSettingsRepository>((ref) {
+final alertSettingsRepositoryProvider =
+    Provider<AlertSettingsRepository>((ref) {
   return AlertSettingsRepository(AppDatabase.instance);
 });
 
-final alertsProvider = StateNotifierProvider<AlertNotifier, AsyncValue<List<Alert>>>((ref) {
+final alertsProvider =
+    StateNotifierProvider<AlertNotifier, AsyncValue<List<Alert>>>((ref) {
   final repository = ref.watch(alertRepositoryProvider);
   return AlertNotifier(repository, ref);
 });
@@ -23,7 +25,8 @@ final activeAlertsProvider = FutureProvider<List<Alert>>((ref) async {
   return await repository.getActive();
 });
 
-final alertsByBaseProvider = FutureProvider.family<List<Alert>, String>((ref, baseId) async {
+final alertsByBaseProvider =
+    FutureProvider.family<List<Alert>, String>((ref, baseId) async {
   final repository = ref.watch(alertRepositoryProvider);
   return await repository.getByBaseId(baseId);
 });
@@ -37,7 +40,8 @@ class AlertNotifier extends StateNotifier<AsyncValue<List<Alert>>> {
   final AlertRepository _repository;
   final Ref _ref;
 
-  AlertNotifier(this._repository, this._ref) : super(const AsyncValue.loading()) {
+  AlertNotifier(this._repository, this._ref)
+      : super(const AsyncValue.loading()) {
     _loadAlerts();
   }
 
@@ -103,7 +107,8 @@ class AlertNotifier extends StateNotifier<AsyncValue<List<Alert>>> {
 }
 
 final alertSettingsNotifierProvider =
-    StateNotifierProvider<AlertSettingsNotifier, AsyncValue<AlertSettings>>((ref) {
+    StateNotifierProvider<AlertSettingsNotifier, AsyncValue<AlertSettings>>(
+        (ref) {
   final repository = ref.watch(alertSettingsRepositoryProvider);
   return AlertSettingsNotifier(repository, ref);
 });
@@ -112,7 +117,8 @@ class AlertSettingsNotifier extends StateNotifier<AsyncValue<AlertSettings>> {
   final AlertSettingsRepository _repository;
   final Ref _ref;
 
-  AlertSettingsNotifier(this._repository, this._ref) : super(const AsyncValue.loading()) {
+  AlertSettingsNotifier(this._repository, this._ref)
+      : super(const AsyncValue.loading()) {
     _loadSettings();
   }
 

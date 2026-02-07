@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Dune-inspired color palette (copyright-safe)
-/// 
+///
 /// This color scheme is inspired by desert/sand aesthetics
 /// without infringing on any copyrighted material.
 class DuneColors {
@@ -42,7 +42,8 @@ class DuneColors {
   static const secondaryAccent = Color(0xFFE6B84F); // Desert amber
 
   // Semantic Colors
-  static const success = Color(0xFF8B9A6B); // Sage green (subtle, desert-appropriate)
+  static const success =
+      Color(0xFF8B9A6B); // Sage green (subtle, desert-appropriate)
   static const error = Color(0xFFA84D3A); // Deep rust
   static const info = Color(0xFF6B8B9A); // Desert blue (subtle)
 
@@ -223,7 +224,8 @@ class FremenColors {
   static const mutedText = Color(0xFF9A8A70); // Dusty sand
 
   // Accent Colors - Fremen Blue (stillsuit eyes) & Sand
-  static const primaryAccent = Color(0xFF4A7AC9); // Spice blue (blue-within-blue)
+  static const primaryAccent =
+      Color(0xFF4A7AC9); // Spice blue (blue-within-blue)
   static const secondaryAccent = Color(0xFFD4B896); // Desert gold
 
   // Semantic Colors
@@ -272,16 +274,16 @@ class AppColors {
   // Background Colors
   static const background = DuneColors.primaryBackground;
   static const cardBackground = DuneColors.tertiaryBackground;
-  
+
   // Text Colors
   static const textPrimary = DuneColors.primaryText;
   static const textSecondary = DuneColors.secondaryText;
-  
+
   // Status Colors
   static const criticalStatus = DuneColors.criticalPrimary;
   static const warningYellow = DuneColors.warningPrimary;
   static const safeGreen = DuneColors.success;
-  
+
   // Accent Colors
   static const primaryAccent = DuneColors.primaryAccent;
 }

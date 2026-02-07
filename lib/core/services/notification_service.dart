@@ -19,7 +19,8 @@ class NotificationService {
     if (_initialized) return;
 
     // Android initialization
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     // iOS initialization
     const iosSettings = DarwinInitializationSettings(
@@ -29,7 +30,7 @@ class NotificationService {
     );
 
     debugPrint('[NotificationService] Initializing...');
-    
+
     // Linux initialization
     const linuxSettings = LinuxInitializationSettings(
       defaultActionName: 'Open notification',
@@ -73,8 +74,9 @@ class NotificationService {
   /// Request notification permissions (mobile)
   Future<bool> _requestPermissions() async {
     if (Platform.isAndroid) {
-      final androidPlugin = _notifications.resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>();
+      final androidPlugin =
+          _notifications.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
       return await androidPlugin?.requestNotificationsPermission() ?? false;
     } else if (Platform.isIOS) {
       final iosPlugin = _notifications.resolvePlatformSpecificImplementation<
@@ -149,7 +151,6 @@ class NotificationService {
     );
   }
 
-
   /// Internal method to show notification
   Future<void> _showNotification({
     required int id,
@@ -168,7 +169,9 @@ class NotificationService {
       channelId == 'critical_alerts' ? 'Critical Alerts' : 'Warning Alerts',
       channelDescription: 'Base alerts',
       importance: importance,
-      priority: importance == Importance.high ? Priority.high : Priority.defaultPriority,
+      priority: importance == Importance.high
+          ? Priority.high
+          : Priority.defaultPriority,
       ticker: 'Base Alert',
       playSound: soundEnabled,
       enableVibration: vibrationEnabled,
@@ -234,7 +237,7 @@ class NotificationService {
 
     // Use timestamp for unique ID so notifications don't replace each other
     final uniqueId = DateTime.now().millisecondsSinceEpoch % 100000;
-    
+
     await _notifications.show(
       uniqueId,
       title,

@@ -10,9 +10,9 @@ import '../models/notification_history_entry.dart';
 class NotificationCoordinator {
   final NotificationService _notificationService;
   final AlertCheckerService _alertCheckerService;
-  final NotificationHistoryRepository _historyRepository = 
+  final NotificationHistoryRepository _historyRepository =
       NotificationHistoryRepository.instance;
-  
+
   Timer? _periodicTimer;
   bool _isRunning = false;
 
@@ -49,7 +49,7 @@ class NotificationCoordinator {
   /// Perform a single check and send notifications
   Future<void> checkAndNotify({bool includeWarnings = false}) async {
     debugPrint('[NotificationCoordinator] Starting alert check...');
-    
+
     // Check if we're in quiet hours
     final inQuietHours = await NotificationSettings.isInQuietHours();
     if (inQuietHours) {
@@ -58,7 +58,7 @@ class NotificationCoordinator {
       );
       return;
     }
-    
+
     final alerts = await _alertCheckerService.checkForAlerts(
       includeWarnings: includeWarnings,
     );
@@ -86,10 +86,9 @@ class NotificationCoordinator {
       final criticalAlerts = baseAlerts
           .where((a) => a.severity == AlertSeverity.critical)
           .toList();
-      
-      final alertToSend = criticalAlerts.isNotEmpty 
-          ? criticalAlerts.first 
-          : baseAlerts.first;
+
+      final alertToSend =
+          criticalAlerts.isNotEmpty ? criticalAlerts.first : baseAlerts.first;
 
       debugPrint(
         '[NotificationCoordinator] Sending notification for ${alertToSend.base.name}',
@@ -98,7 +97,8 @@ class NotificationCoordinator {
       notificationCount++;
     }
 
-    debugPrint('[NotificationCoordinator] Sent $notificationCount notifications');
+    debugPrint(
+        '[NotificationCoordinator] Sent $notificationCount notifications');
   }
 
   /// Send notification for a specific alert
@@ -106,13 +106,16 @@ class NotificationCoordinator {
     final hours = alert.timeRemaining.inHours;
     final timeText = hours < 1
         ? '${alert.timeRemaining.inMinutes} minutes'
-        : hours == 1 ? '1 hour' : '$hours hours';
-    
-    final title = alert.severity == AlertSeverity.critical 
-        ? '⚡ Power Critical!' 
+        : hours == 1
+            ? '1 hour'
+            : '$hours hours';
+
+    final title = alert.severity == AlertSeverity.critical
+        ? '⚡ Power Critical!'
         : '⚡ Power Running Low';
-    final body = '${alert.base.name} (${alert.characterInfo}) - $timeText remaining';
-    
+    final body =
+        '${alert.base.name} (${alert.characterInfo}) - $timeText remaining';
+
     await _notificationService.showPowerAlert(
       baseId: alert.base.id,
       baseName: alert.base.name,
@@ -129,10 +132,11 @@ class NotificationCoordinator {
       baseId: alert.base.id,
       baseName: alert.base.name,
       characterName: alert.characterInfo,
-      severity: alert.severity == AlertSeverity.critical ? 'critical' : 'warning',
+      severity:
+          alert.severity == AlertSeverity.critical ? 'critical' : 'warning',
       sentAt: DateTime.now(),
     );
-    
+
     await _historyRepository.addEntry(historyEntry);
     debugPrint('[NotificationCoordinator] Saved notification to history');
   }

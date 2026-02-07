@@ -26,7 +26,7 @@ class AppDatabase {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
-    
+
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
@@ -39,7 +39,7 @@ class AppDatabase {
 
   Future<String> _getDatabasePath() async {
     Directory documentsDirectory;
-    
+
     if (Platform.isAndroid) {
       documentsDirectory = await getApplicationDocumentsDirectory();
     } else if (Platform.isIOS) {
@@ -47,12 +47,13 @@ class AppDatabase {
     } else {
       // Desktop platforms
       final appDataDir = await getApplicationSupportDirectory();
-      documentsDirectory = Directory('${appDataDir.path}/dune-awakening-companion');
+      documentsDirectory =
+          Directory('${appDataDir.path}/dune-awakening-companion');
       if (!await documentsDirectory.exists()) {
         await documentsDirectory.create(recursive: true);
       }
     }
-    
+
     return join(documentsDirectory.path, 'dune_companion.db');
   }
 
@@ -97,7 +98,7 @@ class AppDatabase {
     await db.close();
     _database = null;
   }
-  
+
   Future<void> clearAllData() async {
     final db = await database;
     await db.transaction((txn) async {

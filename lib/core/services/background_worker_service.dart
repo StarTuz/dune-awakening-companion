@@ -87,7 +87,8 @@ void callbackDispatcher() {
       // Initialize services
       final baseRepository = BaseRepository(database);
       final characterRepository = CharacterRepository(database);
-      final alertChecker = AlertCheckerService(baseRepository, characterRepository);
+      final alertChecker =
+          AlertCheckerService(baseRepository, characterRepository);
       final notificationService = NotificationService.instance;
 
       // Initialize notification service

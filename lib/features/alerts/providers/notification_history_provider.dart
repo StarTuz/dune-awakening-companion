@@ -32,8 +32,9 @@ class NotificationHistoryState {
 }
 
 /// Notifier for notification history
-class NotificationHistoryNotifier extends StateNotifier<NotificationHistoryState> {
-  final NotificationHistoryRepository _repository = 
+class NotificationHistoryNotifier
+    extends StateNotifier<NotificationHistoryState> {
+  final NotificationHistoryRepository _repository =
       NotificationHistoryRepository.instance;
 
   NotificationHistoryNotifier() : super(const NotificationHistoryState()) {
@@ -85,7 +86,7 @@ class NotificationHistoryNotifier extends StateNotifier<NotificationHistoryState
 }
 
 /// Provider for notification history
-final notificationHistoryProvider = 
-    StateNotifierProvider<NotificationHistoryNotifier, NotificationHistoryState>((ref) {
+final notificationHistoryProvider = StateNotifierProvider<
+    NotificationHistoryNotifier, NotificationHistoryState>((ref) {
   return NotificationHistoryNotifier();
 });

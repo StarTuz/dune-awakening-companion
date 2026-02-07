@@ -54,7 +54,7 @@ class NotificationSettingsState {
   }
 
   /// Get quiet hours start as formatted string
-  String get quietHoursStartString => 
+  String get quietHoursStartString =>
       NotificationSettings.minutesToTimeString(quietHoursStart);
 
   /// Get quiet hours end as formatted string
@@ -64,7 +64,8 @@ class NotificationSettingsState {
 
 /// StateNotifier for notification settings
 /// This ensures state sync between Settings UI and System Tray
-class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsState> {
+class NotificationSettingsNotifier
+    extends StateNotifier<NotificationSettingsState> {
   NotificationSettingsNotifier() : super(const NotificationSettingsState()) {
     _loadSettings();
   }
@@ -148,7 +149,7 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsSta
 
 /// Provider for notification settings state
 /// Both Settings UI and System Tray should use this provider
-final notificationSettingsProvider =
-    StateNotifierProvider<NotificationSettingsNotifier, NotificationSettingsState>((ref) {
+final notificationSettingsProvider = StateNotifierProvider<
+    NotificationSettingsNotifier, NotificationSettingsState>((ref) {
   return NotificationSettingsNotifier();
 });

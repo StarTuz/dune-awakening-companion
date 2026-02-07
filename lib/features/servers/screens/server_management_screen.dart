@@ -30,11 +30,13 @@ class ServerManagementScreen extends ConsumerWidget {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.edit),
-                          onPressed: () => _showEditDialog(context, ref, server),
+                          onPressed: () =>
+                              _showEditDialog(context, ref, server),
                         ),
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => _showDeleteDialog(context, ref, server),
+                          onPressed: () =>
+                              _showDeleteDialog(context, ref, server),
                         ),
                       ],
                     ),
@@ -75,7 +77,9 @@ class ServerManagementScreen extends ConsumerWidget {
           TextButton(
             onPressed: () {
               if (nameController.text.isNotEmpty) {
-                ref.read(serversProvider.notifier).createServer(nameController.text);
+                ref
+                    .read(serversProvider.notifier)
+                    .createServer(nameController.text);
                 Navigator.of(context).pop();
               }
             },

@@ -8,7 +8,8 @@ final serverRepositoryProvider = Provider<ServerRepository>((ref) {
   return ServerRepository(AppDatabase.instance);
 });
 
-final serversProvider = StateNotifierProvider<ServerNotifier, AsyncValue<List<Server>>>((ref) {
+final serversProvider =
+    StateNotifierProvider<ServerNotifier, AsyncValue<List<Server>>>((ref) {
   final repository = ref.watch(serverRepositoryProvider);
   return ServerNotifier(repository);
 });

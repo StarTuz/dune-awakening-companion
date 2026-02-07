@@ -6,19 +6,19 @@ part 'alert_settings.g.dart';
 class AlertSettings {
   /// Warning thresholds in hours (e.g., [24, 12, 6, 1])
   final List<int> warningThresholds;
-  
+
   /// How often to check for alerts (in minutes)
   final int checkIntervalMinutes;
-  
+
   /// How often to repeat alerts (in minutes). 0 = alert once only
   final int repeatIntervalMinutes;
-  
+
   /// Enable sound alerts
   final bool enableSound;
-  
+
   /// Enable desktop/mobile notifications
   final bool enableNotifications;
-  
+
   /// Minimize to system tray
   final bool minimizeToTray;
 
@@ -31,9 +31,9 @@ class AlertSettings {
     this.minimizeToTray = true,
   });
 
-  factory AlertSettings.fromJson(Map<String, dynamic> json) => 
+  factory AlertSettings.fromJson(Map<String, dynamic> json) =>
       _$AlertSettingsFromJson(json);
-  
+
   Map<String, dynamic> toJson() => _$AlertSettingsToJson(this);
 
   AlertSettings copyWith({
@@ -47,11 +47,11 @@ class AlertSettings {
     return AlertSettings(
       warningThresholds: warningThresholds ?? this.warningThresholds,
       checkIntervalMinutes: checkIntervalMinutes ?? this.checkIntervalMinutes,
-      repeatIntervalMinutes: repeatIntervalMinutes ?? this.repeatIntervalMinutes,
+      repeatIntervalMinutes:
+          repeatIntervalMinutes ?? this.repeatIntervalMinutes,
       enableSound: enableSound ?? this.enableSound,
       enableNotifications: enableNotifications ?? this.enableNotifications,
       minimizeToTray: minimizeToTray ?? this.minimizeToTray,
     );
   }
 }
-
