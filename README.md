@@ -106,7 +106,7 @@ A cross-platform companion application for managing characters, bases, and power
 | Platform | Instructions |
 |----------|--------------|
 | 🪟 **Windows** | Download the `.zip` file. Extract it and run `dune_awakening_companion.exe`. If it fails to open, run the included installer for Visual C++. |
-| 🐧 **Linux** | Download the `.tar.gz`. Extract and run `./dune_awakening_companion` from the extracted folder. **See Linux requirements below.** |
+| 🐧 **Linux** | Download the `.tar.gz` (extract and run `./dune_awakening_companion`) or the `.AppImage` (chmod +x and run). **See Linux requirements below.** |
 | 🤖 **Android** | Download the `.apk` file and install it on your device. |
 | 🍎 **macOS** | Download the `.zip`, extract, and look for the `.app` file. |
 
@@ -127,6 +127,26 @@ sudo apt-get install libayatana-appindicator3-1
 **Fedora:**
 ```bash
 sudo dnf install libayatana-appindicator-gtk3
+```
+
+**AppImage (FUSE):**
+
+Some distros require FUSE to run AppImages. If the AppImage does not launch,
+install FUSE and try again:
+
+**Arch Linux:**
+```bash
+sudo pacman -S fuse2
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install libfuse2
+```
+
+**Fedora:**
+```bash
+sudo dnf install fuse
 ```
 
 ---
@@ -321,18 +341,20 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read the contributing guidelines in [HANDOFF.md](./HANDOFF.md) before submitting PRs.
+Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [HANDOFF.md](./HANDOFF.md) before submitting PRs.
+
+Every PR is automatically reviewed by **Qodo Merge** (AI code review). See `CONTRIBUTING.md` for details.
 
 ### Development Workflow
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run `flutter analyze` to check for issues
+4. Run `bash scripts/ci/local.sh` to verify locally
 5. Test thoroughly on your target platform(s)
 6. Commit your changes (`git commit -m 'Add amazing feature'`)
 7. Push to the branch (`git push origin feature/amazing-feature`)
-8. Open a Pull Request
+8. Open a Pull Request and address Qodo review feedback
 
 ---
 

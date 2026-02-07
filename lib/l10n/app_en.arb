@@ -657,6 +657,14 @@
   "@baseName": {
     "description": "Base name field label"
   },
+  "baseNameHint": "e.g., Main Base, Mining Outpost",
+  "@baseNameHint": {
+    "description": "Base name field hint text"
+  },
+  "powerDownInLabel": "Power Down In:",
+  "@powerDownInLabel": {
+    "description": "Label for power expiration input section"
+  },
   "powerDays": "Days",
   "@powerDays": {
     "description": "Power days field"
@@ -668,6 +676,22 @@
   "powerMinutes": "Minutes",
   "@powerMinutes": {
     "description": "Power minutes field"
+  },
+  "notificationsEnabledTitle": "🔔 Notifications Enabled",
+  "@notificationsEnabledTitle": {
+    "description": "Title for notification-enabled tray feedback"
+  },
+  "notificationsDisabledTitle": "🔕 Notifications Disabled",
+  "@notificationsDisabledTitle": {
+    "description": "Title for notification-disabled tray feedback"
+  },
+  "notificationsEnabledMessage": "You will receive alerts for expiring bases",
+  "@notificationsEnabledMessage": {
+    "description": "Message for notification-enabled tray feedback"
+  },
+  "notificationsDisabledMessage": "Notification alerts have been turned off",
+  "@notificationsDisabledMessage": {
+    "description": "Message for notification-disabled tray feedback"
   },
   "addBase": "Add Base",
   "@addBase": {
@@ -891,6 +915,41 @@
   "errorClearingData": "Error clearing data: {error}",
   "@errorClearingData": {
     "description": "Error message when clearing data",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingCharacter": "Error creating character: {error}",
+  "@errorCreatingCharacter": {
+    "description": "Error message when creating a character",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorAddingBase": "Error adding base: {error}",
+  "@errorAddingBase": {
+    "description": "Error message when adding a base",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "checkingAlerts": "Checking for alerts...",
+  "@checkingAlerts": {
+    "description": "Snack bar message when checking alerts"
+  },
+  "checkComplete": "✅ Check complete! Notifications sent if bases need attention.",
+  "@checkComplete": {
+    "description": "Snack bar message when alert check completes"
+  },
+  "errorCheckingAlerts": "❌ Error: {error}",
+  "@errorCheckingAlerts": {
+    "description": "Error message when checking alerts",
     "placeholders": {
       "error": {
         "type": "String"

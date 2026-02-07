@@ -834,13 +834,13 @@ abstract class AppLocalizations {
   /// **'Test Alerts'**
   String get testAlerts;
 
-  /// Checking alerts message
+  /// Snack bar message when checking alerts
   ///
   /// In en, this message translates to:
   /// **'Checking for alerts...'**
   String get checkingAlerts;
 
-  /// Test notification success message
+  /// Snack bar message when alert check completes
   ///
   /// In en, this message translates to:
   /// **'✅ Check complete! Notifications sent if bases need attention.'**
@@ -1056,6 +1056,18 @@ abstract class AppLocalizations {
   /// **'Base Name'**
   String get baseName;
 
+  /// Base name field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Main Base, Mining Outpost'**
+  String get baseNameHint;
+
+  /// Label for power expiration input section
+  ///
+  /// In en, this message translates to:
+  /// **'Power Down In:'**
+  String get powerDownInLabel;
+
   /// Power days field
   ///
   /// In en, this message translates to:
@@ -1073,6 +1085,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Minutes'**
   String get powerMinutes;
+
+  /// Title for notification-enabled tray feedback
+  ///
+  /// In en, this message translates to:
+  /// **'🔔 Notifications Enabled'**
+  String get notificationsEnabledTitle;
+
+  /// Title for notification-disabled tray feedback
+  ///
+  /// In en, this message translates to:
+  /// **'🔕 Notifications Disabled'**
+  String get notificationsDisabledTitle;
+
+  /// Message for notification-enabled tray feedback
+  ///
+  /// In en, this message translates to:
+  /// **'You will receive alerts for expiring bases'**
+  String get notificationsEnabledMessage;
+
+  /// Message for notification-disabled tray feedback
+  ///
+  /// In en, this message translates to:
+  /// **'Notification alerts have been turned off'**
+  String get notificationsDisabledMessage;
 
   /// Add base button
   ///
@@ -1361,6 +1397,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error clearing data: {error}'**
   String errorClearingData(String error);
+
+  /// Error message when creating a character
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating character: {error}'**
+  String errorCreatingCharacter(String error);
+
+  /// Error message when adding a base
+  ///
+  /// In en, this message translates to:
+  /// **'Error adding base: {error}'**
+  String errorAddingBase(String error);
+
+  /// Error message when checking alerts
+  ///
+  /// In en, this message translates to:
+  /// **'❌ Error: {error}'**
+  String errorCheckingAlerts(String error);
 
   /// Notifications enabled description
   ///

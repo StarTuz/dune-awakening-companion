@@ -102,6 +102,7 @@ class CharacterManagementScreen extends ConsumerWidget {
     final nameController = TextEditingController();
     final worldController = TextEditingController();
     final sietchController = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
     String? selectedRegion;
     String? selectedServerType;
     String? selectedProvider;
@@ -267,7 +268,7 @@ class CharacterManagementScreen extends ConsumerWidget {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 final worldValue =
                     selectedServerType == AppConstants.serverTypeOfficial
                         ? selectedWorld
@@ -282,19 +283,33 @@ class CharacterManagementScreen extends ConsumerWidget {
                             selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
                   final imageService = ref.read(imageServiceProvider);
-                  ref
-                      .read(charactersProvider.notifier)
-                      .createCharacterWithPortrait(
-                        nameController.text,
-                        selectedRegion!,
-                        selectedServerType!,
-                        selectedProvider,
-                        worldValue!,
-                        sietchController.text,
-                        selectedPortraitPath,
-                        imageService,
+                  try {
+                    await ref
+                        .read(charactersProvider.notifier)
+                        .createCharacterWithPortrait(
+                          nameController.text,
+                          selectedRegion!,
+                          selectedServerType!,
+                          selectedProvider,
+                          worldValue!,
+                          sietchController.text,
+                          selectedPortraitPath,
+                          imageService,
+                        );
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(l10n.errorCreatingCharacter(
+                            e.toString(),
+                          )),
+                        ),
                       );
-                  Navigator.of(context).pop();
+                    }
+                  }
                 }
               },
               child: const Text('Add'),
@@ -685,11 +700,12 @@ class CharacterManagementScreen extends ConsumerWidget {
     final daysController = TextEditingController();
     final hoursController = TextEditingController();
     final minutesController = TextEditingController();
+    final l10n = AppLocalizations.of(context)!;
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add Base'),
+        title: Text(l10n.addBase),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -697,13 +713,13 @@ class CharacterManagementScreen extends ConsumerWidget {
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Base Name',
-                  hintText: 'e.g., Main Base, Mining Outpost',
+                decoration: InputDecoration(
+                  labelText: l10n.baseName,
+                  hintText: l10n.baseNameHint,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -711,8 +727,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: daysController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Days',
+                      decoration: InputDecoration(
+                        labelText: l10n.powerDays,
                         hintText: '0',
                       ),
                     ),
@@ -722,8 +738,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: hoursController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Hours',
+                      decoration: InputDecoration(
+                        labelText: l10n.powerHours,
                         hintText: '0',
                       ),
                     ),
@@ -733,8 +749,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: minutesController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Minutes',
+                      decoration: InputDecoration(
+                        labelText: l10n.powerMinutes,
                         hintText: '0',
                       ),
                     ),
@@ -747,10 +763,10 @@ class CharacterManagementScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (nameController.text.isNotEmpty) {
                 final days = int.tryParse(daysController.text) ?? 0;
                 final hours = int.tryParse(hoursController.text) ?? 0;
@@ -760,16 +776,28 @@ class CharacterManagementScreen extends ConsumerWidget {
                   Duration(days: days, hours: hours, minutes: minutes),
                 );
 
-                ref.read(basesProvider.notifier).createBase(
-                      characterId,
-                      nameController.text,
-                      expirationTime,
+                try {
+                  await ref.read(basesProvider.notifier).createBase(
+                        characterId,
+                        nameController.text,
+                        expirationTime,
+                      );
+                  if (context.mounted) {
+                    Navigator.of(context).pop(); // Close add dialog
+                    Navigator.of(context).pop(); // Close base management dialog
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.errorAddingBase(e.toString())),
+                      ),
                     );
-                Navigator.of(context).pop(); // Close add dialog
-                Navigator.of(context).pop(); // Close base management dialog
+                  }
+                }
               }
             },
-            child: const Text('Add'),
+            child: Text(l10n.addBase),
           ),
         ],
       ),
@@ -783,6 +811,7 @@ class CharacterManagementScreen extends ConsumerWidget {
     final daysRemaining = difference.inDays;
     final hoursRemaining = difference.inHours % 24;
     final minutesRemaining = difference.inMinutes % 60;
+    final l10n = AppLocalizations.of(context)!;
 
     final daysController =
         TextEditingController(text: daysRemaining.toString());
@@ -794,7 +823,7 @@ class CharacterManagementScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Base'),
+        title: Text(l10n.editBase),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -802,12 +831,10 @@ class CharacterManagementScreen extends ConsumerWidget {
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Base Name',
-                ),
+                decoration: InputDecoration(labelText: l10n.baseName),
               ),
               const SizedBox(height: 16),
-              const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -815,9 +842,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: daysController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Days',
-                      ),
+                      decoration: InputDecoration(labelText: l10n.powerDays),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -825,9 +850,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: hoursController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Hours',
-                      ),
+                      decoration: InputDecoration(labelText: l10n.powerHours),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -835,9 +858,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     child: TextField(
                       controller: minutesController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Minutes',
-                      ),
+                      decoration: InputDecoration(labelText: l10n.powerMinutes),
                     ),
                   ),
                 ],
@@ -848,7 +869,7 @@ class CharacterManagementScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -872,7 +893,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                 Navigator.of(context).pop(); // Close base management dialog
               }
             },
-            child: const Text('Save'),
+            child: Text(l10n.save),
           ),
         ],
       ),

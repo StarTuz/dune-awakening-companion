@@ -11,6 +11,7 @@ import 'core/services/system_tray_service.dart';
 import 'core/services/alert_checker_service.dart';
 import 'core/services/notification_settings.dart';
 import 'core/providers/notification_settings_provider.dart';
+import 'core/repositories/notification_history_repository.dart';
 import 'features/bases/services/base_repository.dart';
 import 'features/characters/services/character_repository.dart';
 import 'shared/theme/app_theme.dart';
@@ -119,8 +120,11 @@ Future<void> _initializeNotifications() async {
 
   final notificationService = NotificationService.instance;
   final alertChecker = AlertCheckerService(baseRepository, characterRepository);
-  final coordinator =
-      NotificationCoordinator(notificationService, alertChecker);
+  final coordinator = NotificationCoordinator(
+    notificationService,
+    alertChecker,
+    NotificationHistoryRepository.instance,
+  );
   final manager = NotificationManager(notificationService, coordinator);
 
   await manager.initialize();
@@ -162,8 +166,11 @@ Future<void> _initializeSystemTray() async {
         final notificationService = NotificationService.instance;
         final alertChecker =
             AlertCheckerService(baseRepository, characterRepository);
-        final coordinator =
-            NotificationCoordinator(notificationService, alertChecker);
+        final coordinator = NotificationCoordinator(
+          notificationService,
+          alertChecker,
+          NotificationHistoryRepository.instance,
+        );
         final manager = NotificationManager(notificationService, coordinator);
         await manager.checkNow();
 
@@ -194,8 +201,11 @@ Future<void> _initializeSystemTray() async {
       final characterRepository = CharacterRepository(database);
       final alertChecker =
           AlertCheckerService(baseRepository, characterRepository);
-      final coordinator =
-          NotificationCoordinator(notificationService, alertChecker);
+      final coordinator = NotificationCoordinator(
+        notificationService,
+        alertChecker,
+        NotificationHistoryRepository.instance,
+      );
       final manager = NotificationManager(notificationService, coordinator);
 
       await manager.updateSettings(enabled: newState);
@@ -207,13 +217,21 @@ Future<void> _initializeSystemTray() async {
       // NOW show feedback notification AFTER manager updates
       // This ensures it won't be canceled by cancelAllNotifications()
       try {
+        final context = navigatorKey.currentContext;
+        final l10n = context != null && context.mounted
+            ? AppLocalizations.of(context)
+            : null;
+        final title = newState
+            ? (l10n?.notificationsEnabledTitle ?? '🔔 Notifications Enabled')
+            : (l10n?.notificationsDisabledTitle ?? '🔕 Notifications Disabled');
+        final message = newState
+            ? (l10n?.notificationsEnabledMessage ??
+                'You will receive alerts for expiring bases')
+            : (l10n?.notificationsDisabledMessage ??
+                'Notification alerts have been turned off');
         await notificationService.showSimpleNotification(
-          title: newState
-              ? '🔔 Notifications Enabled'
-              : '🔕 Notifications Disabled',
-          message: newState
-              ? 'You will receive alerts for expiring bases'
-              : 'Notification alerts have been turned off',
+          title: title,
+          message: message,
         );
       } catch (e) {
         debugPrint('[SystemTray] Feedback notification error: $e');

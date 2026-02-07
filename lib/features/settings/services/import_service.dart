@@ -303,6 +303,11 @@ class ImportService {
     }
   }
 
+  /// Clear all existing data (public entry point for UI flows).
+  Future<void> clearAllData() async {
+    await _clearAllData();
+  }
+
   /// Preview import file without importing
   Future<Map<String, dynamic>?> previewImport(String filePath) async {
     try {

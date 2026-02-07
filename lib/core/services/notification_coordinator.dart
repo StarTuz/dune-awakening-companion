@@ -10,8 +10,7 @@ import '../models/notification_history_entry.dart';
 class NotificationCoordinator {
   final NotificationService _notificationService;
   final AlertCheckerService _alertCheckerService;
-  final NotificationHistoryRepository _historyRepository =
-      NotificationHistoryRepository.instance;
+  final NotificationHistoryRepository _historyRepository;
 
   Timer? _periodicTimer;
   bool _isRunning = false;
@@ -19,6 +18,7 @@ class NotificationCoordinator {
   NotificationCoordinator(
     this._notificationService,
     this._alertCheckerService,
+    this._historyRepository,
   );
 
   /// Start periodic alert checking
@@ -103,42 +103,49 @@ class NotificationCoordinator {
 
   /// Send notification for a specific alert
   Future<void> _sendNotificationForAlert(BaseAlert alert) async {
-    final hours = alert.timeRemaining.inHours;
-    final timeText = hours < 1
-        ? '${alert.timeRemaining.inMinutes} minutes'
-        : hours == 1
-            ? '1 hour'
-            : '$hours hours';
+    try {
+      final hours = alert.timeRemaining.inHours;
+      final timeText = hours < 1
+          ? '${alert.timeRemaining.inMinutes} minutes'
+          : hours == 1
+              ? '1 hour'
+              : '$hours hours';
 
-    final title = alert.severity == AlertSeverity.critical
-        ? '⚡ Power Critical!'
-        : '⚡ Power Running Low';
-    final body =
-        '${alert.base.name} (${alert.characterInfo}) - $timeText remaining';
+      final title = alert.severity == AlertSeverity.critical
+          ? '⚡ Power Critical!'
+          : '⚡ Power Running Low';
+      final body =
+          '${alert.base.name} (${alert.characterInfo}) - $timeText remaining';
 
-    await _notificationService.showPowerAlert(
-      baseId: alert.base.id,
-      baseName: alert.base.name,
-      characterInfo: alert.characterInfo,
-      timeRemaining: alert.timeRemaining,
-      isCritical: alert.severity == AlertSeverity.critical,
-    );
+      await _notificationService.showPowerAlert(
+        baseId: alert.base.id,
+        baseName: alert.base.name,
+        characterInfo: alert.characterInfo,
+        timeRemaining: alert.timeRemaining,
+        isCritical: alert.severity == AlertSeverity.critical,
+      );
 
-    // Save to history
-    final historyEntry = NotificationHistoryEntry(
-      type: 'power',
-      title: title,
-      body: body,
-      baseId: alert.base.id,
-      baseName: alert.base.name,
-      characterName: alert.characterInfo,
-      severity:
-          alert.severity == AlertSeverity.critical ? 'critical' : 'warning',
-      sentAt: DateTime.now(),
-    );
+      // Save to history
+      final historyEntry = NotificationHistoryEntry(
+        type: 'power',
+        title: title,
+        body: body,
+        baseId: alert.base.id,
+        baseName: alert.base.name,
+        characterName: alert.characterInfo,
+        severity:
+            alert.severity == AlertSeverity.critical ? 'critical' : 'warning',
+        sentAt: DateTime.now(),
+      );
 
-    await _historyRepository.addEntry(historyEntry);
-    debugPrint('[NotificationCoordinator] Saved notification to history');
+      await _historyRepository.addEntry(historyEntry);
+      debugPrint('[NotificationCoordinator] Saved notification to history');
+    } catch (e, stackTrace) {
+      debugPrint(
+        '[NotificationCoordinator] Error sending notification for '
+        '${alert.base.name}: $e\n$stackTrace',
+      );
+    }
   }
 
   /// Get current alert count

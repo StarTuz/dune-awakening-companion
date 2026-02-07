@@ -4,8 +4,13 @@ import '../models/server.dart';
 import '../services/server_repository.dart';
 import 'package:uuid/uuid.dart';
 
+final appDatabaseProvider = Provider<AppDatabase>((ref) {
+  return AppDatabase.instance;
+});
+
 final serverRepositoryProvider = Provider<ServerRepository>((ref) {
-  return ServerRepository(AppDatabase.instance);
+  final database = ref.watch(appDatabaseProvider);
+  return ServerRepository(database);
 });
 
 final serversProvider =

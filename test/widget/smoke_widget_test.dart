@@ -5,7 +5,7 @@ void main() {
   testWidgets('widget smoke test', (tester) async {
     await tester.pumpWidget(const Directionality(
       textDirection: TextDirection.ltr,
-      child: SizedBox(),
+      child: SizedBox.shrink(),
     ));
 
     expect(find.byType(SizedBox), findsOneWidget);
