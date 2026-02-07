@@ -3,6 +3,14 @@ set -euo pipefail
 
 export COVERAGE_THRESHOLD="${COVERAGE_THRESHOLD:-15}"
 
+echo "==> Validate GitHub Actions workflows"
+if command -v actionlint &>/dev/null; then
+  actionlint .github/workflows/*.yml
+  echo "    Workflows valid."
+else
+  echo "    actionlint not installed — skipping (install: go install github.com/rhysd/actionlint/cmd/actionlint@latest)"
+fi
+
 echo "==> Flutter version"
 flutter --version
 
