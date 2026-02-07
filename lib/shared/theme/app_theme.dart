@@ -30,7 +30,7 @@ class AppTheme {
         foregroundColor: DuneColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: DuneColors.primaryText,
         ),
       ),
@@ -273,7 +273,7 @@ class AppTheme {
         foregroundColor: DuneColorsLight.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(
+        iconTheme: IconThemeData(
           color: DuneColorsLight.primaryText,
         ),
       ),
@@ -540,7 +540,7 @@ class AppTheme {
         foregroundColor: AtreidesColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AtreidesColors.primaryText),
+        iconTheme: IconThemeData(color: AtreidesColors.primaryText),
       ),
       cardTheme: CardThemeData(
         color: AtreidesColors.tertiaryBackground,
@@ -623,7 +623,7 @@ class AppTheme {
         foregroundColor: HarkonnenColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: HarkonnenColors.primaryText),
+        iconTheme: IconThemeData(color: HarkonnenColors.primaryText),
       ),
       cardTheme: CardThemeData(
         color: HarkonnenColors.tertiaryBackground,
@@ -706,7 +706,7 @@ class AppTheme {
         foregroundColor: FremenColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: FremenColors.primaryText),
+        iconTheme: IconThemeData(color: FremenColors.primaryText),
       ),
       cardTheme: CardThemeData(
         color: FremenColors.tertiaryBackground,
@@ -788,7 +788,7 @@ class AppTheme {
         foregroundColor: SmugglerColors.primaryText,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: SmugglerColors.primaryText),
+        iconTheme: IconThemeData(color: SmugglerColors.primaryText),
       ),
       cardTheme: CardThemeData(
         color: SmugglerColors.tertiaryBackground,

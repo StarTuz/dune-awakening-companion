@@ -7,6 +7,7 @@ import '../../../core/providers/notification_settings_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/accessibility_provider.dart';
 import '../providers/import_export_provider.dart';
+import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../../core/providers/language_provider.dart';
