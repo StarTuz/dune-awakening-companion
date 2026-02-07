@@ -574,42 +574,6 @@ class SettingsScreen extends ConsumerWidget {
     return _NotificationSettingsWidget();
   }
 
-  Future<void> _sendTestNotification(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context)!;
-    // Show loading indicator
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.checkingAlerts),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-
-    try {
-      final manager = ref.read(notificationManagerProvider);
-      await manager.checkNow();
-      
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(l10n.checkComplete),
-            duration: const Duration(seconds: 3),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${l10n.error}: $e'),
-            duration: const Duration(seconds: 3),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    }
-  }
-
   void _showClearDataDialog(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     showDialog(
@@ -750,7 +714,7 @@ class SettingsScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     try {
       // Pick file - accept both ZIP (new) and JSON (legacy)
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['zip', 'json'],
         dialogTitle: l10n.importData,
@@ -932,12 +896,12 @@ class SettingsScreen extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '${l10n.importSuccessful}\n' +
-              l10n.importSummary(
+              '${l10n.importSuccessful}\n'
+              '${l10n.importSummary(
                 result.charactersImported, 
                 result.basesImported, 
                 portraitMsg.isNotEmpty ? ', $portraitMsg' : ''
-              ),
+              )}',
             ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 4),
@@ -1193,7 +1157,7 @@ class _NotificationSettingsWidget extends ConsumerWidget {
         );
       }
     } catch (e) {
-      print('Test notification error: $e');
+      debugPrint('Test notification error: $e');
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

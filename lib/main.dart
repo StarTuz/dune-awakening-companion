@@ -37,7 +37,7 @@ void main(List<String> args) async {
   if (Platform.isWindows) {
     await WindowsSingleInstance.ensureSingleInstance(
       args,
-      "dune_awakening_companion",
+      'dune_awakening_companion',
       onSecondWindow: (args) {
         // When a second instance tries to open, show the existing window
         windowManager.show();
@@ -168,7 +168,7 @@ Future<void> _initializeSystemTray() async {
         final alertCount = await coordinator.getAlertCount();
         await trayService.updateAlertCount(alertCount);
       } catch (e) {
-        print('[SystemTray] Check alerts error: $e');
+        debugPrint('[SystemTray] Check alerts error: $e');
       }
     },
     onToggleNotifications: () async {
@@ -207,10 +207,12 @@ Future<void> _initializeSystemTray() async {
               : 'Notification alerts have been turned off',
         );
       } catch (e) {
-        print('[SystemTray] Feedback notification error: $e');
+        debugPrint('[SystemTray] Feedback notification error: $e');
       }
       
-      print('[SystemTray] Notifications toggled: $newState (UI should update automatically!)');
+      debugPrint(
+        '[SystemTray] Notifications toggled: $newState (UI should update automatically!)',
+      );
     },
     onQuit: () async {
       await trayService.dispose();

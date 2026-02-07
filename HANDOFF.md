@@ -140,7 +140,45 @@ flutter build apk --release
 2. `build-windows` - Windows, creates `.zip` with VC++ redistributable
 3. `build-macos` - macOS, creates `.zip` with `.app`
 4. `build-android` - Ubuntu, creates `.apk`
-5. `release` - Creates GitHub Release with all artifacts
+5. `release` - Creates GitHub Release with all artifacts + SHA-256 checksums
+
+### Pull Request Workflow
+**File:** `.github/workflows/ci.yml`
+
+**Trigger:** Pull requests and manual dispatch
+
+**Checks:**
+- `dart format --set-exit-if-changed .`
+- `flutter analyze`
+- Dependency report (`scripts/ci/deps_audit.sh`)
+- `flutter test --coverage` with 15% threshold enforcement
+- Coverage summary
+- Code metrics (`scripts/ci/metrics.sh`) — informational, non-blocking
+- SBOM generation (`scripts/ci/sbom.sh`)
+- `flutter build linux --debug`
+
+### Local CI (Parity Script)
+**File:** `scripts/ci/local.sh`
+
+Run the same checks locally:
+```bash
+bash scripts/ci/local.sh
+```
+
+### Performance Regression Check
+**File:** `scripts/ci/perf_baseline.sh`
+
+Capture baselines and compare future runs:
+```bash
+# Save a baseline
+bash scripts/ci/perf_baseline.sh --save
+
+# Compare against baseline (fails if >25% regression)
+bash scripts/ci/perf_baseline.sh
+```
+
+### Release Signing
+See `docs/SIGNING_GUIDE.md` for Android, macOS, Windows, and Linux.
 
 ### Release Process
 ```bash
@@ -289,6 +327,14 @@ All notification settings stored in `SharedPreferences`:
 | `SECURITY_AUDIT.md` | Security review |
 | `SETUP.md` | Detailed setup instructions |
 | `docs/CUSTOM_SOUNDS.md` | Custom notification sounds guide |
+| `docs/CHAPTER3_RESEARCH.md` | Chapter 3 patch research & impact |
+| `docs/ENGINEERING_HOUSEKEEPING.md` | Engineering assessment & gaps |
+| `docs/ENGINEERING_TASKLIST.md` | Concrete engineering task list |
+| `docs/ROADMAP_2026.md` | Phased engineering + product roadmap |
+| `docs/SIGNING_GUIDE.md` | Release signing for all platforms |
+| `docs/RELEASE_CHECKLIST.md` | Pre-release checklist |
+| `docs/RELEASE_NOTES_TEMPLATE.md` | Standardized release notes template |
+| `docs/SECURITY_CHECKLIST.md` | Ongoing security review checklist |
 
 ---
 

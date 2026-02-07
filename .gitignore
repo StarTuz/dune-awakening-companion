@@ -76,6 +76,5 @@ dune-sound-pack-*.zip
 
 # Local cleanup
 .gemini/
-test/
 analysis_output.txt
 dune-awakening-companion.wiki/

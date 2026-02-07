@@ -9,7 +9,7 @@ class ServerRepository {
   Future<List<Server>> getAll() async {
     final db = await _database.database;
     final maps = await db.query('servers', orderBy: 'created_at DESC');
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<Server?> getById(String id) async {

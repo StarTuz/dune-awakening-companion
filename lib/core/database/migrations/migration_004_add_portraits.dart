@@ -1,4 +1,4 @@
-import 'package:sqflite_common/sqlite_api.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Migration004AddPortraits {
   static Future<void> up(Database db) async {

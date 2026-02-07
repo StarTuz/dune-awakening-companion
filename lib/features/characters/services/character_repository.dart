@@ -9,7 +9,7 @@ class CharacterRepository {
   Future<List<Character>> getAll() async {
     final db = await _database.database;
     final maps = await db.query('characters', orderBy: 'created_at DESC');
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<Character?> getById(String id) async {
@@ -32,7 +32,7 @@ class CharacterRepository {
       whereArgs: [serverId],
       orderBy: 'created_at DESC',
     );
-    return maps.map((map) => _fromMap(map)).toList();
+    return maps.map(_fromMap).toList();
   }
 
   Future<String> create(Character character) async {

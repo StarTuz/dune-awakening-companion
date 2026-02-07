@@ -14,9 +14,7 @@ final notificationCoordinatorProvider = Provider<NotificationCoordinator>((ref) 
   );
 
   // Clean up when provider is disposed
-  ref.onDispose(() {
-    coordinator.dispose();
-  });
+  ref.onDispose(coordinator.dispose);
 
   return coordinator;
 });

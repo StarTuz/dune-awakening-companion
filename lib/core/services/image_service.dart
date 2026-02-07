@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
@@ -11,7 +12,7 @@ class ImageService {
       // Read source image
       final sourceFile = File(sourcePath);
       if (!await sourceFile.exists()) {
-        print('Source file does not exist: $sourcePath');
+        debugPrint('Source file does not exist: $sourcePath');
         return null;
       }
 
@@ -19,7 +20,7 @@ class ImageService {
       final image = img.decodeImage(bytes);
       
       if (image == null) {
-        print('Failed to decode image');
+        debugPrint('Failed to decode image');
         return null;
       }
 
@@ -46,7 +47,7 @@ class ImageService {
 
       return filePath;
     } catch (e) {
-      print('Error saving portrait: $e');
+      debugPrint('Error saving portrait: $e');
       return null;
     }
   }
@@ -62,7 +63,7 @@ class ImageService {
       }
       return true;
     } catch (e) {
-      print('Error deleting portrait: $e');
+      debugPrint('Error deleting portrait: $e');
       return false;
     }
   }
@@ -79,7 +80,7 @@ class ImageService {
       
       return portraitsDir;
     } catch (e) {
-      print('Error getting portraits directory: $e');
+      debugPrint('Error getting portraits directory: $e');
       return null;
     }
   }
@@ -93,7 +94,7 @@ class ImageService {
       // Check file size (max 2MB)
       final bytes = await file.length();
       if (bytes > 2 * 1024 * 1024) {
-        print('Image too large: ${bytes / (1024 * 1024)}MB');
+        debugPrint('Image too large: ${bytes / (1024 * 1024)}MB');
         return false;
       }
 
@@ -103,7 +104,7 @@ class ImageService {
       
       return image != null;
     } catch (e) {
-      print('Error validating image: $e');
+      debugPrint('Error validating image: $e');
       return false;
     }
   }

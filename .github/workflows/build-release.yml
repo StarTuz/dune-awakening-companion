@@ -179,6 +179,13 @@ jobs:
       - name: Display artifacts
         run: ls -R artifacts
 
+      - name: Generate checksums
+        run: |
+          cd artifacts
+          find . -type f \( -name '*.tar.gz' -o -name '*.zip' -o -name '*.apk' \) \
+            -exec sha256sum {} \; | sort > ../checksums.txt
+          cat ../checksums.txt
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
@@ -191,5 +198,6 @@ jobs:
             artifacts/windows-build/*.zip
             artifacts/macos-build/*.zip
             artifacts/android-build/*.apk
+            checksums.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

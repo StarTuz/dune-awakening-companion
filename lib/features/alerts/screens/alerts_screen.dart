@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../bases/models/base.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../characters/models/character.dart';
 import '../../characters/providers/character_provider.dart';
@@ -40,7 +39,7 @@ class AlertsScreen extends ConsumerWidget {
                   top: 8,
                   child: Container(
                     padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.criticalStatus,
                       shape: BoxShape.circle,
                     ),
@@ -129,7 +128,9 @@ class AlertsScreen extends ConsumerWidget {
                     ? DuneColors.criticalPrimary 
                     : DuneColors.warningPrimary;
                 final severityLabel = isCritical ? l10n.severityCritical : l10n.severityWarning;
-                final timeText = '${daysRemaining}${l10n.daysAbbr} ${hoursRemaining}${l10n.hoursAbbr} ${minutesRemaining}${l10n.minutesAbbr}';
+                final timeText = '$daysRemaining${l10n.daysAbbr} '
+                    '$hoursRemaining${l10n.hoursAbbr} '
+                    '$minutesRemaining${l10n.minutesAbbr}';
 
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
@@ -294,8 +295,14 @@ class AlertsScreen extends ConsumerWidget {
                                                 : Colors.green);
                                         
                                         final taxText = taxTotalHours >= 0
-                                            ? '${taxDays}${l10n.daysAbbr} ${taxHours}${l10n.hoursAbbr} ${taxMinutes}${l10n.minutesAbbr}'
-                                            : l10n.taxOverdueLabel('${taxDays.abs()}${l10n.daysAbbr} ${taxHours.abs()}${l10n.hoursAbbr} ${taxMinutes.abs()}${l10n.minutesAbbr}');
+                                            ? '$taxDays${l10n.daysAbbr} '
+                                                '$taxHours${l10n.hoursAbbr} '
+                                                '$taxMinutes${l10n.minutesAbbr}'
+                                            : l10n.taxOverdueLabel(
+                                                '${taxDays.abs()}${l10n.daysAbbr} '
+                                                '${taxHours.abs()}${l10n.hoursAbbr} '
+                                                '${taxMinutes.abs()}${l10n.minutesAbbr}',
+                                              );
                                         
                                         return Text(
                                           taxText,

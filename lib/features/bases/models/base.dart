@@ -83,7 +83,7 @@ class Base implements BaseModel {
     // Due date is in the past - calculate how many complete cycles have passed
     // Use hours for more precision (avoids truncation issues with inDays)
     final hoursPastDue = now.difference(nextTaxDueDate!).inHours;
-    final hoursPerCycle = kTaxCycleDays * 24;
+    const hoursPerCycle = kTaxCycleDays * 24;
     
     // At minimum 1 cycle if any time has passed beyond due date
     // Then add additional cycles for each complete 14-day period

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import './notification_service.dart';
 import './notification_coordinator.dart';
 import './notification_settings.dart';
@@ -52,13 +53,18 @@ class NotificationManager {
     int? intervalMinutes,
     bool? includeWarnings,
   }) async {
-    print('[NotificationManager] Updating settings: enabled=$enabled, interval=$intervalMinutes, warnings=$includeWarnings');
+    debugPrint(
+      '[NotificationManager] Updating settings: enabled=$enabled, '
+      'interval=$intervalMinutes, warnings=$includeWarnings',
+    );
     
     // Save new settings
     if (enabled != null) {
       await NotificationSettings.setNotificationsEnabled(enabled);
       _notificationService.setNotificationsEnabled(enabled);
-      print('[NotificationManager] Notification service enabled state set to: $enabled');
+      debugPrint(
+        '[NotificationManager] Notification service enabled state set to: $enabled',
+      );
     }
     if (intervalMinutes != null) {
       await NotificationSettings.setCheckInterval(intervalMinutes);
