@@ -296,7 +296,9 @@ class CharacterManagementScreen extends ConsumerWidget {
                           selectedPortraitPath,
                           imageService,
                         );
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   } catch (e) {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -780,8 +782,10 @@ class CharacterManagementScreen extends ConsumerWidget {
                         nameController.text,
                         expirationTime,
                       );
-                  Navigator.of(context).pop(); // Close add dialog
-                  Navigator.of(context).pop(); // Close base management dialog
+                  if (context.mounted) {
+                    Navigator.of(context).pop(); // Close add dialog
+                    Navigator.of(context).pop(); // Close base management dialog
+                  }
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(

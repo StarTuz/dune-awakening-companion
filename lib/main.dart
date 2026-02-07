@@ -218,7 +218,8 @@ Future<void> _initializeSystemTray() async {
       // This ensures it won't be canceled by cancelAllNotifications()
       try {
         final context = navigatorKey.currentContext;
-        final l10n = context != null ? AppLocalizations.of(context) : null;
+        final l10n =
+            context != null && context.mounted ? AppLocalizations.of(context) : null;
         final title = newState
             ? (l10n?.notificationsEnabledTitle ?? '🔔 Notifications Enabled')
             : (l10n?.notificationsDisabledTitle ?? '🔕 Notifications Disabled');
