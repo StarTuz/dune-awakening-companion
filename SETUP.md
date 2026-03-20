@@ -1,8 +1,8 @@
 # Setup Guide - Dune Awakening Companion App
 
-## Initial Setup Complete ✅
+## Current Setup Status ✅
 
-The project structure has been initialized with an extensible architecture. Here's what's been set up:
+The project is actively implemented and uses a feature-based architecture with SQLite migrations, Riverpod state management, and generated JSON serialization.
 
 ### ✅ Completed
 
@@ -11,9 +11,9 @@ The project structure has been initialized with an extensible architecture. Here
 3. **Data Models**: Server, Character, Base, Alert, AlertSettings
 4. **Database**: SQLite schema with migrations system
 5. **Theme**: Complete Dune-inspired color scheme
-6. **Navigation**: App router with all routes defined
+6. **Navigation**: Adaptive desktop/mobile navigation
 7. **Core Utilities**: Date formatting, constants
-8. **Placeholder Screens**: All main screens created (ready for implementation)
+8. **Feature Modules**: Quest journal, specializations, faction progress, and augmentations
 
 ## Next Steps
 
@@ -55,6 +55,11 @@ This will generate:
 - `base.g.dart`
 - `alert.g.dart`
 - `alert_settings.g.dart`
+- `character_specialization.g.dart`
+- `faction_progress.g.dart`
+- `augmentation.g.dart`
+- `quest.g.dart`
+- `quest_step.g.dart`
 
 ### 4. Enable Desktop Support (Linux)
 
@@ -79,7 +84,7 @@ lib/
 ├── core/                    # Core functionality
 │   ├── database/            # Database setup & migrations
 │   ├── models/              # Base model interface
-│   ├── services/            # Core services (future)
+│   ├── services/            # Notifications, tray, alert orchestration
 │   └── utils/               # Utilities (date, constants)
 │
 ├── features/                # Feature modules
@@ -88,6 +93,10 @@ lib/
 │   ├── characters/         # Character management
 │   ├── servers/            # Server management
 │   ├── dashboard/          # Dashboard
+│   ├── quest_journal/      # Quest tracking
+│   ├── specializations/    # Chapter 3 progression
+│   ├── factions/           # Faction progress
+│   ├── augmentations/      # Augment tracker
 │   └── settings/           # Settings
 │
 ├── shared/                  # Shared components
@@ -100,22 +109,10 @@ lib/
 
 ## Implementation Priority
 
-### Phase 1: Core Features (Next)
-1. **Database Services**: Implement repositories for CRUD operations
-2. **State Management**: Set up Riverpod providers
-3. **Base Management**: Full CRUD UI for bases
-4. **Character/Server Management**: Full CRUD UI
-
-### Phase 2: Alert System
-1. **Alert Service**: Background checking logic
-2. **Notification Service**: Platform notifications
-3. **Alert UI**: Alert panel and management
-
-### Phase 3: Polish
-1. **Dashboard**: Overview with statistics
-2. **Settings**: Complete settings UI
-3. **System Tray**: Full tray integration
-4. **Testing**: Cross-platform testing
+### Current Development Priorities
+1. **Polish and refinement**: sort/filter UX, cloud sync research, deeper analytics
+2. **Release hardening**: SBOMs, checksums, and signing workflow validation
+3. **Quality**: additional widget/integration coverage for new feature modules
 
 ## Troubleshooting
 
@@ -140,7 +137,8 @@ flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ### Database errors
-The database will be created automatically on first run. Location:
+The database will be created automatically on first run. Current schema version: `v8`.
+Location:
 - Linux: `~/.local/share/dune-awakening-companion/dune_companion.db`
 - Windows: `%APPDATA%/dune-awakening-companion/dune_companion.db`
 - macOS: `~/Library/Application Support/dune-awakening-companion/dune_companion.db`
@@ -151,13 +149,13 @@ The database will be created automatically on first run. Location:
 2. **Hot Restart**: Press `R` in the terminal
 3. **DevTools**: Run `flutter pub global activate devtools` then `flutter pub global run devtools`
 
-## Next Development Session
+## Current Workflow
 
-When you're ready to continue development:
-1. Implement database repositories
-2. Create Riverpod providers
-3. Build the Base Management UI
-4. Implement the alert checking service
+When continuing development:
+1. Run `flutter pub get`
+2. Run `dart run build_runner build --delete-conflicting-outputs` after model changes
+3. Run `flutter analyze`
+4. Run `flutter test`
 
-See `PLAN.md` for the complete development roadmap.
+See `README.md`, `NEXT_STEPS.md`, and `docs/ROADMAP_2026.md` for the current roadmap.
 

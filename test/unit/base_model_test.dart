@@ -32,4 +32,47 @@ void main() {
     expect(base.isExpired, isTrue);
     expect(base.hoursRemaining, lessThan(0));
   });
+
+  test('Base notification overrides expose effective thresholds', () {
+    final now = DateTime.now();
+    final base = Base(
+      id: 'base-3',
+      characterId: 'char-3',
+      name: 'Custom Alerts',
+      powerExpirationTime: now.add(const Duration(hours: 10)),
+      notificationsEnabled: false,
+      warningThresholdHours: 72,
+      criticalThresholdHours: 12,
+      createdAt: now,
+      updatedAt: now,
+    );
+
+    expect(base.notificationsEnabled, isFalse);
+    expect(base.effectiveWarningThresholdHours, 72);
+    expect(base.effectiveCriticalThresholdHours, 12);
+  });
+
+  test('Base copyWith can clear custom thresholds', () {
+    final now = DateTime.now();
+    final base = Base(
+      id: 'base-4',
+      characterId: 'char-4',
+      name: 'Clear Thresholds',
+      powerExpirationTime: now.add(const Duration(hours: 10)),
+      warningThresholdHours: 72,
+      criticalThresholdHours: 12,
+      createdAt: now,
+      updatedAt: now,
+    );
+
+    final cleared = base.copyWith(
+      warningThresholdHours: null,
+      criticalThresholdHours: null,
+    );
+
+    expect(cleared.warningThresholdHours, isNull);
+    expect(cleared.criticalThresholdHours, isNull);
+    expect(cleared.effectiveWarningThresholdHours, 48);
+    expect(cleared.effectiveCriticalThresholdHours, 24);
+  });
 }

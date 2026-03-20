@@ -21,6 +21,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get navAlerts => 'Сповіщення';
 
   @override
+  String get navJournal => 'Journal';
+
+  @override
   String get navSettings => 'Налаштування';
 
   @override
@@ -836,4 +839,152 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get madeWithLove => 'Зроблено з ❤️ для гравців Dune Awakening';
+
+  @override
+  String get questJournalTitle => 'Quest Journal';
+
+  @override
+  String get questFilterByCharacter => 'Filter by character';
+
+  @override
+  String get questAllCharacters => 'All characters';
+
+  @override
+  String get questEmptyHint =>
+      'No quests match your filters. Add one or adjust search.';
+
+  @override
+  String get questEmptyNoData =>
+      'No quests tracked yet. Add one to start your journal.';
+
+  @override
+  String get questSearchHint => 'Search title or description';
+
+  @override
+  String get questFilterStatus => 'Status';
+
+  @override
+  String get questFilterType => 'Type';
+
+  @override
+  String get questStatusAll => 'All';
+
+  @override
+  String get questStatusActive => 'Active';
+
+  @override
+  String get questStatusBlocked => 'Blocked';
+
+  @override
+  String get questStatusCompleted => 'Completed';
+
+  @override
+  String get questTypeAll => 'All';
+
+  @override
+  String get questTypeGeneral => 'General';
+
+  @override
+  String get questTypeStory => 'Story';
+
+  @override
+  String get questTypeContract => 'Contract';
+
+  @override
+  String get questTypeChallenge => 'Challenge';
+
+  @override
+  String get questAddQuest => 'Add Quest';
+
+  @override
+  String get questAddTitle => 'Add Quest';
+
+  @override
+  String get questEditTitle => 'Edit Quest';
+
+  @override
+  String get questCharacterLabel => 'Character';
+
+  @override
+  String get questTitleLabel => 'Title';
+
+  @override
+  String get questTypeLabel => 'Quest type';
+
+  @override
+  String get questStatusLabel => 'Status';
+
+  @override
+  String get questMissionTypeLabel => 'Mission type';
+
+  @override
+  String get questMissionTypeNone => 'None';
+
+  @override
+  String get questMissionCombat => 'Combat';
+
+  @override
+  String get questMissionCrafting => 'Crafting';
+
+  @override
+  String get questMissionGathering => 'Gathering';
+
+  @override
+  String get questMissionExploration => 'Exploration';
+
+  @override
+  String get questMissionSabotage => 'Sabotage';
+
+  @override
+  String get questDescriptionLabel => 'Description';
+
+  @override
+  String get questNotesLabel => 'Notes';
+
+  @override
+  String get questSpecXpLabel => 'Specialization XP gained';
+
+  @override
+  String get questLandsraadContract => 'Landsraad Contract';
+
+  @override
+  String get questRepeatable => 'Repeatable';
+
+  @override
+  String get questReminderLabel => 'Reminder';
+
+  @override
+  String get questReminderNone => 'No reminder set';
+
+  @override
+  String get questPickDateTime => 'Pick date & time';
+
+  @override
+  String get questClearReminder => 'Clear reminder';
+
+  @override
+  String questReminderScheduled(String dateTime) {
+    return 'Reminder: $dateTime';
+  }
+
+  @override
+  String get questAddStep => 'Add step';
+
+  @override
+  String get questEditStep => 'Edit step';
+
+  @override
+  String get questStepTitleLabel => 'Step';
+
+  @override
+  String get questStepsHeading => 'Steps';
+
+  @override
+  String get questDragToReorder => 'Drag to reorder';
+
+  @override
+  String get questNoCharactersYet => 'Add a character first to track quests.';
+
+  @override
+  String get questReminderNotificationTitle => 'Quest reminder';
 }

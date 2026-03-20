@@ -11,6 +11,7 @@ Use this checklist before tagging a release.
 - [ ] Run performance check: `bash scripts/ci/perf_baseline.sh`
 - [ ] Generate SBOM: `bash scripts/ci/sbom.sh`
 - [ ] Generate dependency report: `bash scripts/ci/deps_audit.sh`
+- [ ] Dry-run release checksums: `bash scripts/ci/release_checksums.sh artifacts checksums.txt`
 
 ## Versioning
 
@@ -44,4 +45,6 @@ Use this checklist before tagging a release.
 - [ ] `git push origin main --tags`
 - [ ] Confirm GitHub Actions release succeeds.
 - [ ] Verify all 4 platform artifacts are attached.
+- [ ] Verify `sbom.json` is attached to the GitHub release.
+- [ ] Verify `checksums.txt` matches the attached artifacts.
 - [ ] Smoke-test at least one downloaded artifact.

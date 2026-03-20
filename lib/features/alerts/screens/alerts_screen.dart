@@ -79,7 +79,8 @@ class AlertsScreen extends ConsumerWidget {
             data: (characters) {
               // Filter bases that are expiring soon (< 48 hours)
               final expiringBases = bases.where((base) {
-                return base.hoursRemaining < 48;
+                return base.notificationsEnabled &&
+                    base.hoursRemaining < base.effectiveWarningThresholdHours;
               }).toList();
 
               // Sort by most urgent first
@@ -129,7 +130,8 @@ class AlertsScreen extends ConsumerWidget {
                   final totalHours = base.hoursRemaining;
 
                   // Determine severity
-                  final isCritical = totalHours < 24;
+                  final isCritical =
+                      totalHours < base.effectiveCriticalThresholdHours;
                   final color = isCritical
                       ? DuneColors.criticalPrimary
                       : DuneColors.warningPrimary;

@@ -53,11 +53,15 @@ class AlertCheckerService {
     final characterMap = {for (var c in characters) c.id: c};
 
     for (final base in bases) {
+      if (!base.notificationsEnabled) continue;
+
       final character = characterMap[base.characterId];
       if (character == null) continue; // Skip if character not found
 
       // Check power expiration
       final powerRemaining = base.powerExpirationTime.difference(now);
+      final criticalThreshold = base.effectiveCriticalThresholdHours;
+      final warningThreshold = base.effectiveWarningThresholdHours;
       if (powerRemaining.isNegative) {
         // Power expired
         alerts.add(BaseAlert(
@@ -67,7 +71,7 @@ class AlertCheckerService {
           severity: AlertSeverity.critical,
           timeRemaining: powerRemaining,
         ));
-      } else if (powerRemaining.inHours < 24) {
+      } else if (powerRemaining.inHours < criticalThreshold) {
         // Power critical (< 24h)
         alerts.add(BaseAlert(
           base: base,
@@ -76,7 +80,7 @@ class AlertCheckerService {
           severity: AlertSeverity.critical,
           timeRemaining: powerRemaining,
         ));
-      } else if (includeWarnings && powerRemaining.inHours < 48) {
+      } else if (includeWarnings && powerRemaining.inHours < warningThreshold) {
         // Power warning (< 48h)
         alerts.add(BaseAlert(
           base: base,

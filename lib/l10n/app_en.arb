@@ -16,6 +16,10 @@
   "@navAlerts": {
     "description": "Navigation label for Alerts"
   },
+  "navJournal": "Journal",
+  "@navJournal": {
+    "description": "Navigation label for Quest Journal"
+  },
   "navSettings": "Settings",
   "@navSettings": {
     "description": "Navigation label for Settings"
@@ -1100,5 +1104,94 @@
   "madeWithLove": "Made with ❤️ for Dune Awakening players",
   "@madeWithLove": {
     "description": "Footer message"
+  },
+  "questJournalTitle": "Quest Journal",
+  "@questJournalTitle": {
+    "description": "Quest journal screen title"
+  },
+  "questFilterByCharacter": "Filter by character",
+  "@questFilterByCharacter": {
+    "description": "Quest journal character filter label"
+  },
+  "questAllCharacters": "All characters",
+  "@questAllCharacters": {
+    "description": "Show quests for every character"
+  },
+  "questEmptyHint": "No quests match your filters. Add one or adjust search.",
+  "@questEmptyHint": {
+    "description": "Empty quest list with filters"
+  },
+  "questEmptyNoData": "No quests tracked yet. Add one to start your journal.",
+  "@questEmptyNoData": {
+    "description": "Empty quest list with no data"
+  },
+  "questSearchHint": "Search title or description",
+  "@questSearchHint": {
+    "description": "Quest search field hint"
+  },
+  "questFilterStatus": "Status",
+  "@questFilterStatus": {
+    "description": "Quest status filter section"
+  },
+  "questFilterType": "Type",
+  "@questFilterType": {
+    "description": "Quest type filter section"
+  },
+  "questStatusAll": "All",
+  "questStatusActive": "Active",
+  "questStatusBlocked": "Blocked",
+  "questStatusCompleted": "Completed",
+  "questTypeAll": "All",
+  "questTypeGeneral": "General",
+  "questTypeStory": "Story",
+  "questTypeContract": "Contract",
+  "questTypeChallenge": "Challenge",
+  "questAddQuest": "Add Quest",
+  "@questAddQuest": {
+    "description": "FAB label for new quest"
+  },
+  "questAddTitle": "Add Quest",
+  "questEditTitle": "Edit Quest",
+  "questCharacterLabel": "Character",
+  "questTitleLabel": "Title",
+  "questTypeLabel": "Quest type",
+  "questStatusLabel": "Status",
+  "questMissionTypeLabel": "Mission type",
+  "questMissionTypeNone": "None",
+  "questMissionCombat": "Combat",
+  "questMissionCrafting": "Crafting",
+  "questMissionGathering": "Gathering",
+  "questMissionExploration": "Exploration",
+  "questMissionSabotage": "Sabotage",
+  "questDescriptionLabel": "Description",
+  "questNotesLabel": "Notes",
+  "questSpecXpLabel": "Specialization XP gained",
+  "questLandsraadContract": "Landsraad Contract",
+  "questRepeatable": "Repeatable",
+  "questReminderLabel": "Reminder",
+  "questReminderNone": "No reminder set",
+  "questPickDateTime": "Pick date & time",
+  "questClearReminder": "Clear reminder",
+  "questReminderScheduled": "Reminder: {dateTime}",
+  "@questReminderScheduled": {
+    "description": "Shows chosen reminder time",
+    "placeholders": {
+      "dateTime": {
+        "type": "String"
+      }
+    }
+  },
+  "questAddStep": "Add step",
+  "questEditStep": "Edit step",
+  "questStepTitleLabel": "Step",
+  "questStepsHeading": "Steps",
+  "questDragToReorder": "Drag to reorder",
+  "questNoCharactersYet": "Add a character first to track quests.",
+  "@questNoCharactersYet": {
+    "description": "Snackbar when adding quest with no characters"
+  },
+  "questReminderNotificationTitle": "Quest reminder",
+  "@questReminderNotificationTitle": {
+    "description": "OS notification title for quest reminder"
   }
 }

@@ -9,6 +9,7 @@ import '../../../core/providers/accessibility_provider.dart';
 import '../providers/import_export_provider.dart';
 import '../services/import_service.dart';
 import '../../characters/providers/character_provider.dart';
+import '../../quest_journal/providers/quest_provider.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../../core/providers/language_provider.dart';
 import '../../../l10n/app_localizations.dart';
@@ -32,12 +33,12 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: l10n.version,
-            subtitle: '1.0.8',
+            subtitle: '1.2.0',
           ),
           _buildInfoTile(
             icon: Icons.storage,
             title: l10n.databaseVersion,
-            subtitle: 'v5',
+            subtitle: 'v8',
           ),
           _buildInfoTile(
             icon: Icons.code,
@@ -47,7 +48,8 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.build,
             title: l10n.features,
-            subtitle: 'Characters, Bases, Tax, Alerts, i18n, Export/Import',
+            subtitle:
+                'Characters, Bases, Quest Journal, Progression, Alerts, Export/Import',
           ),
 
           const Divider(height: 32),
@@ -231,7 +233,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              'v1.0.4 • ${l10n.databaseVersion} v5',
+              'v1.2.0 • ${l10n.databaseVersion} v8',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey[500],
@@ -606,6 +608,9 @@ class SettingsScreen extends ConsumerWidget {
               try {
                 final importService = ref.read(importServiceProvider);
                 await importService.clearAllData();
+                ref.invalidate(charactersProvider);
+                ref.invalidate(basesProvider);
+                ref.invalidate(questsProvider);
 
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -900,6 +905,7 @@ class SettingsScreen extends ConsumerWidget {
         // Success - invalidate providers to refresh UI
         ref.invalidate(charactersProvider);
         ref.invalidate(basesProvider);
+        ref.invalidate(questsProvider);
 
         if (!context.mounted) return;
         final portraitMsg = result.portraitsImported > 0

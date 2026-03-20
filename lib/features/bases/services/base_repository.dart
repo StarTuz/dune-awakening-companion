@@ -82,6 +82,9 @@ class BaseRepository {
       'character_id': base.characterId,
       'name': base.name,
       'power_expiration_time': base.powerExpirationTime.millisecondsSinceEpoch,
+      'notifications_enabled': base.notificationsEnabled ? 1 : 0,
+      'warning_threshold_hours': base.warningThresholdHours,
+      'critical_threshold_hours': base.criticalThresholdHours,
       'created_at': base.createdAt.millisecondsSinceEpoch,
       'updated_at': base.updatedAt.millisecondsSinceEpoch,
     };
@@ -95,6 +98,9 @@ class BaseRepository {
       powerExpirationTime: DateTime.fromMillisecondsSinceEpoch(
         map['power_expiration_time'] as int,
       ),
+      notificationsEnabled: (map['notifications_enabled'] as int? ?? 1) == 1,
+      warningThresholdHours: map['warning_threshold_hours'] as int?,
+      criticalThresholdHours: map['critical_threshold_hours'] as int?,
       createdAt: DateTime.fromMillisecondsSinceEpoch(
         map['created_at'] as int,
       ),

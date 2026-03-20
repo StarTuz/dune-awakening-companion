@@ -7,6 +7,7 @@ import '../models/character.dart';
 import '../providers/character_provider.dart';
 import '../../bases/models/base.dart';
 import '../../bases/providers/base_provider.dart';
+import 'character_progress_dialog.dart';
 import '../../../core/utils/constants.dart';
 import '../../../core/providers/image_service_provider.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -68,6 +69,21 @@ class CharacterManagementScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
+                          ElevatedButton.icon(
+                            onPressed: () => _showProgressDialog(
+                              context,
+                              character,
+                            ),
+                            icon: const Icon(Icons.insights, size: 18),
+                            label: const Text('Progress'),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
                           IconButton(
                             icon: const Icon(Icons.edit),
                             color: DuneColors.primaryAccent,
@@ -102,7 +118,6 @@ class CharacterManagementScreen extends ConsumerWidget {
     final nameController = TextEditingController();
     final worldController = TextEditingController();
     final sietchController = TextEditingController();
-    final l10n = AppLocalizations.of(context)!;
     String? selectedRegion;
     String? selectedServerType;
     String? selectedProvider;
@@ -268,7 +283,7 @@ class CharacterManagementScreen extends ConsumerWidget {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () async {
+              onPressed: () {
                 final worldValue =
                     selectedServerType == AppConstants.serverTypeOfficial
                         ? selectedWorld
@@ -283,33 +298,19 @@ class CharacterManagementScreen extends ConsumerWidget {
                             selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
                   final imageService = ref.read(imageServiceProvider);
-                  try {
-                    await ref
-                        .read(charactersProvider.notifier)
-                        .createCharacterWithPortrait(
-                          nameController.text,
-                          selectedRegion!,
-                          selectedServerType!,
-                          selectedProvider,
-                          worldValue!,
-                          sietchController.text,
-                          selectedPortraitPath,
-                          imageService,
-                        );
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  } catch (e) {
-                    if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(l10n.errorCreatingCharacter(
-                            e.toString(),
-                          )),
-                        ),
+                  ref
+                      .read(charactersProvider.notifier)
+                      .createCharacterWithPortrait(
+                        nameController.text,
+                        selectedRegion!,
+                        selectedServerType!,
+                        selectedProvider,
+                        worldValue!,
+                        sietchController.text,
+                        selectedPortraitPath,
+                        imageService,
                       );
-                    }
-                  }
+                  Navigator.of(context).pop();
                 }
               },
               child: const Text('Add'),
@@ -694,112 +695,171 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
+  void _showProgressDialog(BuildContext context, Character character) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => Dialog(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800, maxHeight: 720),
+          child: CharacterProgressDialog(character: character),
+        ),
+      ),
+    );
+  }
+
   void _showAddBaseDialog(
       BuildContext context, WidgetRef ref, String characterId) {
     final nameController = TextEditingController();
     final daysController = TextEditingController();
     final hoursController = TextEditingController();
     final minutesController = TextEditingController();
-    final l10n = AppLocalizations.of(context)!;
+    bool notificationsEnabled = true;
+    bool useCustomThresholds = false;
+    final warningController = TextEditingController(text: '48');
+    final criticalController = TextEditingController(text: '24');
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.addBase),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  labelText: l10n.baseName,
-                  hintText: l10n.baseNameHint,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Add Base'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Base Name',
+                    hintText: 'e.g., Main Base, Mining Outpost',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: daysController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: l10n.powerDays,
-                        hintText: '0',
+                const SizedBox(height: 16),
+                const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: daysController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Days',
+                          hintText: '0',
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: hoursController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: l10n.powerHours,
-                        hintText: '0',
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: hoursController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Hours',
+                          hintText: '0',
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: minutesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: l10n.powerMinutes,
-                        hintText: '0',
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: minutesController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Minutes',
+                          hintText: '0',
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: notificationsEnabled,
+                  onChanged: (value) =>
+                      setState(() => notificationsEnabled = value),
+                  title: const Text('Notifications'),
+                  subtitle:
+                      const Text('Allow alerts and tray badges for this base'),
+                ),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: useCustomThresholds,
+                  onChanged: notificationsEnabled
+                      ? (value) => setState(() => useCustomThresholds = value)
+                      : null,
+                  title: const Text('Custom alert thresholds'),
+                  subtitle: const Text('Override the app-wide 48h / 24h rules'),
+                ),
+                if (useCustomThresholds) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: warningController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Warning Hours',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: criticalController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Critical Hours',
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
-          ),
-          TextButton(
-            onPressed: () async {
-              if (nameController.text.isNotEmpty) {
-                final days = int.tryParse(daysController.text) ?? 0;
-                final hours = int.tryParse(hoursController.text) ?? 0;
-                final minutes = int.tryParse(minutesController.text) ?? 0;
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (nameController.text.isNotEmpty) {
+                  final days = int.tryParse(daysController.text) ?? 0;
+                  final hours = int.tryParse(hoursController.text) ?? 0;
+                  final minutes = int.tryParse(minutesController.text) ?? 0;
 
-                final expirationTime = DateTime.now().add(
-                  Duration(days: days, hours: hours, minutes: minutes),
-                );
+                  final expirationTime = DateTime.now().add(
+                    Duration(days: days, hours: hours, minutes: minutes),
+                  );
 
-                try {
-                  await ref.read(basesProvider.notifier).createBase(
+                  final warningThreshold = useCustomThresholds
+                      ? int.tryParse(warningController.text)
+                      : null;
+                  final criticalThreshold = useCustomThresholds
+                      ? int.tryParse(criticalController.text)
+                      : null;
+
+                  ref.read(basesProvider.notifier).createBase(
                         characterId,
                         nameController.text,
                         expirationTime,
+                        notificationsEnabled: notificationsEnabled,
+                        warningThresholdHours: warningThreshold,
+                        criticalThresholdHours: criticalThreshold,
                       );
-                  if (context.mounted) {
-                    Navigator.of(context).pop(); // Close add dialog
-                    Navigator.of(context).pop(); // Close base management dialog
-                  }
-                } catch (e) {
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(l10n.errorAddingBase(e.toString())),
-                      ),
-                    );
-                  }
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }
-              }
-            },
-            child: Text(l10n.addBase),
-          ),
-        ],
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -811,7 +871,6 @@ class CharacterManagementScreen extends ConsumerWidget {
     final daysRemaining = difference.inDays;
     final hoursRemaining = difference.inHours % 24;
     final minutesRemaining = difference.inMinutes % 60;
-    final l10n = AppLocalizations.of(context)!;
 
     final daysController =
         TextEditingController(text: daysRemaining.toString());
@@ -819,83 +878,153 @@ class CharacterManagementScreen extends ConsumerWidget {
         TextEditingController(text: hoursRemaining.toString());
     final minutesController =
         TextEditingController(text: minutesRemaining.toString());
+    bool notificationsEnabled = base.notificationsEnabled;
+    bool useCustomThresholds = base.warningThresholdHours != null ||
+        base.criticalThresholdHours != null;
+    final warningController = TextEditingController(
+      text: (base.warningThresholdHours ?? 48).toString(),
+    );
+    final criticalController = TextEditingController(
+      text: (base.criticalThresholdHours ?? 24).toString(),
+    );
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.editBase),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: l10n.baseName),
-              ),
-              const SizedBox(height: 16),
-              Text(l10n.powerDownInLabel, style: const TextStyle(fontSize: 12)),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: daysController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: l10n.powerDays),
-                    ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: const Text('Edit Base'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Base Name',
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: hoursController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: l10n.powerHours),
+                ),
+                const SizedBox(height: 16),
+                const Text('Power Down In:', style: TextStyle(fontSize: 12)),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: daysController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Days',
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: minutesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: l10n.powerMinutes),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: hoursController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Hours',
+                        ),
+                      ),
                     ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: minutesController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Minutes',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: notificationsEnabled,
+                  onChanged: (value) =>
+                      setState(() => notificationsEnabled = value),
+                  title: const Text('Notifications'),
+                  subtitle:
+                      const Text('Allow alerts and tray badges for this base'),
+                ),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  value: useCustomThresholds,
+                  onChanged: notificationsEnabled
+                      ? (value) => setState(() => useCustomThresholds = value)
+                      : null,
+                  title: const Text('Custom alert thresholds'),
+                  subtitle: const Text('Override the app-wide 48h / 24h rules'),
+                ),
+                if (useCustomThresholds) ...[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: warningController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Warning Hours',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: criticalController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'Critical Hours',
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              ),
-            ],
+              ],
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (nameController.text.isNotEmpty) {
+                  final days = int.tryParse(daysController.text) ?? 0;
+                  final hours = int.tryParse(hoursController.text) ?? 0;
+                  final minutes = int.tryParse(minutesController.text) ?? 0;
+
+                  final expirationTime = DateTime.now().add(
+                    Duration(days: days, hours: hours, minutes: minutes),
+                  );
+
+                  ref.read(basesProvider.notifier).updateBase(
+                        base.copyWith(
+                          name: nameController.text,
+                          powerExpirationTime: expirationTime,
+                          notificationsEnabled: notificationsEnabled,
+                          warningThresholdHours: useCustomThresholds
+                              ? int.tryParse(warningController.text)
+                              : null,
+                          criticalThresholdHours: useCustomThresholds
+                              ? int.tryParse(criticalController.text)
+                              : null,
+                          updatedAt: DateTime.now(),
+                        ),
+                      );
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Save'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.cancel),
-          ),
-          TextButton(
-            onPressed: () {
-              if (nameController.text.isNotEmpty) {
-                final days = int.tryParse(daysController.text) ?? 0;
-                final hours = int.tryParse(hoursController.text) ?? 0;
-                final minutes = int.tryParse(minutesController.text) ?? 0;
-
-                final expirationTime = DateTime.now().add(
-                  Duration(days: days, hours: hours, minutes: minutes),
-                );
-
-                ref.read(basesProvider.notifier).updateBase(
-                      base.copyWith(
-                        name: nameController.text,
-                        powerExpirationTime: expirationTime,
-                        updatedAt: DateTime.now(),
-                      ),
-                    );
-                Navigator.of(context).pop(); // Close edit dialog
-                Navigator.of(context).pop(); // Close base management dialog
-              }
-            },
-            child: Text(l10n.save),
-          ),
-        ],
       ),
     );
   }

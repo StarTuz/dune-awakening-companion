@@ -6,6 +6,23 @@ This guide explains how to extend the Dune Awakening Companion App with new feat
 
 The app follows a **feature-based modular architecture** where each feature is self-contained and can be added without modifying existing code.
 
+### Current Feature Template
+
+Recent features such as `quest_journal`, `specializations`, `factions`, and
+`augmentations` follow this pattern:
+
+1. `models/` for JSON-serializable domain models
+2. `services/` for repository/database access only
+3. `providers/` for Riverpod state access and invalidation
+4. `screens/` for UI surfaces and dialogs
+
+If a feature is persisted:
+
+1. Add a dedicated migration under `lib/core/database/migrations/`
+2. Register it in `lib/core/database/app_database.dart`
+3. Extend export/import if the feature should be included in backups
+4. Add at least one unit, widget, or integration test
+
 ## Core Principles
 
 1. **Separation of Concerns**: Each layer has a clear responsibility
@@ -180,26 +197,9 @@ class Migration002AddStatistics {
 
 #### Step 7: Register in Navigation
 
-```dart
-// lib/shared/navigation/app_router.dart
-import '../features/statistics/screens/statistics_screen.dart';
-
-class AppRouter {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      // ... existing routes
-      
-      case '/statistics':
-        final baseId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => StatisticsScreen(baseId: baseId),
-        );
-        
-      // ... other routes
-    }
-  }
-}
-```
+Register the screen in `lib/shared/navigation/main_navigation.dart` if it
+should be a top-level destination, or open it from an existing screen/dialog
+like the character progression flow.
 
 #### Step 8: Add to Main App (Optional - if needed in main menu)
 
@@ -213,6 +213,14 @@ ListTile(
 ```
 
 ## Extension Points
+
+### 0. Backup-Aware Features
+
+If your feature should survive export/import:
+
+- Update `ExportService` to append serialized records to the ZIP payload
+- Update `ImportService` to restore them in both JSON and ZIP flows
+- Keep the payload additive so older backups still import cleanly
 
 ### 1. Alert Handlers
 

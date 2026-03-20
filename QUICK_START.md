@@ -1,19 +1,18 @@
 # Quick Start Guide - Dune Awakening Companion App
 
 ## Overview
-A cross-platform companion app for tracking power expiration across multiple bases, characters, and servers in Dune Awakening.
+A cross-platform companion app for tracking characters, bases, quests, and Chapter 3 progression systems in Dune Awakening.
 
 ## Key Features
 
-### ✅ Confirmed Requirements
-1. **Manual Entry**: You manually enter power expiration times (no API available)
-2. **Configurable Alerts**: 
-   - Set custom warning thresholds (e.g., 24h, 12h, 6h, 1h)
-   - Configure how often alerts repeat (once, every X minutes, etc.)
-   - Configure check interval (how often the app checks for alerts)
-3. **Dune-Inspired Theme**: Desert/sand color palette (copyright-safe)
-4. **System Tray**: Minimize to system tray, can quit from tray menu
-5. **Cross-Platform**: Single codebase for Linux, Windows, macOS, iOS, Android
+### ✅ Current Scope
+1. **Manual Base Tracking**: Enter power expiration times directly
+2. **Character Management**: Official/private server support plus portraits
+3. **Per-base Alerts**: Enable/disable notifications and override thresholds
+4. **Quest Journal**: Track quests, steps, notes, contracts, and repeatables
+5. **Character Progression**: Specializations, faction ranks, and augmentations
+6. **Dashboard Analytics**: Region and alert distribution charts
+7. **Cross-Platform**: Linux, Windows, macOS, iOS, Android
 
 ## Technology Stack
 
@@ -41,8 +40,11 @@ lib/
 │   ├── bases/       # Base management
 │   ├── alerts/      # Alert system
 │   ├── characters/  # Character management
-│   ├── servers/     # Server management
-│   └── [future]/    # Easy to add new features
+│   ├── quest_journal/ # Quest journal + steps
+│   ├── specializations/ # Chapter 3 progression
+│   ├── factions/    # Faction rank tracking
+│   ├── augmentations/ # Augmentation tracking
+│   └── settings/    # Export/import + app settings
 ├── shared/          # Shared across features
 │   ├── widgets/     # Reusable UI components
 │   └── theme/       # Dune-inspired color scheme
@@ -51,36 +53,21 @@ lib/
 
 Each feature is self-contained and can be added/modified independently.
 
-## Development Phases
+## Current Architecture
 
-### Phase 1: Foundation
-- Flutter project setup
-- Database schema
-- Basic CRUD operations
-- Theme implementation
-- Basic UI layout
-
-### Phase 2: Core Features
-- Alert system with configurable thresholds
-- Platform notifications
-- System tray integration
-- Base/Character/Server management
-- Settings panel
-
-### Phase 3: Polish & Testing
-- Cross-platform testing
-- UI refinements
-- Error handling
-- Documentation
+- **UI**: Flutter + Material 3 + adaptive navigation
+- **State**: Riverpod providers and notifiers
+- **Storage**: SQLite with migrations up to database v8
+- **Charts**: `fl_chart`
+- **Export/Import**: ZIP backup with JSON data and portraits
+- **Background alerts**: local notifications + WorkManager/system tray flows
 
 ## Next Steps
 
-1. Initialize Flutter project
-2. Set up database schema
-3. Implement Dune theme
-4. Build core features
-5. Add alert system
-6. Test on all platforms
+1. Keep `dart run build_runner build --delete-conflicting-outputs` in your workflow after model changes
+2. Add tests for any new feature module or repository you introduce
+3. Use `README.md`, `NEXT_STEPS.md`, and `docs/ROADMAP_2026.md` for roadmap context
+4. Follow `EXTENSIBILITY_GUIDE.md` when adding new feature modules
 
 ## Color Scheme Preview
 

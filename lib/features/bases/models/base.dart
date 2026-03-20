@@ -5,11 +5,16 @@ part 'base.g.dart';
 
 @JsonSerializable()
 class Base implements BaseModel {
+  static const Object _unset = Object();
+
   @override
   final String id;
   final String characterId;
   final String name;
   final DateTime powerExpirationTime; // Manual entry
+  final bool notificationsEnabled;
+  final int? warningThresholdHours;
+  final int? criticalThresholdHours;
   @override
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -19,6 +24,9 @@ class Base implements BaseModel {
     required this.characterId,
     required this.name,
     required this.powerExpirationTime,
+    this.notificationsEnabled = true,
+    this.warningThresholdHours,
+    this.criticalThresholdHours,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -41,11 +49,18 @@ class Base implements BaseModel {
   /// Check if power is expiring soon (within 24 hours)
   bool get isExpiringSoon => hoursRemaining <= 24 && !isExpired;
 
+  int get effectiveWarningThresholdHours => warningThresholdHours ?? 48;
+
+  int get effectiveCriticalThresholdHours => criticalThresholdHours ?? 24;
+
   Base copyWith({
     String? id,
     String? characterId,
     String? name,
     DateTime? powerExpirationTime,
+    bool? notificationsEnabled,
+    Object? warningThresholdHours = _unset,
+    Object? criticalThresholdHours = _unset,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -54,6 +69,13 @@ class Base implements BaseModel {
       characterId: characterId ?? this.characterId,
       name: name ?? this.name,
       powerExpirationTime: powerExpirationTime ?? this.powerExpirationTime,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      warningThresholdHours: identical(warningThresholdHours, _unset)
+          ? this.warningThresholdHours
+          : warningThresholdHours as int?,
+      criticalThresholdHours: identical(criticalThresholdHours, _unset)
+          ? this.criticalThresholdHours
+          : criticalThresholdHours as int?,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

@@ -1,6 +1,9 @@
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
+
 import 'notification_settings.dart';
 
 class NotificationService {
@@ -115,6 +118,14 @@ class NotificationService {
 
     await androidPlugin?.createNotificationChannel(criticalChannel);
     await androidPlugin?.createNotificationChannel(warningChannel);
+
+    const questChannel = AndroidNotificationChannel(
+      'quest_reminders',
+      'Quest reminders',
+      description: 'Optional quest journal reminders',
+      importance: Importance.defaultImportance,
+    );
+    await androidPlugin?.createNotificationChannel(questChannel);
   }
 
   /// Handle notification tap
@@ -244,6 +255,63 @@ class NotificationService {
       message,
       details,
     );
+  }
+
+  /// Schedule a one-shot quest reminder (Android / iOS only).
+  Future<void> scheduleQuestReminder({
+    required int id,
+    required String questTitle,
+    required DateTime scheduledTime,
+  }) async {
+    if (!_notificationsEnabled) return;
+    if (!Platform.isAndroid && !Platform.isIOS) return;
+
+    final soundEnabled = await NotificationSettings.getSoundEnabled();
+    final vibrationEnabled = await NotificationSettings.getVibrationEnabled();
+
+    final androidDetails = AndroidNotificationDetails(
+      'quest_reminders',
+      'Quest reminders',
+      channelDescription: 'Optional quest journal reminders',
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+      playSound: soundEnabled,
+      enableVibration: vibrationEnabled,
+      silent: !soundEnabled && !vibrationEnabled,
+    );
+
+    final iosDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: soundEnabled,
+    );
+
+    const linuxDetails = LinuxNotificationDetails();
+
+    final details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+      linux: linuxDetails,
+    );
+
+    final when = tz.TZDateTime.from(scheduledTime, tz.local);
+    if (!when.isAfter(tz.TZDateTime.now(tz.local))) return;
+
+    try {
+      await _notifications.zonedSchedule(
+        id,
+        'Quest reminder',
+        questTitle,
+        when,
+        details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        payload: 'quest',
+      );
+      debugPrint('[NotificationService] Scheduled quest reminder id=$id at $when');
+    } catch (e, stack) {
+      debugPrint('[NotificationService] Quest schedule error: $e');
+      debugPrint(stack.toString());
+    }
   }
 
   /// Cancel a specific notification

@@ -115,8 +115,12 @@ void main() {
     ));
     await tester.pumpAndSettle();
 
-    expect(find.text('2'), findsOneWidget); // 2 characters
-    expect(find.text('1'), findsOneWidget); // 1 base
+    expect(find.text('Characters'), findsOneWidget);
+    expect(find.text('Bases'), findsOneWidget);
+    expect(find.text('2'), findsAtLeastNWidgets(1));
+    expect(find.text('1'), findsAtLeastNWidgets(1));
+    expect(find.text('Characters by Region'), findsOneWidget);
+    expect(find.text('Base Alert Distribution'), findsOneWidget);
   });
 
   testWidgets('shows zero counts when no data', (tester) async {

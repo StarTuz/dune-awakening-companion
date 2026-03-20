@@ -5,14 +5,32 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
+import '../../augmentations/services/augmentation_repository.dart';
 import '../../characters/services/character_repository.dart';
+import '../../factions/services/faction_progress_repository.dart';
 import '../../bases/services/base_repository.dart';
+import '../../quest_journal/services/quest_repository.dart';
+import '../../specializations/services/character_specialization_repository.dart';
 
 class ExportService {
   final CharacterRepository _characterRepository;
   final BaseRepository _baseRepository;
+  final CharacterSpecializationRepository? _specializationRepository;
+  final FactionProgressRepository? _factionRepository;
+  final AugmentationRepository? _augmentationRepository;
+  final QuestRepository? _questRepository;
 
-  ExportService(this._characterRepository, this._baseRepository);
+  ExportService(
+    this._characterRepository,
+    this._baseRepository, {
+    CharacterSpecializationRepository? specializationRepository,
+    FactionProgressRepository? factionRepository,
+    AugmentationRepository? augmentationRepository,
+    QuestRepository? questRepository,
+  })  : _specializationRepository = specializationRepository,
+        _factionRepository = factionRepository,
+        _augmentationRepository = augmentationRepository,
+        _questRepository = questRepository;
 
   /// Export all data to ZIP file (includes portraits)
   /// Returns the file path if successful, null otherwise
@@ -21,6 +39,40 @@ class ExportService {
       // Get all data
       final characters = await _characterRepository.getAll();
       final bases = await _baseRepository.getAll();
+      final specializationRepository = _specializationRepository;
+      final factionRepository = _factionRepository;
+      final augmentationRepository = _augmentationRepository;
+      final questRepository = _questRepository;
+      final specializations = specializationRepository == null
+          ? <dynamic>[]
+          : await specializationRepository.getAll();
+      final factionProgress = <dynamic>[];
+      final augmentations = <dynamic>[];
+      final quests = <dynamic>[];
+      final questSteps = <dynamic>[];
+
+      if (factionRepository != null ||
+          augmentationRepository != null ||
+          questRepository != null) {
+        for (final character in characters) {
+          if (factionRepository != null) {
+            factionProgress
+                .addAll(await factionRepository.getByCharacterId(character.id));
+          }
+          if (augmentationRepository != null) {
+            augmentations.addAll(
+                await augmentationRepository.getByCharacterId(character.id));
+          }
+          if (questRepository != null) {
+            final characterQuests =
+                await questRepository.getByCharacterId(character.id);
+            quests.addAll(characterQuests);
+            for (final quest in characterQuests) {
+              questSteps.addAll(await questRepository.getSteps(quest.id));
+            }
+          }
+        }
+      }
 
       // Create archive
       final archive = Archive();
@@ -54,12 +106,18 @@ class ExportService {
 
       // Create JSON data
       final exportData = {
-        'version': '1.1.0', // Bumped version for ZIP format
+        'version': '1.2.0',
         'exportDate': DateTime.now().toIso8601String(),
-        'databaseVersion': 4,
-        'format': 'zip', // New field to indicate format
+        'databaseVersion': 8,
+        'format': 'zip',
         'characters': exportCharacters,
         'bases': bases.map((b) => b.toJson()).toList(),
+        'characterSpecializations':
+            specializations.map((s) => s.toJson()).toList(),
+        'factionProgress': factionProgress.map((f) => f.toJson()).toList(),
+        'augmentations': augmentations.map((a) => a.toJson()).toList(),
+        'quests': quests.map((q) => q.toJson()).toList(),
+        'questSteps': questSteps.map((s) => s.toJson()).toList(),
       };
 
       // Add JSON to archive

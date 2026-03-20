@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/characters/screens/character_management_screen.dart';
+import '../../features/quest_journal/screens/quest_journal_screen.dart';
 import '../../features/alerts/screens/alerts_screen.dart';
 import '../../features/alerts/providers/alert_provider.dart';
 import '../../features/bases/providers/base_provider.dart';
@@ -27,6 +28,7 @@ class MainNavigationScreen extends ConsumerWidget {
     final screens = [
       const DashboardScreen(),
       const CharacterManagementScreen(),
+      const QuestJournalScreen(),
       const AlertsScreen(),
       const SettingsScreen(),
     ];
@@ -49,6 +51,7 @@ class MainNavigationScreen extends ConsumerWidget {
       // Find minimum hours remaining across all bases
       double minHours = double.infinity;
       for (final base in bases) {
+        if (!base.notificationsEnabled) continue;
         final hours = base.hoursRemaining;
         if (hours < minHours) {
           minHours = hours;
@@ -85,6 +88,11 @@ class MainNavigationScreen extends ConsumerWidget {
                   icon: const Icon(Icons.person_outline),
                   selectedIcon: const Icon(Icons.person),
                   label: Text(l10n.navCharacters),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.menu_book_outlined),
+                  selectedIcon: const Icon(Icons.menu_book),
+                  label: Text(l10n.navJournal),
                 ),
                 NavigationRailDestination(
                   icon: Badge(
@@ -143,6 +151,10 @@ class MainNavigationScreen extends ConsumerWidget {
           NavigationDestination(
             icon: const Icon(Icons.person),
             label: l10n.navCharacters,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.menu_book),
+            label: l10n.navJournal,
           ),
           NavigationDestination(
             icon: Badge(

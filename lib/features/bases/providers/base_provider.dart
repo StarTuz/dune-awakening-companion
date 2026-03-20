@@ -47,14 +47,20 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
   Future<void> createBase(
     String characterId,
     String name,
-    DateTime powerExpirationTime,
-  ) async {
+    DateTime powerExpirationTime, {
+    bool notificationsEnabled = true,
+    int? warningThresholdHours,
+    int? criticalThresholdHours,
+  }) async {
     try {
       final base = Base(
         id: const Uuid().v4(),
         characterId: characterId,
         name: name,
         powerExpirationTime: powerExpirationTime,
+        notificationsEnabled: notificationsEnabled,
+        warningThresholdHours: warningThresholdHours,
+        criticalThresholdHours: criticalThresholdHours,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       );

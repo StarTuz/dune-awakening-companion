@@ -4,10 +4,19 @@ import 'package:archive/archive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import '../../augmentations/models/augmentation.dart';
+import '../../augmentations/services/augmentation_repository.dart';
 import '../../characters/models/character.dart';
 import '../../bases/models/base.dart';
 import '../../characters/services/character_repository.dart';
 import '../../bases/services/base_repository.dart';
+import '../../factions/models/faction_progress.dart';
+import '../../factions/services/faction_progress_repository.dart';
+import '../../quest_journal/models/quest.dart';
+import '../../quest_journal/models/quest_step.dart';
+import '../../quest_journal/services/quest_repository.dart';
+import '../../specializations/models/character_specialization.dart';
+import '../../specializations/services/character_specialization_repository.dart';
 
 enum ImportMode {
   merge, // Add to existing data
@@ -33,8 +42,22 @@ class ImportResult {
 class ImportService {
   final CharacterRepository _characterRepository;
   final BaseRepository _baseRepository;
+  final CharacterSpecializationRepository? _specializationRepository;
+  final FactionProgressRepository? _factionRepository;
+  final AugmentationRepository? _augmentationRepository;
+  final QuestRepository? _questRepository;
 
-  ImportService(this._characterRepository, this._baseRepository);
+  ImportService(
+    this._characterRepository,
+    this._baseRepository, {
+    CharacterSpecializationRepository? specializationRepository,
+    FactionProgressRepository? factionRepository,
+    AugmentationRepository? augmentationRepository,
+    QuestRepository? questRepository,
+  })  : _specializationRepository = specializationRepository,
+        _factionRepository = factionRepository,
+        _augmentationRepository = augmentationRepository,
+        _questRepository = questRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -167,6 +190,8 @@ class ImportService {
         }
       }
 
+      await _importExtendedData(data);
+
       return ImportResult(
         success: true,
         charactersImported: charactersImported,
@@ -237,6 +262,8 @@ class ImportService {
         }
       }
 
+      await _importExtendedData(data);
+
       return ImportResult(
         success: true,
         charactersImported: charactersImported,
@@ -306,6 +333,55 @@ class ImportService {
   /// Clear all existing data (public entry point for UI flows).
   Future<void> clearAllData() async {
     await _clearAllData();
+  }
+
+  Future<void> _importExtendedData(Map<String, dynamic> data) async {
+    final specializationRepository = _specializationRepository;
+    final factionRepository = _factionRepository;
+    final augmentationRepository = _augmentationRepository;
+    final questRepository = _questRepository;
+
+    if (specializationRepository != null) {
+      final items =
+          (data['characterSpecializations'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final specialization = CharacterSpecialization.fromJson(
+          item as Map<String, dynamic>,
+        );
+        await specializationRepository.upsert(specialization);
+      }
+    }
+
+    if (factionRepository != null) {
+      final items = (data['factionProgress'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final progress = FactionProgress.fromJson(item as Map<String, dynamic>);
+        await factionRepository.upsert(progress);
+      }
+    }
+
+    if (augmentationRepository != null) {
+      final items = (data['augmentations'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final augmentation =
+            Augmentation.fromJson(item as Map<String, dynamic>);
+        await augmentationRepository.upsert(augmentation);
+      }
+    }
+
+    if (questRepository != null) {
+      final quests = (data['quests'] as List<dynamic>? ?? const []);
+      for (final item in quests) {
+        final quest = Quest.fromJson(item as Map<String, dynamic>);
+        await questRepository.upsertQuest(quest);
+      }
+
+      final steps = (data['questSteps'] as List<dynamic>? ?? const []);
+      for (final item in steps) {
+        final step = QuestStep.fromJson(item as Map<String, dynamic>);
+        await questRepository.upsertStep(step);
+      }
+    }
   }
 
   /// Preview import file without importing

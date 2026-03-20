@@ -13,7 +13,7 @@ checks and a review cadence.
 | Review | Frequency | Owner |
 |--------|-----------|-------|
 | Dependency audit (`scripts/ci/deps_audit.sh`) | Every PR (automated) | CI |
-| SBOM generation (`scripts/ci/sbom.sh`) | Every PR (automated) | CI |
+| SBOM generation (`scripts/ci/sbom.sh`) | Every PR and release metadata build | CI |
 | Manual checklist below | Before each stable release | Developer |
 | Full security review | Quarterly or after major changes | Developer |
 
@@ -83,6 +83,8 @@ checks and a review cadence.
 - [ ] **Artifact checksums**: Release workflow generates `checksums.txt`
       with SHA-256 hashes for all platform artifacts. Users can verify
       downloads match.
+- [ ] **Release metadata**: Release workflow uploads `sbom.json` alongside
+      artifacts so dependency snapshots are published with each tagged build.
 
 ## 5. CI Security Checks
 
@@ -92,6 +94,9 @@ checks and a review cadence.
 - [ ] **SBOM**: `scripts/ci/sbom.sh` generates a dependency tree in
       `build/sbom.json`. Review quarterly for unexpected transitive
       dependencies.
+- [ ] **Release checksum script**: `scripts/ci/release_checksums.sh` is the
+      single source for generating release hashes. Keep it aligned with the
+      artifact file types produced by GitHub Actions.
 - [ ] **Static analysis**: `flutter analyze` runs on every PR with
       strict lint rules. No warnings allowed in CI.
 - [ ] **No secrets in repo**: Verify `.gitignore` excludes `.env`,

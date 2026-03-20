@@ -132,6 +132,12 @@ abstract class AppLocalizations {
   /// **'Alerts'**
   String get navAlerts;
 
+  /// Navigation label for Quest Journal
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get navJournal;
+
   /// Navigation label for Settings
   ///
   /// In en, this message translates to:
@@ -1613,6 +1619,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Made with ❤️ for Dune Awakening players'**
   String get madeWithLove;
+
+  /// Quest journal screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Quest Journal'**
+  String get questJournalTitle;
+
+  /// Quest journal character filter label
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by character'**
+  String get questFilterByCharacter;
+
+  /// Show quests for every character
+  ///
+  /// In en, this message translates to:
+  /// **'All characters'**
+  String get questAllCharacters;
+
+  /// Empty quest list with filters
+  ///
+  /// In en, this message translates to:
+  /// **'No quests match your filters. Add one or adjust search.'**
+  String get questEmptyHint;
+
+  /// Empty quest list with no data
+  ///
+  /// In en, this message translates to:
+  /// **'No quests tracked yet. Add one to start your journal.'**
+  String get questEmptyNoData;
+
+  /// Quest search field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Search title or description'**
+  String get questSearchHint;
+
+  /// Quest status filter section
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get questFilterStatus;
+
+  /// Quest type filter section
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get questFilterType;
+
+  /// No description provided for @questStatusAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get questStatusAll;
+
+  /// No description provided for @questStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get questStatusActive;
+
+  /// No description provided for @questStatusBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get questStatusBlocked;
+
+  /// No description provided for @questStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get questStatusCompleted;
+
+  /// No description provided for @questTypeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get questTypeAll;
+
+  /// No description provided for @questTypeGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get questTypeGeneral;
+
+  /// No description provided for @questTypeStory.
+  ///
+  /// In en, this message translates to:
+  /// **'Story'**
+  String get questTypeStory;
+
+  /// No description provided for @questTypeContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get questTypeContract;
+
+  /// No description provided for @questTypeChallenge.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge'**
+  String get questTypeChallenge;
+
+  /// FAB label for new quest
+  ///
+  /// In en, this message translates to:
+  /// **'Add Quest'**
+  String get questAddQuest;
+
+  /// No description provided for @questAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Quest'**
+  String get questAddTitle;
+
+  /// No description provided for @questEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Quest'**
+  String get questEditTitle;
+
+  /// No description provided for @questCharacterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get questCharacterLabel;
+
+  /// No description provided for @questTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get questTitleLabel;
+
+  /// No description provided for @questTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quest type'**
+  String get questTypeLabel;
+
+  /// No description provided for @questStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get questStatusLabel;
+
+  /// No description provided for @questMissionTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mission type'**
+  String get questMissionTypeLabel;
+
+  /// No description provided for @questMissionTypeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get questMissionTypeNone;
+
+  /// No description provided for @questMissionCombat.
+  ///
+  /// In en, this message translates to:
+  /// **'Combat'**
+  String get questMissionCombat;
+
+  /// No description provided for @questMissionCrafting.
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting'**
+  String get questMissionCrafting;
+
+  /// No description provided for @questMissionGathering.
+  ///
+  /// In en, this message translates to:
+  /// **'Gathering'**
+  String get questMissionGathering;
+
+  /// No description provided for @questMissionExploration.
+  ///
+  /// In en, this message translates to:
+  /// **'Exploration'**
+  String get questMissionExploration;
+
+  /// No description provided for @questMissionSabotage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sabotage'**
+  String get questMissionSabotage;
+
+  /// No description provided for @questDescriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get questDescriptionLabel;
+
+  /// No description provided for @questNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get questNotesLabel;
+
+  /// No description provided for @questSpecXpLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Specialization XP gained'**
+  String get questSpecXpLabel;
+
+  /// No description provided for @questLandsraadContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Landsraad Contract'**
+  String get questLandsraadContract;
+
+  /// No description provided for @questRepeatable.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeatable'**
+  String get questRepeatable;
+
+  /// No description provided for @questReminderLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get questReminderLabel;
+
+  /// No description provided for @questReminderNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder set'**
+  String get questReminderNone;
+
+  /// No description provided for @questPickDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick date & time'**
+  String get questPickDateTime;
+
+  /// No description provided for @questClearReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear reminder'**
+  String get questClearReminder;
+
+  /// Shows chosen reminder time
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder: {dateTime}'**
+  String questReminderScheduled(String dateTime);
+
+  /// No description provided for @questAddStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Add step'**
+  String get questAddStep;
+
+  /// No description provided for @questEditStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit step'**
+  String get questEditStep;
+
+  /// No description provided for @questStepTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Step'**
+  String get questStepTitleLabel;
+
+  /// No description provided for @questStepsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get questStepsHeading;
+
+  /// No description provided for @questDragToReorder.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to reorder'**
+  String get questDragToReorder;
+
+  /// Snackbar when adding quest with no characters
+  ///
+  /// In en, this message translates to:
+  /// **'Add a character first to track quests.'**
+  String get questNoCharactersYet;
+
+  /// OS notification title for quest reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Quest reminder'**
+  String get questReminderNotificationTitle;
 }
 
 class _AppLocalizationsDelegate

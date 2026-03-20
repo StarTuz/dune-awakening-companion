@@ -7,6 +7,9 @@ import 'migrations/migration_002_add_server_fields.dart';
 import 'migrations/migration_003_add_tax_fields.dart';
 import 'migrations/migration_004_add_portraits.dart';
 import 'migrations/migration_005_add_notification_history.dart';
+import 'migrations/migration_006_add_progression_and_quests.dart';
+import 'migrations/migration_007_add_base_notification_overrides.dart';
+import 'migrations/migration_008_add_quest_reminder.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -30,7 +33,10 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 5,
+      version: 8,
+      onConfigure: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -72,6 +78,15 @@ class AppDatabase {
     if (version >= 5) {
       await Migration005AddNotificationHistory.up(db);
     }
+    if (version >= 6) {
+      await Migration006AddProgressionAndQuests.up(db);
+    }
+    if (version >= 7) {
+      await Migration007AddBaseNotificationOverrides.up(db);
+    }
+    if (version >= 8) {
+      await Migration008AddQuestReminder.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -86,6 +101,15 @@ class AppDatabase {
     }
     if (oldVersion < 5) {
       await Migration005AddNotificationHistory.up(db);
+    }
+    if (oldVersion < 6) {
+      await Migration006AddProgressionAndQuests.up(db);
+    }
+    if (oldVersion < 7) {
+      await Migration007AddBaseNotificationOverrides.up(db);
+    }
+    if (oldVersion < 8) {
+      await Migration008AddQuestReminder.up(db);
     }
   }
 
@@ -105,6 +129,11 @@ class AppDatabase {
       await txn.delete('characters');
       await txn.delete('bases');
       await txn.delete('notification_history');
+      await txn.delete('character_specializations');
+      await txn.delete('faction_progress');
+      await txn.delete('augmentations');
+      await txn.delete('quest_steps');
+      await txn.delete('quests');
     });
   }
 }

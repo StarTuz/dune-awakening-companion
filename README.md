@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, and power
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.0.10-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -23,6 +23,9 @@ A cross-platform companion application for managing characters, bases, and power
 ### 🏰 Unlimited Base Tracking
 - Manage **unlimited bases** per character
 - Individual power countdown tracking (Days/Hours/Minutes)
+- Per-base notification overrides:
+  - Disable alerts for quiet/abandoned bases
+  - Override warning/critical thresholds per base
 - Color-coded status indicators:
   - 🔴 **Red:** < 6 hours (Critical)
   - 🟡 **Yellow:** < 24 hours (Warning)  
@@ -43,15 +46,22 @@ A cross-platform companion application for managing characters, bases, and power
 - **🎵 Optional Sound Pack:** Dune-themed notification sounds (see Releases)
 
 ### 📤 Data Management
-- **Export:** Backup all data to JSON files
-- **Import:** Restore from backups with Merge or Replace modes
+- **Export:** ZIP backup with JSON data and portraits
+- **Import:** Restore from ZIP backups with Merge or Replace modes
 - Custom save/load locations via file picker
 - Platform-agnostic (works on all platforms)
 
+### 📖 Quest Journal & Character Progression
+- **Quest Journal:** Track multi-step quests, contracts, notes, and repeatable objectives
+- **Quest Steps:** Mark progress step-by-step from a dedicated detail sheet
+- **Specializations:** Track all 5 Chapter 3 specialization trees up to 500 total levels
+- **Faction Progress:** Record ranks, contracts completed, and reputation progress
+- **Augmentations:** Track acquired augments, source bosses, slots, and equipped state
+
 ### 🔔 Smart Alert System
-- Automatic alerts for bases expiring in < 48 hours
+- Automatic alerts for bases expiring soon
 - Visual alert badge showing count
-- Color-coded alert icon (Red < 24h, Yellow < 48h)
+- Color-coded alert icon (critical vs warning)
 - Detailed alerts screen with:
   - Base severity labels (CRITICAL/WARNING)
   - Full character context
@@ -61,8 +71,9 @@ A cross-platform companion application for managing characters, bases, and power
 ### 📊 Dashboard Overview
 - Real-time statistics from database
 - Character and base counts
-- Expiring Soon count (< 48h)
-- Active Alerts count (< 24h)
+- Expiring Soon and Active Alerts counts
+- Region chart for character distribution
+- Alert distribution chart for base urgency
 - Pull-to-refresh support
 
 ### 🌍 Multi-Language Support
@@ -177,7 +188,12 @@ sudo dnf install fuse
    flutter pub get
    ```
 
-4. **Run the app**
+4. **Generate code**
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+5. **Run the app**
    ```bash
    # Desktop (Linux)
    flutter run -d linux
@@ -234,10 +250,24 @@ sudo dnf install fuse
 ### Backup & Restore
 
 1. Navigate to **Settings** screen
-2. **Export Data:** Creates a timestamped JSON backup
+2. **Export Data:** Creates a timestamped ZIP backup
 3. **Import Data:** 
    - **Merge:** Add backup data to existing data
    - **Replace:** Clear all data, then import backup
+
+### Character Progression
+
+1. On the **Characters** screen, use the **Progress** button on a character card
+2. In the progression dialog:
+   - **Specializations:** adjust Combat, Crafting, Gathering, Exploration, and Sabotage levels
+   - **Factions:** record faction rank, contracts, and reputation
+   - **Augments:** track acquired augmentations and mark equipped items
+
+### Quest Journal
+
+1. Open the **Journal** tab from the main navigation
+2. Add quests for any character and assign status, type, mission type, and notes
+3. Open a quest to manage steps and mark progress as you play
 
 ---
 
@@ -246,15 +276,19 @@ sudo dnf install fuse
 ```
 lib/
 ├── core/                       # Core functionality
-│   ├── database/              # SQLite + migrations (v4)
+│   ├── database/              # SQLite + migrations (v8)
 │   ├── services/              # Notifications, system tray, images
 │   ├── providers/             # Riverpod providers
 │   └── utils/                 # Constants, helpers
 ├── features/                   # Feature modules
 │   ├── characters/            # Character management + portraits
-│   ├── bases/                 # Base tracking + tax system
+│   ├── bases/                 # Base tracking + per-base alert overrides
 │   ├── alerts/                # Alert system
 │   ├── dashboard/             # Overview screen
+│   ├── quest_journal/         # Quest and step tracking
+│   ├── specializations/       # Chapter 3 specialization progress
+│   ├── factions/              # Faction rank tracking
+│   ├── augmentations/         # Augmentation tracker
 │   └── settings/              # Export/import, notifications
 ├── shared/                     # Shared components
 │   ├── navigation/            # Adaptive navigation
@@ -311,7 +345,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.0.5)
+### ✅ Completed (v1.2.0)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
@@ -322,18 +356,22 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
 - [x] Adaptive navigation
-- [x] Database v5 with migrations
+- [x] Database v8 with migrations
 - [x] Multi-language support (7 languages)
 - [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
 - [x] **Light/Dark Mode Toggle**
 - [x] **Accessibility Features** (Text size, weight, contrast, motion)
 - [x] **Quiet Hours & Notification Controls**
 - [x] **Notification History**
+- [x] **Quest Journal**
+- [x] **Specialization Tracker**
+- [x] **Faction Progress Tracker**
+- [x] **Augmentation Tracker**
+- [x] **Dashboard Charts & Analytics**
+- [x] **Per-base Notification Overrides**
 
 ### 📋 Future Features
 
-- [ ] Quest Journal (tracking complex multi-step quests)
-- [ ] Dashboard Charts & Analytics
 - [ ] Character Sorting (by server, urgency, name, last updated)
 - [ ] Cloud Sync (optional, opt-in)
 

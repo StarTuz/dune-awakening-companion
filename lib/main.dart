@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest_all.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:window_manager/window_manager.dart';
 import 'package:windows_single_instance/windows_single_instance.dart';
 import 'core/database/app_database.dart';
@@ -14,6 +17,9 @@ import 'core/providers/notification_settings_provider.dart';
 import 'core/repositories/notification_history_repository.dart';
 import 'features/bases/services/base_repository.dart';
 import 'features/characters/services/character_repository.dart';
+import 'features/quest_journal/services/quest_reminder_service.dart';
+import 'features/quest_journal/services/quest_repository.dart';
+import 'features/quest_journal/widgets/quest_reminder_lifecycle.dart';
 import 'shared/theme/app_theme.dart';
 import 'core/providers/language_provider.dart';
 import 'core/providers/theme_provider.dart';
@@ -30,8 +36,33 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 // This allows system tray callbacks to update Riverpod state
 late final ProviderContainer globalContainer;
 
+Future<void> _configureLocalTimeZone() async {
+  tzdata.initializeTimeZones();
+  try {
+    final name = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(name));
+  } catch (e, st) {
+    debugPrint('[Timezone] $e\n$st');
+    try {
+      tz.setLocalLocation(tz.getLocation('UTC'));
+    } catch (_) {}
+  }
+}
+
+Future<void> _resyncQuestReminders() async {
+  try {
+    final repo = QuestRepository(AppDatabase.instance);
+    final svc = QuestReminderService();
+    await svc.resyncAllScheduled(repo);
+    await svc.processDueReminders(repo);
+  } catch (e, st) {
+    debugPrint('[QuestReminders] bootstrap: $e\n$st');
+  }
+}
+
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await _configureLocalTimeZone();
 
   // Enforce single instance on Windows
   // If another instance is already running, this will bring it to front and exit
@@ -55,6 +86,7 @@ void main(List<String> args) async {
 
   // Initialize notification system
   await _initializeNotifications();
+  await _resyncQuestReminders();
 
   // Initialize system tray (desktop platforms)
   if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
@@ -292,7 +324,7 @@ class DuneAwakeningCompanionApp extends ConsumerWidget {
           child: child ?? const SizedBox.shrink(),
         );
       },
-      home: const MainNavigationScreen(),
+      home: const QuestReminderLifecycle(child: MainNavigationScreen()),
     );
   }
 
