@@ -95,15 +95,27 @@ void main() {
             sietch: 'Desert Wind',
             createdAt: now,
             updatedAt: now),
+        Character(
+            id: 'c3',
+            name: 'Duncan',
+            region: 'North America',
+            serverType: 'Self Hosted',
+            provider: 'Self Hosted',
+            world: 'House Idaho',
+            sietch: 'Training Yard',
+            createdAt: now,
+            updatedAt: now),
       ],
     ));
     await tester.pumpAndSettle();
 
     expect(find.text('Paul Atreides'), findsOneWidget);
     expect(find.text('Chani'), findsOneWidget);
+    expect(find.text('Duncan'), findsOneWidget);
     // Subtitle shows region - world - sietch
     expect(find.textContaining('NA'), findsOneWidget);
     expect(find.textContaining('GPORTAL'), findsOneWidget);
+    expect(find.textContaining('Self Hosted'), findsOneWidget);
   });
 
   testWidgets('shows FAB for adding new character', (tester) async {

@@ -117,7 +117,7 @@ class ExportService {
 
       // Create JSON data
       final exportData = {
-        'version': '1.3.0',
+        'version': '1.3.0-beta',
         'exportDate': DateTime.now().toIso8601String(),
         'databaseVersion': 9,
         'format': 'zip',

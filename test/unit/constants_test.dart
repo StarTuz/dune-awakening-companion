@@ -2,16 +2,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dune_awakening_companion/core/utils/constants.dart';
 
 void main() {
-  test('serverTypes has Official and Private', () {
+  test('serverTypes has Official, Private, and Self Hosted', () {
     expect(AppConstants.serverTypes, contains('Official'));
     expect(AppConstants.serverTypes, contains('Private'));
-    expect(AppConstants.serverTypes.length, 2);
+    expect(AppConstants.serverTypes, contains('Self Hosted'));
+    expect(AppConstants.serverTypes.length, 3);
   });
 
   test('privateProviders is non-empty', () {
     expect(AppConstants.privateProviders, isNotEmpty);
     expect(AppConstants.privateProviders, contains('GPORTAL'));
     expect(AppConstants.privateProviders, contains('BisectHosting'));
+  });
+
+  test('self hosted uses freeform world name and provider', () {
+    expect(
+      AppConstants.usesFreeformWorldName(AppConstants.serverTypeSelfHosted),
+      isTrue,
+    );
+    expect(
+      AppConstants.getProvidersForServerType(AppConstants.serverTypeSelfHosted),
+      contains(AppConstants.serverTypeSelfHosted),
+    );
   });
 
   test('regions returns all keys from regionWorlds', () {

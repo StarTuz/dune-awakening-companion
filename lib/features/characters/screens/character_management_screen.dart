@@ -34,7 +34,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final character = characters[index];
 
-                  final serverInfo = character.serverType == 'Private' &&
+                  final serverInfo = AppConstants.usesFreeformWorldName(
+                              character.serverType) &&
                           character.provider != null
                       ? '${character.provider} - ${character.world}'
                       : character.world;
@@ -218,19 +219,24 @@ class CharacterManagementScreen extends ConsumerWidget {
                   onChanged: (value) {
                     setState(() {
                       selectedServerType = value;
-                      selectedProvider = null;
+                      selectedProvider =
+                          value == AppConstants.serverTypeSelfHosted
+                              ? AppConstants.serverTypeSelfHosted
+                              : null;
                       selectedWorld = null;
                       worldController.clear();
                     });
                   },
                 ),
                 const SizedBox(height: 16),
-                // Show provider dropdown only for Private servers
-                if (selectedServerType == AppConstants.serverTypePrivate) ...[
+                // Show provider dropdown for non-official server types.
+                if (AppConstants.getProvidersForServerType(selectedServerType)
+                    .isNotEmpty) ...[
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Provider'),
                     value: selectedProvider,
-                    items: AppConstants.privateProviders
+                    items: AppConstants.getProvidersForServerType(
+                            selectedServerType)
                         .map<DropdownMenuItem<String>>((provider) {
                       return DropdownMenuItem<String>(
                         value: provider,
@@ -242,7 +248,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                 ],
-                // Show world dropdown for Official, text field for Private
+                // Show world dropdown for Official, text field for other server types.
                 if (selectedServerType == AppConstants.serverTypeOfficial)
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'World'),
@@ -258,12 +264,15 @@ class CharacterManagementScreen extends ConsumerWidget {
                         ? (value) => setState(() => selectedWorld = value)
                         : null,
                   )
-                else if (selectedServerType == AppConstants.serverTypePrivate)
+                else if (AppConstants.usesFreeformWorldName(selectedServerType))
                   TextField(
                     controller: worldController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'World/Server Name',
-                      hintText: 'Enter private server name',
+                      hintText: selectedServerType ==
+                              AppConstants.serverTypeSelfHosted
+                          ? 'Enter self-hosted world/server name'
+                          : 'Enter private server name',
                     ),
                   ),
                 const SizedBox(height: 16),
@@ -284,15 +293,15 @@ class CharacterManagementScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
+                final isOfficial =
+                    selectedServerType == AppConstants.serverTypeOfficial;
                 final worldValue =
-                    selectedServerType == AppConstants.serverTypeOfficial
-                        ? selectedWorld
-                        : worldController.text;
+                    isOfficial ? selectedWorld : worldController.text;
 
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
-                    (selectedServerType == AppConstants.serverTypeOfficial
+                    (isOfficial
                         ? selectedWorld != null
                         : (worldController.text.isNotEmpty &&
                             selectedProvider != null)) &&
@@ -325,7 +334,7 @@ class CharacterManagementScreen extends ConsumerWidget {
       BuildContext context, WidgetRef ref, Character character) {
     final nameController = TextEditingController(text: character.name);
     final worldController = TextEditingController(
-      text: character.serverType == AppConstants.serverTypePrivate
+      text: AppConstants.usesFreeformWorldName(character.serverType)
           ? character.world
           : '',
     );
@@ -439,18 +448,23 @@ class CharacterManagementScreen extends ConsumerWidget {
                   onChanged: (value) {
                     setState(() {
                       selectedServerType = value;
-                      selectedProvider = null;
+                      selectedProvider =
+                          value == AppConstants.serverTypeSelfHosted
+                              ? AppConstants.serverTypeSelfHosted
+                              : null;
                       selectedWorld = null;
                       worldController.clear();
                     });
                   },
                 ),
                 const SizedBox(height: 16),
-                if (selectedServerType == AppConstants.serverTypePrivate) ...[
+                if (AppConstants.getProvidersForServerType(selectedServerType)
+                    .isNotEmpty) ...[
                   DropdownButtonFormField<String>(
                     decoration: const InputDecoration(labelText: 'Provider'),
                     value: selectedProvider,
-                    items: AppConstants.privateProviders
+                    items: AppConstants.getProvidersForServerType(
+                            selectedServerType)
                         .map<DropdownMenuItem<String>>((provider) {
                       return DropdownMenuItem<String>(
                         value: provider,
@@ -477,11 +491,15 @@ class CharacterManagementScreen extends ConsumerWidget {
                         ? (value) => setState(() => selectedWorld = value)
                         : null,
                   )
-                else if (selectedServerType == AppConstants.serverTypePrivate)
+                else if (AppConstants.usesFreeformWorldName(selectedServerType))
                   TextField(
                     controller: worldController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'World/Server Name',
+                      hintText: selectedServerType ==
+                              AppConstants.serverTypeSelfHosted
+                          ? 'Enter self-hosted world/server name'
+                          : 'Enter private server name',
                     ),
                   ),
                 const SizedBox(height: 16),
@@ -501,15 +519,15 @@ class CharacterManagementScreen extends ConsumerWidget {
             ),
             TextButton(
               onPressed: () {
+                final isOfficial =
+                    selectedServerType == AppConstants.serverTypeOfficial;
                 final worldValue =
-                    selectedServerType == AppConstants.serverTypeOfficial
-                        ? selectedWorld
-                        : worldController.text;
+                    isOfficial ? selectedWorld : worldController.text;
 
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
-                    (selectedServerType == AppConstants.serverTypeOfficial
+                    (isOfficial
                         ? selectedWorld != null
                         : (worldController.text.isNotEmpty &&
                             selectedProvider != null)) &&

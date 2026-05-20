@@ -73,7 +73,7 @@ void main() {
     await tester.pumpWidget(buildSettings());
     await tester.pumpAndSettle();
 
-    expect(find.text('1.3.0'), findsOneWidget);
+    expect(find.text('1.3.0-beta'), findsOneWidget);
     expect(find.text('v9'), findsAtLeastNWidgets(1));
   });
 

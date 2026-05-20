@@ -2,9 +2,11 @@ class AppConstants {
   // Server types
   static const String serverTypeOfficial = 'Official';
   static const String serverTypePrivate = 'Private';
+  static const String serverTypeSelfHosted = 'Self Hosted';
   static const List<String> serverTypes = [
     serverTypeOfficial,
-    serverTypePrivate
+    serverTypePrivate,
+    serverTypeSelfHosted,
   ];
 
   // Private server providers
@@ -15,6 +17,22 @@ class AppConstants {
     '4NetPlayers',
     'Nitrado',
   ];
+
+  // Self-hosted servers are user-run battlegroups/worlds.
+  static const List<String> selfHostedProviders = [
+    serverTypeSelfHosted,
+  ];
+
+  static bool usesFreeformWorldName(String? serverType) {
+    return serverType == serverTypePrivate ||
+        serverType == serverTypeSelfHosted;
+  }
+
+  static List<String> getProvidersForServerType(String? serverType) {
+    if (serverType == serverTypePrivate) return privateProviders;
+    if (serverType == serverTypeSelfHosted) return selfHostedProviders;
+    return const [];
+  }
 
   // Dune Awakening Regions and their official Worlds (from dune.gaming.tools)
   static const Map<String, List<String>> regionWorlds = {

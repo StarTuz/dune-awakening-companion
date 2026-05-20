@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, and power
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.3.0--beta-orange)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -17,6 +17,7 @@ A cross-platform companion application for managing characters, bases, and power
 - Track **unlimited characters** across all Dune Awakening servers
 - **Official Servers:** 227 worlds across 5 regions (North America, Europe, Asia, Oceania, South America)
 - **Private Servers:** Support for 5 major hosting providers (GPORTAL, BisectHosting, xREALM, 4NetPlayers, Nitrado)
+- **Self Hosted Servers:** Track player-run worlds/battlegroups with freeform world/server names
 - Full character context: Name, Region, World, Sietch
 - **📸 Character Portraits:** Add custom images from in-game screenshots!
 
@@ -364,7 +365,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.3.0)
+### ✅ Completed (v1.3.0-beta)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
