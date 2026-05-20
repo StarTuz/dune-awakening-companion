@@ -1,9 +1,9 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
-**Last Updated:** December 25, 2025  
-**Current Version:** v1.0.6  
-**Database Version:** v5  
-**Status:** ✅ v1.0 Feature Complete! | i18n ✅ | Export/Import ✅ | Portraits ✅ | Notifications ✅ | UI Polish ✅ | Themes ✅ | Accessibility ✅ | 🔮 Chapter 3 Assessed
+**Last Updated:** May 19, 2026  
+**Current Version:** v1.3.0  
+**Database Version:** v9  
+**Status:** Current app feature set is documented in `README.md`; this file keeps historical planning notes and future ideas.
 
 ---
 
@@ -998,7 +998,9 @@ QuestStep {
 
 6. **RPG Elements & Storytelling** 📖 ⭐ (Fan Favorite!)
    **Goal:** Bring characters to life through creative storytelling
-   
+
+   > **Linked companion research (spatial onboarding):** Long-term vision for **new players** includes an **interactive Hagga Basin (and adjacent) map** with toggles and sub-regions — *separate* from this chronicle/journal feature set. See **`docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md`** for the full assessment, source tiers, and phased plan.
+
    **The Lore:**
    - Players are gholas (clones with recovered memories)
    - Rich Dune universe for roleplay

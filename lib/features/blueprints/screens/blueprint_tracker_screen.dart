@@ -1,0 +1,620 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../characters/models/character.dart';
+import '../../characters/providers/character_provider.dart';
+import '../models/blueprint.dart';
+import '../models/blueprint_catalog.dart';
+import '../providers/blueprint_provider.dart';
+
+class BlueprintTrackerScreen extends ConsumerStatefulWidget {
+  const BlueprintTrackerScreen({super.key});
+
+  @override
+  ConsumerState<BlueprintTrackerScreen> createState() =>
+      _BlueprintTrackerScreenState();
+}
+
+class _BlueprintTrackerScreenState
+    extends ConsumerState<BlueprintTrackerScreen> {
+  String? _selectedCharacterId;
+  String _statusFilter = 'all';
+
+  @override
+  Widget build(BuildContext context) {
+    final charactersAsync = ref.watch(charactersProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Blueprints / Schematics'),
+        actions: [
+          IconButton(
+            tooltip: 'Refresh',
+            onPressed: () {
+              final characterId = _selectedCharacterId;
+              if (characterId != null) {
+                ref.invalidate(haggaSouthBlueprintsProvider(characterId));
+              }
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
+      ),
+      body: charactersAsync.when(
+        data: (characters) => _buildContent(context, characters),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      ),
+      floatingActionButton: charactersAsync.maybeWhen(
+        data: (characters) => characters.isEmpty
+            ? null
+            : FloatingActionButton.extended(
+                onPressed: () => _showBlueprintDialog(context, characters),
+                icon: const Icon(Icons.add),
+                label: const Text('Add Blueprint'),
+              ),
+        orElse: () => null,
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context, List<Character> characters) {
+    if (characters.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Text(
+            'Add a character first, then track Hagga Basin South blueprints.',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    _selectedCharacterId ??= characters.first.id;
+    final selectedCharacterId = _selectedCharacterId!;
+    final blueprintsAsync =
+        ref.watch(haggaSouthBlueprintsProvider(selectedCharacterId));
+
+    return Column(
+      children: [
+        _buildHeader(context, characters, selectedCharacterId),
+        Expanded(
+          child: blueprintsAsync.when(
+            data: (blueprints) =>
+                _buildBlueprintList(selectedCharacterId, blueprints),
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text('Error: $error')),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeader(
+    BuildContext context,
+    List<Character> characters,
+    String selectedCharacterId,
+  ) {
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.map_outlined),
+                const SizedBox(width: 8),
+                Text(
+                  Blueprint.defaultRegion,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Checklist seeded from IGN guide data. Track each discovery per character, then add personal notes or future quest/map links as needed.',
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: selectedCharacterId,
+              items: characters
+                  .map(
+                    (character) => DropdownMenuItem(
+                      value: character.id,
+                      child: Text(character.name),
+                    ),
+                  )
+                  .toList(),
+              decoration: const InputDecoration(
+                labelText: 'Character',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                if (value == null) return;
+                setState(() => _selectedCharacterId = value);
+              },
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 8,
+              children: [
+                ChoiceChip(
+                  label: const Text('All'),
+                  selected: _statusFilter == 'all',
+                  onSelected: (_) => setState(() => _statusFilter = 'all'),
+                ),
+                ChoiceChip(
+                  label: const Text('Locked'),
+                  selected: _statusFilter == 'locked',
+                  onSelected: (_) => setState(() => _statusFilter = 'locked'),
+                ),
+                ChoiceChip(
+                  label: const Text('Unlocked'),
+                  selected: _statusFilter == 'unlocked',
+                  onSelected: (_) => setState(() => _statusFilter = 'unlocked'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBlueprintList(String characterId, List<Blueprint> blueprints) {
+    final rows = _buildChecklistRows(blueprints);
+    final collectedCount = rows.where((row) => row.isUnlocked).length;
+    final filtered = rows.where((row) {
+      return switch (_statusFilter) {
+        'locked' => !row.isUnlocked,
+        'unlocked' => row.isUnlocked,
+        _ => true,
+      };
+    }).toList();
+
+    if (filtered.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Text(
+            'No blueprints match this filter yet.',
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+          child: LinearProgressIndicator(
+            value: rows.isEmpty ? 0 : collectedCount / rows.length,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text('$collectedCount / ${rows.length} collected'),
+          ),
+        ),
+        Expanded(
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
+            itemCount: filtered.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              final row = filtered[index];
+              return _BlueprintCard(
+                row: row,
+                onToggle: () => _toggleChecklistRow(characterId, row),
+                onEdit: () => _showBlueprintDialog(
+                  context,
+                  null,
+                  existing:
+                      row.blueprint ?? row.entry?.toBlueprint(characterId),
+                ),
+                onDelete: row.blueprint == null
+                    ? null
+                    : () => _confirmDelete(context, row.blueprint!),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<_BlueprintChecklistRow> _buildChecklistRows(List<Blueprint> blueprints) {
+    final byName = {
+      for (final blueprint in blueprints) _key(blueprint.name): blueprint,
+    };
+    final catalogRows = haggaBasinSouthBlueprintCatalog.map((entry) {
+      return _BlueprintChecklistRow(
+        entry: entry,
+        blueprint: byName[_key(entry.name)],
+      );
+    });
+    final customRows = blueprints
+        .where((blueprint) => !haggaBasinSouthBlueprintCatalog
+            .any((entry) => _key(entry.name) == _key(blueprint.name)))
+        .map((blueprint) => _BlueprintChecklistRow(blueprint: blueprint));
+
+    return [...catalogRows, ...customRows];
+  }
+
+  Future<void> _toggleChecklistRow(
+    String characterId,
+    _BlueprintChecklistRow row,
+  ) async {
+    final existing = row.blueprint;
+    if (existing != null) {
+      await ref.read(blueprintEditorProvider).toggleUnlocked(existing);
+      return;
+    }
+
+    final now = DateTime.now();
+    final blueprint = row.entry!.toBlueprint(characterId).copyWith(
+          isUnlocked: true,
+          unlockedAt: now,
+          updatedAt: now,
+        );
+    await ref.read(blueprintEditorProvider).save(blueprint);
+  }
+
+  Future<void> _showBlueprintDialog(
+    BuildContext context,
+    List<Character>? providedCharacters, {
+    Blueprint? existing,
+  }) async {
+    final characters =
+        providedCharacters ?? ref.read(charactersProvider).valueOrNull ?? [];
+    if (!context.mounted || characters.isEmpty) return;
+
+    final now = DateTime.now();
+    String characterId =
+        existing?.characterId ?? _selectedCharacterId ?? characters.first.id;
+    String category = existing?.category ?? 'Schematic';
+    String sourceType = existing?.sourceType ?? 'Unknown';
+    bool isUnlocked = existing?.isUnlocked ?? false;
+    final nameController = TextEditingController(text: existing?.name ?? '');
+    final sourceController =
+        TextEditingController(text: existing?.sourceLocation ?? '');
+    final materialsController = TextEditingController(
+      text: existing?.requiredMaterials.join('\n') ?? '',
+    );
+    final notesController = TextEditingController(text: existing?.notes ?? '');
+    final questController =
+        TextEditingController(text: existing?.questId ?? '');
+    final mapPinController =
+        TextEditingController(text: existing?.mapPinId ?? '');
+
+    await showDialog<void>(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          title: Text(existing == null ? 'Add Blueprint' : 'Edit Blueprint'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButtonFormField<String>(
+                  value: characterId,
+                  items: characters
+                      .map(
+                        (character) => DropdownMenuItem(
+                          value: character.id,
+                          child: Text(character.name),
+                        ),
+                      )
+                      .toList(),
+                  decoration: const InputDecoration(labelText: 'Character'),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setDialogState(() => characterId = value);
+                    }
+                  },
+                ),
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(labelText: 'Name'),
+                ),
+                DropdownButtonFormField<String>(
+                  value: category,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Schematic',
+                      child: Text('Schematic'),
+                    ),
+                    DropdownMenuItem(value: 'Weapon', child: Text('Weapon')),
+                    DropdownMenuItem(value: 'Armor', child: Text('Armor')),
+                    DropdownMenuItem(value: 'Tool', child: Text('Tool')),
+                    DropdownMenuItem(
+                        value: 'Building', child: Text('Building')),
+                    DropdownMenuItem(value: 'Vehicle', child: Text('Vehicle')),
+                    DropdownMenuItem(value: 'Other', child: Text('Other')),
+                  ],
+                  decoration: const InputDecoration(labelText: 'Category'),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setDialogState(() => category = value);
+                    }
+                  },
+                ),
+                DropdownButtonFormField<String>(
+                  value: sourceType,
+                  items: const [
+                    DropdownMenuItem(value: 'Unknown', child: Text('Unknown')),
+                    DropdownMenuItem(value: 'Vendor', child: Text('Vendor')),
+                    DropdownMenuItem(value: 'Quest', child: Text('Quest')),
+                    DropdownMenuItem(value: 'Chest', child: Text('Chest')),
+                    DropdownMenuItem(value: 'Trainer', child: Text('Trainer')),
+                    DropdownMenuItem(value: 'Drop', child: Text('Drop')),
+                    DropdownMenuItem(
+                        value: 'Crafting', child: Text('Crafting')),
+                    DropdownMenuItem(value: 'Other', child: Text('Other')),
+                  ],
+                  decoration: const InputDecoration(labelText: 'Source type'),
+                  onChanged: (value) {
+                    if (value != null) {
+                      setDialogState(() => sourceType = value);
+                    }
+                  },
+                ),
+                TextField(
+                  controller: sourceController,
+                  decoration: const InputDecoration(
+                    labelText: 'Source / location',
+                    hintText: 'Example: cave, outpost, NPC, or coordinates',
+                  ),
+                ),
+                TextField(
+                  controller: materialsController,
+                  decoration: const InputDecoration(
+                    labelText: 'Required materials',
+                    hintText: 'One material per line',
+                  ),
+                  minLines: 2,
+                  maxLines: 4,
+                ),
+                TextField(
+                  controller: notesController,
+                  decoration: const InputDecoration(labelText: 'Notes'),
+                  minLines: 2,
+                  maxLines: 4,
+                ),
+                ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  title: const Text('Future links'),
+                  children: [
+                    TextField(
+                      controller: questController,
+                      decoration:
+                          const InputDecoration(labelText: 'Quest ID/link'),
+                    ),
+                    TextField(
+                      controller: mapPinController,
+                      decoration:
+                          const InputDecoration(labelText: 'Map pin ID/link'),
+                    ),
+                  ],
+                ),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Unlocked'),
+                  value: isUnlocked,
+                  onChanged: (value) =>
+                      setDialogState(() => isUnlocked = value),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () async {
+                final name = nameController.text.trim();
+                if (name.isEmpty) return;
+
+                final materials = materialsController.text
+                    .split('\n')
+                    .map((line) => line.trim())
+                    .where((line) => line.isNotEmpty)
+                    .toList();
+                final unlockedAt =
+                    isUnlocked ? existing?.unlockedAt ?? now : null;
+
+                final blueprint = Blueprint(
+                  id: existing?.id ?? const Uuid().v4(),
+                  characterId: characterId,
+                  name: name,
+                  category: category,
+                  region: Blueprint.defaultRegion,
+                  sourceType: sourceType == 'Unknown' ? null : sourceType,
+                  sourceLocation: _emptyToNull(sourceController.text),
+                  requiredMaterials: materials,
+                  notes: _emptyToNull(notesController.text),
+                  isUnlocked: isUnlocked,
+                  unlockedAt: unlockedAt,
+                  questId: _emptyToNull(questController.text),
+                  mapPinId: _emptyToNull(mapPinController.text),
+                  createdAt: existing?.createdAt ?? now,
+                  updatedAt: now,
+                );
+
+                await ref.read(blueprintEditorProvider).save(blueprint);
+                if (context.mounted) Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmDelete(BuildContext context, Blueprint blueprint) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Blueprint?'),
+        content: Text('Delete "${blueprint.name}" from this character?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await ref.read(blueprintEditorProvider).delete(blueprint);
+    }
+  }
+
+  String? _emptyToNull(String value) {
+    final trimmed = value.trim();
+    return trimmed.isEmpty ? null : trimmed;
+  }
+
+  String _key(String value) => value.trim().toLowerCase();
+}
+
+class _BlueprintChecklistRow {
+  final BlueprintCatalogEntry? entry;
+  final Blueprint? blueprint;
+
+  const _BlueprintChecklistRow({
+    this.entry,
+    this.blueprint,
+  });
+
+  String get name => blueprint?.name ?? entry!.name;
+
+  String get category => blueprint?.category ?? entry!.category;
+
+  String get location => blueprint?.sourceLocation ?? entry!.location;
+
+  String? get sourceType =>
+      blueprint?.sourceType ?? (entry == null ? null : 'Chest');
+
+  List<String> get requiredMaterials =>
+      blueprint?.requiredMaterials ?? const [];
+
+  String? get notes => blueprint?.notes;
+
+  String? get questId => blueprint?.questId;
+
+  String? get mapPinId => blueprint?.mapPinId;
+
+  bool get isUnlocked => blueprint?.isUnlocked ?? false;
+
+  bool get isSeeded => entry != null;
+}
+
+class _BlueprintCard extends StatelessWidget {
+  final _BlueprintChecklistRow row;
+  final VoidCallback onToggle;
+  final VoidCallback onEdit;
+  final VoidCallback? onDelete;
+
+  const _BlueprintCard({
+    required this.row,
+    required this.onToggle,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Checkbox(
+                  value: row.isUnlocked,
+                  onChanged: (_) => onToggle(),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        row.name,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text('${row.category} • ${Blueprint.defaultRegion}'),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  tooltip: 'Edit',
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit),
+                ),
+                if (onDelete != null)
+                  IconButton(
+                    tooltip: row.isSeeded ? 'Reset' : 'Delete',
+                    onPressed: onDelete,
+                    icon: Icon(row.isSeeded ? Icons.restart_alt : Icons.delete),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(row.location),
+            if (row.sourceType != null) ...[
+              const SizedBox(height: 12),
+              Chip(label: Text(row.sourceType!)),
+            ],
+            if (row.requiredMaterials.isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: row.requiredMaterials
+                    .map((material) => Chip(label: Text(material)))
+                    .toList(),
+              ),
+            ],
+            if (row.notes != null) ...[
+              const SizedBox(height: 12),
+              Text(row.notes!),
+            ],
+            if (row.questId != null || row.mapPinId != null) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                children: [
+                  if (row.questId != null)
+                    Chip(label: Text('Quest: ${row.questId}')),
+                  if (row.mapPinId != null)
+                    Chip(label: Text('Map pin: ${row.mapPinId}')),
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}

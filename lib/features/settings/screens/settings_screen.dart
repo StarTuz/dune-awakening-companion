@@ -33,12 +33,12 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: l10n.version,
-            subtitle: '1.2.0',
+            subtitle: '1.3.0',
           ),
           _buildInfoTile(
             icon: Icons.storage,
             title: l10n.databaseVersion,
-            subtitle: 'v8',
+            subtitle: 'v9',
           ),
           _buildInfoTile(
             icon: Icons.code,
@@ -49,7 +49,7 @@ class SettingsScreen extends ConsumerWidget {
             icon: Icons.build,
             title: l10n.features,
             subtitle:
-                'Characters, Bases, Quest Journal, Progression, Alerts, Export/Import',
+                'Characters, Bases, Blueprints, Quest Journal, Progression, Alerts, Export/Import',
           ),
 
           const Divider(height: 32),
@@ -233,7 +233,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              'v1.2.0 • ${l10n.databaseVersion} v8',
+              'v1.3.0 • ${l10n.databaseVersion} v9',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey[500],

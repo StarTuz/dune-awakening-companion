@@ -1,6 +1,6 @@
 # Engineering + Product Roadmap (2026)
 
-Last updated: 2026-02-07
+Last updated: 2026-03-19
 
 This roadmap aligns engineering maturity with product goals, with
 priority sequencing: CI/CD, testing, security, quality, release
@@ -39,6 +39,7 @@ Engineering:
 
 Product:
 - Overland map updates with new locations/testing stations.
+- **New-player / Hagga Basin research:** interactive regional map, POI toggles, sub-area IA — see `docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md` (assessment phase; not yet scoped for implementation).
 - Returning player flow (return packages, re-onboarding).
 - Advanced analytics dashboard (local-only summaries).
 

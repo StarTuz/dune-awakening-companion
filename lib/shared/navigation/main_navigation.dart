@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
+import '../../features/blueprints/screens/blueprint_tracker_screen.dart';
 import '../../features/characters/screens/character_management_screen.dart';
 import '../../features/quest_journal/screens/quest_journal_screen.dart';
 import '../../features/alerts/screens/alerts_screen.dart';
@@ -29,6 +30,7 @@ class MainNavigationScreen extends ConsumerWidget {
       const DashboardScreen(),
       const CharacterManagementScreen(),
       const QuestJournalScreen(),
+      const BlueprintTrackerScreen(),
       const AlertsScreen(),
       const SettingsScreen(),
     ];
@@ -94,6 +96,11 @@ class MainNavigationScreen extends ConsumerWidget {
                   selectedIcon: const Icon(Icons.menu_book),
                   label: Text(l10n.navJournal),
                 ),
+                const NavigationRailDestination(
+                  icon: Icon(Icons.construction_outlined),
+                  selectedIcon: Icon(Icons.construction),
+                  label: Text('Blueprints'),
+                ),
                 NavigationRailDestination(
                   icon: Badge(
                     label: Text('$alertCount'),
@@ -155,6 +162,10 @@ class MainNavigationScreen extends ConsumerWidget {
           NavigationDestination(
             icon: const Icon(Icons.menu_book),
             label: l10n.navJournal,
+          ),
+          const NavigationDestination(
+            icon: Icon(Icons.construction),
+            label: 'Blueprints',
           ),
           NavigationDestination(
             icon: Badge(

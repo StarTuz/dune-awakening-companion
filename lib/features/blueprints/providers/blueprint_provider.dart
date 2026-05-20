@@ -1,0 +1,68 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/database/app_database.dart';
+import '../models/blueprint.dart';
+import '../services/blueprint_repository.dart';
+
+final blueprintRepositoryProvider = Provider<BlueprintRepository>((ref) {
+  return BlueprintRepository(AppDatabase.instance);
+});
+
+final blueprintsProvider = FutureProvider<List<Blueprint>>((ref) async {
+  final repository = ref.watch(blueprintRepositoryProvider);
+  return repository.getAll();
+});
+
+final blueprintsByCharacterProvider =
+    FutureProvider.family<List<Blueprint>, String>((ref, characterId) async {
+  final repository = ref.watch(blueprintRepositoryProvider);
+  return repository.getByCharacterId(characterId);
+});
+
+final haggaSouthBlueprintsProvider =
+    FutureProvider.family<List<Blueprint>, String>((ref, characterId) async {
+  final repository = ref.watch(blueprintRepositoryProvider);
+  return repository.getByCharacterAndRegion(
+    characterId,
+    Blueprint.defaultRegion,
+  );
+});
+
+final blueprintEditorProvider = Provider((ref) {
+  return BlueprintEditor(ref.watch(blueprintRepositoryProvider), ref);
+});
+
+class BlueprintEditor {
+  final BlueprintRepository _repository;
+  final Ref _ref;
+
+  BlueprintEditor(this._repository, this._ref);
+
+  Future<void> save(Blueprint blueprint) async {
+    final updated = blueprint.copyWith(updatedAt: DateTime.now());
+    await _repository.upsert(updated);
+    _invalidate(updated.characterId);
+  }
+
+  Future<void> toggleUnlocked(Blueprint blueprint) async {
+    final now = DateTime.now();
+    final updated = blueprint.copyWith(
+      isUnlocked: !blueprint.isUnlocked,
+      unlockedAt: blueprint.isUnlocked ? null : now,
+      updatedAt: now,
+    );
+    await _repository.upsert(updated);
+    _invalidate(updated.characterId);
+  }
+
+  Future<void> delete(Blueprint blueprint) async {
+    await _repository.delete(blueprint.id);
+    _invalidate(blueprint.characterId);
+  }
+
+  void _invalidate(String characterId) {
+    _ref.invalidate(blueprintsProvider);
+    _ref.invalidate(blueprintsByCharacterProvider(characterId));
+    _ref.invalidate(haggaSouthBlueprintsProvider(characterId));
+  }
+}

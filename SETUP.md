@@ -137,7 +137,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
 ### Database errors
-The database will be created automatically on first run. Current schema version: `v8`.
+The database will be created automatically on first run. Current schema version: `v9`.
 Location:
 - Linux: `~/.local/share/dune-awakening-companion/dune_companion.db`
 - Windows: `%APPDATA%/dune-awakening-companion/dune_companion.db`

@@ -17,6 +17,7 @@ class Quest {
   final bool isLandsraadContract;
   final bool isRepeatable;
   final int? specializationXpGained;
+
   /// One-shot reminder (local time). Cleared after it fires.
   final DateTime? reminderAt;
   final DateTime createdAt;

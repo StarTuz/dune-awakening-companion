@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, and power
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.2.0-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.3.0-brightgreen)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -57,6 +57,12 @@ A cross-platform companion application for managing characters, bases, and power
 - **Specializations:** Track all 5 Chapter 3 specialization trees up to 500 total levels
 - **Faction Progress:** Record ranks, contracts completed, and reputation progress
 - **Augmentations:** Track acquired augments, source bosses, slots, and equipped state
+
+### 📐 Blueprints & Schematics
+- **Hagga Basin South slice:** Seeded checklist based on IGN's [Hagga Basin South unique schematics guide](https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations)
+- **Per-character progress:** Mark each blueprint locked/unlocked independently per character
+- **Source details:** Record category, source type, source/location, required materials, and notes
+- **Future-ready links:** Store optional quest and map-pin references for later journal/map integration
 
 ### 🔔 Smart Alert System
 - Automatic alerts for bases expiring soon
@@ -276,7 +282,7 @@ sudo dnf install fuse
 ```
 lib/
 ├── core/                       # Core functionality
-│   ├── database/              # SQLite + migrations (v8)
+│   ├── database/              # SQLite + migrations (v9)
 │   ├── services/              # Notifications, system tray, images
 │   ├── providers/             # Riverpod providers
 │   └── utils/                 # Constants, helpers
@@ -285,6 +291,7 @@ lib/
 │   ├── bases/                 # Base tracking + per-base alert overrides
 │   ├── alerts/                # Alert system
 │   ├── dashboard/             # Overview screen
+│   ├── blueprints/            # Blueprint and schematic tracker
 │   ├── quest_journal/         # Quest and step tracking
 │   ├── specializations/       # Chapter 3 specialization progress
 │   ├── factions/              # Faction rank tracking
@@ -323,12 +330,24 @@ lib/
 | **[NEXT_STEPS.md](./NEXT_STEPS.md)** | Development roadmap |
 | **[PLAN.md](./PLAN.md)** | Original architecture planning |
 | **[docs/CHAPTER3_RESEARCH.md](./docs/CHAPTER3_RESEARCH.md)** | Chapter 3 and early 2026 patch research |
+| **[docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md](./docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md)** | **Vision track:** Hagga / new-player interactive map — research & assessment |
 | **[docs/SIGNING_GUIDE.md](./docs/SIGNING_GUIDE.md)** | Release signing for all platforms |
 | **[docs/RELEASE_CHECKLIST.md](./docs/RELEASE_CHECKLIST.md)** | Pre-release checklist |
 | **[docs/RELEASE_NOTES_TEMPLATE.md](./docs/RELEASE_NOTES_TEMPLATE.md)** | Standardized release notes template |
 | **[docs/SECURITY_CHECKLIST.md](./docs/SECURITY_CHECKLIST.md)** | Ongoing security review checklist |
 | **[docs/ROADMAP_2026.md](./docs/ROADMAP_2026.md)** | 2026 engineering + product roadmap |
 | **[docs/ENGINEERING_TASKLIST.md](./docs/ENGINEERING_TASKLIST.md)** | Engineering tasks (100% complete) |
+
+---
+
+## Vision & product research
+
+Long-term companion vision includes **guided regional onboarding** (especially **Hagga Basin**) so new players don’t miss critical early beats—separate from the in-app **Quest Journal** (manual tracking) and from the **Adventure Journal / chronicles** brainstorm in `NEXT_STEPS.md`.
+
+| Doc | Purpose |
+|-----|---------|
+| **[docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md](./docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md)** | Full **research / analysis / assessment** index for an interactive Hagga-style map (layers, sub-regions, risks, phases). Includes **internet research methodology** and **tiered source** notes. |
+| **[NEXT_STEPS.md](./NEXT_STEPS.md)** §7 *RPG Elements & Storytelling* | **Chronicles / adventure journal** brainstorm (`JournalEntry`, timeline, biography) — narrative layer; cross-linked from the Hagga doc. |
 
 ---
 
@@ -345,7 +364,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.2.0)
+### ✅ Completed (v1.3.0)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
@@ -356,7 +375,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
 - [x] Adaptive navigation
-- [x] Database v8 with migrations
+- [x] Database v9 with migrations
 - [x] Multi-language support (7 languages)
 - [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
 - [x] **Light/Dark Mode Toggle**
@@ -369,6 +388,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] **Augmentation Tracker**
 - [x] **Dashboard Charts & Analytics**
 - [x] **Per-base Notification Overrides**
+- [x] **Blueprints/Schematics Tracker** (Hagga Basin South first slice)
 
 ### 📋 Future Features
 

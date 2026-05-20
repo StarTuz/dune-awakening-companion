@@ -6,6 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import '../../augmentations/models/augmentation.dart';
 import '../../augmentations/services/augmentation_repository.dart';
+import '../../blueprints/models/blueprint.dart';
+import '../../blueprints/services/blueprint_repository.dart';
 import '../../characters/models/character.dart';
 import '../../bases/models/base.dart';
 import '../../characters/services/character_repository.dart';
@@ -46,6 +48,7 @@ class ImportService {
   final FactionProgressRepository? _factionRepository;
   final AugmentationRepository? _augmentationRepository;
   final QuestRepository? _questRepository;
+  final BlueprintRepository? _blueprintRepository;
 
   ImportService(
     this._characterRepository,
@@ -54,10 +57,12 @@ class ImportService {
     FactionProgressRepository? factionRepository,
     AugmentationRepository? augmentationRepository,
     QuestRepository? questRepository,
+    BlueprintRepository? blueprintRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
-        _questRepository = questRepository;
+        _questRepository = questRepository,
+        _blueprintRepository = blueprintRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -340,6 +345,7 @@ class ImportService {
     final factionRepository = _factionRepository;
     final augmentationRepository = _augmentationRepository;
     final questRepository = _questRepository;
+    final blueprintRepository = _blueprintRepository;
 
     if (specializationRepository != null) {
       final items =
@@ -380,6 +386,14 @@ class ImportService {
       for (final item in steps) {
         final step = QuestStep.fromJson(item as Map<String, dynamic>);
         await questRepository.upsertStep(step);
+      }
+    }
+
+    if (blueprintRepository != null) {
+      final blueprints = (data['blueprints'] as List<dynamic>? ?? const []);
+      for (final item in blueprints) {
+        final blueprint = Blueprint.fromJson(item as Map<String, dynamic>);
+        await blueprintRepository.upsert(blueprint);
       }
     }
   }

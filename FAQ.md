@@ -15,17 +15,8 @@
 - When you open the app, we calculate: `targetTime - currentTime = remaining`
 - This means countdowns are always accurate, regardless of when you last opened the app
 
-**Examples:**
+**Example:**
 - Close app with "Power: 1d 5h" → Reopen 6 hours later → Shows "Power: 23h" ✅
-- Close app with "Tax: 7d" → Reopen 2 days later → Shows "Tax: 5d" ✅
-- Close app before tax due date → Reopen after → Shows "Tax: Overdue" ✅
-
-**Tax Auto-Increment:**
-When you edit a base, the app automatically:
-- Detects missed tax cycles
-- Calculates owed amounts
-- Moves amounts between Current → Overdue → Defaulted
-- Shows you a warning message to review
 
 **Note:** The app doesn't run in the background (to save battery), but everything updates the instant you open it!
 
@@ -37,7 +28,7 @@ When you edit a base, the app automatically:
 
 ---
 
-### Q: Will I get notifications when power or tax is running low?
+### Q: Will I get notifications when power is running low?
 
 **A: YES!** (v1.0.4+)
 - **Desktop:** Notifications appear in your system notification center
@@ -47,69 +38,11 @@ When you edit a base, the app automatically:
 
 ---
 
-## 💰 Tax Tracking
+## Chapter 3 Tax Removal
 
-### Q: How does the tax auto-increment work?
+### Q: What happened to tax tracking?
 
-**A:** When you edit a base with taxes enabled:
-1. The app checks if the tax due date has passed
-2. If yes, it calculates how many 14-day cycles you've missed
-3. It auto-fills the owed amounts based on your tax per cycle
-4. You see a warning message explaining what was calculated
-5. You can edit the amounts if they're incorrect
-
-**Example:**
-- Tax due: Dec 15
-- You edit on Dec 31 (16 days late)
-- Auto-detects: 1 missed cycle + grace period active
-- Moves previous "Current" to "Overdue"
-- Adds new cycle to "Current"
-- Shows: "⚠️ Tax overdue by 16 days!"
-
----
-
-### Q: What's the difference between Current, Overdue, and Defaulted tax?
-
-**A:**
-- **Current Owed**: Taxes for the current cycle (14 days)
-- **Overdue Owed**: Past due but still in grace period (< 14 days overdue)
-- **Defaulted Owed**: Beyond grace period (14+ days overdue) - **shields are down!**
-
-**Timeline:**
-```
-Day 0-14: Current cycle
-Day 15-28: Overdue (grace period, shields still up)
-Day 29+: Defaulted (shields down, base can be destroyed!)
-```
-
----
-
-### Q: How do I calculate my tax amount?
-
-**A:** Use the built-in **Tax Calculator**:
-1. Go to Characters screen
-2. Click "Bases" for your character
-3. Click "Edit" on your Advanced Fief
-4. Scroll to the tax section
-5. Enter your number of stakes in the calculator
-6. Formula: **4,000 base + (Stakes × 2,000)**
-
-**Examples:**
-- 0 stakes = 4,000 Solari
-- 1 stake = 6,000 Solari
-- 2 stakes = 8,000 Solari
-- 5 stakes = 14,000 Solari
-
----
-
-### Q: What if I pay my taxes in-game? How do I update the app?
-
-**A:** Edit your base and:
-1. Set amounts owed to 0 (or remaining balance)
-2. Update "Next Tax Due In" to the new due date (14 days from payment)
-3. Save
-
-The app will now track your next tax cycle!
+**A:** Dune Awakening Chapter 3 removed base taxes, so the companion app removed tax tracking, tax alerts, and tax calculator workflows. Existing old backup data with tax fields is harmless and ignored by current imports.
 
 ---
 
@@ -393,8 +326,8 @@ Screenshots help too!
 
 ## 💡 Tips & Tricks
 
-### Tip 1: Use the Tax Calculator
-Don't manually calculate taxes – use the built-in calculator in the Edit Base dialog!
+### Tip 1: Keep Power Timers Fresh
+Update each base's power countdown right after refueling so alerts stay accurate.
 
 ### Tip 2: Export Regularly
 Make it a habit to export your data monthly. It's your safety net!
@@ -405,8 +338,8 @@ Scan the Alerts screen for color codes:
 - Yellow? Check soon
 - Red? Urgent action needed!
 
-### Tip 4: Edit Bases After Refueling
-Update power countdown right after refueling in-game so your tracker stays accurate.
+### Tip 4: Use the Quest Journal
+Break longer quest chains into steps and add notes while details are fresh.
 
 ### Tip 5: Use Descriptive Base Names
 "Main Base" is okay, but "Aluminium Production" or "Desert Outpost" helps you identify bases faster!
@@ -416,12 +349,12 @@ Make it the last screen you check before closing the app – know what needs att
 
 ---
 
-**Last Updated:** December 25, 2025  
-**App Version:** 1.0.5  
-**Database Version:** v5
+**Last Updated:** May 19, 2026  
+**App Version:** 1.3.0  
+**Database Version:** v9
 
 ---
 
 **Need more help?** Check `HANDOFF.md` for technical documentation or open a GitHub issue.
 
-**May your power stay charged and your taxes stay paid!** 🌟
+**May your power stay charged!** 🌟

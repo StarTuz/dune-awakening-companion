@@ -307,7 +307,8 @@ class NotificationService {
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         payload: 'quest',
       );
-      debugPrint('[NotificationService] Scheduled quest reminder id=$id at $when');
+      debugPrint(
+          '[NotificationService] Scheduled quest reminder id=$id at $when');
     } catch (e, stack) {
       debugPrint('[NotificationService] Quest schedule error: $e');
       debugPrint(stack.toString());

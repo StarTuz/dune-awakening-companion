@@ -1,14 +1,14 @@
 # 🏜️ Dune Awakening Companion App - Handoff Document
 
-**Date:** December 25, 2025  
-**Version:** v1.0.7  
-**Status:** Stable Release  
+**Date:** May 19, 2026  
+**Version:** v1.3.0  
+**Status:** Release candidate / documentation cleanup  
 
 ---
 
 ## 📋 Executive Summary
 
-The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases and power countdowns in Dune Awakening.
+The Dune Awakening Companion App is a **feature-complete** cross-platform application for tracking character bases, power countdowns, quest progress, and Chapter 3 progression systems in Dune Awakening.
 
 ### Key Achievements
 - ✅ Multi-character & multi-base management
@@ -24,6 +24,11 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 - ✅ Notification history with mark as read
 - ✅ Tray icon alert badge
 - ✅ Android UI Layout Fixes (Text Weight)
+- ✅ Quest Journal with steps and reminders
+- ✅ Specialization, faction progress, and augmentation tracking
+- ✅ Dashboard charts and analytics
+- ✅ Per-base notification overrides
+- ✅ Hagga Basin South blueprint/schematic tracker
 
 ---
 
@@ -42,7 +47,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 ```
 lib/
 ├── core/                    # Core services & infrastructure
-│   ├── database/           # SQLite + migrations (v5)
+│   ├── database/           # SQLite + migrations (v9)
 │   ├── models/             # Core data models
 │   ├── providers/          # Riverpod providers
 │   ├── repositories/       # Data access layer
@@ -52,7 +57,12 @@ lib/
 │   ├── alerts/             # Alert system + notification history
 │   ├── bases/              # Base management
 │   ├── characters/         # Character management
-│   ├── dashboard/          # Overview screen
+│   ├── dashboard/          # Overview screen + charts
+│   ├── blueprints/         # Blueprint and schematic tracker
+│   ├── quest_journal/      # Quest and step tracking
+│   ├── specializations/    # Chapter 3 specialization progress
+│   ├── factions/           # Faction rank tracking
+│   ├── augmentations/      # Augmentation tracker
 │   └── settings/           # Export/import, preferences
 ├── l10n/                   # Localization
 │   ├── app_en.arb          # English (source)

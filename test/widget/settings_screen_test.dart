@@ -73,8 +73,8 @@ void main() {
     await tester.pumpWidget(buildSettings());
     await tester.pumpAndSettle();
 
-    expect(find.text('1.2.0'), findsOneWidget);
-    expect(find.text('v8'), findsAtLeastNWidgets(1));
+    expect(find.text('1.3.0'), findsOneWidget);
+    expect(find.text('v9'), findsAtLeastNWidgets(1));
   });
 
   testWidgets('shows appearance section after scrolling', (tester) async {

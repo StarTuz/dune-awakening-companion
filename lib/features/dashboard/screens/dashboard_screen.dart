@@ -312,7 +312,8 @@ class _AlertDistributionChart extends StatelessWidget {
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final side = math.min(constraints.maxWidth, constraints.maxHeight);
+                  final side =
+                      math.min(constraints.maxWidth, constraints.maxHeight);
                   return Center(
                     child: SizedBox(
                       width: side,

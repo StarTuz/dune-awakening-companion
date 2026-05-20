@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import '../../augmentations/services/augmentation_repository.dart';
+import '../../blueprints/services/blueprint_repository.dart';
 import '../../characters/services/character_repository.dart';
 import '../../factions/services/faction_progress_repository.dart';
 import '../../bases/services/base_repository.dart';
@@ -19,6 +20,7 @@ class ExportService {
   final FactionProgressRepository? _factionRepository;
   final AugmentationRepository? _augmentationRepository;
   final QuestRepository? _questRepository;
+  final BlueprintRepository? _blueprintRepository;
 
   ExportService(
     this._characterRepository,
@@ -27,10 +29,12 @@ class ExportService {
     FactionProgressRepository? factionRepository,
     AugmentationRepository? augmentationRepository,
     QuestRepository? questRepository,
+    BlueprintRepository? blueprintRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
-        _questRepository = questRepository;
+        _questRepository = questRepository,
+        _blueprintRepository = blueprintRepository;
 
   /// Export all data to ZIP file (includes portraits)
   /// Returns the file path if successful, null otherwise
@@ -43,6 +47,7 @@ class ExportService {
       final factionRepository = _factionRepository;
       final augmentationRepository = _augmentationRepository;
       final questRepository = _questRepository;
+      final blueprintRepository = _blueprintRepository;
       final specializations = specializationRepository == null
           ? <dynamic>[]
           : await specializationRepository.getAll();
@@ -50,10 +55,12 @@ class ExportService {
       final augmentations = <dynamic>[];
       final quests = <dynamic>[];
       final questSteps = <dynamic>[];
+      final blueprints = <dynamic>[];
 
       if (factionRepository != null ||
           augmentationRepository != null ||
-          questRepository != null) {
+          questRepository != null ||
+          blueprintRepository != null) {
         for (final character in characters) {
           if (factionRepository != null) {
             factionProgress
@@ -70,6 +77,10 @@ class ExportService {
             for (final quest in characterQuests) {
               questSteps.addAll(await questRepository.getSteps(quest.id));
             }
+          }
+          if (blueprintRepository != null) {
+            blueprints.addAll(
+                await blueprintRepository.getByCharacterId(character.id));
           }
         }
       }
@@ -106,9 +117,9 @@ class ExportService {
 
       // Create JSON data
       final exportData = {
-        'version': '1.2.0',
+        'version': '1.3.0',
         'exportDate': DateTime.now().toIso8601String(),
-        'databaseVersion': 8,
+        'databaseVersion': 9,
         'format': 'zip',
         'characters': exportCharacters,
         'bases': bases.map((b) => b.toJson()).toList(),
@@ -118,6 +129,7 @@ class ExportService {
         'augmentations': augmentations.map((a) => a.toJson()).toList(),
         'quests': quests.map((q) => q.toJson()).toList(),
         'questSteps': questSteps.map((s) => s.toJson()).toList(),
+        'blueprints': blueprints.map((b) => b.toJson()).toList(),
       };
 
       // Add JSON to archive

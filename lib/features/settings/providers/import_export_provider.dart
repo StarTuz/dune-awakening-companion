@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../augmentations/providers/augmentation_provider.dart';
+import '../../blueprints/providers/blueprint_provider.dart';
 import '../../factions/providers/faction_progress_provider.dart';
 import '../../quest_journal/providers/quest_provider.dart';
 import '../../specializations/providers/character_specialization_provider.dart';
@@ -16,6 +17,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
   final factionRepo = ref.watch(factionProgressRepositoryProvider);
   final augmentationRepo = ref.watch(augmentationRepositoryProvider);
   final questRepo = ref.watch(questRepositoryProvider);
+  final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   return ExportService(
     characterRepo,
     baseRepo,
@@ -23,6 +25,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     factionRepository: factionRepo,
     augmentationRepository: augmentationRepo,
     questRepository: questRepo,
+    blueprintRepository: blueprintRepo,
   );
 });
 
@@ -34,6 +37,7 @@ final importServiceProvider = Provider<ImportService>((ref) {
   final factionRepo = ref.watch(factionProgressRepositoryProvider);
   final augmentationRepo = ref.watch(augmentationRepositoryProvider);
   final questRepo = ref.watch(questRepositoryProvider);
+  final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   return ImportService(
     characterRepo,
     baseRepo,
@@ -41,5 +45,6 @@ final importServiceProvider = Provider<ImportService>((ref) {
     factionRepository: factionRepo,
     augmentationRepository: augmentationRepo,
     questRepository: questRepo,
+    blueprintRepository: blueprintRepo,
   );
 });

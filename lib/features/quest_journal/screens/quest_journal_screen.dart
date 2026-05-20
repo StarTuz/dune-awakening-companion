@@ -119,15 +119,13 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
                 FilterChip(
                   label: Text(l10n.questStatusActive),
                   selected: _statusFilter == 'active',
-                  onSelected: (_) =>
-                      setState(() => _statusFilter = 'active'),
+                  onSelected: (_) => setState(() => _statusFilter = 'active'),
                 ),
                 const SizedBox(width: 8),
                 FilterChip(
                   label: Text(l10n.questStatusBlocked),
                   selected: _statusFilter == 'blocked',
-                  onSelected: (_) =>
-                      setState(() => _statusFilter = 'blocked'),
+                  onSelected: (_) => setState(() => _statusFilter = 'blocked'),
                 ),
                 const SizedBox(width: 8),
                 FilterChip(
@@ -160,8 +158,7 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
                 FilterChip(
                   label: Text(l10n.questTypeGeneral),
                   selected: _typeFilter == 'general',
-                  onSelected: (_) =>
-                      setState(() => _typeFilter = 'general'),
+                  onSelected: (_) => setState(() => _typeFilter = 'general'),
                 ),
                 const SizedBox(width: 8),
                 FilterChip(
@@ -173,15 +170,13 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
                 FilterChip(
                   label: Text(l10n.questTypeContract),
                   selected: _typeFilter == 'contract',
-                  onSelected: (_) =>
-                      setState(() => _typeFilter = 'contract'),
+                  onSelected: (_) => setState(() => _typeFilter = 'contract'),
                 ),
                 const SizedBox(width: 8),
                 FilterChip(
                   label: Text(l10n.questTypeChallenge),
                   selected: _typeFilter == 'challenge',
-                  onSelected: (_) =>
-                      setState(() => _typeFilter = 'challenge'),
+                  onSelected: (_) => setState(() => _typeFilter = 'challenge'),
                 ),
               ],
             ),
@@ -285,7 +280,8 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text(existing == null ? l10n.questAddTitle : l10n.questEditTitle),
+          title:
+              Text(existing == null ? l10n.questAddTitle : l10n.questEditTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -301,7 +297,8 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
                       )
                       .toList(),
                   onChanged: (value) => setState(() => characterId = value),
-                  decoration: InputDecoration(labelText: l10n.questCharacterLabel),
+                  decoration:
+                      InputDecoration(labelText: l10n.questCharacterLabel),
                 ),
                 const SizedBox(height: 12),
                 TextField(
@@ -420,7 +417,8 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
                   contentPadding: EdgeInsets.zero,
                   title: reminderAt == null
                       ? Text(l10n.questReminderNone)
-                      : Text(l10n.questReminderScheduled(dateFmt.format(reminderAt!))),
+                      : Text(l10n
+                          .questReminderScheduled(dateFmt.format(reminderAt!))),
                   trailing: Wrap(
                     spacing: 4,
                     children: [
@@ -592,9 +590,7 @@ class _QuestDetailsSheet extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       l10n.questReminderScheduled(
-                        DateFormat.yMMMd()
-                            .add_jm()
-                            .format(quest.reminderAt!),
+                        DateFormat.yMMMd().add_jm().format(quest.reminderAt!),
                       ),
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
@@ -683,8 +679,7 @@ class _QuestDetailsSheet extends ConsumerWidget {
                                     ),
                                     IconButton(
                                       icon: const Icon(Icons.edit, size: 20),
-                                      onPressed: () =>
-                                          _showStepDialogForSheet(
+                                      onPressed: () => _showStepDialogForSheet(
                                         context,
                                         ref,
                                         quest,
@@ -693,8 +688,7 @@ class _QuestDetailsSheet extends ConsumerWidget {
                                       tooltip: l10n.edit,
                                     ),
                                     IconButton(
-                                      icon:
-                                          const Icon(Icons.delete, size: 20),
+                                      icon: const Icon(Icons.delete, size: 20),
                                       onPressed: () => ref
                                           .read(questEditorProvider)
                                           .deleteStep(step.id, quest.id),
@@ -708,7 +702,8 @@ class _QuestDetailsSheet extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    loading: () => const Center(child: CircularProgressIndicator()),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     error: (error, stack) =>
                         Center(child: Text('${l10n.error}: $error')),
                   ),
@@ -741,10 +736,8 @@ Future<void> _showStepDialogForSheet(
   QuestStep? existing,
 }) async {
   final l10n = AppLocalizations.of(context)!;
-  final titleController =
-      TextEditingController(text: existing?.title ?? '');
-  final notesController =
-      TextEditingController(text: existing?.notes ?? '');
+  final titleController = TextEditingController(text: existing?.title ?? '');
+  final notesController = TextEditingController(text: existing?.notes ?? '');
 
   await showDialog<void>(
     context: context,
@@ -781,9 +774,8 @@ Future<void> _showStepDialogForSheet(
                 id: const Uuid().v4(),
                 questId: quest.id,
                 title: titleController.text,
-                notes: notesController.text.isEmpty
-                    ? null
-                    : notesController.text,
+                notes:
+                    notesController.text.isEmpty ? null : notesController.text,
                 sortOrder: existingSteps.length,
                 createdAt: DateTime.now(),
               );
