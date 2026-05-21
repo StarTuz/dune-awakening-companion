@@ -14,6 +14,7 @@ class Character implements BaseModel {
       provider; // Only for private servers (GPORTAL, BisectHosting, etc.)
   final String world;
   final String sietch;
+  final String? primaryClass;
   final String? portraitPath; // Path to character portrait image
   @override
   final DateTime createdAt;
@@ -27,6 +28,7 @@ class Character implements BaseModel {
     this.provider,
     required this.world,
     required this.sietch,
+    this.primaryClass,
     this.portraitPath,
     required this.createdAt,
     required this.updatedAt,
@@ -46,6 +48,7 @@ class Character implements BaseModel {
     String? provider,
     String? world,
     String? sietch,
+    String? primaryClass,
     String? portraitPath,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -58,6 +61,7 @@ class Character implements BaseModel {
       provider: provider ?? this.provider,
       world: world ?? this.world,
       sietch: sietch ?? this.sietch,
+      primaryClass: primaryClass ?? this.primaryClass,
       portraitPath: portraitPath ?? this.portraitPath,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

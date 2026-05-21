@@ -47,7 +47,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 ```
 lib/
 ├── core/                    # Core services & infrastructure
-│   ├── database/           # SQLite + migrations (v9)
+│   ├── database/           # SQLite + migrations (v11)
 │   ├── models/             # Core data models
 │   ├── providers/          # Riverpod providers
 │   ├── repositories/       # Data access layer

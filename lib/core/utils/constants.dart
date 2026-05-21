@@ -34,6 +34,28 @@ class AppConstants {
     return const [];
   }
 
+  // Character classes available from the character generator.
+  static const String classBeneGesserit = 'Bene Gesserit';
+  static const String classMentat = 'Mentat';
+  static const String classSwordmaster = 'Swordmaster';
+  static const String classTrooper = 'Trooper';
+  static const String classPlanetologist = 'Planetologist';
+
+  static const List<String> primaryClasses = [
+    classBeneGesserit,
+    classMentat,
+    classSwordmaster,
+    classTrooper,
+  ];
+
+  static const List<String> allProgressionClasses = [
+    classBeneGesserit,
+    classMentat,
+    classPlanetologist,
+    classSwordmaster,
+    classTrooper,
+  ];
+
   // Dune Awakening Regions and their official Worlds (from dune.gaming.tools)
   static const Map<String, List<String>> regionWorlds = {
     'North America': [

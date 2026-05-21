@@ -157,6 +157,7 @@ void main() {
             sourceType: 'Chest',
             sourceLocation: 'Hagga Basin South, Wreck of the Alcyon',
             isUnlocked: true,
+            unlockedAt: now,
             createdAt: now,
             updatedAt: now,
           ),
@@ -173,5 +174,80 @@ void main() {
       ),
       findsOneWidget,
     );
+  });
+
+  testWidgets('keeps respawn timer optional for collected blueprints',
+      (tester) async {
+    await tester.pumpWidget(
+      buildScreen(
+        characters: [
+          Character(
+            id: 'c1',
+            name: 'Chani',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now,
+          ),
+        ],
+        blueprints: [
+          Blueprint(
+            id: 'bp1',
+            characterId: 'c1',
+            name: "Kaleff's Drinker",
+            category: 'Weapon',
+            sourceType: 'Chest',
+            sourceLocation: 'Hagga Basin South, Wreck of the Alcyon',
+            isUnlocked: true,
+            unlockedAt: DateTime.now(),
+            createdAt: now,
+            updatedAt: now,
+          ),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Respawn timer'), findsOneWidget);
+    expect(find.textContaining('Respawns in'), findsNothing);
+  });
+
+  testWidgets('shows respawn countdown when timer is enabled', (tester) async {
+    await tester.pumpWidget(
+      buildScreen(
+        characters: [
+          Character(
+            id: 'c1',
+            name: 'Chani',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now,
+          ),
+        ],
+        blueprints: [
+          Blueprint(
+            id: 'bp1',
+            characterId: 'c1',
+            name: "Kaleff's Drinker",
+            category: 'Weapon',
+            sourceType: 'Chest',
+            sourceLocation: 'Hagga Basin South, Wreck of the Alcyon',
+            isUnlocked: true,
+            unlockedAt: DateTime.now(),
+            respawnTimerEnabled: true,
+            createdAt: now,
+            updatedAt: now,
+          ),
+        ],
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Respawns in'), findsOneWidget);
   });
 }

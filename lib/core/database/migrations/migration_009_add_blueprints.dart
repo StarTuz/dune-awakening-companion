@@ -16,6 +16,7 @@ class Migration009AddBlueprints {
         notes TEXT,
         is_unlocked INTEGER NOT NULL DEFAULT 0,
         unlocked_at INTEGER,
+        respawn_timer_enabled INTEGER NOT NULL DEFAULT 0,
         quest_id TEXT,
         map_pin_id TEXT,
         created_at INTEGER NOT NULL,

@@ -11,6 +11,8 @@ import 'migrations/migration_006_add_progression_and_quests.dart';
 import 'migrations/migration_007_add_base_notification_overrides.dart';
 import 'migrations/migration_008_add_quest_reminder.dart';
 import 'migrations/migration_009_add_blueprints.dart';
+import 'migrations/migration_010_add_blueprint_respawn_timer.dart';
+import 'migrations/migration_011_add_class_quests.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -34,7 +36,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 9,
+      version: 11,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -91,6 +93,12 @@ class AppDatabase {
     if (version >= 9) {
       await Migration009AddBlueprints.up(db);
     }
+    if (version >= 10) {
+      await Migration010AddBlueprintRespawnTimer.up(db);
+    }
+    if (version >= 11) {
+      await Migration011AddClassQuests.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -118,6 +126,12 @@ class AppDatabase {
     if (oldVersion < 9) {
       await Migration009AddBlueprints.up(db);
     }
+    if (oldVersion < 10) {
+      await Migration010AddBlueprintRespawnTimer.up(db);
+    }
+    if (oldVersion < 11) {
+      await Migration011AddClassQuests.up(db);
+    }
   }
 
   Future<void> initialize() async {
@@ -140,6 +154,8 @@ class AppDatabase {
       await txn.delete('faction_progress');
       await txn.delete('augmentations');
       await txn.delete('blueprints');
+      await txn.delete('character_class_quest_steps');
+      await txn.delete('character_class_quests');
       await txn.delete('quest_steps');
       await txn.delete('quests');
     });

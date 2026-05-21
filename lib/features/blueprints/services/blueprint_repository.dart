@@ -71,6 +71,7 @@ class BlueprintRepository {
       'notes': blueprint.notes,
       'is_unlocked': blueprint.isUnlocked ? 1 : 0,
       'unlocked_at': blueprint.unlockedAt?.millisecondsSinceEpoch,
+      'respawn_timer_enabled': blueprint.respawnTimerEnabled ? 1 : 0,
       'quest_id': blueprint.questId,
       'map_pin_id': blueprint.mapPinId,
       'created_at': blueprint.createdAt.millisecondsSinceEpoch,
@@ -93,6 +94,7 @@ class BlueprintRepository {
       unlockedAt: map['unlocked_at'] == null
           ? null
           : DateTime.fromMillisecondsSinceEpoch(map['unlocked_at'] as int),
+      respawnTimerEnabled: (map['respawn_timer_enabled'] as int? ?? 0) == 1,
       questId: map['quest_id'] as String?,
       mapPinId: map['map_pin_id'] as String?,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at'] as int),

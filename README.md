@@ -55,6 +55,7 @@ A cross-platform companion application for managing characters, bases, and power
 ### 📖 Quest Journal & Character Progression
 - **Quest Journal:** Track multi-step quests, contracts, notes, and repeatable objectives
 - **Quest Steps:** Mark progress step-by-step from a dedicated detail sheet
+- **Class Quests:** Track basic and advanced trainer unlock paths per character
 - **Specializations:** Track all 5 Chapter 3 specialization trees up to 500 total levels
 - **Faction Progress:** Record ranks, contracts completed, and reputation progress
 - **Augmentations:** Track acquired augments, source bosses, slots, and equipped state
@@ -283,7 +284,7 @@ sudo dnf install fuse
 ```
 lib/
 ├── core/                       # Core functionality
-│   ├── database/              # SQLite + migrations (v9)
+│   ├── database/              # SQLite + migrations (v11)
 │   ├── services/              # Notifications, system tray, images
 │   ├── providers/             # Riverpod providers
 │   └── utils/                 # Constants, helpers
@@ -376,7 +377,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
 - [x] Adaptive navigation
-- [x] Database v9 with migrations
+- [x] Database v11 with migrations
 - [x] Multi-language support (7 languages)
 - [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
 - [x] **Light/Dark Mode Toggle**

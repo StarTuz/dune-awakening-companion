@@ -49,6 +49,36 @@ class BlueprintEditor {
     final updated = blueprint.copyWith(
       isUnlocked: !blueprint.isUnlocked,
       unlockedAt: blueprint.isUnlocked ? null : now,
+      respawnTimerEnabled:
+          blueprint.isUnlocked ? false : blueprint.respawnTimerEnabled,
+      updatedAt: now,
+    );
+    await _repository.upsert(updated);
+    _invalidate(updated.characterId);
+  }
+
+  Future<void> setRespawnTimerEnabled(
+    Blueprint blueprint,
+    bool isEnabled,
+  ) async {
+    final now = DateTime.now();
+    final updated = blueprint.copyWith(
+      respawnTimerEnabled: isEnabled,
+      unlockedAt: isEnabled && blueprint.unlockedAt == null
+          ? now
+          : blueprint.unlockedAt,
+      updatedAt: now,
+    );
+    await _repository.upsert(updated);
+    _invalidate(updated.characterId);
+  }
+
+  Future<void> resetRespawnTimer(Blueprint blueprint) async {
+    final now = DateTime.now();
+    final updated = blueprint.copyWith(
+      isUnlocked: true,
+      unlockedAt: now,
+      respawnTimerEnabled: true,
       updatedAt: now,
     );
     await _repository.upsert(updated);

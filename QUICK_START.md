@@ -57,7 +57,7 @@ Each feature is self-contained and can be added/modified independently.
 
 - **UI**: Flutter + Material 3 + adaptive navigation
 - **State**: Riverpod providers and notifiers
-- **Storage**: SQLite with migrations up to database v9
+- **Storage**: SQLite with migrations up to database v11
 - **Charts**: `fl_chart`
 - **Export/Import**: ZIP backup with JSON data and portraits
 - **Background alerts**: local notifications + WorkManager/system tray flows

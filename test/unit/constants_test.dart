@@ -26,6 +26,19 @@ void main() {
     );
   });
 
+  test('primary classes exclude Planetologist', () {
+    expect(
+        AppConstants.primaryClasses, contains(AppConstants.classBeneGesserit));
+    expect(AppConstants.primaryClasses, contains(AppConstants.classMentat));
+    expect(
+        AppConstants.primaryClasses, contains(AppConstants.classSwordmaster));
+    expect(AppConstants.primaryClasses, contains(AppConstants.classTrooper));
+    expect(
+      AppConstants.primaryClasses,
+      isNot(contains(AppConstants.classPlanetologist)),
+    );
+  });
+
   test('regions returns all keys from regionWorlds', () {
     final regions = AppConstants.regions;
     expect(

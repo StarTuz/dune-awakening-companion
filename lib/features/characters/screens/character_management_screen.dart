@@ -123,6 +123,7 @@ class CharacterManagementScreen extends ConsumerWidget {
     String? selectedServerType;
     String? selectedProvider;
     String? selectedWorld;
+    String? selectedPrimaryClass;
     List<String> availableWorlds = [];
     String? selectedPortraitPath; // Portrait path
 
@@ -276,6 +277,22 @@ class CharacterManagementScreen extends ConsumerWidget {
                     ),
                   ),
                 const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  decoration:
+                      const InputDecoration(labelText: 'Starting Class'),
+                  value: selectedPrimaryClass,
+                  items: AppConstants.primaryClasses
+                      .map<DropdownMenuItem<String>>((className) {
+                    return DropdownMenuItem<String>(
+                      value: className,
+                      child: Text(className),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() => selectedPrimaryClass = value);
+                  },
+                ),
+                const SizedBox(height: 16),
                 TextField(
                   controller: sietchController,
                   decoration: const InputDecoration(
@@ -316,6 +333,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                         selectedProvider,
                         worldValue!,
                         sietchController.text,
+                        selectedPrimaryClass,
                         selectedPortraitPath,
                         imageService,
                       );
@@ -347,6 +365,7 @@ class CharacterManagementScreen extends ConsumerWidget {
         character.serverType == AppConstants.serverTypeOfficial
             ? character.world
             : null;
+    String? selectedPrimaryClass = character.primaryClass;
     List<String> availableWorlds =
         AppConstants.getWorldsForRegion(character.region);
 
@@ -503,6 +522,22 @@ class CharacterManagementScreen extends ConsumerWidget {
                     ),
                   ),
                 const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  decoration:
+                      const InputDecoration(labelText: 'Starting Class'),
+                  value: selectedPrimaryClass,
+                  items: AppConstants.primaryClasses
+                      .map<DropdownMenuItem<String>>((className) {
+                    return DropdownMenuItem<String>(
+                      value: className,
+                      child: Text(className),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() => selectedPrimaryClass = value);
+                  },
+                ),
+                const SizedBox(height: 16),
                 TextField(
                   controller: sietchController,
                   decoration: const InputDecoration(
@@ -539,6 +574,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                     provider: selectedProvider,
                     world: worldValue,
                     sietch: sietchController.text,
+                    primaryClass: selectedPrimaryClass,
                     updatedAt: DateTime.now(),
                   );
 

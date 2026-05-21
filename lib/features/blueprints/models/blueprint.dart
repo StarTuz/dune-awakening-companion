@@ -13,6 +13,7 @@ class Blueprint {
   final String? notes;
   final bool isUnlocked;
   final DateTime? unlockedAt;
+  final bool respawnTimerEnabled;
   final String? questId;
   final String? mapPinId;
   final DateTime createdAt;
@@ -30,6 +31,7 @@ class Blueprint {
     this.notes,
     this.isUnlocked = false,
     this.unlockedAt,
+    this.respawnTimerEnabled = false,
     this.questId,
     this.mapPinId,
     required this.createdAt,
@@ -54,6 +56,7 @@ class Blueprint {
       unlockedAt: json['unlockedAt'] == null
           ? null
           : DateTime.parse(json['unlockedAt'] as String),
+      respawnTimerEnabled: json['respawnTimerEnabled'] as bool? ?? false,
       questId: json['questId'] as String?,
       mapPinId: json['mapPinId'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -74,6 +77,7 @@ class Blueprint {
       'notes': notes,
       'isUnlocked': isUnlocked,
       'unlockedAt': unlockedAt?.toIso8601String(),
+      'respawnTimerEnabled': respawnTimerEnabled,
       'questId': questId,
       'mapPinId': mapPinId,
       'createdAt': createdAt.toIso8601String(),
@@ -93,6 +97,7 @@ class Blueprint {
     Object? notes = _unset,
     bool? isUnlocked,
     Object? unlockedAt = _unset,
+    bool? respawnTimerEnabled,
     Object? questId = _unset,
     Object? mapPinId = _unset,
     DateTime? createdAt,
@@ -116,6 +121,7 @@ class Blueprint {
       unlockedAt: identical(unlockedAt, _unset)
           ? this.unlockedAt
           : unlockedAt as DateTime?,
+      respawnTimerEnabled: respawnTimerEnabled ?? this.respawnTimerEnabled,
       questId: identical(questId, _unset) ? this.questId : questId as String?,
       mapPinId:
           identical(mapPinId, _unset) ? this.mapPinId : mapPinId as String?,

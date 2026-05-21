@@ -73,6 +73,7 @@ void main() {
         notes: 'Verify exact source in-game before publishing as guide data.',
         isUnlocked: true,
         unlockedAt: now,
+        respawnTimerEnabled: true,
         questId: 'quest-placeholder',
         mapPinId: 'hagga-south-placeholder',
         createdAt: now,
@@ -89,6 +90,7 @@ void main() {
     expect(blueprints.single.name, 'Starter Cutter Schematic');
     expect(blueprints.single.requiredMaterials, contains('Scrap Metal'));
     expect(blueprints.single.isUnlocked, isTrue);
+    expect(blueprints.single.respawnTimerEnabled, isTrue);
     expect(blueprints.single.questId, 'quest-placeholder');
     expect(blueprints.single.mapPinId, 'hagga-south-placeholder');
   });

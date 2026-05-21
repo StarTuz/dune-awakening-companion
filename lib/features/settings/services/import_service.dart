@@ -8,6 +8,8 @@ import '../../augmentations/models/augmentation.dart';
 import '../../augmentations/services/augmentation_repository.dart';
 import '../../blueprints/models/blueprint.dart';
 import '../../blueprints/services/blueprint_repository.dart';
+import '../../class_quests/models/class_quest_progress.dart';
+import '../../class_quests/services/class_quest_repository.dart';
 import '../../characters/models/character.dart';
 import '../../bases/models/base.dart';
 import '../../characters/services/character_repository.dart';
@@ -49,6 +51,7 @@ class ImportService {
   final AugmentationRepository? _augmentationRepository;
   final QuestRepository? _questRepository;
   final BlueprintRepository? _blueprintRepository;
+  final ClassQuestRepository? _classQuestRepository;
 
   ImportService(
     this._characterRepository,
@@ -58,11 +61,13 @@ class ImportService {
     AugmentationRepository? augmentationRepository,
     QuestRepository? questRepository,
     BlueprintRepository? blueprintRepository,
+    ClassQuestRepository? classQuestRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
         _questRepository = questRepository,
-        _blueprintRepository = blueprintRepository;
+        _blueprintRepository = blueprintRepository,
+        _classQuestRepository = classQuestRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -346,6 +351,7 @@ class ImportService {
     final augmentationRepository = _augmentationRepository;
     final questRepository = _questRepository;
     final blueprintRepository = _blueprintRepository;
+    final classQuestRepository = _classQuestRepository;
 
     if (specializationRepository != null) {
       final items =
@@ -394,6 +400,23 @@ class ImportService {
       for (final item in blueprints) {
         final blueprint = Blueprint.fromJson(item as Map<String, dynamic>);
         await blueprintRepository.upsert(blueprint);
+      }
+    }
+
+    if (classQuestRepository != null) {
+      final classQuests = (data['classQuests'] as List<dynamic>? ?? const []);
+      for (final item in classQuests) {
+        final progress =
+            ClassQuestProgress.fromJson(item as Map<String, dynamic>);
+        await classQuestRepository.upsertProgress(progress);
+      }
+
+      final classQuestSteps =
+          (data['classQuestSteps'] as List<dynamic>? ?? const []);
+      for (final item in classQuestSteps) {
+        final step =
+            ClassQuestStepProgress.fromJson(item as Map<String, dynamic>);
+        await classQuestRepository.upsertStep(step);
       }
     }
   }

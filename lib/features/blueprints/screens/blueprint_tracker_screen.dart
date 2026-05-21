@@ -8,6 +8,8 @@ import '../models/blueprint.dart';
 import '../models/blueprint_catalog.dart';
 import '../providers/blueprint_provider.dart';
 
+const _schematicRespawnDuration = Duration(minutes: 45);
+
 class BlueprintTrackerScreen extends ConsumerStatefulWidget {
   const BlueprintTrackerScreen({super.key});
 
@@ -213,6 +215,16 @@ class _BlueprintTrackerScreenState
               return _BlueprintCard(
                 row: row,
                 onToggle: () => _toggleChecklistRow(characterId, row),
+                onToggleRespawnTimer: row.blueprint == null
+                    ? null
+                    : (isEnabled) => ref
+                        .read(blueprintEditorProvider)
+                        .setRespawnTimerEnabled(row.blueprint!, isEnabled),
+                onResetRespawn: row.blueprint == null
+                    ? null
+                    : () => ref
+                        .read(blueprintEditorProvider)
+                        .resetRespawnTimer(row.blueprint!),
                 onEdit: () => _showBlueprintDialog(
                   context,
                   null,
@@ -282,6 +294,7 @@ class _BlueprintTrackerScreenState
     String category = existing?.category ?? 'Schematic';
     String sourceType = existing?.sourceType ?? 'Unknown';
     bool isUnlocked = existing?.isUnlocked ?? false;
+    bool respawnTimerEnabled = existing?.respawnTimerEnabled ?? false;
     final nameController = TextEditingController(text: existing?.name ?? '');
     final sourceController =
         TextEditingController(text: existing?.sourceLocation ?? '');
@@ -408,9 +421,22 @@ class _BlueprintTrackerScreenState
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Unlocked'),
                   value: isUnlocked,
-                  onChanged: (value) =>
-                      setDialogState(() => isUnlocked = value),
+                  onChanged: (value) => setDialogState(() {
+                    isUnlocked = value;
+                    if (!isUnlocked) {
+                      respawnTimerEnabled = false;
+                    }
+                  }),
                 ),
+                if (isUnlocked)
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Respawn timer'),
+                    subtitle: const Text('Estimate 45 minutes after pickup'),
+                    value: respawnTimerEnabled,
+                    onChanged: (value) =>
+                        setDialogState(() => respawnTimerEnabled = value),
+                  ),
               ],
             ),
           ),
@@ -431,6 +457,7 @@ class _BlueprintTrackerScreenState
                     .toList();
                 final unlockedAt =
                     isUnlocked ? existing?.unlockedAt ?? now : null;
+                final shouldRunTimer = isUnlocked && respawnTimerEnabled;
 
                 final blueprint = Blueprint(
                   id: existing?.id ?? const Uuid().v4(),
@@ -444,6 +471,7 @@ class _BlueprintTrackerScreenState
                   notes: _emptyToNull(notesController.text),
                   isUnlocked: isUnlocked,
                   unlockedAt: unlockedAt,
+                  respawnTimerEnabled: shouldRunTimer,
                   questId: _emptyToNull(questController.text),
                   mapPinId: _emptyToNull(mapPinController.text),
                   createdAt: existing?.createdAt ?? now,
@@ -522,18 +550,26 @@ class _BlueprintChecklistRow {
 
   bool get isUnlocked => blueprint?.isUnlocked ?? false;
 
+  DateTime? get unlockedAt => blueprint?.unlockedAt;
+
+  bool get respawnTimerEnabled => blueprint?.respawnTimerEnabled ?? false;
+
   bool get isSeeded => entry != null;
 }
 
 class _BlueprintCard extends StatelessWidget {
   final _BlueprintChecklistRow row;
   final VoidCallback onToggle;
+  final ValueChanged<bool>? onToggleRespawnTimer;
+  final VoidCallback? onResetRespawn;
   final VoidCallback onEdit;
   final VoidCallback? onDelete;
 
   const _BlueprintCard({
     required this.row,
     required this.onToggle,
+    required this.onToggleRespawnTimer,
+    required this.onResetRespawn,
     required this.onEdit,
     required this.onDelete,
   });
@@ -564,6 +600,36 @@ class _BlueprintCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text('${row.category} • ${Blueprint.defaultRegion}'),
+                      if (row.isUnlocked) ...[
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            FilterChip(
+                              label: const Text('Respawn timer'),
+                              avatar: Checkbox(
+                                value: row.respawnTimerEnabled,
+                                onChanged: onToggleRespawnTimer == null
+                                    ? null
+                                    : (value) => onToggleRespawnTimer!(
+                                          value ?? false,
+                                        ),
+                                visualDensity: VisualDensity.compact,
+                              ),
+                              selected: row.respawnTimerEnabled,
+                              onSelected: onToggleRespawnTimer,
+                            ),
+                            if (row.respawnTimerEnabled &&
+                                row.unlockedAt != null)
+                              _RespawnTimerChip(
+                                unlockedAt: row.unlockedAt!,
+                                onReset: onResetRespawn,
+                              ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -616,5 +682,59 @@ class _BlueprintCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _RespawnTimerChip extends StatelessWidget {
+  final DateTime unlockedAt;
+  final VoidCallback? onReset;
+
+  const _RespawnTimerChip({
+    required this.unlockedAt,
+    required this.onReset,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<int>(
+      stream: Stream.periodic(const Duration(seconds: 1), (tick) => tick),
+      builder: (context, snapshot) {
+        final remaining = _remainingRespawnTime(unlockedAt);
+        final isReady = remaining <= Duration.zero;
+        final colorScheme = Theme.of(context).colorScheme;
+
+        return InputChip(
+          avatar: Icon(
+            isReady ? Icons.check_circle_outline : Icons.timer_outlined,
+            size: 18,
+          ),
+          label: Text(
+            isReady
+                ? 'Respawn ready'
+                : 'Respawns in ${_formatRespawnDuration(remaining)}',
+          ),
+          tooltip: 'Schematic respawn estimate: 45 minutes',
+          onPressed: onReset,
+          deleteIcon: const Icon(Icons.restart_alt, size: 18),
+          onDeleted: onReset,
+          backgroundColor: isReady
+              ? colorScheme.secondaryContainer
+              : colorScheme.surfaceContainerHighest,
+        );
+      },
+    );
+  }
+
+  Duration _remainingRespawnTime(DateTime unlockedAt) {
+    final readyAt = unlockedAt.add(_schematicRespawnDuration);
+    return readyAt.difference(DateTime.now());
+  }
+
+  String _formatRespawnDuration(Duration duration) {
+    final clamped = duration.isNegative ? Duration.zero : duration;
+    final minutes = clamped.inMinutes;
+    final seconds = clamped.inSeconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:'
+        '${seconds.toString().padLeft(2, '0')}';
   }
 }

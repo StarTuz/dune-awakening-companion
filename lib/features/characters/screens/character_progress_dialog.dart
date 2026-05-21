@@ -4,6 +4,9 @@ import 'package:uuid/uuid.dart';
 
 import '../../augmentations/models/augmentation.dart';
 import '../../augmentations/providers/augmentation_provider.dart';
+import '../../class_quests/models/class_quest_catalog.dart';
+import '../../class_quests/models/class_quest_progress.dart';
+import '../../class_quests/providers/class_quest_provider.dart';
 import '../../factions/models/faction_progress.dart';
 import '../../factions/providers/faction_progress_provider.dart';
 import '../../specializations/providers/character_specialization_provider.dart';
@@ -20,13 +23,14 @@ class CharacterProgressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text('${character.name} Progress'),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Specializations'),
+              Tab(text: 'Skills'),
               Tab(text: 'Factions'),
               Tab(text: 'Augments'),
             ],
@@ -35,6 +39,7 @@ class CharacterProgressDialog extends ConsumerWidget {
         body: TabBarView(
           children: [
             _SpecializationsTab(character: character),
+            _SkillsTab(character: character),
             _FactionProgressTab(character: character),
             _AugmentationsTab(character: character),
           ],
@@ -148,6 +153,224 @@ class _SpecializationsTabState extends ConsumerState<_SpecializationsTab> {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stack) => Center(child: Text('Error: $error')),
     );
+  }
+}
+
+class _SkillsTab extends ConsumerWidget {
+  const _SkillsTab({required this.character});
+
+  final Character character;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final progressAsync = ref.watch(classQuestProgressProvider(character.id));
+
+    return progressAsync.when(
+      data: (progressEntries) {
+        final byQuestId = {
+          for (final progress in progressEntries) progress.questId: progress,
+        };
+        final basicSkipped = character.primaryClass == null
+            ? 'Set this character’s starting class to auto-skip that basic unlock quest.'
+            : '${character.primaryClass} basic training is treated as already available for this character.';
+
+        return ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Card(
+              child: ListTile(
+                leading: const Icon(Icons.school_outlined),
+                title: const Text('Class Quests'),
+                subtitle: Text(
+                  '$basicSkipped Planetologist is always tracked as a secondary unlock.',
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            ...classQuestCatalog.map(
+              (entry) => _ClassQuestCard(
+                character: character,
+                entry: entry,
+                progress: byQuestId[entry.id],
+              ),
+            ),
+          ],
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('Error: $error')),
+    );
+  }
+}
+
+class _ClassQuestCard extends ConsumerWidget {
+  const _ClassQuestCard({
+    required this.character,
+    required this.entry,
+    required this.progress,
+  });
+
+  final Character character;
+  final ClassQuestCatalogEntry entry;
+  final ClassQuestProgress? progress;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isStartingClassBasic =
+        entry.isBasic && character.primaryClass == entry.className;
+    final effectiveStatus = isStartingClassBasic
+        ? ClassQuestStatus.notRequired
+        : progress?.status ?? ClassQuestStatus.notStarted;
+    final stepsAsync = progress == null
+        ? const AsyncValue<List<ClassQuestStepProgress>>.data([])
+        : ref.watch(classQuestStepsProvider(progress!.id));
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${entry.className} - ${_tierLabel(entry.tier)}',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(entry.questName),
+                    ],
+                  ),
+                ),
+                Chip(label: Text(_statusLabel(effectiveStatus))),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text('Trainer: ${entry.trainerName}'),
+            Text('Location: ${entry.trainerLocation}'),
+            const SizedBox(height: 8),
+            Text(entry.summary),
+            if (entry.prerequisites.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: entry.prerequisites
+                    .map((item) => Chip(label: Text(item)))
+                    .toList(),
+              ),
+            ],
+            if (entry.rewards != null) ...[
+              const SizedBox(height: 8),
+              Text('Rewards: ${entry.rewards}'),
+            ],
+            if (entry.notes != null) ...[
+              const SizedBox(height: 8),
+              Text(entry.notes!),
+            ],
+            const SizedBox(height: 12),
+            stepsAsync.when(
+              data: (stepProgressEntries) {
+                final completedSteps = {
+                  for (final step in stepProgressEntries)
+                    if (step.isCompleted) step.stepId,
+                };
+                return Column(
+                  children: [
+                    if (!isStartingClassBasic)
+                      ...entry.steps.map(
+                        (step) => CheckboxListTile(
+                          contentPadding: EdgeInsets.zero,
+                          value: completedSteps.contains(step.id),
+                          title: Text(step.title),
+                          subtitle:
+                              step.details == null ? null : Text(step.details!),
+                          onChanged: (value) {
+                            ref.read(classQuestEditorProvider).toggleStep(
+                                  characterId: character.id,
+                                  questId: entry.id,
+                                  stepId: step.id,
+                                  isCompleted: value ?? false,
+                                );
+                          },
+                        ),
+                      ),
+                    if (isStartingClassBasic)
+                      const ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Icon(Icons.check_circle_outline),
+                        title: Text(
+                          'Basic unlock skipped by starting class choice',
+                        ),
+                      ),
+                  ],
+                );
+              },
+              loading: () => const LinearProgressIndicator(),
+              error: (error, stack) => Text('Step error: $error'),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              children: [
+                if (!isStartingClassBasic &&
+                    effectiveStatus == ClassQuestStatus.notStarted)
+                  OutlinedButton(
+                    onPressed: () =>
+                        ref.read(classQuestEditorProvider).setStatus(
+                              characterId: character.id,
+                              questId: entry.id,
+                              status: ClassQuestStatus.inProgress,
+                            ),
+                    child: const Text('Start'),
+                  ),
+                if (!isStartingClassBasic &&
+                    effectiveStatus != ClassQuestStatus.completed)
+                  FilledButton(
+                    onPressed: () =>
+                        ref.read(classQuestEditorProvider).setStatus(
+                              characterId: character.id,
+                              questId: entry.id,
+                              status: ClassQuestStatus.completed,
+                            ),
+                    child: const Text('Complete'),
+                  ),
+                if (!isStartingClassBasic &&
+                    effectiveStatus != ClassQuestStatus.notStarted)
+                  TextButton(
+                    onPressed: () =>
+                        ref.read(classQuestEditorProvider).setStatus(
+                              characterId: character.id,
+                              questId: entry.id,
+                              status: ClassQuestStatus.notStarted,
+                            ),
+                    child: const Text('Reset status'),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _tierLabel(String tier) {
+    return tier == ClassQuestTier.basic ? 'Basic Unlock' : 'Advanced Chain';
+  }
+
+  String _statusLabel(String status) {
+    return switch (status) {
+      ClassQuestStatus.notRequired => 'Not required',
+      ClassQuestStatus.inProgress => 'In progress',
+      ClassQuestStatus.completed => 'Completed',
+      _ => 'Not started',
+    };
   }
 }
 

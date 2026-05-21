@@ -2,7 +2,7 @@
 
 **Last Updated:** May 19, 2026  
 **Current Version:** v1.3.0-beta  
-**Database Version:** v9  
+**Database Version:** v11  
 **Status:** Current app feature set is documented in `README.md`; this file keeps historical planning notes and future ideas.
 
 ---

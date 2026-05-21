@@ -39,6 +39,7 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
     String? provider,
     String world,
     String sietch,
+    String? primaryClass,
   ) async {
     try {
       final character = Character(
@@ -49,6 +50,7 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
         provider: provider,
         world: world,
         sietch: sietch,
+        primaryClass: primaryClass,
         portraitPath: null, // Will be set separately if portrait was selected
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -67,6 +69,7 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
     String? provider,
     String world,
     String sietch,
+    String? primaryClass,
     String? sourcePortraitPath,
     dynamic imageService, // Pass ImageService from dialog
   ) async {
@@ -88,6 +91,7 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
         provider: provider,
         world: world,
         sietch: sietch,
+        primaryClass: primaryClass,
         portraitPath: savedPortraitPath,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),

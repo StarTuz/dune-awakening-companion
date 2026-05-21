@@ -351,7 +351,7 @@ Make it the last screen you check before closing the app – know what needs att
 
 **Last Updated:** May 19, 2026  
 **App Version:** 1.3.0-beta  
-**Database Version:** v9
+**Database Version:** v11
 
 ---
 
