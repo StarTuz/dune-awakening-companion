@@ -139,7 +139,7 @@ void main() {
     // Default region filter is "All Regions" until a character pref is set.
     expect(find.text('All Regions'), findsOneWidget);
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('0 / 145 collected'), findsOneWidget);
+    expect(find.text('0 / 148 collected'), findsOneWidget);
   });
 
   testWidgets('marks seeded checklist rows collected per character',
@@ -178,7 +178,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('1 / 145 collected'), findsOneWidget);
+    expect(find.text('1 / 148 collected'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (widget) => widget is Checkbox && widget.value == true,

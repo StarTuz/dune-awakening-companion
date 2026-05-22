@@ -15,6 +15,8 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations
 ///  - Shield Wall (Eastern + Western):
 ///    https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations
+///  - The O'odham:
+///    https://www.ign.com/wikis/dune-awakening/All_The_O%27odham_Unique_Schematics_and_Locations
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -396,6 +398,80 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Spice-infused Aluminum Dust',
       'Spice-infused Copper Dust',
       'Tarl Cutteray',
+    ],
+  },
+  // The O'odham is mostly Mk4 overlap with Shield Wall. Three sites
+  // (Stonestep Village / ITS 71 / Rockwarren Village) share a 10-entry
+  // pool with ITS 60. ITS 163 shares a pool with ITS 142. Batigh Grotto
+  // overlaps with Sentinel City + Wreck of the Alecto (plus Poison Mist
+  // which is otherwise Sentinel City-only).
+  //
+  // Tarl Cutteray is listed at the tri-pool here per IGN; the user has
+  // separately reported it as moved to Sheol in-game. Canon test keeps
+  // the IGN listing for now — see "Pending corrections" in
+  // docs/RESEARCH_BLUEPRINTS.md.
+  "The O'odham": {
+    'Stonestep Village': [
+      'Bluddshot Buggy Engine Mk4',
+      'Compact Compactor Mk4',
+      'Eviscerator',
+      'Hajra Literjon Mk4',
+      'Improved Suspensor Jacket',
+      "Miner's Blessing",
+      'Night Rider Sandbike Boost Mk4',
+      'Pipecleaner',
+      "Shadrath's Drinker",
+      'Tarl Cutteray',
+    ],
+    'Imperial Testing Station No. 71': [
+      'Bluddshot Buggy Engine Mk4',
+      'Compact Compactor Mk4',
+      'Compression-Stim Leggings',
+      'Eviscerator',
+      'Hajra Literjon Mk4',
+      'Improved Suspensor Jacket',
+      "Miner's Blessing",
+      'Night Rider Sandbike Boost Mk4',
+      'Pipecleaner',
+      "Shadrath's Drinker",
+      'Tarl Cutteray',
+    ],
+    'Rockwarren Village': [
+      'Bluddshot Buggy Engine Mk4',
+      'Compact Compactor Mk4',
+      'Eviscerator',
+      'Hajra Literjon Mk4',
+      'Improved Suspensor Jacket',
+      "Miner's Blessing",
+      'Night Rider Sandbike Boost Mk4',
+      'Pipecleaner',
+      "Shadrath's Drinker",
+      'Tarl Cutteray',
+    ],
+    'Imperial Testing Station No. 163': [
+      'Buoyant Reaper Mk4',
+      'Firestorm',
+      'Improved Reaper Gloves',
+      'Ironwatch Special',
+      'Maraqeb Stillsuit Boots',
+      'Maraqeb Stillsuit Garment',
+      'Maraqeb Stillsuit Gloves',
+      'Maraqeb Stillsuit Mask',
+      'Mohandis Sandbike Engine Mk4',
+      'Rattler Boost Module Mk4',
+      'Spark-sword',
+    ],
+    'Batigh Grotto': [
+      "Denira's Gift",
+      'House Disruptor Pistol',
+      'Poison Mist',
+      "Quirth's Boots",
+      "Quirth's Gauntlets",
+      "Quirth's Helmet",
+      "Quirth's Jacket",
+      "Quirth's Pants",
+      "Sinner's Bloodbag",
+      'Way of the Fighter',
     ],
   },
 };

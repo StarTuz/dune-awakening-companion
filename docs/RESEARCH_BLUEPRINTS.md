@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22 (Shield Wall added)
+Last updated: 2026-05-22 (The O'odham added)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -57,6 +57,7 @@ multi-region rewrite — the catalog shape is presentational only.
 | Hagga Rift | [All Hagga Rift Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations) |
 | Jabal Eifrit (Al-gharb, Al-Janub, Al-sharq) | [All Jabal Eifrit Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations) |
 | Shield Wall (Eastern + Western) | [All Shield Wall Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations) |
+| The O'odham | [All The O'odham Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_The_O%27odham_Unique_Schematics_and_Locations) |
 
 ---
 
@@ -73,8 +74,9 @@ multi-region rewrite — the catalog shape is presentational only.
 | Jabal Eifrit Al-sharq | 3 | 20 | 13 |
 | Eastern Shield Wall | 4 | 45 | 35 |
 | Western Shield Wall | 4 | 48 | 25 |
-| **Total source rows** | — | **270** | — |
-| **Unique catalog entries** | — | — | **145** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³) |
+| The O'odham | 5 | 52 | 13 |
+| **Total source rows** | — | **322** | — |
+| **Unique catalog entries** | — | — | **148** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³ + 3 O'odham⁴) |
 
 ¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
@@ -92,6 +94,12 @@ new catalog rows. Only 8 schematics are truly Jabal-Eifrit-exclusive
 (Ripper Searing Shiv, Spice-infused Steel/Copper Dust, Glutton's
 Drinker, Reaper Gloves, The Tapper, Rigged Suspensor Jacket, Filter
 Extractor Mk3).
+
+⁴ The O'odham is **almost entirely overlap** with Shield Wall — 29 of
+the 32 schematics IGN lists at O'odham sites are existing Shield Wall
+catalog rows gaining O'odham sources rather than new rows. Only three
+schematics are O'odham-exclusive: Firestorm (ITS 163), Ironwatch
+Special (ITS 163), and Compression-Stim Leggings (ITS 71).
 
 ³ Shield Wall is mostly Mk4 versions of earlier-tier schematics
 (Bigger Buggy Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray
@@ -280,8 +288,30 @@ Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
 
 ⁹ The Southern Comms (E) / Passage of Artemis (W) / Sirr'asraar Vault (W) tri-source pool.
 ¹⁰ Spice-infused Aluminum Dust drops at **six** sites: Southern Comms, Passage of Artemis, Sirr'asraar Vault, Sentinel City, Wreck of the Alecto, *and* ITS 60.
-¹¹ The Sentinel City (E) / Wreck of the Alecto (W) dual-source pool.
+¹¹ The Sentinel City (E) / Wreck of the Alecto (W) dual-source pool (+ Batigh Grotto in The O'odham — see below).
 ¹² Spice-infused Copper Dust drops at Jabal Eifrit Al-gharb (Eastern Jumble), ITS 142, *and* ITS 60.
+
+### The O'odham
+
+| Site | Schematics |
+|------|------------|
+| Stonestep Village | Mk4 tri-source pool¹³ |
+| Imperial Testing Station No. 71 | Mk4 tri-source pool¹³, Compression-Stim Leggings |
+| Rockwarren Village | Mk4 tri-source pool¹³ |
+| Imperial Testing Station No. 163 | Buoyant Reaper Mk4¹⁴, Improved Reaper Gloves¹⁴, Maraqeb Stillsuit (Boots, Garment, Gloves, Mask)¹⁴, Mohandis Sandbike Engine Mk4¹⁴, Rattler Boost Module Mk4¹⁴, Spark-sword¹⁴, Firestorm, Ironwatch Special |
+| Batigh Grotto | Denira's Gift¹¹, House Disruptor Pistol¹¹, Poison Mist¹⁵, Quirth's set¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹ |
+
+¹³ The O'odham tri-source pool (Stonestep / ITS 71 / Rockwarren) shares
+its 10-entry pool with Western Shield Wall / ITS 60: Bluddshot Buggy
+Engine Mk4, Compact Compactor Mk4, Eviscerator, Hajra Literjon Mk4,
+Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost
+Mk4, Pipecleaner, Shadrath's Drinker, **Tarl Cutteray** (see Pending
+corrections re: Sheol).
+
+¹⁴ Also drops at Eastern Shield Wall / ITS 142.
+
+¹⁵ Poison Mist is otherwise Sentinel City-only — Batigh Grotto adds a
+second source.
 
 ---
 
@@ -332,6 +362,10 @@ repeatedly — worth a per-site "tips" string in a future iteration:
   Shield Wall) hides its chest behind a granite deposit — scan the
   rocks and cut through with a Cutteray. Same trick as the
   scan-and-cut sealed door at Wreck of Kytheria (Hagga Rift).
+- **Moisture-seal break-throughs.** Batigh Grotto (The O'odham) hides
+  its chest behind a moisture seal in a corner — break through it
+  after clearing the cave to reach a hidden room. Similar pattern to
+  Micro-sandwich Fabric seals seen in earlier regions.
 - **Layered Pentashield gating in Shield Wall.** Passage of Artemis
   (W) and Sentinel City (E) both use the now-familiar ID-band →
   pentashield gate; Wreck of the Alecto (W) requires retrieving the
@@ -372,13 +406,20 @@ the catalog rows yet — wait until Sheol is being added so the move can
 land in a single, consistent commit.
 
 - **Tarl Cutteray** is currently catalogued at Western Shield Wall /
-  Imperial Testing Station No. 60 (from IGN's Shield Wall guide). It
-  has since been **moved to Sheol** in-game. Something was probably
-  swapped into ITS 60 in its place; need to identify that exchange when
+  Imperial Testing Station No. 60 (per IGN's Shield Wall guide) **and**
+  at The O'odham / Stonestep Village + ITS 71 + Rockwarren Village (per
+  IGN's O'odham guide). User has separately reported it as **moved to
+  Sheol** in-game. Three possibilities to resolve when Sheol is added:
+  1. Both IGN guides are stale and Tarl Cutteray is now Sheol-only.
+  2. Tarl Cutteray genuinely drops in all four regions (Shield Wall +
+     O'odham + Sheol).
+  3. One of the IGN guides is fresh and the other is stale.
+  Something was probably swapped into ITS 60 (and possibly the O'odham
+  tri-pool) in its place; need to identify those exchanges when
   reviewing the Sheol guide.
-- General rule when adding Sheol: cross-check every Shield Wall entry
-  against the Sheol guide for swaps, not just adds. Recent IGN guide
-  pages may still show the pre-move state.
+- General rule when adding Sheol: cross-check every Shield Wall and
+  O'odham entry against the Sheol guide for swaps, not just adds.
+  Recent IGN guide pages may still show the pre-move state.
 
 ## Backlog
 
