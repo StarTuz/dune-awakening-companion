@@ -4,6 +4,7 @@ import 'blueprint.dart';
 import 'catalogs/hagga_basin_south.dart';
 import 'catalogs/hagga_rift.dart';
 import 'catalogs/jabal_eifrit.dart';
+import 'catalogs/shield_wall.dart';
 import 'catalogs/vermillius_gap.dart';
 
 /// A single in-world location where a schematic can drop.
@@ -69,6 +70,7 @@ const blueprintCatalog = [
   ...vermilliusGapBlueprintCatalog,
   ...haggaRiftBlueprintCatalog,
   ...jabalEifritBlueprintCatalog,
+  ...shieldWallBlueprintCatalog,
 ];
 
 /// Distinct region names that appear in the catalog, in the order the

@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22 (Jabal Eifrit added)
+Last updated: 2026-05-22 (Shield Wall added)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -56,6 +56,7 @@ multi-region rewrite — the catalog shape is presentational only.
 | Vermillius Gap (West + East) | [All Vermillius Gap Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Vermillius_Gap_Unique_Schematics_and_Locations) |
 | Hagga Rift | [All Hagga Rift Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations) |
 | Jabal Eifrit (Al-gharb, Al-Janub, Al-sharq) | [All Jabal Eifrit Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations) |
+| Shield Wall (Eastern + Western) | [All Shield Wall Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations) |
 
 ---
 
@@ -70,8 +71,10 @@ multi-region rewrite — the catalog shape is presentational only.
 | Jabal Eifrit Al-gharb | 2 | 16 | 16 |
 | Jabal Eifrit Al-Janub | 4 | 29 | 22 |
 | Jabal Eifrit Al-sharq | 3 | 20 | 13 |
-| **Total source rows** | — | **177** | — |
-| **Unique catalog entries** | — | — | **90** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit²) |
+| Eastern Shield Wall | 4 | 45 | 35 |
+| Western Shield Wall | 4 | 48 | 25 |
+| **Total source rows** | — | **270** | — |
+| **Unique catalog entries** | — | — | **145** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³) |
 
 ¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
@@ -89,6 +92,18 @@ new catalog rows. Only 8 schematics are truly Jabal-Eifrit-exclusive
 (Ripper Searing Shiv, Spice-infused Steel/Copper Dust, Glutton's
 Drinker, Reaper Gloves, The Tapper, Rigged Suspensor Jacket, Filter
 Extractor Mk3).
+
+³ Shield Wall is mostly Mk4 versions of earlier-tier schematics
+(Bigger Buggy Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray
+Mk4, The Emperor's Wings Mk4, Buoyant Reaper Mk4, Mohandis Sandbike
+Engine Mk4, Old Sparky Mk4, Hajra Literjon Mk4, Bluddshot Buggy Engine
+Mk4, Compact Compactor Mk4, Night Rider Sandbike Boost Mk4, plus new
+Mk4-only series: Stormrider Boost Module Mk4, Rattler Boost Module Mk4,
+Albatross Wing Module Mk4, Collapsible Dew Reaper Mk4). These are
+**different schematics** from their lower-Mk counterparts, not extra
+sources for the same entry. One entry — Spice-infused Copper Dust —
+genuinely overlaps with Jabal Eifrit Al-gharb and gains two Shield Wall
+sources on the existing row.
 
 ### Cross-source schematics
 
@@ -123,6 +138,25 @@ regions. Highlights:
   Stepstone + Al-Janub Runaway Camp + Hand of Khidr + Al-sharq Farhold).
 - Glutton's Bloodbag — 6 sources total (3 in Hagga Rift + 2 in Al-Janub
   + 1 in Al-sharq), tied with Buoyant Reaper Mk3 for catalog breadth.
+
+Shield Wall is mostly Mk4 (a fresh tier separate from the Mk1-Mk3 chain
+that earlier regions cover). Its biggest cross-sub-region pools are:
+
+- **Spice-infused Aluminum Dust** — 6 sources spanning both Shield Wall
+  pools and ITS 60. Tied with Glutton's Bloodbag and Buoyant Reaper Mk3
+  for the most-widely-shared schematic in the catalog.
+- **Tri-source pool** — Southern Comms (E), Passage of Artemis (W),
+  Sirr'asraar Vault (W) all share a 12-entry pool (Sentinel armor set
+  ×5, Long Shot, Spark-Knife, The Emperor's Wings Mk4, Bigger Buggy
+  Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray Mk4, plus
+  Spice-infused Aluminum Dust).
+- **Sentinel City (E) / Wreck of the Alecto (W)** — Quirth's armor set
+  ×5, Denira's Gift, House Disruptor Pistol, Sinner's Bloodbag, Way of
+  the Fighter, plus Spice-infused Aluminum Dust.
+
+Spice-infused Copper Dust now drops at three sites across two regions —
+Jabal Eifrit Al-gharb (Eastern Jumble), Eastern Shield Wall (ITS 142),
+and Western Shield Wall (ITS 60).
 
 Within a region, several schematics drop in 2-3 sites:
 
@@ -226,6 +260,29 @@ Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
 | Kel's Fallback | Callie's Breaker⁴, Glutton's Drinker⁷, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴ |
 | Unnamed observation point east of Farhold | Buoyant Reaper Mk3⁸, Glutton's Bloodbag⁵, Hajra Literjon Mk3⁸, Shock Gauntlets⁸, Skin-Lined Jacket⁸, Ta'lab Softstep Boots⁸, The Emperor's Wings Mk3⁸ |
 
+### Eastern Shield Wall
+
+| Site | Schematics |
+|------|------------|
+| Southern Comms | Sentinel set (Boots, Gauntlets, Helmet, Jacket, Pants)⁹, Long Shot⁹, Spark-Knife⁹, The Emperor's Wings Mk4⁹, Bigger Buggy Boot Mk4⁹, Filter Extractor Mk4⁹, Focused Buggy Cutteray Mk4⁹, Spice-infused Aluminum Dust¹⁰ |
+| Fangs of Maraqeb | Collapsible Dew Reaper Mk4, Idaho Softstep Boots, Power Gauntlets, Shadrath's Stillsuit (Boots, Garment, Gloves, Mask), Stammershot, Stormrider Boost Module Mk4 |
+| Sentinel City | Denira's Gift¹¹, House Burst Drillshot, House Disruptor Pistol¹¹, Poison Mist, Quirth's set (Boots, Gauntlets, Helmet, Jacket, Pants)¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹, Spice-infused Aluminum Dust¹⁰ |
+| Imperial Testing Station No. 142 | Abulurd's Rapture, Buoyant Reaper Mk4, Improved Reaper Gloves, Maraqeb Stillsuit (Boots, Garment, Gloves, Mask), Mohandis Sandbike Engine Mk4, Old Sparky Mk4, Rattler Boost Module Mk4, Spark-sword, Spice-infused Copper Dust¹² |
+
+### Western Shield Wall
+
+| Site | Schematics |
+|------|------------|
+| Passage of Artemis | Sentinel set + Mk4 buggy/tool pool⁹, Spice-infused Aluminum Dust¹⁰ — same 12 entries as Southern Comms |
+| Sirr'asraar Vault | Same 12-entry pool as Southern Comms / Passage of Artemis⁹ |
+| Wreck of the Alecto | Denira's Gift¹¹, House Disruptor Pistol¹¹, Quirth's set¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹, Spice-infused Aluminum Dust¹⁰ |
+| Imperial Testing Station No. 60 | Albatross Wing Module Mk4, Bluddshot Buggy Engine Mk4, Compact Compactor Mk4, Eviscerator, Experimental Vulcan GAU-94, Hajra Literjon Mk4, Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost Mk4, Pipecleaner, Shadrath's Drinker, Tarl Cutteray, Spice-infused Aluminum Dust¹⁰, Spice-infused Copper Dust¹² |
+
+⁹ The Southern Comms (E) / Passage of Artemis (W) / Sirr'asraar Vault (W) tri-source pool.
+¹⁰ Spice-infused Aluminum Dust drops at **six** sites: Southern Comms, Passage of Artemis, Sirr'asraar Vault, Sentinel City, Wreck of the Alecto, *and* ITS 60.
+¹¹ The Sentinel City (E) / Wreck of the Alecto (W) dual-source pool.
+¹² Spice-infused Copper Dust drops at Jabal Eifrit Al-gharb (Eastern Jumble), ITS 142, *and* ITS 60.
+
 ---
 
 ## Gotchas worth surfacing in-app later
@@ -271,6 +328,15 @@ repeatedly — worth a per-site "tips" string in a future iteration:
 - **Twin chests at one site.** The Unnamed observation point east of
   Farhold (Al-sharq) has *two* chests but they share the same drop pool —
   no extra schematics, just an additional chance per visit.
+- **Granite blockage / Cutteray cut-throughs.** Sirr'asraar Vault (W
+  Shield Wall) hides its chest behind a granite deposit — scan the
+  rocks and cut through with a Cutteray. Same trick as the
+  scan-and-cut sealed door at Wreck of Kytheria (Hagga Rift).
+- **Layered Pentashield gating in Shield Wall.** Passage of Artemis
+  (W) and Sentinel City (E) both use the now-familiar ID-band →
+  pentashield gate; Wreck of the Alecto (W) requires retrieving the
+  ID band deep in the wreck and walking it back to the entrance
+  pentashield.
 - **45-minute chest respawn.** Every multi-schematic site loops back:
   each chest cycles through the drop pool, so completionists need
   multiple visits. The `respawnTimerEnabled` flag on `Blueprint` exists

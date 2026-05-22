@@ -47,11 +47,20 @@ const jabalEifritBlueprintCatalog = [
       BlueprintSource(region: _alGharb, location: _easternJumble),
     ],
   ),
+  // Also drops in Shield Wall — see canon test for ITS 142 / ITS 60.
   BlueprintCatalogEntry(
     name: 'Spice-infused Copper Dust',
     category: 'Other',
     sources: [
       BlueprintSource(region: _alGharb, location: _easternJumble),
+      BlueprintSource(
+        region: 'Eastern Shield Wall',
+        location: 'Imperial Testing Station No. 142',
+      ),
+      BlueprintSource(
+        region: 'Western Shield Wall',
+        location: 'Imperial Testing Station No. 60',
+      ),
     ],
   ),
 

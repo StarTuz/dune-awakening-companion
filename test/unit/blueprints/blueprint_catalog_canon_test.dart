@@ -13,6 +13,8 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations
 ///  - Jabal Eifrit (Al-gharb, Al-Janub, Al-sharq):
 ///    https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations
+///  - Shield Wall (Eastern + Western):
+///    https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -276,6 +278,124 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Skin-Lined Jacket',
       "Ta'lab Softstep Boots",
       "The Emperor's Wings Mk3",
+    ],
+  },
+  // Shield Wall splits into Eastern + Western. Several schematics roll
+  // from three- and two-site pools that span both sub-regions; Spice-
+  // infused Aluminum Dust touches six sites in total. Spice-infused
+  // Copper Dust at ITS 142 / ITS 60 is already in the Jabal Eifrit
+  // catalog row that owns it.
+  'Eastern Shield Wall': {
+    'Southern Comms': [
+      'Bigger Buggy Boot Mk4',
+      'Filter Extractor Mk4',
+      'Focused Buggy Cutteray Mk4',
+      'Long Shot',
+      'Sentinel Boots',
+      'Sentinel Gauntlets',
+      'Sentinel Helmet',
+      'Sentinel Jacket',
+      'Sentinel Pants',
+      'Spark-Knife',
+      'Spice-infused Aluminum Dust',
+      "The Emperor's Wings Mk4",
+    ],
+    'Fangs of Maraqeb': [
+      'Collapsible Dew Reaper Mk4',
+      'Idaho Softstep Boots',
+      'Power Gauntlets',
+      "Shadrath's Stillsuit Boots",
+      "Shadrath's Stillsuit Garment",
+      "Shadrath's Stillsuit Gloves",
+      "Shadrath's Stillsuit Mask",
+      'Stammershot',
+      'Stormrider Boost Module Mk4',
+    ],
+    'Sentinel City': [
+      "Denira's Gift",
+      'House Burst Drillshot',
+      'House Disruptor Pistol',
+      'Poison Mist',
+      "Quirth's Boots",
+      "Quirth's Gauntlets",
+      "Quirth's Helmet",
+      "Quirth's Jacket",
+      "Quirth's Pants",
+      "Sinner's Bloodbag",
+      'Spice-infused Aluminum Dust',
+      'Way of the Fighter',
+    ],
+    'Imperial Testing Station No. 142': [
+      "Abulurd's Rapture",
+      'Buoyant Reaper Mk4',
+      'Improved Reaper Gloves',
+      'Maraqeb Stillsuit Boots',
+      'Maraqeb Stillsuit Garment',
+      'Maraqeb Stillsuit Gloves',
+      'Maraqeb Stillsuit Mask',
+      'Mohandis Sandbike Engine Mk4',
+      'Old Sparky Mk4',
+      'Rattler Boost Module Mk4',
+      'Spark-sword',
+      'Spice-infused Copper Dust',
+    ],
+  },
+  'Western Shield Wall': {
+    'Passage of Artemis': [
+      'Bigger Buggy Boot Mk4',
+      'Filter Extractor Mk4',
+      'Focused Buggy Cutteray Mk4',
+      'Long Shot',
+      'Sentinel Boots',
+      'Sentinel Gauntlets',
+      'Sentinel Helmet',
+      'Sentinel Jacket',
+      'Sentinel Pants',
+      'Spark-Knife',
+      'Spice-infused Aluminum Dust',
+      "The Emperor's Wings Mk4",
+    ],
+    "Sirr'asraar Vault": [
+      'Bigger Buggy Boot Mk4',
+      'Filter Extractor Mk4',
+      'Focused Buggy Cutteray Mk4',
+      'Long Shot',
+      'Sentinel Boots',
+      'Sentinel Gauntlets',
+      'Sentinel Helmet',
+      'Sentinel Jacket',
+      'Sentinel Pants',
+      'Spark-Knife',
+      'Spice-infused Aluminum Dust',
+      "The Emperor's Wings Mk4",
+    ],
+    'Wreck of the Alecto': [
+      "Denira's Gift",
+      'House Disruptor Pistol',
+      "Quirth's Boots",
+      "Quirth's Gauntlets",
+      "Quirth's Helmet",
+      "Quirth's Jacket",
+      "Quirth's Pants",
+      "Sinner's Bloodbag",
+      'Spice-infused Aluminum Dust',
+      'Way of the Fighter',
+    ],
+    'Imperial Testing Station No. 60': [
+      'Albatross Wing Module Mk4',
+      'Bluddshot Buggy Engine Mk4',
+      'Compact Compactor Mk4',
+      'Eviscerator',
+      'Experimental Vulcan GAU-94',
+      'Hajra Literjon Mk4',
+      'Improved Suspensor Jacket',
+      "Miner's Blessing",
+      'Night Rider Sandbike Boost Mk4',
+      'Pipecleaner',
+      "Shadrath's Drinker",
+      'Spice-infused Aluminum Dust',
+      'Spice-infused Copper Dust',
+      'Tarl Cutteray',
     ],
   },
 };
