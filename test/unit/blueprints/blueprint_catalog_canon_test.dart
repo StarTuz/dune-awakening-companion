@@ -9,6 +9,8 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations
 ///  - Vermillius Gap (West + East):
 ///    https://www.ign.com/wikis/dune-awakening/All_Vermillius_Gap_Unique_Schematics_and_Locations
+///  - Hagga Rift:
+///    https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -117,6 +119,64 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Mendia's Wrap",
       'Mohandis Sandbike Engine Mk3',
       'Night Rider Sandbike Boost Mk3',
+    ],
+  },
+  // IGN renders some Hagga Rift locations as "Imperial Testing Station #29"
+  // and "Choam Mineral Extraction Facility #6"; we normalise both to "No. N"
+  // to match the rest of the catalog.
+  'Hagga Rift': {
+    'The Spiral': [
+      'Inkvine Mask',
+      'Inkvine Jacket',
+      'Inkvine Gauntlets',
+      'Inkvine Pants',
+      'Inkvine Boots',
+      'Handheld Life Scanner Mk3',
+      "Assassin's Rifle",
+    ],
+    'Arctus Cavern': [
+      'Inkvine Mask',
+      'Inkvine Jacket',
+      'Inkvine Gauntlets',
+      'Inkvine Pants',
+      'Inkvine Boots',
+      'Handheld Life Scanner Mk3',
+      "Assassin's Rifle",
+    ],
+    'Deserter Camp in Imperial Testing Station No. 29': [
+      "Callie's Breaker",
+      "Glutton's Bloodbag",
+      'Old Sparky Mk3',
+      "Seb's Kisser",
+      'Shock-sword',
+      'Focused Buggy Cutteray Mk3',
+    ],
+    'Choam Mineral Extraction Facility No. 6': [
+      "Callie's Breaker",
+      "Glutton's Bloodbag",
+      'Old Sparky Mk3',
+      "Seb's Kisser",
+      'Shock-sword',
+      'Focused Buggy Cutteray Mk3',
+    ],
+    'Stepstone Cavern': [
+      "Glutton's Bloodbag",
+      'Buoyant Reaper Mk3',
+      'Hajra Literjon Mk3',
+      'Shock Gauntlets',
+      'Skin-Lined Jacket',
+      "Ta'lab Softstep Boots",
+      "The Emperor's Wings Mk3",
+    ],
+    'Wreck of Kytheria': [
+      "Karak's Helmet",
+      "Karak's Jacket",
+      "Karak's Gauntlets",
+      "Karak's Pants",
+      "Karak's Boots",
+      'Way of the Lost Maula Pistol',
+      "Zaal's Companion Assault Rifle",
+      'Ripper Scattergun',
     ],
   },
 };

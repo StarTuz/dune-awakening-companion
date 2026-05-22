@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22
+Last updated: 2026-05-22 (Hagga Rift added)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -29,28 +29,52 @@ multi-region rewrite — the catalog shape is presentational only.
 |--------|-------|
 | Hagga Basin South | [All Hagga Basin South Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations) |
 | Vermillius Gap (West + East) | [All Vermillius Gap Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Vermillius_Gap_Unique_Schematics_and_Locations) |
+| Hagga Rift | [All Hagga Rift Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations) |
 
 ---
 
 ## Region coverage
 
-| Region | Sites | Source rows | Unique schematics |
+| Region | Sites | Source rows | Unique schematics within region |
 |--------|-------|-------------|-------------------|
 | Hagga Basin South | 7 | 17 | 17 |
-| Vermillius Gap West | 7 | 29 | 29 unique within region |
-| Vermillius Gap East | 4 | 25 | 25 unique within region |
-| **Total source rows** | — | **71** | — |
-| **Unique catalog entries** | — | — | **56** (17 Hagga + 39 VG) |
+| Vermillius Gap West | 7 | 29 | 29 |
+| Vermillius Gap East | 4 | 25 | 25 |
+| Hagga Rift | 6 | 41 | 27 |
+| **Total source rows** | — | **112** | — |
+| **Unique catalog entries** | — | — | **82** (17 Hagga + 39 VG + 26 Hagga Rift¹) |
 
-Vermillius Gap West and East share **15 schematics** between them — same
-name, two drop sites:
+¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
+(`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
+contributes 26 *new* catalog entries on top of the existing VG row, which
+gains a second source.
+
+### Cross-source schematics
+
+Vermillius Gap West and East share **15 schematics** — same name, two drop
+sites:
 
 - `Old Sparky Mk2`, `Hajra Literjon Mk2`, `Scipio's Bloodbag`, `The Emperor's Wings Mk2` (Table of the Gods ↔ Mirzabah's Head)
 - `Oathbreaker` ×5 (Coils of the Wyrm ↔ Suk Alusus)
 - `Pseudo-Pulse-Sword`, `Mendia's` ×5 (Miner's Watch ↔ Imperial Testing Station No. 10)
 
-These collapse into single catalog entries with two sources each — checking
-either source unlocks the schematic everywhere.
+Hagga Rift overlaps with Vermillius Gap East on **1 schematic**:
+
+- `Buoyant Reaper Mk3` (Mirzabah's Head ↔ Stepstone Cavern)
+
+Within Hagga Rift, several schematics drop in 2-3 sites of the same region:
+
+- 7 schematics drop in *either* **The Spiral** *or* **Arctus Cavern**
+  (Inkvine ×5, Handheld Life Scanner Mk3, Assassin's Rifle)
+- 6 schematics drop in *either* the **Deserter Camp** *or* **Choam #6**
+  (Callie's Breaker, Old Sparky Mk3, Seb's Kisser, Shock-sword,
+  Focused Buggy Cutteray Mk3, Glutton's Bloodbag)
+- `Glutton's Bloodbag` actually has **three** drop sites — Deserter Camp,
+  Choam #6, *and* Stepstone Cavern.
+
+All multi-source schematics collapse into single catalog entries with the
+full sources list — unlocking from any listed site flips the checklist
+everywhere it appears.
 
 ---
 
@@ -84,12 +108,28 @@ either source unlocks the schematic everywhere.
 
 | Site | Schematics |
 |------|------------|
-| Mirzabah's Head | Buoyant Reaper Mk3, Hajra Literjon Mk2¹, Old Sparky Mk2¹, Scipio's Bloodbag¹, The Emperor's Wings Mk2¹ |
+| Mirzabah's Head | Buoyant Reaper Mk3², Hajra Literjon Mk2¹, Old Sparky Mk2¹, Scipio's Bloodbag¹, The Emperor's Wings Mk2¹ |
 | Suk Alusus | Oathbreaker set¹ |
 | Ghanima Cavern | Menol's Stillsuit (Boots, Garment, Gloves, Mask), Night Rider Sandbike Boost Mk2 |
 | Imperial Testing Station No. 10 | Pseudo-Pulse-Sword¹, Bigger Buggy Boot Mk3, Bluddshot Buggy Engine Mk3, Mendia's set¹, Mohandis Sandbike Engine Mk3, Night Rider Sandbike Boost Mk3 |
 
 ¹ Also drops in the other Vermillius Gap sub-region.
+² Also drops in Hagga Rift (Stepstone Cavern).
+
+### Hagga Rift
+
+| Site | Schematics |
+|------|------------|
+| The Spiral | Inkvine set (Mask, Jacket, Gauntlets, Pants, Boots)³, Handheld Life Scanner Mk3³, Assassin's Rifle³ |
+| Arctus Cavern | Inkvine set³, Handheld Life Scanner Mk3³, Assassin's Rifle³ |
+| Deserter Camp in Imperial Testing Station No. 29 | Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴ |
+| Choam Mineral Extraction Facility No. 6 | Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴ |
+| Stepstone Cavern | Buoyant Reaper Mk3², Glutton's Bloodbag⁵, Hajra Literjon Mk3, Shock Gauntlets, Skin-Lined Jacket, Ta'lab Softstep Boots, The Emperor's Wings Mk3 |
+| Wreck of Kytheria | Karak's set (Helmet, Jacket, Gauntlets, Pants, Boots), Way of the Lost Maula Pistol, Zaal's Companion Assault Rifle, Ripper Scattergun |
+
+³ Drops at *either* The Spiral *or* Arctus Cavern.
+⁴ Drops at *either* the Deserter Camp *or* Choam Mineral Extraction Facility No. 6.
+⁵ Glutton's Bloodbag drops at *all three* of Deserter Camp, Choam #6, and Stepstone Cavern.
 
 ---
 
@@ -98,19 +138,34 @@ either source unlocks the schematic everywhere.
 These don't shape the data model today, but the IGN guides flag them
 repeatedly — worth a per-site "tips" string in a future iteration:
 
-- **ID bands required.** Wreck of the Pallas (West) needs a band cut out of
-  a sealed door with a Cutteray. Suk Alusus (East) uses a **purple** band
-  pulled from a market room.
+- **ID bands required.** Wreck of the Pallas (VG West) needs a band cut
+  out of a sealed door with a Cutteray. Suk Alusus (VG East) uses a
+  **purple** band pulled from a market room. The Spiral and Arctus
+  Cavern (Hagga Rift) both gate the chest behind a **pentashield**;
+  Arctus Cavern's ID band is **red** and the matching shield turns
+  green once the band is collected.
 - **False bookshelves / glowing vertical yellow lines** open hidden rooms
   containing Minimic Films in most Imperial Testing Stations.
-- **Radiation hazards.** The Anomaly (West) requires radiation protection;
-  Wreck of the Pallas has irradiated rooms that can be avoided.
-- **45-minute chest respawn.** Every multi-schematic site loops back: each
-  chest cycles through the drop pool, so completionists need multiple
-  visits. The `respawnTimerEnabled` flag on `Blueprint` exists for this
-  but is not auto-enabled by the seed.
-- **Climb requirements.** Table of the Gods, Mirzabah's Head: easiest via
-  Ornithopter; otherwise scale an adjacent butte and grapple/jump.
+- **Radiation hazards.** The Anomaly (VG West) requires radiation
+  protection; Wreck of the Pallas has irradiated rooms that can be
+  avoided.
+- **Poison gas.** Choam Mineral Extraction Facility No. 6 (Hagga Rift)
+  has multiple gas-filled rooms — bring filters or move fast.
+- **Fire / scan-and-cut doors.** Wreck of Kytheria (Hagga Rift) is
+  reached via a "ragged hole" in the main floor with fire below; the
+  chest sits behind a sealed door that must be scanned, then cut
+  through.
+- **Vertical descent / climb.** Deserter Camp sits inside a giant
+  vertical tunnel above Imperial Testing Station No. 29; the chest is
+  in a secret cavern partway down. Stepstone Cavern requires
+  Grappler + suspension gear (or careful stamina-managed climbing) to
+  reach the schematic ledge.
+- **45-minute chest respawn.** Every multi-schematic site loops back:
+  each chest cycles through the drop pool, so completionists need
+  multiple visits. The `respawnTimerEnabled` flag on `Blueprint` exists
+  for this but is not auto-enabled by the seed.
+- **Climb requirements.** Table of the Gods, Mirzabah's Head: easiest
+  via Ornithopter; otherwise scale an adjacent butte and grapple/jump.
 
 ---
 
