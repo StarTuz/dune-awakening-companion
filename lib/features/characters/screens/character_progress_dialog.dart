@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../core/utils/constants.dart';
 import '../../augmentations/models/augmentation.dart';
 import '../../augmentations/providers/augmentation_provider.dart';
 import '../../class_quests/models/class_quest_catalog.dart';
@@ -9,6 +10,9 @@ import '../../class_quests/models/class_quest_progress.dart';
 import '../../class_quests/providers/class_quest_provider.dart';
 import '../../factions/models/faction_progress.dart';
 import '../../factions/providers/faction_progress_provider.dart';
+import '../../skills/models/character_skill.dart';
+import '../../skills/models/skill_catalog.dart';
+import '../../skills/providers/skill_provider.dart';
 import '../../specializations/providers/character_specialization_provider.dart';
 import '../models/character.dart';
 
@@ -23,14 +27,16 @@ class CharacterProgressDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text('${character.name} Progress'),
           bottom: const TabBar(
+            isScrollable: true,
             tabs: [
               Tab(text: 'Specializations'),
-              Tab(text: 'Skills'),
+              Tab(text: 'Class Quests'),
+              Tab(text: 'Skill Planner'),
               Tab(text: 'Factions'),
               Tab(text: 'Augments'),
             ],
@@ -39,7 +45,8 @@ class CharacterProgressDialog extends ConsumerWidget {
         body: TabBarView(
           children: [
             _SpecializationsTab(character: character),
-            _SkillsTab(character: character),
+            _ClassQuestsTab(character: character),
+            _SkillPlannerTab(character: character),
             _FactionProgressTab(character: character),
             _AugmentationsTab(character: character),
           ],
@@ -156,8 +163,8 @@ class _SpecializationsTabState extends ConsumerState<_SpecializationsTab> {
   }
 }
 
-class _SkillsTab extends ConsumerWidget {
-  const _SkillsTab({required this.character});
+class _ClassQuestsTab extends ConsumerWidget {
+  const _ClassQuestsTab({required this.character});
 
   final Character character;
 
@@ -688,6 +695,293 @@ class _AugmentationsTab extends ConsumerWidget {
               child: const Text('Save'),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SkillPlannerTab extends ConsumerStatefulWidget {
+  const _SkillPlannerTab({required this.character});
+
+  final Character character;
+
+  @override
+  ConsumerState<_SkillPlannerTab> createState() => _SkillPlannerTabState();
+}
+
+class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
+  String _selectedClass = AppConstants.classBeneGesserit;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.character.primaryClass != null &&
+        AppConstants.allProgressionClasses
+            .contains(widget.character.primaryClass)) {
+      _selectedClass = widget.character.primaryClass!;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final catalog = ref.watch(skillCatalogProvider);
+    final skillsAsync =
+        ref.watch(characterSkillsProvider(widget.character.id));
+
+    return Scaffold(
+      body: skillsAsync.when(
+        data: (characterSkills) {
+          final skillMap = {for (final s in characterSkills) s.skillId: s};
+          final classSkills =
+              catalog.where((s) => s.className == _selectedClass).toList();
+          final trees = classSkills.map((s) => s.treeName).toSet().toList();
+          
+          int totalPoints = 0;
+          for (final s in characterSkills) {
+            final catalogEntry = catalog.firstWhere(
+                (c) => c.id == s.skillId,
+                orElse: () => catalog.first);
+            totalPoints += s.currentRank * catalogEntry.pointCostPerRank;
+          }
+
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: _selectedClass,
+                        items: AppConstants.allProgressionClasses
+                            .map((c) => DropdownMenuItem(
+                                  value: c,
+                                  child: Text(c),
+                                ))
+                            .toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _selectedClass = val);
+                        },
+                        decoration: const InputDecoration(labelText: 'Class'),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text('Total Points Spent'),
+                        Text(
+                          '$totalPoints / 200',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: totalPoints > 200 ? Colors.red : null,
+                              ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: trees.length,
+                  itemBuilder: (context, index) {
+                    final treeName = trees[index];
+                    final treeSkills = classSkills
+                        .where((s) => s.treeName == treeName)
+                        .toList();
+
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              treeName,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const Divider(),
+                            ...treeSkills.map((skill) {
+                              final charSkill = skillMap[skill.id];
+                              final currentRank = charSkill?.currentRank ?? 0;
+                              final targetRank = charSkill?.targetRank ?? 0;
+                              final isEquipped = charSkill?.isEquipped ?? false;
+
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(skill.name,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          const SizedBox(height: 2),
+                                          Row(
+                                            children: [
+                                              _SkillTypeBadge(type: skill.type),
+                                              const SizedBox(width: 6),
+                                              Text(
+                                                'Cost: ${skill.pointCostPerRank} pt/rank',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          if (skill.type == 'active' ||
+                                              skill.type == 'technique') ...[
+                                            const Text('Equip: '),
+                                            Checkbox(
+                                              value: isEquipped,
+                                              onChanged: currentRank > 0
+                                                  ? (val) => _updateSkill(skill,
+                                                      charSkill, currentRank, targetRank, val ?? false)
+                                                  : null,
+                                            ),
+                                          ],
+                                          const SizedBox(width: 8),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  const Text('Rank: ', style: TextStyle(fontSize: 12)),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.remove, size: 16),
+                                                    onPressed: currentRank > 0
+                                                        ? () => _updateSkill(skill,
+                                                            charSkill, currentRank - 1, targetRank, isEquipped)
+                                                        : null,
+                                                  ),
+                                                  Text('$currentRank / ${skill.maxRank}'),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.add, size: 16),
+                                                    onPressed: currentRank < skill.maxRank
+                                                        ? () => _updateSkill(skill,
+                                                            charSkill, currentRank + 1, targetRank, isEquipped)
+                                                        : null,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Text('Target: ', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.remove, size: 16),
+                                                    color: Colors.grey,
+                                                    onPressed: targetRank > 0
+                                                        ? () => _updateSkill(skill,
+                                                            charSkill, currentRank, targetRank - 1, isEquipped)
+                                                        : null,
+                                                  ),
+                                                  Text('$targetRank / ${skill.maxRank}', style: const TextStyle(color: Colors.grey)),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.add, size: 16),
+                                                    color: Colors.grey,
+                                                    onPressed: targetRank < skill.maxRank
+                                                        ? () => _updateSkill(skill,
+                                                            charSkill, currentRank, targetRank + 1, isEquipped)
+                                                        : null,
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, stack) => Center(child: Text('Error: $error')),
+      ),
+    );
+  }
+
+  void _updateSkill(SkillCatalogEntry catalogEntry, CharacterSkill? existing,
+      int newCurrent, int newTarget, bool newEquipped) {
+    if (newTarget < newCurrent) newTarget = newCurrent;
+    
+    if (newCurrent == 0) newEquipped = false;
+
+    final updated = (existing ??
+            CharacterSkill(
+              id: const Uuid().v4(),
+              characterId: widget.character.id,
+              skillId: catalogEntry.id,
+              currentRank: 0,
+              isEquipped: false,
+              createdAt: DateTime.now(),
+              updatedAt: DateTime.now(),
+            ))
+        .copyWith(
+      currentRank: newCurrent,
+      targetRank: newTarget,
+      isEquipped: newEquipped,
+      updatedAt: DateTime.now(),
+    );
+
+    ref.read(characterSkillEditorProvider).save(updated);
+  }
+}
+
+class _SkillTypeBadge extends StatelessWidget {
+  const _SkillTypeBadge({required this.type});
+
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final (label, bg, fg) = switch (type) {
+      'active' => ('ABILITY', scheme.primary, scheme.onPrimary),
+      'technique' => ('TECHNIQUE', scheme.secondary, scheme.onSecondary),
+      _ => (
+          'PASSIVE',
+          scheme.surfaceContainerHighest,
+          scheme.onSurfaceVariant,
+        ),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: fg,
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
         ),
       ),
     );

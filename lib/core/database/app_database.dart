@@ -13,6 +13,7 @@ import 'migrations/migration_008_add_quest_reminder.dart';
 import 'migrations/migration_009_add_blueprints.dart';
 import 'migrations/migration_010_add_blueprint_respawn_timer.dart';
 import 'migrations/migration_011_add_class_quests.dart';
+import 'migrations/migration_012_add_character_skills.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -36,7 +37,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 11,
+      version: 12,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -99,6 +100,9 @@ class AppDatabase {
     if (version >= 11) {
       await Migration011AddClassQuests.up(db);
     }
+    if (version >= 12) {
+      await Migration012AddCharacterSkills.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -132,6 +136,9 @@ class AppDatabase {
     if (oldVersion < 11) {
       await Migration011AddClassQuests.up(db);
     }
+    if (oldVersion < 12) {
+      await Migration012AddCharacterSkills.up(db);
+    }
   }
 
   Future<void> initialize() async {
@@ -158,6 +165,7 @@ class AppDatabase {
       await txn.delete('character_class_quests');
       await txn.delete('quest_steps');
       await txn.delete('quests');
+      await txn.delete('character_skills');
     });
   }
 }
