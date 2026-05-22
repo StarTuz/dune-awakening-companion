@@ -492,6 +492,68 @@ the canon test's deviations from raw IGN data don't look mysterious:
   stores Sentinel Pants. The Sentinel armor set is now consistent
   across all 4 sites it drops at.
 
+## Future regions & content (deferred)
+
+All Funcom-released regions in the base game are catalogued as of
+2026-05-22. Known-pending additions worth documenting now so they
+aren't forgotten:
+
+### Deep Desert
+
+The remaining base-game region. **Defer for now** — it has undergone
+significant rework across multiple patches since release, so IGN data
+is more volatile than the relatively stable inner-zone regions. Worth
+waiting for a stable state, then importing in a single pass.
+
+When ready: same pattern as the other regions — new
+`deep_desert.dart` under `catalogs/`, canon-test entry, doc section.
+Special considerations to look out for:
+- Deep Desert is partially or fully open-PvP and may have moved
+  schematics in/out as Funcom tuned the loot economy.
+- It may use distinct chest mechanics (PvP boxes, faction-tied drops)
+  that the current `BlueprintSource` model handles fine but the docs
+  should explain.
+
+### Lost Harvest DLC
+
+DLC content that unlocks the **treadwheel** (vehicle / device — to
+confirm category when adding). Conditional on DLC ownership.
+
+Open questions to resolve when adding:
+- Does the treadwheel come with its own schematic chest(s), or is it
+  unlocked via a quest/purchase rather than a chest pool? If
+  quest/purchase only, it may not fit the current catalog model
+  cleanly.
+- DLC gating — the catalog doesn't currently have a "requires DLC"
+  flag on `BlueprintCatalogEntry`; consider whether to add one or
+  leave it implicit in the location/region name.
+
+### 10 overland map locations (T6 gear + augments)
+
+A set of 10 overland (i.e., outside the existing 12 regions) chest
+locations that drop **Tier 6** gear schematics and augments. T6 is a
+tier above Sheol's T5/Duraluminum.
+
+Open questions:
+- Are these grouped into a "region" (e.g. "Overland" / "World Map") or
+  scattered across existing regions? The catalog model assumes
+  region → site → schematic, so we need a region label.
+- Augments are tracked in a separate feature
+  (`lib/features/augmentations/`) — only the gear schematics belong
+  in the blueprint catalog. Augment drops at these locations should
+  feed the augmentation catalog instead.
+
+### Patch 1.4 — The Wind Pass and The Old Quarry Testing Station
+
+Two new sites added in patch 1.4. Need to confirm whether they sit
+inside existing regions (most likely — extending Shield Wall, Hagga
+Rift, or similar) or are net-new regions.
+
+When adding: figure out the parent region first, then add as new
+locations on existing or new region rows.
+
+---
+
 ## Backlog
 
 ### Per-site tips/notes
