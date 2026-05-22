@@ -6,6 +6,7 @@ import 'catalogs/hagga_rift.dart';
 import 'catalogs/jabal_eifrit.dart';
 import 'catalogs/mysa_tarill.dart';
 import 'catalogs/oodham.dart';
+import 'catalogs/sheol.dart';
 import 'catalogs/shield_wall.dart';
 import 'catalogs/vermillius_gap.dart';
 
@@ -75,6 +76,7 @@ const blueprintCatalog = [
   ...shieldWallBlueprintCatalog,
   ...oodhamBlueprintCatalog,
   ...mysaTarillBlueprintCatalog,
+  ...sheolBlueprintCatalog,
 ];
 
 /// Distinct region names that appear in the catalog, in the order the

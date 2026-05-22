@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22 (Mysa Tarill added)
+Last updated: 2026-05-22 (Sheol added — all regions catalogued)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -59,6 +59,7 @@ multi-region rewrite — the catalog shape is presentational only.
 | Shield Wall (Eastern + Western) | [All Shield Wall Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations) |
 | The O'odham | [All The O'odham Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_The_O%27odham_Unique_Schematics_and_Locations) |
 | Mysa Tarill | [All Mysa Tarill Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Mysa_Tarill_Unique_Schematics_and_Locations) |
+| Sheol | [All Sheol Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Sheol_Unique_Schematics_and_Locations) |
 
 ---
 
@@ -77,8 +78,9 @@ multi-region rewrite — the catalog shape is presentational only.
 | Western Shield Wall | 4 | 48 | 25 |
 | The O'odham | 5 | 52 | 13 |
 | Mysa Tarill | 2 | 20 | 12 |
-| **Total source rows** | — | **342** | — |
-| **Unique catalog entries** | — | — | **149** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³ + 3 O'odham⁴ + 1 Mysa Tarill⁵) |
+| Sheol | 5 | 40 | 26 |
+| **Total source rows** | — | **382** | — |
+| **Unique catalog entries** | — | — | **175** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 54 Shield Wall³ + 4 O'odham⁴ + 1 Mysa Tarill⁵ + 26 Sheol⁶) |
 
 ¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
@@ -113,6 +115,15 @@ Dust). Only Clapper Mk4 is Mysa-Tarill-exclusive.
 (IGN's Mysa Tarill guide table renders Sentinel Pants as a duplicate
 "Sentinel Jacket" row — confirmed in-game as a typo; catalog uses
 Sentinel Pants.)
+
+⁶ Sheol is the endgame Mk5/Duraluminum region — almost all entries
+here are net-new schematics rather than overlap. The 26 catalog rows
+in `sheol.dart` include 25 Sheol-exclusive schematics plus Tarl
+Cutteray, which was **moved here from the T4 zones by patch 1.1.20**
+(see "Known IGN-vs-in-game discrepancies" above). Counter-direction:
+Sandflies Carver was swapped INTO the vacated T4 sites; its catalog
+row lives in `oodham.dart` since 3 of its 4 sources are in The
+O'odham.
 
 ³ Shield Wall is mostly Mk4 versions of earlier-tier schematics
 (Bigger Buggy Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray
@@ -297,7 +308,7 @@ Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
 | Passage of Artemis | Sentinel set + Mk4 buggy/tool pool⁹, Spice-infused Aluminum Dust¹⁰ — same 12 entries as Southern Comms |
 | Sirr'asraar Vault | Same 12-entry pool as Southern Comms / Passage of Artemis⁹ |
 | Wreck of the Alecto | Denira's Gift¹¹, House Disruptor Pistol¹¹, Quirth's set¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹, Spice-infused Aluminum Dust¹⁰ |
-| Imperial Testing Station No. 60 | Albatross Wing Module Mk4, Bluddshot Buggy Engine Mk4, Compact Compactor Mk4, Eviscerator, Experimental Vulcan GAU-94, Hajra Literjon Mk4, Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost Mk4, Pipecleaner, Shadrath's Drinker, Tarl Cutteray, Spice-infused Aluminum Dust¹⁰, Spice-infused Copper Dust¹² |
+| Imperial Testing Station No. 60 | Albatross Wing Module Mk4, Bluddshot Buggy Engine Mk4, Compact Compactor Mk4, Eviscerator, Experimental Vulcan GAU-94, Hajra Literjon Mk4, Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost Mk4, Pipecleaner, Sandflies Carver¹⁸, Shadrath's Drinker, Spice-infused Aluminum Dust¹⁰, Spice-infused Copper Dust¹² |
 
 ⁹ The Southern Comms (E) / Passage of Artemis (W) / Sirr'asraar Vault (W) tri-source pool.
 ¹⁰ Spice-infused Aluminum Dust drops at **six** sites: Southern Comms, Passage of Artemis, Sirr'asraar Vault, Sentinel City, Wreck of the Alecto, *and* ITS 60.
@@ -318,13 +329,19 @@ Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
 its 10-entry pool with Western Shield Wall / ITS 60: Bluddshot Buggy
 Engine Mk4, Compact Compactor Mk4, Eviscerator, Hajra Literjon Mk4,
 Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost
-Mk4, Pipecleaner, Shadrath's Drinker, **Tarl Cutteray** (see Pending
-corrections re: Sheol).
+Mk4, Pipecleaner, Sandflies Carver, Shadrath's Drinker. (Prior to patch
+1.1.20 this pool included Tarl Cutteray instead of Sandflies Carver —
+see "Known IGN-vs-in-game discrepancies".)
 
 ¹⁴ Also drops at Eastern Shield Wall / ITS 142.
 
 ¹⁵ Poison Mist is otherwise Sentinel City-only — Batigh Grotto adds a
 second source.
+
+¹⁸ Sandflies Carver was swapped INTO this site (and the O'odham
+tri-pool) by patch 1.1.20 as a T4 replacement for Tarl Cutteray. Its
+catalog row lives in `oodham.dart` since 3 of its 4 sources are in
+The O'odham.
 
 ### Mysa Tarill
 
@@ -341,6 +358,28 @@ site does NOT include Power Gauntlets — that one is Fangs-exclusive.
 ¹⁷ IGN's table renders Sentinel Pants as a duplicate "Sentinel Jacket"
 row — confirmed in-game as a typo; the catalog stores it as Sentinel
 Pants.
+
+### Sheol
+
+The endgame Mk5/Duraluminum region. Heavy radiation zones, the central
+open-PvP shipwreck, and the only place Tarl Cutteray drops post-patch.
+
+| Site | Schematics |
+|------|------------|
+| Shaitan's Grotto | Acheronian set (Boots, Chestplate, Gauntlets, Helmet¹⁹, Pants), Buoyant Reaper Mk5, Moisture Sealer, Rattler Boost Module Mk5, Relentless |
+| Edge of Acheron | Adept Burst Drillshot, Bigger Buggy Boot Mk5²⁰, Syndicate Boots, Syndicate Chestplate²¹, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
+| Wreck of the Delphis | Adept Tripleshot Repeating Rifle²⁴, Bigger Buggy Boot Mk5²⁰, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, Jolt-knife, Stim-Leggings, Syndicate Gauntlets, Syndicate Helmet²², **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
+| Wreck of the Euporia | Acheronian Helmet¹⁹, Adept Tripleshot Repeating Rifle²⁴, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
+| Downed Ships | Syndicate Chestplate²¹, Syndicate Pants²¹, Thufir's Best²⁶, Way of the Desert²³ |
+
+¹⁹ Acheronian Helmet drops at Shaitan's Grotto *and* Wreck of the Euporia.
+²⁰ Bigger Buggy Boot Mk5 drops at Edge of Acheron *and* Wreck of the Delphis.
+²¹ Syndicate Chestplate / Pants drop at Edge of Acheron *and* Downed Ships.
+²² Syndicate Helmet drops at Edge of Acheron *and* Wreck of the Delphis.
+²³ Way of the Desert drops at Edge of Acheron *and* Downed Ships.
+²⁴ The Delphis + Euporia dual-pool: most Mk5 weapons and the buggy/vehicle Mk5 schematics drop at both wrecks.
+²⁵ **Tarl Cutteray** drops *only* at the two Sheol wrecks post-patch (~12.5-15% chance per the patch notes). Pre-patch state had it in O'odham + Western Shield Wall — see "Known IGN-vs-in-game discrepancies".
+²⁶ Thufir's Best drops at Delphis, Euporia, *and* Downed Ships — the broadest Sheol distribution.
 
 ---
 
@@ -428,27 +467,30 @@ and the canon test in lockstep.
 
 ---
 
-## Pending corrections (resolve when Sheol is added)
+## Known IGN-vs-in-game discrepancies (resolved)
 
-Known-stale data carried over from IGN's published guides. Don't touch
-the catalog rows yet — wait until Sheol is being added so the move can
-land in a single, consistent commit.
+The catalog reflects the **post-patch in-game state**, not whatever
+IGN's published guides currently show. The following discrepancies
+were resolved during the import process and are documented here so
+the canon test's deviations from raw IGN data don't look mysterious:
 
-- **Tarl Cutteray** is currently catalogued at Western Shield Wall /
-  Imperial Testing Station No. 60 (per IGN's Shield Wall guide) **and**
-  at The O'odham / Stonestep Village + ITS 71 + Rockwarren Village (per
-  IGN's O'odham guide). User has separately reported it as **moved to
-  Sheol** in-game. Three possibilities to resolve when Sheol is added:
-  1. Both IGN guides are stale and Tarl Cutteray is now Sheol-only.
-  2. Tarl Cutteray genuinely drops in all four regions (Shield Wall +
-     O'odham + Sheol).
-  3. One of the IGN guides is fresh and the other is stale.
-  Something was probably swapped into ITS 60 (and possibly the O'odham
-  tri-pool) in its place; need to identify those exchanges when
-  reviewing the Sheol guide.
-- General rule when adding Sheol: cross-check every Shield Wall and
-  O'odham entry against the Sheol guide for swaps, not just adds.
-  Recent IGN guide pages may still show the pre-move state.
+- **Tarl Cutteray ↔ Sandflies Carver swap (patch 1.1.20, Aug 2025).**
+  Tarl Cutteray (T5 Duraluminum) was incorrectly dropping in T4
+  zones — Western Shield Wall / ITS 60 and The O'odham tri-pool
+  (Stonestep / ITS 71 / Rockwarren). The patch moved it OUT of those
+  T4 sites and INTO Sheol (Wreck of the Delphis + Wreck of the
+  Euporia, ~12.5-15% drop rate). **Sandflies Carver** (T4 Aluminum)
+  was swapped the other way: removed from Sheol and added to the
+  vacated T4 sites. IGN's Sheol guide still lists Sandflies Carver at
+  Delphis/Euporia and the Shield Wall + O'odham guides still list
+  Tarl Cutteray at the T4 sites — both pre-patch. Catalog and canon
+  test follow post-patch reality.
+
+- **Sentinel Pants at The Beast's Claw (Mysa Tarill).** IGN's Mysa
+  Tarill guide table renders Sentinel Pants as a duplicate "Sentinel
+  Jacket" row. Confirmed in-game by the user as a typo; catalog
+  stores Sentinel Pants. The Sentinel armor set is now consistent
+  across all 4 sites it drops at.
 
 ## Backlog
 

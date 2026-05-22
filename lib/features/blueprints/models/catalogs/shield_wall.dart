@@ -446,14 +446,16 @@ const shieldWallBlueprintCatalog = [
   // ─── ITS 60 (W) + O'odham tri-pool ────────────────────────────────────
   // (Spice-infused Aluminum Dust + Spice-infused Copper Dust also drop
   // here — see the Aluminum entry above and jabal_eifrit.dart.)
-  // 10 of these 12 schematics also drop in The O'odham's tri-source pool:
+  // 9 of these 11 schematics also drop in The O'odham's tri-source pool:
   // Stonestep Village / Imperial Testing Station No. 71 / Rockwarren
   // Village. Albatross Wing Module Mk4 and Experimental Vulcan GAU-94 are
   // ITS 60-only.
   //
-  // Tarl Cutteray is listed at the O'odham tri-pool by IGN, but per the
-  // user it has since been moved to Sheol in-game; see the "Pending
-  // corrections" section of docs/RESEARCH_BLUEPRINTS.md.
+  // Note: patch 1.1.20 (Aug 2025) moved Tarl Cutteray out of this pool
+  // and into Sheol (Wreck of the Delphis + Wreck of the Euporia).
+  // Sandflies Carver was swapped INTO this pool as its T4 replacement —
+  // its catalog row lives in oodham.dart since 3 of its 4 sources are
+  // in O'odham.
   BlueprintCatalogEntry(
     name: 'Albatross Wing Module Mk4',
     category: 'Vehicle',
@@ -551,16 +553,6 @@ const shieldWallBlueprintCatalog = [
   BlueprintCatalogEntry(
     name: "Shadrath's Drinker",
     category: 'Weapon',
-    sources: [
-      BlueprintSource(region: _west, location: _its60),
-      BlueprintSource(region: _oodham, location: _stonestep),
-      BlueprintSource(region: _oodham, location: _its71),
-      BlueprintSource(region: _oodham, location: _rockwarren),
-    ],
-  ),
-  BlueprintCatalogEntry(
-    name: 'Tarl Cutteray',
-    category: 'Tool',
     sources: [
       BlueprintSource(region: _west, location: _its60),
       BlueprintSource(region: _oodham, location: _stonestep),

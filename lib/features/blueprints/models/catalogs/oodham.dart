@@ -2,7 +2,9 @@ import '../blueprint_catalog.dart';
 
 const _region = "The O'odham";
 
+const _stonestep = 'Stonestep Village';
 const _its71 = 'Imperial Testing Station No. 71';
+const _rockwarren = 'Rockwarren Village';
 const _its163 = 'Imperial Testing Station No. 163';
 
 /// Seed list from IGN's The O'odham unique schematics guide:
@@ -40,6 +42,27 @@ const oodhamBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _region, location: _its71),
+    ],
+  ),
+
+  // ─── Sandflies Carver — Tarl Cutteray's T4 swap-in replacement ───────
+  // Patch 1.1.20 (Aug 2025) moved Tarl Cutteray (T5/Duraluminum) out of
+  // these low-tier sites and swapped Sandflies Carver (T4/Aluminum) into
+  // them. Lives here because 3 of 4 sources are in The O'odham. IGN's
+  // Sheol guide still lists Sandflies Carver at Delphis/Euporia, but
+  // that's the pre-patch state — those slots now hold Tarl Cutteray
+  // (see sheol.dart).
+  BlueprintCatalogEntry(
+    name: 'Sandflies Carver',
+    category: 'Tool',
+    sources: [
+      BlueprintSource(region: _region, location: _stonestep),
+      BlueprintSource(region: _region, location: _its71),
+      BlueprintSource(region: _region, location: _rockwarren),
+      BlueprintSource(
+        region: 'Western Shield Wall',
+        location: 'Imperial Testing Station No. 60',
+      ),
     ],
   ),
 ];

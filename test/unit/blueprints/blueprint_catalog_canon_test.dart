@@ -19,6 +19,15 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_The_O%27odham_Unique_Schematics_and_Locations
 ///  - Mysa Tarill:
 ///    https://www.ign.com/wikis/dune-awakening/All_Mysa_Tarill_Unique_Schematics_and_Locations
+///  - Sheol:
+///    https://www.ign.com/wikis/dune-awakening/All_Sheol_Unique_Schematics_and_Locations
+///
+/// **Patch 1.1.20 (Aug 2025)** swapped Tarl Cutteray (T5) and Sandflies
+/// Carver (T4). The canon below reflects post-patch reality, not what
+/// IGN's pre-patch Sheol/Shield Wall/O'odham guides still show:
+///   - Tarl Cutteray drops in Sheol only (Delphis + Euporia).
+///   - Sandflies Carver drops in O'odham (Stonestep + ITS 71 +
+///     Rockwarren) + Western Shield Wall (ITS 60).
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -396,10 +405,10 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Miner's Blessing",
       'Night Rider Sandbike Boost Mk4',
       'Pipecleaner',
+      'Sandflies Carver',
       "Shadrath's Drinker",
       'Spice-infused Aluminum Dust',
       'Spice-infused Copper Dust',
-      'Tarl Cutteray',
     ],
   },
   // The O'odham is mostly Mk4 overlap with Shield Wall. Three sites
@@ -422,8 +431,8 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Miner's Blessing",
       'Night Rider Sandbike Boost Mk4',
       'Pipecleaner',
+      'Sandflies Carver',
       "Shadrath's Drinker",
-      'Tarl Cutteray',
     ],
     'Imperial Testing Station No. 71': [
       'Bluddshot Buggy Engine Mk4',
@@ -435,8 +444,8 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Miner's Blessing",
       'Night Rider Sandbike Boost Mk4',
       'Pipecleaner',
+      'Sandflies Carver',
       "Shadrath's Drinker",
-      'Tarl Cutteray',
     ],
     'Rockwarren Village': [
       'Bluddshot Buggy Engine Mk4',
@@ -447,8 +456,8 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Miner's Blessing",
       'Night Rider Sandbike Boost Mk4',
       'Pipecleaner',
+      'Sandflies Carver',
       "Shadrath's Drinker",
-      'Tarl Cutteray',
     ],
     'Imperial Testing Station No. 163': [
       'Buoyant Reaper Mk4',
@@ -510,6 +519,63 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Sentinel Pants',
       'Spark-Knife',
       "The Emperor's Wings Mk4",
+    ],
+  },
+  // Sheol — endgame Mk5/Duraluminum region with the radiated zone and
+  // PvP shipwrecks. Tarl Cutteray was moved here from the T4 zones by
+  // patch 1.1.20; Sandflies Carver was swapped the other way. The
+  // canon below reflects post-patch state — IGN's Sheol guide still
+  // lists Sandflies Carver at Delphis/Euporia, which is stale.
+  'Sheol': {
+    "Shaitan's Grotto": [
+      'Acheronian Boots',
+      'Acheronian Chestplate',
+      'Acheronian Gauntlets',
+      'Acheronian Helmet',
+      'Acheronian Pants',
+      'Buoyant Reaper Mk5',
+      'Moisture Sealer',
+      'Rattler Boost Module Mk5',
+      'Relentless',
+    ],
+    'Edge of Acheron': [
+      'Adept Burst Drillshot',
+      'Bigger Buggy Boot Mk5',
+      'Syndicate Boots',
+      'Syndicate Chestplate',
+      'Syndicate Helmet',
+      'Syndicate Pants',
+      'Way of the Desert',
+    ],
+    'Wreck of the Delphis': [
+      'Adept Tripleshot Repeating Rifle',
+      'Bigger Buggy Boot Mk5',
+      'Bluddshot Buggy Engine Mk5',
+      "Fivefinger's Tripleshot Rifle",
+      'Hajra Literjon Mk5',
+      'Jolt-knife',
+      'Stim-Leggings',
+      'Syndicate Gauntlets',
+      'Syndicate Helmet',
+      'Tarl Cutteray',
+      "Thufir's Best",
+      'Young Sparky Mk5',
+    ],
+    'Wreck of the Euporia': [
+      'Acheronian Helmet',
+      'Adept Tripleshot Repeating Rifle',
+      'Bluddshot Buggy Engine Mk5',
+      "Fivefinger's Tripleshot Rifle",
+      'Hajra Literjon Mk5',
+      'Tarl Cutteray',
+      "Thufir's Best",
+      'Young Sparky Mk5',
+    ],
+    'Downed Ships': [
+      'Syndicate Chestplate',
+      'Syndicate Pants',
+      "Thufir's Best",
+      'Way of the Desert',
     ],
   },
 };
