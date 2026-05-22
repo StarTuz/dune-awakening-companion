@@ -1,122 +1,81 @@
 import 'package:uuid/uuid.dart';
 
 import 'blueprint.dart';
+import 'catalogs/hagga_basin_south.dart';
+import 'catalogs/vermillius_gap.dart';
+
+/// A single in-world location where a schematic can drop.
+class BlueprintSource {
+  final String region;
+  final String location;
+
+  const BlueprintSource({required this.region, required this.location});
+
+  String get label => '$region, $location';
+}
 
 class BlueprintCatalogEntry {
   final String name;
   final String category;
-  final String location;
+  final List<BlueprintSource> sources;
 
   const BlueprintCatalogEntry({
     required this.name,
     required this.category,
-    required this.location,
+    required this.sources,
   });
 
-  Blueprint toBlueprint(String characterId) {
+  /// Region of the first source — used when creating a `Blueprint` record
+  /// for a schematic the player just discovered.
+  String get primaryRegion => sources.first.region;
+
+  /// Distinct regions this schematic drops in (preserves source order).
+  List<String> get regions {
+    final seen = <String>{};
+    return [
+      for (final s in sources)
+        if (seen.add(s.region)) s.region,
+    ];
+  }
+
+  /// Display-friendly joined source labels (region, location pairs).
+  String get sourceSummary => sources.map((s) => s.label).join(' / ');
+
+  Blueprint toBlueprint(String characterId, {BlueprintSource? source}) {
+    final src = source ?? sources.first;
     final now = DateTime.now();
     return Blueprint(
       id: const Uuid().v4(),
       characterId: characterId,
       name: name,
       category: category,
-      region: Blueprint.defaultRegion,
+      region: src.region,
       sourceType: 'Chest',
-      sourceLocation: location,
+      sourceLocation: src.location,
       notes:
-          'Seeded from IGN Hagga Basin South unique schematics guide; verify in-game before treating as confirmed.',
+          'Seeded from IGN unique schematics guide; verify in-game before treating as confirmed.',
       createdAt: now,
       updatedAt: now,
     );
   }
 }
 
-// Seed list from IGN's Hagga Basin South unique schematic checklist:
-// https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations
-const haggaBasinSouthBlueprintCatalog = [
-  BlueprintCatalogEntry(
-    name: "Kaleff's Drinker",
-    category: 'Weapon',
-    location: 'Hagga Basin South, Wreck of the Alcyon',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Old Sparky Mk1',
-    category: 'Weapon',
-    location: 'Hagga Basin South, Key Hole Rock',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Mohandis Sandbike Engine Mk1',
-    category: 'Vehicle',
-    location: 'Hagga Basin South, Key Hole Rock',
-  ),
-  BlueprintCatalogEntry(
-    name: "Sim's Cutter",
-    category: 'Tool',
-    location: 'Hagga Basin South, Key Hole Rock',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Mask",
-    category: 'Armor',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Chestpiece",
-    category: 'Armor',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Boots",
-    category: 'Armor',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Gloves",
-    category: 'Armor',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Pants",
-    category: 'Armor',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "Aren's Vengeance",
-    category: 'Weapon',
-    location: 'Hagga Basin South, Broken Stone Station',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Hajra Literjon Mk1',
-    category: 'Utility',
-    location: 'Hagga Basin South',
-  ),
-  BlueprintCatalogEntry(
-    name: "The Emperor's Wings Mk1",
-    category: 'Vehicle',
-    location: 'Hagga Basin South, Imperial Testing Station No. 2',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Way of the Fallen',
-    category: 'Weapon',
-    location: 'Hagga Basin South, Old Griffin Hideaway',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Hollower Stillsuit Mask',
-    category: 'Armor',
-    location: 'Hagga Basin South, Dewgap Gateway',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Hollower Stillsuit Garment',
-    category: 'Armor',
-    location: 'Hagga Basin South, Dewgap Gateway',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Hollower Stillsuit Gloves',
-    category: 'Armor',
-    location: 'Hagga Basin South, Dewgap Gateway',
-  ),
-  BlueprintCatalogEntry(
-    name: 'Hollower Stillsuit Boots',
-    category: 'Armor',
-    location: 'Hagga Basin South, Dewgap Gateway',
-  ),
+/// Aggregate catalog across every region the app knows about. Per-region
+/// lists live under `catalogs/`.
+const blueprintCatalog = [
+  ...haggaBasinSouthBlueprintCatalog,
+  ...vermilliusGapBlueprintCatalog,
 ];
+
+/// Distinct region names that appear in the catalog, in the order the
+/// catalog declares them.
+List<String> blueprintCatalogRegions() {
+  final seen = <String>{};
+  final ordered = <String>[];
+  for (final entry in blueprintCatalog) {
+    for (final source in entry.sources) {
+      if (seen.add(source.region)) ordered.add(source.region);
+    }
+  }
+  return ordered;
+}

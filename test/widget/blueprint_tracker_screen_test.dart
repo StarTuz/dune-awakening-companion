@@ -102,12 +102,12 @@ void main() {
     expect(find.text('Blueprints / Schematics'), findsOneWidget);
     expect(
       find.text(
-          'Add a character first, then track Hagga Basin South blueprints.'),
+          'Add a character first, then track unique schematic discoveries.'),
       findsOneWidget,
     );
   });
 
-  testWidgets('renders seeded Hagga Basin South checklist', (tester) async {
+  testWidgets('renders seeded multi-region checklist', (tester) async {
     await tester.pumpWidget(
       buildScreen(
         characters: [
@@ -126,10 +126,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text(Blueprint.defaultRegion), findsOneWidget);
+    // Default region filter is "All Regions" until a character pref is set.
+    expect(find.text('All Regions'), findsOneWidget);
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('Old Sparky Mk1'), findsOneWidget);
-    expect(find.text('0 / 17 collected'), findsOneWidget);
+    expect(find.text('0 / 56 collected'), findsOneWidget);
   });
 
   testWidgets('marks seeded checklist rows collected per character',
@@ -167,7 +167,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('1 / 17 collected'), findsOneWidget);
+    expect(find.text('1 / 56 collected'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (widget) => widget is Checkbox && widget.value == true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../characters/models/character.dart';
@@ -9,6 +10,11 @@ import '../models/blueprint_catalog.dart';
 import '../providers/blueprint_provider.dart';
 
 const _schematicRespawnDuration = Duration(minutes: 45);
+
+/// Sentinel value for the "All regions" filter.
+const String _allRegions = '__all__';
+
+String _regionPrefKey(String characterId) => 'blueprint_region:$characterId';
 
 class BlueprintTrackerScreen extends ConsumerStatefulWidget {
   const BlueprintTrackerScreen({super.key});
@@ -23,6 +29,47 @@ class _BlueprintTrackerScreenState
   String? _selectedCharacterId;
   String _statusFilter = 'all';
 
+  /// Selected region filter — sentinel `_allRegions` means show every region.
+  /// Cached per-character in-memory so flipping between characters is snappy.
+  final Map<String, String> _regionFilterByCharacter = {};
+
+  /// Characters whose region preference has been loaded from disk at least
+  /// once. Prevents redundant SharedPreferences hits on every rebuild.
+  final Set<String> _regionPrefLoadedFor = {};
+
+  String _regionFilter(String characterId) =>
+      _regionFilterByCharacter[characterId] ?? _allRegions;
+
+  Future<void> _ensureRegionPrefLoaded(String characterId) async {
+    if (_regionPrefLoadedFor.contains(characterId)) return;
+    _regionPrefLoadedFor.add(characterId);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getString(_regionPrefKey(characterId));
+      if (!mounted) return;
+      if (stored != null && stored != _regionFilterByCharacter[characterId]) {
+        setState(() {
+          _regionFilterByCharacter[characterId] = stored;
+        });
+      }
+    } catch (_) {
+      // SharedPreferences plugin unavailable (e.g. in unit/widget tests
+      // without setMockInitialValues). Fall back to in-memory state.
+    }
+  }
+
+  Future<void> _setRegionFilter(String characterId, String region) async {
+    setState(() {
+      _regionFilterByCharacter[characterId] = region;
+    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_regionPrefKey(characterId), region);
+    } catch (_) {
+      // Same as above; persistence is best-effort.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final charactersAsync = ref.watch(charactersProvider);
@@ -36,7 +83,7 @@ class _BlueprintTrackerScreenState
             onPressed: () {
               final characterId = _selectedCharacterId;
               if (characterId != null) {
-                ref.invalidate(haggaSouthBlueprintsProvider(characterId));
+                ref.invalidate(blueprintsByCharacterProvider(characterId));
               }
             },
             icon: const Icon(Icons.refresh),
@@ -67,7 +114,7 @@ class _BlueprintTrackerScreenState
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Text(
-            'Add a character first, then track Hagga Basin South blueprints.',
+            'Add a character first, then track unique schematic discoveries.',
             textAlign: TextAlign.center,
           ),
         ),
@@ -76,8 +123,10 @@ class _BlueprintTrackerScreenState
 
     _selectedCharacterId ??= characters.first.id;
     final selectedCharacterId = _selectedCharacterId!;
+    // Fire-and-forget pref load; setState reruns build when it lands.
+    _ensureRegionPrefLoaded(selectedCharacterId);
     final blueprintsAsync =
-        ref.watch(haggaSouthBlueprintsProvider(selectedCharacterId));
+        ref.watch(blueprintsByCharacterProvider(selectedCharacterId));
 
     return Column(
       children: [
@@ -99,6 +148,8 @@ class _BlueprintTrackerScreenState
     List<Character> characters,
     String selectedCharacterId,
   ) {
+    final activeRegion = _regionFilter(selectedCharacterId);
+    final regions = blueprintCatalogRegions();
     return Card(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Padding(
@@ -111,7 +162,7 @@ class _BlueprintTrackerScreenState
                 const Icon(Icons.map_outlined),
                 const SizedBox(width: 8),
                 Text(
-                  Blueprint.defaultRegion,
+                  activeRegion == _allRegions ? 'All Regions' : activeRegion,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
@@ -141,6 +192,30 @@ class _BlueprintTrackerScreenState
               },
             ),
             const SizedBox(height: 12),
+            const Text('Region'),
+            const SizedBox(height: 4),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                ChoiceChip(
+                  label: const Text('All'),
+                  selected: activeRegion == _allRegions,
+                  onSelected: (_) =>
+                      _setRegionFilter(selectedCharacterId, _allRegions),
+                ),
+                for (final region in regions)
+                  ChoiceChip(
+                    label: Text(region),
+                    selected: activeRegion == region,
+                    onSelected: (_) =>
+                        _setRegionFilter(selectedCharacterId, region),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text('Status'),
+            const SizedBox(height: 4),
             Wrap(
               spacing: 8,
               children: [
@@ -168,7 +243,7 @@ class _BlueprintTrackerScreenState
   }
 
   Widget _buildBlueprintList(String characterId, List<Blueprint> blueprints) {
-    final rows = _buildChecklistRows(blueprints);
+    final rows = _buildChecklistRows(characterId, blueprints);
     final collectedCount = rows.where((row) => row.isUnlocked).length;
     final filtered = rows.where((row) {
       return switch (_statusFilter) {
@@ -242,19 +317,32 @@ class _BlueprintTrackerScreenState
     );
   }
 
-  List<_BlueprintChecklistRow> _buildChecklistRows(List<Blueprint> blueprints) {
+  List<_BlueprintChecklistRow> _buildChecklistRows(
+    String characterId,
+    List<Blueprint> blueprints,
+  ) {
+    final regionFilter = _regionFilter(characterId);
     final byName = {
       for (final blueprint in blueprints) _key(blueprint.name): blueprint,
     };
-    final catalogRows = haggaBasinSouthBlueprintCatalog.map((entry) {
-      return _BlueprintChecklistRow(
-        entry: entry,
-        blueprint: byName[_key(entry.name)],
-      );
-    });
+    bool inFilter(List<String> regions, String? blueprintRegion) {
+      if (regionFilter == _allRegions) return true;
+      if (regions.contains(regionFilter)) return true;
+      return blueprintRegion == regionFilter;
+    }
+
+    final catalogRows = blueprintCatalog
+        .where((entry) =>
+            inFilter(entry.regions, byName[_key(entry.name)]?.region))
+        .map((entry) => _BlueprintChecklistRow(
+              entry: entry,
+              blueprint: byName[_key(entry.name)],
+            ));
+
     final customRows = blueprints
-        .where((blueprint) => !haggaBasinSouthBlueprintCatalog
+        .where((blueprint) => !blueprintCatalog
             .any((entry) => _key(entry.name) == _key(blueprint.name)))
+        .where((blueprint) => inFilter(const [], blueprint.region))
         .map((blueprint) => _BlueprintChecklistRow(blueprint: blueprint));
 
     return [...catalogRows, ...customRows];
@@ -459,12 +547,16 @@ class _BlueprintTrackerScreenState
                     isUnlocked ? existing?.unlockedAt ?? now : null;
                 final shouldRunTimer = isUnlocked && respawnTimerEnabled;
 
+                final activeRegion = _regionFilter(characterId);
+                final defaultedRegion = activeRegion == _allRegions
+                    ? Blueprint.defaultRegion
+                    : activeRegion;
                 final blueprint = Blueprint(
                   id: existing?.id ?? const Uuid().v4(),
                   characterId: characterId,
                   name: name,
                   category: category,
-                  region: Blueprint.defaultRegion,
+                  region: existing?.region ?? defaultedRegion,
                   sourceType: sourceType == 'Unknown' ? null : sourceType,
                   sourceLocation: _emptyToNull(sourceController.text),
                   requiredMaterials: materials,
@@ -534,7 +626,26 @@ class _BlueprintChecklistRow {
 
   String get category => blueprint?.category ?? entry!.category;
 
-  String get location => blueprint?.sourceLocation ?? entry!.location;
+  /// Display string for the source(s) of this schematic. For catalog rows
+  /// with multiple drop sites, lists them all separated by " · ".
+  String get location {
+    if (entry != null) {
+      return entry!.sources.map((s) => s.label).join(' · ');
+    }
+    final bp = blueprint!;
+    final loc = bp.sourceLocation;
+    if (loc == null || loc.trim().isEmpty) return bp.region;
+    return '${bp.region}, $loc';
+  }
+
+  /// Primary region label shown next to category in the card subtitle.
+  /// For multi-source schematics, joins regions with " / ".
+  String get regionLabel {
+    if (entry != null) {
+      return entry!.regions.join(' / ');
+    }
+    return blueprint?.region ?? Blueprint.defaultRegion;
+  }
 
   String? get sourceType =>
       blueprint?.sourceType ?? (entry == null ? null : 'Chest');
@@ -599,7 +710,7 @@ class _BlueprintCard extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 4),
-                      Text('${row.category} • ${Blueprint.defaultRegion}'),
+                      Text('${row.category} • ${row.regionLabel}'),
                       if (row.isUnlocked) ...[
                         const SizedBox(height: 8),
                         Wrap(
