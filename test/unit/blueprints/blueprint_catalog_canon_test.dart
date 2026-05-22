@@ -17,6 +17,8 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations
 ///  - The O'odham:
 ///    https://www.ign.com/wikis/dune-awakening/All_The_O%27odham_Unique_Schematics_and_Locations
+///  - Mysa Tarill:
+///    https://www.ign.com/wikis/dune-awakening/All_Mysa_Tarill_Unique_Schematics_and_Locations
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -472,6 +474,42 @@ const Map<String, Map<String, List<String>>> _canon = {
       "Quirth's Pants",
       "Sinner's Bloodbag",
       'Way of the Fighter',
+    ],
+  },
+  // Mysa Tarill is mostly Shield Wall overlap. The palace site
+  // (also called "Mysa Tarill" — region and site share a name) shares
+  // its 9-entry pool with Fangs of Maraqeb (E Shield Wall) except for
+  // Power Gauntlets. The Beast's Claw shares its 10-entry pool with
+  // the Shield Wall Southern Comms / Passage of Artemis / Sirr'asraar
+  // Vault tri-source pool except for Sentinel Pants and Spice-infused
+  // Aluminum Dust.
+  //
+  // IGN's Mysa Tarill guide lists "Sentinel Jacket" twice for the
+  // Beast's Claw row and omits Sentinel Pants — likely a typo. See
+  // "Pending corrections" in docs/RESEARCH_BLUEPRINTS.md.
+  'Mysa Tarill': {
+    'Mysa Tarill': [
+      'Clapper Mk4',
+      'Collapsible Dew Reaper Mk4',
+      'Idaho Softstep Boots',
+      "Shadrath's Stillsuit Boots",
+      "Shadrath's Stillsuit Garment",
+      "Shadrath's Stillsuit Gloves",
+      "Shadrath's Stillsuit Mask",
+      'Stammershot',
+      'Stormrider Boost Module Mk4',
+    ],
+    "The Beast's Claw": [
+      'Bigger Buggy Boot Mk4',
+      'Filter Extractor Mk4',
+      'Focused Buggy Cutteray Mk4',
+      'Long Shot',
+      'Sentinel Boots',
+      'Sentinel Gauntlets',
+      'Sentinel Helmet',
+      'Sentinel Jacket',
+      'Spark-Knife',
+      "The Emperor's Wings Mk4",
     ],
   },
 };

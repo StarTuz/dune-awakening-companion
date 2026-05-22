@@ -22,6 +22,12 @@ const _rockwarren = 'Rockwarren Village';
 const _its163 = 'Imperial Testing Station No. 163';
 const _batighGrotto = 'Batigh Grotto';
 
+// Mysa Tarill — the Fangs of Maraqeb pool (except Power Gauntlets) and
+// most of the tri-source Sentinel/Mk4 pool also drop here.
+const _mysa = 'Mysa Tarill';
+const _mysaPalace = 'Mysa Tarill';
+const _beastsClaw = "The Beast's Claw";
+
 /// Seed list from IGN's Shield Wall unique schematics guide:
 /// https://www.ign.com/wikis/dune-awakening/All_Shield_Wall_Unique_Schematics_and_Locations
 ///
@@ -52,6 +58,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -61,6 +68,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -70,6 +78,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -79,6 +88,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -88,6 +98,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -97,6 +108,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -106,6 +118,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -115,6 +128,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -133,6 +147,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(
@@ -142,6 +157,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
 
@@ -151,6 +167,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Tool',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -158,6 +175,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -172,6 +190,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -179,6 +198,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -186,6 +206,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -193,6 +214,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -200,6 +222,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Weapon',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
   BlueprintCatalogEntry(
@@ -207,6 +230,7 @@ const shieldWallBlueprintCatalog = [
     category: 'Vehicle',
     sources: [
       BlueprintSource(region: _east, location: _fangs),
+      BlueprintSource(region: _mysa, location: _mysaPalace),
     ],
   ),
 
