@@ -301,16 +301,80 @@ and the canon test in lockstep.
 
 ## Backlog
 
-- **Per-site tips/notes** — promote the gotchas above to per-source
-  `BlueprintSource.tip` (currently those details live only in this doc).
-- **Respawn-timer auto-enable** — IGN confirms a uniform 45-minute
-  respawn for all chest-locked schematics; should prefill
-  `respawnTimerEnabled` on seeded rows because the chest-pool RNG
-  workflow (see top of doc) makes timer tracking the primary way
-  players use the tracker.
-- **Per-pool progress UI** — show "X / N rolled" per chest at a site,
-  not just per individual schematic. Matches the way players actually
-  farm (cycle chests, tick off whatever rolls).
+### Per-site tips/notes
+
+Promote the gotchas above to per-source `BlueprintSource.tip`
+(currently those details live only in this doc).
+
+### Respawn-timer auto-enable (settings toggle)
+
+**Don't blanket-prefill** — many players track collection status
+without farming, and an always-running timer would clutter the UI for
+them. Make it an opt-in setting.
+
+- **Setting:** "Auto-start respawn timer when I unlock a schematic"
+  (default OFF).
+- **Storage:** SharedPreferences key `blueprint_auto_respawn_timer`,
+  bool.
+- **Surface:** Settings screen, under a Blueprints / Schematics
+  section.
+- **Where it applies:** `BlueprintEditor.toggleUnlocked` (or
+  `_toggleChecklistRow` in the screen) — when a row transitions to
+  unlocked, read the pref and set `respawnTimerEnabled: true` if on.
+  When it's off, leave `respawnTimerEnabled` alone so the per-row
+  manual toggle still works.
+- **Effort:** ~1 hour. No schema change; just a pref, a settings
+  switch, and a conditional in the unlock path.
+
+### Per-pool progress UI
+
+The current tracker is schematic-centric ("X / N schematics collected
+across all regions"). Because chests are RNG pools (see top of doc),
+the farming-oriented workflow is **site-centric**: "I'm at Imperial
+Testing Station No. 10 — which of its 10 pool members do I still
+need?"
+
+**Design:**
+
+- Add a **"View by: Schematic | Site"** segmented control to the
+  tracker header (alongside the region filter chips).
+- In **Site** mode, group entries by `(region, location)` instead of
+  flat:
+  - One Card per site, header showing `<site name>` + `<region>` +
+    `<X / N collected>` chip.
+  - Body: the list of pool members (schematics that include this
+    site as a source) with the existing checkbox/rank UI.
+  - Optional: an aggregate **respawn countdown** per site showing the
+    earliest cooldown across that site's unlocked-with-timer rows.
+- In **Schematic** mode, keep the current layout unchanged.
+- Region filter still applies in both modes — Site mode filters which
+  sites' cards are shown.
+- Persist the view preference per character alongside the region
+  filter (same `_regionFilterByCharacter` pattern, new SharedPreferences
+  key).
+
+**Data needs:** Nothing in the persistence layer changes. The pool
+inversion is a one-pass groupBy over `blueprintCatalog`:
+
+```dart
+final pools = <(String, String), List<BlueprintCatalogEntry>>{};
+for (final entry in blueprintCatalog) {
+  for (final source in entry.sources) {
+    pools.putIfAbsent(
+      (source.region, source.location), () => [],
+    ).add(entry);
+  }
+}
+```
+
+**Effort:** ~3-4 hours. Mostly UI — toggle, pool index, Card layout
+that re-uses the existing per-row widgets.
+
+**When:** Defer until **all regions are catalogued**. The per-pool
+view's payoff scales with the number of pools, and a mid-build
+implementation would compete with data work. Once Hagga Basin
+North/East/West and Deep Desert are in, this becomes the more
+ergonomic default for farming-oriented players.
 - **Hagga Basin North / East / West** — IGN guides exist; same pattern
   applies.
 - **Deep Desert** — schematics there are dynamic / event-driven, so they
