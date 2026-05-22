@@ -1,6 +1,6 @@
 # Character Skills and Class Quests Research
 
-Last updated: 2026-05-21
+Last updated: 2026-05-22
 
 This document tracks **in-game progression systems**, what the companion app implements today, and what remains planned.
 
@@ -13,9 +13,10 @@ Dune Awakening has two progression layers that are easy to conflate:
 | System | In-game meaning | App tab | App status |
 |--------|-----------------|---------|------------|
 | **Specializations** (Chapter 3) | Five Landsraad tracks: Combat, Crafting, Gathering, Exploration, Sabotage — 0–100 each, **500 total** | **Specializations** | **Shipped** — manual sliders per character |
-| **Class skills** | Five class paths (Bene Gesserit, Mentat, Planetologist, Swordmaster, Trooper), each with **3 skill trees**, ~**108 skills**, **200 skill point** cap | **Skills** (misnamed) | **Not shipped** — only trainer-quest checklists |
+| **Class quests** | Trainer unlock chains (basic + advanced) that gate each class tree | **Class Quests** | **Shipped** — step checklists for 5 classes |
+| **Class skills** | Five class paths (Bene Gesserit, Mentat, Planetologist, Swordmaster, Trooper), each with **3 skill trees**, **108 skills**, **200 skill point** cap | **Skill Planner** | **Shipped** — per-character rank/target/equipped tracking against a canonical catalog |
 
-The **Skills** tab in Character Progress is a **Class Quests** tracker, not a skill-tree planner. Full build planning (ranks, points, loadout) is future work.
+Class Quests and Skill Planner are now separate tabs in Character Progress. The Skill Planner does not yet derive unlock state from quest completion or enforce point-budget prerequisites — see *Product Direction* below.
 
 ---
 
@@ -47,7 +48,7 @@ If a character starts as a class, that class should not require its basic unlock
 
 ### Class quests — first slice shipped
 
-- **UI:** Characters → Progress → **Skills** tab (labeled “Class Quests” in the card header).
+- **UI:** Characters → Progress → **Class Quests** tab.
 - **Data:** `character_class_quests`, `character_class_quest_steps` (migration 011); `characters.primary_class` for starting class.
 - **Catalog:** Static seed in `lib/features/class_quests/models/class_quest_catalog.dart` — **10 entries** (basic + advanced per class).
 - **UX:**
@@ -57,12 +58,28 @@ If a character starts as a class, that class should not require its basic unlock
   - **Planetologist basic unlock is always tracked** (never a starting class).
 - **Backup:** `classQuests` and `classQuestSteps` in ZIP export/import.
 
-**Not implemented:**
+### Skill planner — shipped
 
-- Individual skill nodes, ranks, or spent skill points.
-- “Tree unlocked” state derived from quest completion (checkboxes only).
-- Equipped-ability / loadout tracking.
-- Point-budget validation (e.g. “~9 Swordmaster skill points” is catalog text only).
+- **UI:** Characters → Progress → **Skill Planner** tab.
+- **Data:** `character_skills` (migration 012, DB v12) — `(character_id, skill_id)` unique, with `current_rank`, `target_rank`, `is_equipped`, `updated_at`.
+- **Catalog:** Static seed in `lib/features/skills/models/skill_catalog.dart` — **108 skills** across 5 classes × 3 sub-trees (Bene Gesserit: Weirding Way / The Voice / Body Control; Mentat: Mental Calculus / Assassination / Tactician; Planetologist: Scientist / Explorer / Mechanic; Trooper: Gunnery / Suspensor Training / Tactical Tech; Swordmaster: The Blade / The Will / The Way). Skills typed as **active** (Ability), **passive**, or **technique**.
+- **Sources:** Fextralife (skills + types), PCGamesN (sub-tree groupings).
+- **UX:**
+  - Class dropdown defaulting to the character’s primary class.
+  - Skills grouped into per-sub-tree Cards mirroring the in-game layout.
+  - Per-skill current rank and target rank (0–maxRank, default 3).
+  - Equip checkbox for Abilities and Techniques (3 of each per class in-game; checkbox enforces no slot count yet).
+  - Colored type badge per row (Ability / Technique / Passive).
+  - Total points spent shown against a `/ 200` budget (display only — no enforcement yet).
+- **Tests:** 29 unit tests — canon comparison (no hallucinations / missing skills / wrong types / wrong trees), `CharacterSkill` JSON round-trip, sqflite_common_ffi schema smoke test for migration 012.
+
+**Not yet implemented:**
+
+- “Tree unlocked” state derived from class-quest completion.
+- Point-budget enforcement (currently a display-only counter — over-budget shown in red but not blocked).
+- Equipped-slot count enforcement (3 abilities + 3 techniques in-game).
+- Skill prerequisites within a tree.
+- Tree-position layout matching the in-game node graph (linear list within each tree card today).
 
 ### Related progression (separate tabs)
 
@@ -127,25 +144,28 @@ Seeded steps in the catalog match this walkthrough:
 | Specialization UI | `lib/features/characters/screens/character_progress_dialog.dart` (`_SpecializationsTab`) |
 | Class quest catalog | `lib/features/class_quests/models/class_quest_catalog.dart` |
 | Class quest persistence | `lib/features/class_quests/services/class_quest_repository.dart` |
-| Class quest UI | `lib/features/characters/screens/character_progress_dialog.dart` (`_SkillsTab`) |
+| Class quest UI | `lib/features/characters/screens/character_progress_dialog.dart` (`_ClassQuestsTab`) |
+| Skill catalog | `lib/features/skills/models/skill_catalog.dart` |
+| Skill model | `lib/features/skills/models/character_skill.dart` |
+| Skill repository | `lib/features/skills/services/character_skill_repository.dart` |
+| Skill providers | `lib/features/skills/providers/skill_provider.dart` |
+| Skill planner UI | `lib/features/characters/screens/character_progress_dialog.dart` (`_SkillPlannerTab`, `_SkillTypeBadge`) |
 | Starting class on character | `lib/features/characters/models/character.dart` (`primaryClass`) |
 | Class constants | `lib/core/utils/constants.dart` (`primaryClasses`, `allProgressionClasses`) |
-| DB migrations | `migration_006_add_progression_and_quests.dart`, `migration_011_add_class_quests.dart` |
-| Tests | `test/unit/class_quest_catalog_test.dart`, `test/integration/class_quest_flow_test.dart` |
+| DB migrations | `migration_006_add_progression_and_quests.dart`, `migration_011_add_class_quests.dart`, `migration_012_add_character_skills.dart` |
+| Tests | `test/unit/class_quest_catalog_test.dart`, `test/integration/class_quest_flow_test.dart`, `test/unit/skills/` (catalog canon, model round-trip, migration schema) |
 
 ---
 
 ## Product Direction (Not Yet Built)
 
-Class quests should stay coupled to skills because trainer quests explain why trees are locked and which skills gate advanced steps. Planned follow-on:
+Foundation shipped (catalog + per-character ranks/equipped + planner UI). Remaining work to couple skills to the rest of the progression model:
 
-1. **Skill catalog** — seed 15 trees / ~108 skills (static reference data).
-2. **Per-character skill state** — current rank, optional target rank, points spent.
-3. **Unlock linkage** — derive “tree unlocked” from class-quest completion where appropriate.
-4. **Loadout** — track equipped actives (optional).
-5. **Validation** — enforce skill-point prerequisites mentioned in advanced quest copy.
-
-Until then, use **Specializations** for Chapter 3 totals and **Skills (Class Quests)** for trainer walkthrough progress.
+1. **Unlock linkage** — derive “tree unlocked” from class-quest completion (today: Skill Planner shows all skills regardless of trainer-quest state).
+2. **Point-budget enforcement** — the planner displays totals vs. `/ 200` but does not block over-spend.
+3. **Equipped-slot enforcement** — in-game caps are 3 Abilities + 3 Techniques per class; planner allows unlimited equip toggles today.
+4. **Prerequisites within a tree** — `prerequisiteSkillIds` exists on `SkillCatalogEntry` but is not yet populated or enforced.
+5. **In-game tree layout** — planner currently renders each tree as a flat alphabetical list; the in-game node graph (with branching prereq edges) would be a visual upgrade.
 
 ---
 
@@ -153,6 +173,7 @@ Until then, use **Specializations** for Chapter 3 totals and **Skills (Class Que
 
 - [All Skill Trees | Dune: Awakening - Game8](https://game8.co/games/Dune-Awakening/archives/524020)
 - [Skill Trees | Dune Awakening Wiki](https://duneawakening.wiki.fextralife.com/Skill+Trees)
+- [All Dune Awakening Skills (per-class sub-tree groupings) - PCGamesN](https://www.pcgamesn.com/dune-awakening/skills)
 - [Dune Awakening Trainer Locations - Method](https://www.method.gg/dune-awakening/dune-awakening-all-trainer-locations-how-to-unlock-each-secondary-class-fast)
 - [Bene Gesserit Trainer Locations and Quests - IGN](https://www.ign.com/wikis/dune-awakening/Bene_Gesserit_Trainer_Locations_and_Quests)
 - [Planetologist Trainer Locations and Quests - IGN](https://www.ign.com/wikis/dune-awakening/Planetologist_Trainer_Locations_and_Quests)
