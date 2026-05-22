@@ -192,26 +192,28 @@ class _BlueprintTrackerScreenState
               },
             ),
             const SizedBox(height: 12),
-            const Text('Region'),
-            const SizedBox(height: 4),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                ChoiceChip(
-                  label: const Text('All'),
-                  selected: activeRegion == _allRegions,
-                  onSelected: (_) =>
-                      _setRegionFilter(selectedCharacterId, _allRegions),
+            DropdownButtonFormField<String>(
+              value: activeRegion,
+              isExpanded: true,
+              items: [
+                const DropdownMenuItem(
+                  value: _allRegions,
+                  child: Text('All Regions'),
                 ),
                 for (final region in regions)
-                  ChoiceChip(
-                    label: Text(region),
-                    selected: activeRegion == region,
-                    onSelected: (_) =>
-                        _setRegionFilter(selectedCharacterId, region),
+                  DropdownMenuItem(
+                    value: region,
+                    child: Text(region),
                   ),
               ],
+              decoration: const InputDecoration(
+                labelText: 'Region',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                if (value == null) return;
+                _setRegionFilter(selectedCharacterId, value);
+              },
             ),
             const SizedBox(height: 12),
             const Text('Status'),

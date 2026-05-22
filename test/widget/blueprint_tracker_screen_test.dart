@@ -137,7 +137,9 @@ void main() {
     await tester.pumpAndSettle();
 
     // Default region filter is "All Regions" until a character pref is set.
-    expect(find.text('All Regions'), findsOneWidget);
+    // The text now appears in two places (header title + dropdown selected
+    // value), so just assert it's present somewhere.
+    expect(find.text('All Regions'), findsWidgets);
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
     expect(find.text('0 / 175 collected'), findsOneWidget);
   });
