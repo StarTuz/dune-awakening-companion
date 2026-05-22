@@ -23,7 +23,8 @@ const _its163 = 'Imperial Testing Station No. 163';
 const _batighGrotto = 'Batigh Grotto';
 
 // Mysa Tarill — the Fangs of Maraqeb pool (except Power Gauntlets) and
-// most of the tri-source Sentinel/Mk4 pool also drop here.
+// most of the tri-source Sentinel/Mk4 pool (except Spice-infused
+// Aluminum Dust) also drop here.
 const _mysa = 'Mysa Tarill';
 const _mysaPalace = 'Mysa Tarill';
 const _beastsClaw = "The Beast's Claw";
@@ -138,6 +139,7 @@ const shieldWallBlueprintCatalog = [
       BlueprintSource(region: _east, location: _southernComms),
       BlueprintSource(region: _west, location: _passageArtemis),
       BlueprintSource(region: _west, location: _sirrasraar),
+      BlueprintSource(region: _mysa, location: _beastsClaw),
     ],
   ),
   BlueprintCatalogEntry(

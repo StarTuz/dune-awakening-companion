@@ -76,8 +76,8 @@ multi-region rewrite — the catalog shape is presentational only.
 | Eastern Shield Wall | 4 | 45 | 35 |
 | Western Shield Wall | 4 | 48 | 25 |
 | The O'odham | 5 | 52 | 13 |
-| Mysa Tarill | 2 | 19 | 11 |
-| **Total source rows** | — | **341** | — |
+| Mysa Tarill | 2 | 20 | 12 |
+| **Total source rows** | — | **342** | — |
 | **Unique catalog entries** | — | — | **149** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³ + 3 O'odham⁴ + 1 Mysa Tarill⁵) |
 
 ¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
@@ -104,11 +104,15 @@ schematics are O'odham-exclusive: Firestorm (ITS 163), Ironwatch
 Special (ITS 163), and Compression-Stim Leggings (ITS 71).
 
 ⁵ Mysa Tarill is **also almost entirely overlap** with Shield Wall —
-18 of 19 IGN-listed entries are existing Shield Wall rows. The palace
+19 of 20 IGN-listed entries are existing Shield Wall rows. The palace
 site shares its 9-entry pool with Fangs of Maraqeb (minus Power
-Gauntlets), and The Beast's Claw shares 10 of the 12 entries in the
-tri-source Sentinel/Mk4 pool (missing Sentinel Pants and Spice-infused
-Aluminum Dust). Only Clapper Mk4 is Mysa-Tarill-exclusive.
+Gauntlets), and The Beast's Claw shares 11 of the 12 entries in the
+tri-source Sentinel/Mk4 pool (missing only Spice-infused Aluminum
+Dust). Only Clapper Mk4 is Mysa-Tarill-exclusive.
+
+(IGN's Mysa Tarill guide table renders Sentinel Pants as a duplicate
+"Sentinel Jacket" row — confirmed in-game as a typo; catalog uses
+Sentinel Pants.)
 
 ³ Shield Wall is mostly Mk4 versions of earlier-tier schematics
 (Bigger Buggy Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray
@@ -327,15 +331,16 @@ second source.
 | Site | Schematics |
 |------|------------|
 | Mysa Tarill (palace) | Fangs of Maraqeb pool¹⁶ minus Power Gauntlets, plus Clapper Mk4 |
-| The Beast's Claw | Shield Wall tri-source pool⁹ minus Sentinel Pants and Spice-infused Aluminum Dust¹⁷ |
+| The Beast's Claw | Shield Wall tri-source pool⁹ minus Spice-infused Aluminum Dust¹⁷ |
 
 ¹⁶ The Fangs of Maraqeb pool from Eastern Shield Wall: Collapsible Dew
 Reaper Mk4, Idaho Softstep Boots, Shadrath's Stillsuit (Boots, Garment,
 Gloves, Mask), Stammershot, Stormrider Boost Module Mk4. The palace
 site does NOT include Power Gauntlets — that one is Fangs-exclusive.
 
-¹⁷ IGN's table lists "Sentinel Jacket" twice and omits Sentinel Pants;
-see "Pending corrections" — likely a typo.
+¹⁷ IGN's table renders Sentinel Pants as a duplicate "Sentinel Jacket"
+row — confirmed in-game as a typo; the catalog stores it as Sentinel
+Pants.
 
 ---
 
@@ -444,14 +449,6 @@ land in a single, consistent commit.
 - General rule when adding Sheol: cross-check every Shield Wall and
   O'odham entry against the Sheol guide for swaps, not just adds.
   Recent IGN guide pages may still show the pre-move state.
-- **Sentinel Pants at The Beast's Claw (Mysa Tarill).** IGN's Mysa
-  Tarill guide lists "Sentinel Jacket" twice in The Beast's Claw row
-  and omits Sentinel Pants. The rest of the Sentinel set (Boots,
-  Gauntlets, Helmet) is present, so the duplicate is almost certainly
-  a typo for Sentinel Pants. Catalog follows strict IGN reading (no
-  Pants at Beast's Claw) — confirm in-game and add the source if it
-  turns out to be a typo. Tests will pass either way; this is a
-  data-completeness question, not a structural one.
 
 ## Backlog
 

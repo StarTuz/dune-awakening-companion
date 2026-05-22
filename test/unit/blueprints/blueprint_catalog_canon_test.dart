@@ -479,14 +479,13 @@ const Map<String, Map<String, List<String>>> _canon = {
   // Mysa Tarill is mostly Shield Wall overlap. The palace site
   // (also called "Mysa Tarill" — region and site share a name) shares
   // its 9-entry pool with Fangs of Maraqeb (E Shield Wall) except for
-  // Power Gauntlets. The Beast's Claw shares its 10-entry pool with
+  // Power Gauntlets. The Beast's Claw shares its 11-entry pool with
   // the Shield Wall Southern Comms / Passage of Artemis / Sirr'asraar
-  // Vault tri-source pool except for Sentinel Pants and Spice-infused
-  // Aluminum Dust.
+  // Vault tri-source pool except for Spice-infused Aluminum Dust.
   //
-  // IGN's Mysa Tarill guide lists "Sentinel Jacket" twice for the
-  // Beast's Claw row and omits Sentinel Pants — likely a typo. See
-  // "Pending corrections" in docs/RESEARCH_BLUEPRINTS.md.
+  // IGN's Mysa Tarill guide table renders Sentinel Pants as a duplicate
+  // "Sentinel Jacket" row — the catalog and canon test treat the second
+  // Jacket row as Sentinel Pants per in-game confirmation from the user.
   'Mysa Tarill': {
     'Mysa Tarill': [
       'Clapper Mk4',
@@ -508,6 +507,7 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Sentinel Gauntlets',
       'Sentinel Helmet',
       'Sentinel Jacket',
+      'Sentinel Pants',
       'Spark-Knife',
       "The Emperor's Wings Mk4",
     ],
