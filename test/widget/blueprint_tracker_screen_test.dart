@@ -73,6 +73,15 @@ class _FakeBlueprintRepo implements BlueprintRepository {
 void main() {
   final now = DateTime.now();
 
+  // The tracker header carries a region filter chip per known region.
+  // With 7+ chips it can wrap to two rows, pushing the first list row
+  // below the default 800x600 widget-test surface. Tall-viewport helper
+  // for tests that need to see a specific checklist entry.
+  Future<void> useTallSurface(WidgetTester tester) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+  }
+
   Widget buildScreen({
     List<Character> characters = const [],
     List<Blueprint> blueprints = const [],
@@ -108,6 +117,7 @@ void main() {
   });
 
   testWidgets('renders seeded multi-region checklist', (tester) async {
+    await useTallSurface(tester);
     await tester.pumpWidget(
       buildScreen(
         characters: [
@@ -129,11 +139,12 @@ void main() {
     // Default region filter is "All Regions" until a character pref is set.
     expect(find.text('All Regions'), findsOneWidget);
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('0 / 82 collected'), findsOneWidget);
+    expect(find.text('0 / 90 collected'), findsOneWidget);
   });
 
   testWidgets('marks seeded checklist rows collected per character',
       (tester) async {
+    await useTallSurface(tester);
     await tester.pumpWidget(
       buildScreen(
         characters: [
@@ -167,7 +178,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('1 / 82 collected'), findsOneWidget);
+    expect(find.text('1 / 90 collected'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (widget) => widget is Checkbox && widget.value == true,
@@ -178,6 +189,7 @@ void main() {
 
   testWidgets('keeps respawn timer optional for collected blueprints',
       (tester) async {
+    await useTallSurface(tester);
     await tester.pumpWidget(
       buildScreen(
         characters: [
@@ -215,6 +227,7 @@ void main() {
   });
 
   testWidgets('shows respawn countdown when timer is enabled', (tester) async {
+    await useTallSurface(tester);
     await tester.pumpWidget(
       buildScreen(
         characters: [

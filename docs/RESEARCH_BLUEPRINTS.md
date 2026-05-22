@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22 (Hagga Rift added)
+Last updated: 2026-05-22 (Jabal Eifrit added)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -30,6 +30,7 @@ multi-region rewrite — the catalog shape is presentational only.
 | Hagga Basin South | [All Hagga Basin South Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations) |
 | Vermillius Gap (West + East) | [All Vermillius Gap Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Vermillius_Gap_Unique_Schematics_and_Locations) |
 | Hagga Rift | [All Hagga Rift Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations) |
+| Jabal Eifrit (Al-gharb, Al-Janub, Al-sharq) | [All Jabal Eifrit Unique Schematics and Locations — IGN](https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations) |
 
 ---
 
@@ -41,13 +42,28 @@ multi-region rewrite — the catalog shape is presentational only.
 | Vermillius Gap West | 7 | 29 | 29 |
 | Vermillius Gap East | 4 | 25 | 25 |
 | Hagga Rift | 6 | 41 | 27 |
-| **Total source rows** | — | **112** | — |
-| **Unique catalog entries** | — | — | **82** (17 Hagga + 39 VG + 26 Hagga Rift¹) |
+| Jabal Eifrit Al-gharb | 2 | 16 | 16 |
+| Jabal Eifrit Al-Janub | 4 | 29 | 22 |
+| Jabal Eifrit Al-sharq | 3 | 20 | 13 |
+| **Total source rows** | — | **177** | — |
+| **Unique catalog entries** | — | — | **90** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit²) |
 
 ¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
 contributes 26 *new* catalog entries on top of the existing VG row, which
 gains a second source.
+
+² Jabal Eifrit reuses **most** of the Hagga Rift + Vermillius Gap drop
+pool (Karak set, Inkvine set, Way of the Lost Maula Pistol, Zaal's
+Companion Assault Rifle, Ripper Scattergun, Callie's Breaker, Old Sparky
+Mk3, Seb's Kisser, Shock-sword, Glutton's Bloodbag, Handheld Life
+Scanner Mk3, Hajra Literjon Mk3, Shock Gauntlets, Skin-Lined Jacket,
+Ta'lab Softstep Boots, The Emperor's Wings Mk3, Buoyant Reaper Mk3) —
+those existing entries each gain 1-3 Jabal Eifrit sources rather than
+new catalog rows. Only 8 schematics are truly Jabal-Eifrit-exclusive
+(Ripper Searing Shiv, Spice-infused Steel/Copper Dust, Glutton's
+Drinker, Reaper Gloves, The Tapper, Rigged Suspensor Jacket, Filter
+Extractor Mk3).
 
 ### Cross-source schematics
 
@@ -60,9 +76,30 @@ sites:
 
 Hagga Rift overlaps with Vermillius Gap East on **1 schematic**:
 
-- `Buoyant Reaper Mk3` (Mirzabah's Head ↔ Stepstone Cavern)
+- `Buoyant Reaper Mk3` (Mirzabah's Head ↔ Stepstone Cavern). Jabal Eifrit
+  adds **three more sources** for the same entry (Runaway Camp + Hand of
+  Khidr in Al-Janub, plus the Farhold observation point in Al-sharq) —
+  it's now the most widely-shared schematic in the catalog at 5 sources.
 
-Within Hagga Rift, several schematics drop in 2-3 sites of the same region:
+Jabal Eifrit shares **18 schematic names** with previously-catalogued
+regions. Highlights:
+
+- Karak ×5, Way of the Lost Maula Pistol, Zaal's Companion Assault Rifle
+  drop at **all three "Wreck" sites** — Wreck of Kytheria (Hagga Rift),
+  Piter's Net (Al-gharb), Wreck of the Tisiphone (Al-sharq).
+- Ripper Scattergun adds Wreck of the Tisiphone — note that Al-gharb's
+  *Ripper Searing Shiv* is a different weapon.
+- Callie's Breaker, Old Sparky Mk3, Seb's Kisser, Shock-sword each drop
+  at **five sites** across Hagga Rift + all three Jabal Eifrit
+  sub-regions.
+- Inkvine ×5 and Handheld Life Scanner Mk3 add Khidr's Shadow (Al-Janub).
+- Hajra Literjon Mk3, Shock Gauntlets, Skin-Lined Jacket, Ta'lab Softstep
+  Boots, The Emperor's Wings Mk3 each go from 1 source to 4 (Hagga Rift
+  Stepstone + Al-Janub Runaway Camp + Hand of Khidr + Al-sharq Farhold).
+- Glutton's Bloodbag — 6 sources total (3 in Hagga Rift + 2 in Al-Janub
+  + 1 in Al-sharq), tied with Buoyant Reaper Mk3 for catalog breadth.
+
+Within a region, several schematics drop in 2-3 sites:
 
 - 7 schematics drop in *either* **The Spiral** *or* **Arctus Cavern**
   (Inkvine ×5, Handheld Life Scanner Mk3, Assassin's Rifle)
@@ -127,9 +164,39 @@ everywhere it appears.
 | Stepstone Cavern | Buoyant Reaper Mk3², Glutton's Bloodbag⁵, Hajra Literjon Mk3, Shock Gauntlets, Skin-Lined Jacket, Ta'lab Softstep Boots, The Emperor's Wings Mk3 |
 | Wreck of Kytheria | Karak's set (Helmet, Jacket, Gauntlets, Pants, Boots), Way of the Lost Maula Pistol, Zaal's Companion Assault Rifle, Ripper Scattergun |
 
-³ Drops at *either* The Spiral *or* Arctus Cavern.
-⁴ Drops at *either* the Deserter Camp *or* Choam Mineral Extraction Facility No. 6.
-⁵ Glutton's Bloodbag drops at *all three* of Deserter Camp, Choam #6, and Stepstone Cavern.
+³ Drops at *either* The Spiral *or* Arctus Cavern (and at Khidr's Shadow in Jabal Eifrit Al-Janub).
+⁴ Drops at *either* the Deserter Camp *or* Choam Mineral Extraction Facility No. 6 (and at one site in each Jabal Eifrit sub-region).
+⁵ Glutton's Bloodbag drops at *all three* of Deserter Camp, Choam #6, and Stepstone Cavern (plus three Jabal Eifrit sites).
+
+### Jabal Eifrit Al-gharb
+
+| Site | Schematics |
+|------|------------|
+| Piter's Net | Karak's set², Ripper Searing Shiv, Spice-infused Steel Dust⁶, Way of the Lost Maula Pistol², Zaal's Companion Assault Rifle² |
+| Eastern Jumble (Beneath the Jumble) | Callie's Breaker⁴, Glutton's Drinker⁷, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Spice-infused Copper Dust, Spice-infused Steel Dust⁶ |
+
+⁶ Drops at *both* Piter's Net *and* Eastern Jumble within Al-gharb.
+⁷ Glutton's Drinker drops at one site in each Jabal Eifrit sub-region.
+
+### Jabal Eifrit Al-Janub
+
+| Site | Schematics |
+|------|------------|
+| Imperial Testing Station No. 76 | Callie's Breaker⁴, Glutton's Drinker⁷, Old Sparky Mk3⁴, Reaper Gloves, Seb's Kisser⁴, Shock-sword⁴ |
+| Khidr's Shadow | Inkvine set³, Handheld Life Scanner Mk3³, The Tapper |
+| Runaway Station Camp | Buoyant Reaper Mk3⁸, Glutton's Bloodbag⁵, Hajra Literjon Mk3⁸, Rigged Suspensor Jacket, Shock Gauntlets⁸, Skin-Lined Jacket⁸, Ta'lab Softstep Boots⁸, The Emperor's Wings Mk3⁸ |
+| Hand of Khidr | Buoyant Reaper Mk3⁸, Filter Extractor Mk3, Glutton's Bloodbag⁵, Hajra Literjon Mk3⁸, Shock Gauntlets⁸, Skin-Lined Jacket⁸, Ta'lab Softstep Boots⁸, The Emperor's Wings Mk3⁸ |
+
+⁸ Drops at *both* Al-Janub camps (Runaway Camp + Hand of Khidr) *and*
+Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
+
+### Jabal Eifrit Al-sharq
+
+| Site | Schematics |
+|------|------------|
+| Wreck of the Tisiphone | Karak's set², Ripper Scattergun, Way of the Lost Maula Pistol², Zaal's Companion Assault Rifle² |
+| Kel's Fallback | Callie's Breaker⁴, Glutton's Drinker⁷, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴ |
+| Unnamed observation point east of Farhold | Buoyant Reaper Mk3⁸, Glutton's Bloodbag⁵, Hajra Literjon Mk3⁸, Shock Gauntlets⁸, Skin-Lined Jacket⁸, Ta'lab Softstep Boots⁸, The Emperor's Wings Mk3⁸ |
 
 ---
 
@@ -160,6 +227,22 @@ repeatedly — worth a per-site "tips" string in a future iteration:
   in a secret cavern partway down. Stepstone Cavern requires
   Grappler + suspension gear (or careful stamina-managed climbing) to
   reach the schematic ledge.
+- **Pentashields with coloured ID bands.** Recurring in Jabal Eifrit:
+  Piter's Net (Al-gharb) uses a **green** band from the NE building to
+  unlock a NW pentashield. Khidr's Shadow (Al-Janub) uses a **purple**
+  band pulled from the helipad building. Arctus Cavern (Hagga Rift) is
+  also red-band / green-shield gated.
+- **Poison traps.** Wreck of the Tisiphone (Al-sharq) has multiple
+  poison traps in the chest room — deactivate before looting.
+- **Multi-band gating.** Wreck of the Tisiphone needs **two** sequential
+  ID bands — one from outside wreckage, then a second to reach the
+  smaller split section.
+- **Vertical climbs to the top.** Hand of Khidr (Al-Janub) is another
+  Ornithopter-or-grapple climb; the chest sits next to a corpse at the
+  summit. Same pattern as Mirzabah's Head and Table of the Gods.
+- **Twin chests at one site.** The Unnamed observation point east of
+  Farhold (Al-sharq) has *two* chests but they share the same drop pool —
+  no extra schematics, just an additional chance per visit.
 - **45-minute chest respawn.** Every multi-schematic site loops back:
   each chest cycles through the drop pool, so completionists need
   multiple visits. The `respawnTimerEnabled` flag on `Blueprint` exists

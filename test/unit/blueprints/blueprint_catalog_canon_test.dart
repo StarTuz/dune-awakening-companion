@@ -11,6 +11,8 @@ import 'package:dune_awakening_companion/features/blueprints/models/blueprint_ca
 ///    https://www.ign.com/wikis/dune-awakening/All_Vermillius_Gap_Unique_Schematics_and_Locations
 ///  - Hagga Rift:
 ///    https://www.ign.com/wikis/dune-awakening/All_Hagga_Rift_Unique_Schematics_and_Locations
+///  - Jabal Eifrit (Al-gharb, Al-Janub, Al-sharq):
+///    https://www.ign.com/wikis/dune-awakening/All_Jabal_Eifrit_Unique_Schematics_and_Locations
 ///
 /// When IGN updates the guides — or when a new region is added — update this
 /// table along with the catalog. The tests will surface drift in either
@@ -177,6 +179,103 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Way of the Lost Maula Pistol',
       "Zaal's Companion Assault Rifle",
       'Ripper Scattergun',
+    ],
+  },
+  // IGN's Jabal Eifrit page uses the abbreviated names "Way of the Lost",
+  // "Zaal's Companion", and (at Wreck of the Tisiphone) "Ripper". The
+  // catalog uses the fuller in-game names ("Way of the Lost Maula Pistol",
+  // "Zaal's Companion Assault Rifle", "Ripper Scattergun") that match the
+  // Hagga Rift / Wreck of Kytheria entries — treating them as the same
+  // schematics with additional drop sites. "lnkvine" (lowercase L) on
+  // IGN's page is a typo for "Inkvine"; "Skin-lined" is normalised to
+  // "Skin-Lined" to match the Hagga Rift entry.
+  'Jabal Eifrit Al-gharb': {
+    "Piter's Net": [
+      "Karak's Boots",
+      "Karak's Gauntlets",
+      "Karak's Helmet",
+      "Karak's Jacket",
+      "Karak's Pants",
+      'Ripper Searing Shiv',
+      'Spice-infused Steel Dust',
+      'Way of the Lost Maula Pistol',
+      "Zaal's Companion Assault Rifle",
+    ],
+    'Eastern Jumble': [
+      "Callie's Breaker",
+      "Glutton's Drinker",
+      'Old Sparky Mk3',
+      "Seb's Kisser",
+      'Shock-sword',
+      'Spice-infused Copper Dust',
+      'Spice-infused Steel Dust',
+    ],
+  },
+  'Jabal Eifrit Al-Janub': {
+    'Imperial Testing Station No. 76': [
+      'Shock-sword',
+      "Glutton's Drinker",
+      "Callie's Breaker",
+      'Old Sparky Mk3',
+      'Reaper Gloves',
+      "Seb's Kisser",
+    ],
+    "Khidr's Shadow": [
+      'Handheld Life Scanner Mk3',
+      'Inkvine Boots',
+      'Inkvine Gauntlets',
+      'Inkvine Jacket',
+      'Inkvine Mask',
+      'Inkvine Pants',
+      'The Tapper',
+    ],
+    'Runaway Station Camp': [
+      'Buoyant Reaper Mk3',
+      "Glutton's Bloodbag",
+      'Hajra Literjon Mk3',
+      'Rigged Suspensor Jacket',
+      'Shock Gauntlets',
+      'Skin-Lined Jacket',
+      "Ta'lab Softstep Boots",
+      "The Emperor's Wings Mk3",
+    ],
+    'Hand of Khidr': [
+      'Buoyant Reaper Mk3',
+      'Filter Extractor Mk3',
+      "Glutton's Bloodbag",
+      'Hajra Literjon Mk3',
+      'Shock Gauntlets',
+      'Skin-Lined Jacket',
+      "Ta'lab Softstep Boots",
+      "The Emperor's Wings Mk3",
+    ],
+  },
+  'Jabal Eifrit Al-sharq': {
+    'Wreck of the Tisiphone': [
+      "Karak's Boots",
+      "Karak's Gauntlets",
+      "Karak's Helmet",
+      "Karak's Jacket",
+      "Karak's Pants",
+      'Ripper Scattergun',
+      'Way of the Lost Maula Pistol',
+      "Zaal's Companion Assault Rifle",
+    ],
+    "Kel's Fallback": [
+      "Callie's Breaker",
+      "Glutton's Drinker",
+      'Old Sparky Mk3',
+      "Seb's Kisser",
+      'Shock-sword',
+    ],
+    'Unnamed observation point east of Farhold': [
+      'Buoyant Reaper Mk3',
+      "Glutton's Bloodbag",
+      'Hajra Literjon Mk3',
+      'Shock Gauntlets',
+      'Skin-Lined Jacket',
+      "Ta'lab Softstep Boots",
+      "The Emperor's Wings Mk3",
     ],
   },
 };

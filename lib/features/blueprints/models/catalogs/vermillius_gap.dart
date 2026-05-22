@@ -234,17 +234,22 @@ const vermilliusGapBlueprintCatalog = [
   ),
 
   // ─── East-only ───────────────────────────────────────────────────────
-  // Buoyant Reaper Mk3 also drops in Hagga Rift (Stepstone Cavern). Kept
-  // here so the entry lives next to its other Vermillius Gap siblings; the
-  // Hagga Rift source is appended below.
+  // Buoyant Reaper Mk3 also drops in Hagga Rift (Stepstone Cavern) plus
+  // three Jabal Eifrit sites. Kept here so the entry lives next to its
+  // other Vermillius Gap siblings; cross-region sources are appended.
   BlueprintCatalogEntry(
     name: 'Buoyant Reaper Mk3',
     category: 'Tool',
     sources: [
       BlueprintSource(region: _east, location: "Mirzabah's Head"),
+      BlueprintSource(region: 'Hagga Rift', location: 'Stepstone Cavern'),
       BlueprintSource(
-        region: 'Hagga Rift',
-        location: 'Stepstone Cavern',
+          region: 'Jabal Eifrit Al-Janub', location: 'Runaway Station Camp'),
+      BlueprintSource(
+          region: 'Jabal Eifrit Al-Janub', location: 'Hand of Khidr'),
+      BlueprintSource(
+        region: 'Jabal Eifrit Al-sharq',
+        location: 'Unnamed observation point east of Farhold',
       ),
     ],
   ),
