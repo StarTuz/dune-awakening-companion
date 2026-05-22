@@ -365,6 +365,21 @@ and the canon test in lockstep.
 
 ---
 
+## Pending corrections (resolve when Sheol is added)
+
+Known-stale data carried over from IGN's published guides. Don't touch
+the catalog rows yet — wait until Sheol is being added so the move can
+land in a single, consistent commit.
+
+- **Tarl Cutteray** is currently catalogued at Western Shield Wall /
+  Imperial Testing Station No. 60 (from IGN's Shield Wall guide). It
+  has since been **moved to Sheol** in-game. Something was probably
+  swapped into ITS 60 in its place; need to identify that exchange when
+  reviewing the Sheol guide.
+- General rule when adding Sheol: cross-check every Shield Wall entry
+  against the Sheol guide for swaps, not just adds. Recent IGN guide
+  pages may still show the pre-move state.
+
 ## Backlog
 
 ### Per-site tips/notes
