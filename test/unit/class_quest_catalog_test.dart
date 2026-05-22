@@ -40,7 +40,7 @@ void main() {
           )
           .expand((entry) => entry.steps)
           .map((step) => step.title),
-      contains("Read Derek's camp clues and map"),
+      contains('Imperial Testing Station No. 163 - final dungeon'),
     );
   });
 }

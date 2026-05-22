@@ -311,19 +311,23 @@ const classQuestCatalog = [
     steps: [
       ClassQuestCatalogStep(
         id: 'planet-basic-find-derek',
-        title: 'Find Derek Chinara in Hagga Basin South',
+        title: 'Find Derek Chinara above Imperial Testing Station No. 2',
+        details:
+            'His Hagga Basin South camp is easy to miss, so mark the location before starting the chain.',
       ),
       ClassQuestCatalogStep(
-        id: 'planet-basic-enter-station',
-        title: 'Enter Imperial Testing Station No. 2',
+        id: 'planet-basic-secret-room',
+        title: 'Open the hidden room in Imperial Testing Station No. 2',
+        details:
+            'Look for the glowing vertical yellow line behind a bookshelf and interact with it.',
       ),
       ClassQuestCatalogStep(
         id: 'planet-basic-film',
-        title: 'Recover the Minimic Film',
+        title: 'Loot the Minimic Film from the hidden chamber',
       ),
       ClassQuestCatalogStep(
         id: 'planet-basic-return',
-        title: 'Return to Derek to complete training',
+        title: 'Return to Derek to unlock Planetologist level 1',
       ),
     ],
     sourceUrl:
@@ -336,41 +340,65 @@ const classQuestCatalog = [
     className: AppConstants.classPlanetologist,
     tier: ClassQuestTier.advanced,
     trainerName: 'Derek Chinara',
-    trainerLocation: 'Mobile trainer across Arrakis',
+    trainerLocation: 'Hagga Basin South cliff camp',
     questName: 'Planetologist Advanced Route',
     summary:
-        "Follow Derek's notes and maps across regions to recover records from testing stations.",
+        "Follow Derek's notes, maps, and follow-up objectives through the Imperial Testing Station chain.",
     steps: [
       ClassQuestCatalogStep(
-        id: 'planet-adv-clues',
-        title: "Read Derek's camp clues and map",
+        id: 'planet-adv-station-197',
+        title: 'Imperial Testing Station No. 197 - Vermillius Gap',
+        details:
+            'Find Derek at the bottom of the circular pit, survive the locked-room combat gauntlet, recover the data, and return it to unlock level 2.',
       ),
       ClassQuestCatalogStep(
-        id: 'planet-adv-buried',
-        title: 'Buried Archives - Vermilius Gap',
+        id: 'planet-adv-arrakeen-ciprian',
+        title: 'Adhering to Hierarchy - visit Ciprian in Arrakeen',
+        details:
+            'Head to the bar in Arrakeen, speak with Ciprian in the back corner, then return to Derek at camp.',
       ),
       ClassQuestCatalogStep(
-        id: 'planet-adv-science',
-        title: 'Science Unlocked - Testing Station No. 76',
+        id: 'planet-adv-station-76',
+        title: 'Imperial Testing Station No. 76 - Jabal Eifrit Al-Janub',
+        details:
+            'Recover the keys hidden in a book downstairs, find the Minimic Film behind the false bookshelf, and rescue Derek to unlock level 3.',
       ),
       ClassQuestCatalogStep(
-        id: 'planet-adv-routine',
-        title: 'A Reasonable Routine - Testing Station No. 29',
+        id: 'planet-adv-thufir-sietch-tabr',
+        title: 'Mission to Thufir - Arrakeen to Sietch Tabr',
+        details:
+            "Speak with Thufir Hawat, travel to the edge of O'odham near Sietch Tabr, retrieve the item from the crumbling ruins, and return to Derek.",
       ),
       ClassQuestCatalogStep(
-        id: 'planet-adv-past',
-        title: "Clues from the Past - The O'odham",
+        id: 'planet-adv-station-29',
+        title: 'Imperial Testing Station No. 29 - Hagga Rift',
+        details:
+            'Use the purple identification band route, find the false bookshelf, recover the Minimic Film, and unlock the Spice Surveyor capstone.',
       ),
       ClassQuestCatalogStep(
-        id: 'planet-adv-final',
-        title: 'The Final Piece',
+        id: 'planet-adv-station-71',
+        title: "Imperial Testing Station No. 71 - O'odham Region",
+        details:
+            'Watch for the blue identification band, recover the hidden data, and collect the side-chamber notes to unlock the second capstone.',
+      ),
+      ClassQuestCatalogStep(
+        id: 'planet-adv-betrayal-arrakeen',
+        title: 'Betrayal at Arrakeen',
+        details:
+            "Deliver Derek's report to Ciprian, return to Hagga Basin South, defeat two sniper waves, and loot Derek's notes.",
+      ),
+      ClassQuestCatalogStep(
+        id: 'planet-adv-station-163',
+        title: 'Imperial Testing Station No. 163 - final dungeon',
+        details:
+            'Reach the final chamber, recover the holographic recording, and return it to Derek to complete the route.',
       ),
     ],
     prerequisites: ['Planetologist tree unlocked'],
     rewards: 'Unlocks full Planetologist progression and related rewards',
     sourceUrl:
-        'https://www.ign.com/wikis/dune-awakening/Planetologist_Trainer_Locations_and_Quests',
+        'https://www.mmopixel.com/news/dune-awakening-planetologist-skill-guide',
     notes:
-        'This route is intentionally step-by-step because Derek relocates and does not always directly tell players where to go next.',
+        'This route is intentionally step-by-step because Derek can be difficult to find and several station objectives are hidden behind false bookshelves or easy-to-miss clues.',
   ),
 ];
