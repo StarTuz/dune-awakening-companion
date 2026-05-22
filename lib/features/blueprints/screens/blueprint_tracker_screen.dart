@@ -8,6 +8,7 @@ import '../../characters/providers/character_provider.dart';
 import '../models/blueprint.dart';
 import '../models/blueprint_catalog.dart';
 import '../providers/blueprint_provider.dart';
+import '../providers/blueprint_settings_provider.dart';
 
 const _schematicRespawnDuration = Duration(minutes: 45);
 
@@ -238,6 +239,8 @@ class _BlueprintTrackerScreenState
                 ),
               ],
             ),
+            const SizedBox(height: 8),
+            _AutoRespawnTimerSwitch(),
           ],
         ),
       ),
@@ -354,9 +357,14 @@ class _BlueprintTrackerScreenState
     String characterId,
     _BlueprintChecklistRow row,
   ) async {
+    final autoStart =
+        ref.read(blueprintSettingsProvider).autoStartRespawnTimer;
     final existing = row.blueprint;
     if (existing != null) {
-      await ref.read(blueprintEditorProvider).toggleUnlocked(existing);
+      await ref.read(blueprintEditorProvider).toggleUnlocked(
+            existing,
+            autoStartRespawnTimer: autoStart,
+          );
       return;
     }
 
@@ -364,6 +372,7 @@ class _BlueprintTrackerScreenState
     final blueprint = row.entry!.toBlueprint(characterId).copyWith(
           isUnlocked: true,
           unlockedAt: now,
+          respawnTimerEnabled: autoStart,
           updatedAt: now,
         );
     await ref.read(blueprintEditorProvider).save(blueprint);
@@ -849,5 +858,41 @@ class _RespawnTimerChip extends StatelessWidget {
     final seconds = clamped.inSeconds % 60;
     return '${minutes.toString().padLeft(2, '0')}:'
         '${seconds.toString().padLeft(2, '0')}';
+  }
+}
+
+/// Compact in-header toggle for the per-user "auto-start respawn timer
+/// when I unlock a schematic" preference. Lives on the tracker screen
+/// (rather than the global Settings screen) because the rest of this
+/// feature uses literal English strings — moving it to Settings would
+/// require localising it across all 7 ARB files.
+class _AutoRespawnTimerSwitch extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final autoStart =
+        ref.watch(blueprintSettingsProvider).autoStartRespawnTimer;
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Auto-start respawn timer'),
+              Text(
+                'When I tick a schematic as unlocked, also start its '
+                '45-minute chest cooldown.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        Switch(
+          value: autoStart,
+          onChanged: (value) => ref
+              .read(blueprintSettingsProvider.notifier)
+              .setAutoStartRespawnTimer(value),
+        ),
+      ],
+    );
   }
 }

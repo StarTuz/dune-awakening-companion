@@ -44,13 +44,22 @@ class BlueprintEditor {
     _invalidate(updated.characterId);
   }
 
-  Future<void> toggleUnlocked(Blueprint blueprint) async {
+  /// Flip the `isUnlocked` state. When transitioning from locked → unlocked
+  /// AND the per-user `autoStartRespawnTimer` setting is on, also enable the
+  /// respawn timer in the same write. When transitioning the other way the
+  /// timer is always cleared (existing behavior).
+  Future<void> toggleUnlocked(
+    Blueprint blueprint, {
+    bool autoStartRespawnTimer = false,
+  }) async {
     final now = DateTime.now();
+    final goingToUnlocked = !blueprint.isUnlocked;
     final updated = blueprint.copyWith(
-      isUnlocked: !blueprint.isUnlocked,
-      unlockedAt: blueprint.isUnlocked ? null : now,
-      respawnTimerEnabled:
-          blueprint.isUnlocked ? false : blueprint.respawnTimerEnabled,
+      isUnlocked: goingToUnlocked,
+      unlockedAt: goingToUnlocked ? now : null,
+      respawnTimerEnabled: goingToUnlocked
+          ? (blueprint.respawnTimerEnabled || autoStartRespawnTimer)
+          : false,
       updatedAt: now,
     );
     await _repository.upsert(updated);
