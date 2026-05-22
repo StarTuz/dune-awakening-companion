@@ -9,6 +9,31 @@ the player in-game.
 
 ---
 
+## How chest drops actually work
+
+Each unique-schematic chest **rolls one schematic from a shared pool**
+on each respawn cycle, not a fixed drop. IGN's "drops at site A or
+site B" wording is misleading — it's "chests at A and B share a pool,
+so players farm both in rotation while waiting on the 45-minute
+respawn." This shapes the data model and the player workflow:
+
+- The catalog stores **every chest a schematic can roll from** as a
+  separate `BlueprintSource`. Unlock state is keyed by schematic name,
+  so a single successful roll at *any* listed chest ticks the schematic
+  off everywhere it appears.
+- The respawn timer (`Blueprint.respawnTimerEnabled`, set per row)
+  exists precisely so players can manage the multi-site cycling loop.
+  Auto-enabling it on seed for chest-locked rows is a backlog item.
+- A given site can be a chest pool of size 1 (single fixed schematic)
+  or N (e.g. Imperial Testing Station No. 10's 10-entry pool).
+
+When a schematic appears in many sources (e.g. Glutton's Bloodbag at 6
+sites), that doesn't mean "6 chests guaranteed to drop it" — it means
+"6 chests that include it in their pool, and players sometimes need
+multiple rolls before it lands."
+
+---
+
 ## Data model
 
 | Field | Notes |
@@ -109,9 +134,12 @@ Within a region, several schematics drop in 2-3 sites:
 - `Glutton's Bloodbag` actually has **three** drop sites — Deserter Camp,
   Choam #6, *and* Stepstone Cavern.
 
-All multi-source schematics collapse into single catalog entries with the
-full sources list — unlocking from any listed site flips the checklist
-everywhere it appears.
+All multi-source schematics collapse into single catalog entries with
+the full sources list. Because chests are RNG (see "How chest drops
+actually work" above), the multi-source list represents the **chest
+pools that include this schematic** — players cycle through them
+waiting for the roll they want, not visit them in sequence as
+alternatives.
 
 ---
 
@@ -275,9 +303,14 @@ and the canon test in lockstep.
 
 - **Per-site tips/notes** — promote the gotchas above to per-source
   `BlueprintSource.tip` (currently those details live only in this doc).
-- **Respawn-timer auto-enable** — IGN confirms a uniform 45-minute respawn
-  for all chest-locked schematics; could prefill `respawnTimerEnabled` on
-  seeded rows.
+- **Respawn-timer auto-enable** — IGN confirms a uniform 45-minute
+  respawn for all chest-locked schematics; should prefill
+  `respawnTimerEnabled` on seeded rows because the chest-pool RNG
+  workflow (see top of doc) makes timer tracking the primary way
+  players use the tracker.
+- **Per-pool progress UI** — show "X / N rolled" per chest at a site,
+  not just per individual schematic. Matches the way players actually
+  farm (cycle chests, tick off whatever rolls).
 - **Hagga Basin North / East / West** — IGN guides exist; same pattern
   applies.
 - **Deep Desert** — schematics there are dynamic / event-driven, so they
