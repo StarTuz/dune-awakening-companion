@@ -16,6 +16,11 @@ const _schematicRespawnDuration = Duration(minutes: 45);
 const String _allRegions = '__all__';
 
 String _regionPrefKey(String characterId) => 'blueprint_region:$characterId';
+String _viewModePrefKey(String characterId) => 'blueprint_view:$characterId';
+
+/// View-mode values for the per-character "View by" segmented control.
+const String _viewBySchematic = 'schematic';
+const String _viewBySite = 'site';
 
 class BlueprintTrackerScreen extends ConsumerStatefulWidget {
   const BlueprintTrackerScreen({super.key});
@@ -38,8 +43,15 @@ class _BlueprintTrackerScreenState
   /// once. Prevents redundant SharedPreferences hits on every rebuild.
   final Set<String> _regionPrefLoadedFor = {};
 
+  /// Per-character "View by" mode ('schematic' or 'site').
+  final Map<String, String> _viewModeByCharacter = {};
+  final Set<String> _viewPrefLoadedFor = {};
+
   String _regionFilter(String characterId) =>
       _regionFilterByCharacter[characterId] ?? _allRegions;
+
+  String _viewMode(String characterId) =>
+      _viewModeByCharacter[characterId] ?? _viewBySchematic;
 
   Future<void> _ensureRegionPrefLoaded(String characterId) async {
     if (_regionPrefLoadedFor.contains(characterId)) return;
@@ -59,6 +71,23 @@ class _BlueprintTrackerScreenState
     }
   }
 
+  Future<void> _ensureViewPrefLoaded(String characterId) async {
+    if (_viewPrefLoadedFor.contains(characterId)) return;
+    _viewPrefLoadedFor.add(characterId);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getString(_viewModePrefKey(characterId));
+      if (!mounted) return;
+      if (stored != null && stored != _viewModeByCharacter[characterId]) {
+        setState(() {
+          _viewModeByCharacter[characterId] = stored;
+        });
+      }
+    } catch (_) {
+      // SharedPreferences plugin unavailable in tests; in-memory fallback.
+    }
+  }
+
   Future<void> _setRegionFilter(String characterId, String region) async {
     setState(() {
       _regionFilterByCharacter[characterId] = region;
@@ -66,6 +95,18 @@ class _BlueprintTrackerScreenState
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_regionPrefKey(characterId), region);
+    } catch (_) {
+      // Same as above; persistence is best-effort.
+    }
+  }
+
+  Future<void> _setViewMode(String characterId, String mode) async {
+    setState(() {
+      _viewModeByCharacter[characterId] = mode;
+    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_viewModePrefKey(characterId), mode);
     } catch (_) {
       // Same as above; persistence is best-effort.
     }
@@ -124,8 +165,9 @@ class _BlueprintTrackerScreenState
 
     _selectedCharacterId ??= characters.first.id;
     final selectedCharacterId = _selectedCharacterId!;
-    // Fire-and-forget pref load; setState reruns build when it lands.
+    // Fire-and-forget pref loads; setState reruns build when they land.
     _ensureRegionPrefLoaded(selectedCharacterId);
+    _ensureViewPrefLoaded(selectedCharacterId);
     final blueprintsAsync =
         ref.watch(blueprintsByCharacterProvider(selectedCharacterId));
 
@@ -239,6 +281,32 @@ class _BlueprintTrackerScreenState
                 ),
               ],
             ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                const Text('View by:'),
+                const SizedBox(width: 12),
+                SegmentedButton<String>(
+                  segments: const [
+                    ButtonSegment(
+                      value: _viewBySchematic,
+                      label: Text('Schematic'),
+                      icon: Icon(Icons.list_alt),
+                    ),
+                    ButtonSegment(
+                      value: _viewBySite,
+                      label: Text('Site'),
+                      icon: Icon(Icons.place_outlined),
+                    ),
+                  ],
+                  selected: {_viewMode(selectedCharacterId)},
+                  onSelectionChanged: (selection) {
+                    _setViewMode(selectedCharacterId, selection.first);
+                  },
+                  showSelectedIcon: false,
+                ),
+              ],
+            ),
             const SizedBox(height: 8),
             _AutoRespawnTimerSwitch(),
           ],
@@ -250,13 +318,7 @@ class _BlueprintTrackerScreenState
   Widget _buildBlueprintList(String characterId, List<Blueprint> blueprints) {
     final rows = _buildChecklistRows(characterId, blueprints);
     final collectedCount = rows.where((row) => row.isUnlocked).length;
-    final filtered = rows.where((row) {
-      return switch (_statusFilter) {
-        'locked' => !row.isUnlocked,
-        'unlocked' => row.isUnlocked,
-        _ => true,
-      };
-    }).toList();
+    final filtered = rows.where(_passesStatusFilter).toList();
 
     if (filtered.isEmpty) {
       return const Center(
@@ -269,6 +331,10 @@ class _BlueprintTrackerScreenState
         ),
       );
     }
+
+    final body = _viewMode(characterId) == _viewBySite
+        ? _buildSiteGroupedBody(characterId, blueprints)
+        : _buildSchematicBody(characterId, filtered);
 
     return Column(
       children: [
@@ -285,40 +351,199 @@ class _BlueprintTrackerScreenState
             child: Text('$collectedCount / ${rows.length} collected'),
           ),
         ),
-        Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
-            itemCount: filtered.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final row = filtered[index];
-              return _BlueprintCard(
-                row: row,
-                onToggle: () => _toggleChecklistRow(characterId, row),
-                onToggleRespawnTimer: row.blueprint == null
-                    ? null
-                    : (isEnabled) => ref
-                        .read(blueprintEditorProvider)
-                        .setRespawnTimerEnabled(row.blueprint!, isEnabled),
-                onResetRespawn: row.blueprint == null
-                    ? null
-                    : () => ref
-                        .read(blueprintEditorProvider)
-                        .resetRespawnTimer(row.blueprint!),
-                onEdit: () => _showBlueprintDialog(
-                  context,
-                  null,
-                  existing:
-                      row.blueprint ?? row.entry?.toBlueprint(characterId),
-                ),
-                onDelete: row.blueprint == null
-                    ? null
-                    : () => _confirmDelete(context, row.blueprint!),
-              );
-            },
+        Expanded(child: body),
+      ],
+    );
+  }
+
+  bool _passesStatusFilter(_BlueprintChecklistRow row) {
+    return switch (_statusFilter) {
+      'locked' => !row.isUnlocked,
+      'unlocked' => row.isUnlocked,
+      _ => true,
+    };
+  }
+
+  Widget _buildSchematicBody(
+    String characterId,
+    List<_BlueprintChecklistRow> filtered,
+  ) {
+    return ListView.separated(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
+      itemCount: filtered.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      itemBuilder: (context, index) {
+        return _buildBlueprintCard(characterId, filtered[index]);
+      },
+    );
+  }
+
+  /// Site-grouped view — one section per (region, location) pool. A
+  /// schematic that drops in multiple sites appears in each pool's
+  /// section (its unlock state is shared, so checking it in one site
+  /// also ticks it everywhere it appears).
+  Widget _buildSiteGroupedBody(
+    String characterId,
+    List<Blueprint> blueprints,
+  ) {
+    final sections = _buildPoolSections(characterId, blueprints);
+    final visibleSections = sections
+        .map((section) => _PoolSection(
+              region: section.region,
+              location: section.location,
+              rows: section.rows.where(_passesStatusFilter).toList(),
+              totalRows: section.rows.length,
+              unlockedRows: section.rows.where((r) => r.isUnlocked).length,
+            ))
+        .where((section) => section.rows.isNotEmpty)
+        .toList();
+
+    if (visibleSections.isEmpty) {
+      return const Center(
+        child: Padding(
+          padding: EdgeInsets.all(24),
+          child: Text(
+            'No blueprints match this filter yet.',
+            textAlign: TextAlign.center,
           ),
         ),
-      ],
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 96),
+      itemCount: visibleSections.length,
+      itemBuilder: (context, index) {
+        final section = visibleSections[index];
+        return Padding(
+          padding: EdgeInsets.only(bottom: index == visibleSections.length - 1 ? 0 : 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                child: Row(
+                  children: [
+                    const Icon(Icons.place_outlined, size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            section.location,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          Text(
+                            section.region,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Chip(
+                      label: Text(
+                        '${section.unlockedRows} / ${section.totalRows}',
+                      ),
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  ],
+                ),
+              ),
+              ...section.rows.map((row) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: _buildBlueprintCard(characterId, row),
+                  )),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  /// Build per-(region, location) groupings of catalog + custom rows
+  /// for the Site view. A schematic with N sources contributes a row to
+  /// each of its N sections.
+  List<_PoolSection> _buildPoolSections(
+    String characterId,
+    List<Blueprint> blueprints,
+  ) {
+    final regionFilter = _regionFilter(characterId);
+    final byName = {
+      for (final blueprint in blueprints) _key(blueprint.name): blueprint,
+    };
+
+    // Use an insertion-ordered map so the section order mirrors the
+    // catalog's declared order (Hagga first, Sheol last, etc.).
+    final pools = <String, _PoolSection>{};
+    String poolKey(String region, String location) => '$region|$location';
+    _PoolSection sectionFor(String region, String location) {
+      return pools.putIfAbsent(
+        poolKey(region, location),
+        () => _PoolSection(region: region, location: location, rows: []),
+      );
+    }
+
+    for (final entry in blueprintCatalog) {
+      for (final source in entry.sources) {
+        if (regionFilter != _allRegions && source.region != regionFilter) {
+          continue;
+        }
+        sectionFor(source.region, source.location).rows.add(
+              _BlueprintChecklistRow(
+                entry: entry,
+                blueprint: byName[_key(entry.name)],
+              ),
+            );
+      }
+    }
+
+    // Custom blueprints (not in catalog) — bucket each into a section
+    // keyed by its persisted region + sourceLocation.
+    for (final blueprint in blueprints) {
+      final inCatalog = blueprintCatalog
+          .any((entry) => _key(entry.name) == _key(blueprint.name));
+      if (inCatalog) continue;
+      if (regionFilter != _allRegions && blueprint.region != regionFilter) {
+        continue;
+      }
+      final location =
+          (blueprint.sourceLocation == null || blueprint.sourceLocation!.trim().isEmpty)
+              ? '(unspecified)'
+              : blueprint.sourceLocation!;
+      sectionFor(blueprint.region, location).rows.add(
+            _BlueprintChecklistRow(blueprint: blueprint),
+          );
+    }
+
+    return pools.values.toList();
+  }
+
+  Widget _buildBlueprintCard(
+    String characterId,
+    _BlueprintChecklistRow row,
+  ) {
+    return _BlueprintCard(
+      row: row,
+      onToggle: () => _toggleChecklistRow(characterId, row),
+      onToggleRespawnTimer: row.blueprint == null
+          ? null
+          : (isEnabled) => ref
+              .read(blueprintEditorProvider)
+              .setRespawnTimerEnabled(row.blueprint!, isEnabled),
+      onResetRespawn: row.blueprint == null
+          ? null
+          : () => ref
+              .read(blueprintEditorProvider)
+              .resetRespawnTimer(row.blueprint!),
+      onEdit: () => _showBlueprintDialog(
+        context,
+        null,
+        existing: row.blueprint ?? row.entry?.toBlueprint(characterId),
+      ),
+      onDelete: row.blueprint == null
+          ? null
+          : () => _confirmDelete(context, row.blueprint!),
     );
   }
 
@@ -859,6 +1084,29 @@ class _RespawnTimerChip extends StatelessWidget {
     return '${minutes.toString().padLeft(2, '0')}:'
         '${seconds.toString().padLeft(2, '0')}';
   }
+}
+
+/// One pool in the Site view — a (region, location) bucket containing
+/// every schematic that drops at that site. `totalRows` and
+/// `unlockedRows` are pre-filter counts used for the section's
+/// "X / N collected" chip; `rows` is the post-status-filter list
+/// actually rendered.
+class _PoolSection {
+  final String region;
+  final String location;
+  final List<_BlueprintChecklistRow> rows;
+  final int totalRows;
+  final int unlockedRows;
+
+  _PoolSection({
+    required this.region,
+    required this.location,
+    required this.rows,
+    int? totalRows,
+    int? unlockedRows,
+  })  : totalRows = totalRows ?? rows.length,
+        unlockedRows =
+            unlockedRows ?? rows.where((r) => r.isUnlocked).length;
 }
 
 /// Compact in-header toggle for the per-user "auto-start respawn timer
