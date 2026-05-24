@@ -257,6 +257,13 @@ const shieldWallBlueprintCatalog = [
     ],
   ),
   BlueprintCatalogEntry(
+    name: "Shadrath's Edge",
+    category: 'Weapon',
+    sources: [
+      BlueprintSource(region: _west, location: _alecto),
+    ],
+  ),
+  BlueprintCatalogEntry(
     name: "Quirth's Boots",
     category: 'Armor',
     sources: [

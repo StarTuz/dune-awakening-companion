@@ -14,10 +14,12 @@ const _schematicRespawnDuration = Duration(minutes: 45);
 
 /// Sentinel value for the "All regions" filter.
 const String _allRegions = '__all__';
+const String _allSections = '__sections_all__';
 const String _deepDesertRegion = 'Deep Desert';
 const String _deepDesertRotatingPool = 'Deep Desert weekly rotating drop pool';
 
 String _regionPrefKey(String characterId) => 'blueprint_region:$characterId';
+String _sectionPrefKey(String characterId) => 'blueprint_section:$characterId';
 String _viewModePrefKey(String characterId) => 'blueprint_view:$characterId';
 
 /// View-mode values for the per-character "View by" segmented control.
@@ -40,10 +42,12 @@ class _BlueprintTrackerScreenState
   /// Selected region filter — sentinel `_allRegions` means show every region.
   /// Cached per-character in-memory so flipping between characters is snappy.
   final Map<String, String> _regionFilterByCharacter = {};
+  final Map<String, String> _sectionFilterByCharacter = {};
 
   /// Characters whose region preference has been loaded from disk at least
   /// once. Prevents redundant SharedPreferences hits on every rebuild.
   final Set<String> _regionPrefLoadedFor = {};
+  final Set<String> _sectionPrefLoadedFor = {};
 
   /// Per-character "View by" mode ('schematic' or 'site').
   final Map<String, String> _viewModeByCharacter = {};
@@ -51,6 +55,9 @@ class _BlueprintTrackerScreenState
 
   String _regionFilter(String characterId) =>
       _regionFilterByCharacter[characterId] ?? _allRegions;
+
+  String _sectionFilter(String characterId) =>
+      _sectionFilterByCharacter[characterId] ?? _allSections;
 
   String _viewMode(String characterId) =>
       _viewModeByCharacter[characterId] ?? _viewBySchematic;
@@ -70,6 +77,23 @@ class _BlueprintTrackerScreenState
     } catch (_) {
       // SharedPreferences plugin unavailable (e.g. in unit/widget tests
       // without setMockInitialValues). Fall back to in-memory state.
+    }
+  }
+
+  Future<void> _ensureSectionPrefLoaded(String characterId) async {
+    if (_sectionPrefLoadedFor.contains(characterId)) return;
+    _sectionPrefLoadedFor.add(characterId);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getString(_sectionPrefKey(characterId));
+      if (!mounted) return;
+      if (stored != null && stored != _sectionFilterByCharacter[characterId]) {
+        setState(() {
+          _sectionFilterByCharacter[characterId] = stored;
+        });
+      }
+    } catch (_) {
+      // SharedPreferences plugin unavailable in tests; in-memory fallback.
     }
   }
 
@@ -97,6 +121,24 @@ class _BlueprintTrackerScreenState
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_regionPrefKey(characterId), region);
+    } catch (_) {
+      // Same as above; persistence is best-effort.
+    }
+  }
+
+  Future<void> _setSectionFilter(String characterId, String section) async {
+    setState(() {
+      _sectionFilterByCharacter[characterId] = section;
+      if (section != _allSections) {
+        _regionFilterByCharacter[characterId] = _allRegions;
+      }
+    });
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_sectionPrefKey(characterId), section);
+      if (section != _allSections) {
+        await prefs.setString(_regionPrefKey(characterId), _allRegions);
+      }
     } catch (_) {
       // Same as above; persistence is best-effort.
     }
@@ -169,6 +211,7 @@ class _BlueprintTrackerScreenState
     final selectedCharacterId = _selectedCharacterId!;
     // Fire-and-forget pref loads; setState reruns build when they land.
     _ensureRegionPrefLoaded(selectedCharacterId);
+    _ensureSectionPrefLoaded(selectedCharacterId);
     _ensureViewPrefLoaded(selectedCharacterId);
     final blueprintsAsync =
         ref.watch(blueprintsByCharacterProvider(selectedCharacterId));
@@ -194,7 +237,9 @@ class _BlueprintTrackerScreenState
     String selectedCharacterId,
   ) {
     final activeRegion = _regionFilter(selectedCharacterId);
+    final activeSection = _sectionFilter(selectedCharacterId);
     final regions = blueprintCatalogRegions();
+    final sourceGroups = blueprintCatalogSourceGroups();
     return Card(
       margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       child: Padding(
@@ -238,8 +283,33 @@ class _BlueprintTrackerScreenState
             ),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
+              value: activeSection,
+              isExpanded: true,
+              items: [
+                const DropdownMenuItem(
+                  value: _allSections,
+                  child: Text('All Sections'),
+                ),
+                for (final group in sourceGroups)
+                  DropdownMenuItem(
+                    value: group,
+                    child: Text(BlueprintSourceGroup.label(group)),
+                  ),
+              ],
+              decoration: const InputDecoration(
+                labelText: 'Section',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                if (value == null) return;
+                _setSectionFilter(selectedCharacterId, value);
+              },
+            ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
               value: activeRegion,
               isExpanded: true,
+              disabledHint: const Text('Section filter active'),
               items: [
                 const DropdownMenuItem(
                   value: _allRegions,
@@ -255,12 +325,15 @@ class _BlueprintTrackerScreenState
                 labelText: 'Region',
                 border: OutlineInputBorder(),
               ),
-              onChanged: (value) {
-                if (value == null) return;
-                _setRegionFilter(selectedCharacterId, value);
-              },
+              onChanged: activeSection == _allSections
+                  ? (value) {
+                      if (value == null) return;
+                      _setRegionFilter(selectedCharacterId, value);
+                    }
+                  : null,
             ),
-            if (activeRegion == _deepDesertRegion) ...[
+            if (activeRegion == _deepDesertRegion ||
+                activeSection == BlueprintSourceGroup.deepDesert) ...[
               const SizedBox(height: 12),
               const _DeepDesertNotice(),
             ],
@@ -476,6 +549,7 @@ class _BlueprintTrackerScreenState
     List<Blueprint> blueprints,
   ) {
     final regionFilter = _regionFilter(characterId);
+    final sectionFilter = _sectionFilter(characterId);
     final byName = {
       for (final blueprint in blueprints) _key(blueprint.name): blueprint,
     };
@@ -492,11 +566,26 @@ class _BlueprintTrackerScreenState
     }
 
     for (final entry in blueprintCatalog) {
+      if (sectionFilter != _allSections &&
+          entry.effectiveSourceGroup != sectionFilter) {
+        continue;
+      }
       if (entry.isDeepDesert) {
         if (regionFilter != _allRegions && regionFilter != _deepDesertRegion) {
           continue;
         }
         sectionFor(_deepDesertRegion, _deepDesertRotatingPool).rows.add(
+              _BlueprintChecklistRow(
+                entry: entry,
+                blueprint: byName[_key(entry.name)],
+              ),
+            );
+        continue;
+      }
+
+      if (entry.effectiveSourceGroup != BlueprintSourceGroup.worldChest) {
+        final source = entry.sources.first;
+        sectionFor(entry.sourceGroupLabel, source.location).rows.add(
               _BlueprintChecklistRow(
                 entry: entry,
                 blueprint: byName[_key(entry.name)],
@@ -521,6 +610,7 @@ class _BlueprintTrackerScreenState
     // Custom blueprints (not in catalog) — bucket each into a section
     // keyed by its persisted region + sourceLocation.
     for (final blueprint in blueprints) {
+      if (sectionFilter != _allSections) continue;
       final inCatalog = blueprintCatalog
           .any((entry) => _key(entry.name) == _key(blueprint.name));
       if (inCatalog) continue;
@@ -572,18 +662,24 @@ class _BlueprintTrackerScreenState
     List<Blueprint> blueprints,
   ) {
     final regionFilter = _regionFilter(characterId);
+    final sectionFilter = _sectionFilter(characterId);
     final byName = {
       for (final blueprint in blueprints) _key(blueprint.name): blueprint,
     };
-    bool inFilter(List<String> regions, String? blueprintRegion) {
+    bool inCatalogFilter(BlueprintCatalogEntry entry, String? blueprintRegion) {
+      if (sectionFilter != _allSections &&
+          entry.effectiveSourceGroup != sectionFilter) {
+        return false;
+      }
+      if (sectionFilter != _allSections) return true;
       if (regionFilter == _allRegions) return true;
-      if (regions.contains(regionFilter)) return true;
+      if (entry.regions.contains(regionFilter)) return true;
       return blueprintRegion == regionFilter;
     }
 
     final catalogRows = blueprintCatalog
-        .where((entry) =>
-            inFilter(entry.regions, byName[_key(entry.name)]?.region))
+        .where(
+            (entry) => inCatalogFilter(entry, byName[_key(entry.name)]?.region))
         .map((entry) => _BlueprintChecklistRow(
               entry: entry,
               blueprint: byName[_key(entry.name)],
@@ -592,7 +688,9 @@ class _BlueprintTrackerScreenState
     final customRows = blueprints
         .where((blueprint) => !blueprintCatalog
             .any((entry) => _key(entry.name) == _key(blueprint.name)))
-        .where((blueprint) => inFilter(const [], blueprint.region))
+        .where((blueprint) => sectionFilter == _allSections)
+        .where((blueprint) =>
+            regionFilter == _allRegions || blueprint.region == regionFilter)
         .map((blueprint) => _BlueprintChecklistRow(blueprint: blueprint));
 
     return [...catalogRows, ...customRows];
@@ -890,6 +988,11 @@ class _BlueprintChecklistRow {
             'locations rotate after the Coriolis Storm and are not synced '
             'by this app.';
       }
+      if (entry!.effectiveSourceGroup != BlueprintSourceGroup.worldChest) {
+        return entry!.sources
+            .map((s) => '${entry!.sourceGroupLabel}: ${s.location}')
+            .join(' · ');
+      }
       return entry!.sources.map((s) => s.label).join(' · ');
     }
     final bp = blueprint!;
@@ -902,6 +1005,9 @@ class _BlueprintChecklistRow {
   /// For multi-source schematics, joins regions with " / ".
   String get regionLabel {
     if (entry != null) {
+      if (entry!.effectiveSourceGroup != BlueprintSourceGroup.worldChest) {
+        return entry!.sourceGroupLabel;
+      }
       return entry!.regions.join(' / ');
     }
     return blueprint?.region ?? Blueprint.defaultRegion;
@@ -913,7 +1019,12 @@ class _BlueprintChecklistRow {
           ? null
           : entry!.isDeepDesert
               ? 'Weekly rotating pool'
-              : 'Chest');
+              : entry!.effectiveSourceGroup == BlueprintSourceGroup.dlc
+                  ? 'DLC reward'
+                  : entry!.effectiveSourceGroup ==
+                          BlueprintSourceGroup.classQuestReward
+                      ? 'Quest reward'
+                      : 'Chest');
 
   List<String> get requiredMaterials =>
       blueprint?.requiredMaterials ?? const [];

@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/utils/constants.dart';
 import '../../augmentations/models/augmentation.dart';
+import '../../augmentations/models/augmentation_catalog.dart';
 import '../../augmentations/providers/augmentation_provider.dart';
 import '../../class_quests/models/class_quest_catalog.dart';
 import '../../class_quests/models/class_quest_progress.dart';
@@ -554,53 +555,81 @@ class _AugmentationsTab extends ConsumerWidget {
 
     return Scaffold(
       body: augmentationsAsync.when(
-        data: (augmentations) => ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            if (augmentations.isEmpty)
-              const Card(
+        data: (augmentations) {
+          final rows = _buildAugmentationRows(augmentations);
+          final acquiredCount = rows.where((row) => row.isAcquired).length;
+          return ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Card(
                 child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('No augmentations tracked yet.'),
-                ),
-              ),
-            ...augmentations.map(
-              (augmentation) => Card(
-                child: ListTile(
-                  title: Text(augmentation.name),
-                  subtitle: Text(
-                    '${augmentation.slot}${augmentation.sourceBoss == null ? '' : ' • ${augmentation.sourceBoss}'}',
-                  ),
-                  trailing: Wrap(
-                    spacing: 8,
-                    children: [
-                      Checkbox(
-                        value: augmentation.isEquipped,
-                        onChanged: (value) {
-                          ref.read(augmentationEditorProvider).save(
-                                augmentation.copyWith(
-                                    isEquipped: value ?? false),
-                              );
-                        },
-                      ),
-                      IconButton(
-                        onPressed: () =>
-                            _showAugmentationDialog(context, ref, augmentation),
-                        icon: const Icon(Icons.edit),
-                      ),
-                      IconButton(
-                        onPressed: () => ref
-                            .read(augmentationEditorProvider)
-                            .delete(augmentation.id, character.id),
-                        icon: const Icon(Icons.delete),
-                      ),
-                    ],
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    '$acquiredCount / ${augmentationCatalog.length} '
+                    'catalog augments acquired',
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+              const SizedBox(height: 8),
+              ...rows.map(
+                (row) => Card(
+                  child: ListTile(
+                    leading: Checkbox(
+                      value: row.isAcquired,
+                      onChanged: (_) => _toggleAcquired(ref, row),
+                    ),
+                    title: Text(row.name),
+                    subtitle: Text(row.subtitle),
+                    trailing: Wrap(
+                      spacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        if (row.isAcquired)
+                          Tooltip(
+                            message: 'Equipped',
+                            child: Checkbox(
+                              value: row.isEquipped,
+                              onChanged: (value) {
+                                final augmentation = row.augmentation;
+                                if (augmentation == null) return;
+                                ref.read(augmentationEditorProvider).save(
+                                      augmentation.copyWith(
+                                        isEquipped: value ?? false,
+                                      ),
+                                    );
+                              },
+                            ),
+                          ),
+                        IconButton(
+                          onPressed: () => _showAugmentationDialog(
+                            context,
+                            ref,
+                            row.augmentation,
+                          ),
+                          icon: const Icon(Icons.edit),
+                        ),
+                        if (!row.isSeeded)
+                          IconButton(
+                            onPressed: () => ref
+                                .read(augmentationEditorProvider)
+                                .delete(row.augmentation!.id, character.id),
+                            icon: const Icon(Icons.delete),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              if (rows.isEmpty)
+                const Card(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text('No augmentations tracked yet.'),
+                  ),
+                ),
+            ],
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(child: Text('Error: $error')),
       ),
@@ -610,6 +639,63 @@ class _AugmentationsTab extends ConsumerWidget {
         label: const Text('Add Augment'),
       ),
     );
+  }
+
+  List<_AugmentationChecklistRow> _buildAugmentationRows(
+    List<Augmentation> augmentations,
+  ) {
+    final byName = {
+      for (final augmentation in augmentations)
+        _augmentationKey(augmentation.name): augmentation,
+    };
+    final catalogRows = augmentationCatalog.map(
+      (entry) => _AugmentationChecklistRow(
+        entry: entry,
+        augmentation: byName[_augmentationKey(entry.name)],
+      ),
+    );
+    final customRows = augmentations
+        .where((augmentation) => !augmentationCatalog.any(
+              (entry) =>
+                  _augmentationKey(entry.name) ==
+                  _augmentationKey(augmentation.name),
+            ))
+        .map((augmentation) => _AugmentationChecklistRow(
+              augmentation: augmentation,
+            ));
+    return [...catalogRows, ...customRows];
+  }
+
+  Future<void> _toggleAcquired(
+    WidgetRef ref,
+    _AugmentationChecklistRow row,
+  ) async {
+    final now = DateTime.now();
+    final existing = row.augmentation;
+    if (existing != null) {
+      final isAcquired = existing.acquiredAt != null;
+      await ref.read(augmentationEditorProvider).save(
+            existing.copyWith(
+              acquiredAt: isAcquired ? null : now,
+              isEquipped: isAcquired ? false : existing.isEquipped,
+            ),
+          );
+      return;
+    }
+
+    final entry = row.entry!;
+    await ref.read(augmentationEditorProvider).save(
+          Augmentation(
+            id: const Uuid().v4(),
+            characterId: character.id,
+            name: entry.name,
+            slot: entry.slot,
+            sourceBoss: entry.sourceLabel,
+            notes: '${entry.sourceGroup} • Tier ${entry.tier} ${entry.rarity}',
+            acquiredAt: now,
+            updatedAt: now,
+          ),
+        );
   }
 
   void _showAugmentationDialog(
@@ -701,6 +787,38 @@ class _AugmentationsTab extends ConsumerWidget {
   }
 }
 
+class _AugmentationChecklistRow {
+  final AugmentationCatalogEntry? entry;
+  final Augmentation? augmentation;
+
+  const _AugmentationChecklistRow({
+    this.entry,
+    this.augmentation,
+  });
+
+  bool get isSeeded => entry != null;
+
+  String get name => augmentation?.name ?? entry!.name;
+
+  String get slot => augmentation?.slot ?? entry!.slot;
+
+  bool get isAcquired => augmentation?.acquiredAt != null;
+
+  bool get isEquipped => augmentation?.isEquipped ?? false;
+
+  String get subtitle {
+    final parts = <String>[
+      slot,
+      if (entry != null) 'Tier ${entry!.tier} ${entry!.rarity}',
+      if (entry != null) entry!.sourceGroup,
+      if (augmentation?.sourceBoss != null) augmentation!.sourceBoss!,
+    ];
+    return parts.join(' • ');
+  }
+}
+
+String _augmentationKey(String value) => value.trim().toLowerCase();
+
 class _SkillPlannerTab extends ConsumerStatefulWidget {
   const _SkillPlannerTab({required this.character});
 
@@ -726,8 +844,7 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
   @override
   Widget build(BuildContext context) {
     final catalog = ref.watch(skillCatalogProvider);
-    final skillsAsync =
-        ref.watch(characterSkillsProvider(widget.character.id));
+    final skillsAsync = ref.watch(characterSkillsProvider(widget.character.id));
 
     return Scaffold(
       body: skillsAsync.when(
@@ -736,11 +853,10 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
           final classSkills =
               catalog.where((s) => s.className == _selectedClass).toList();
           final trees = classSkills.map((s) => s.treeName).toSet().toList();
-          
+
           int totalPoints = 0;
           for (final s in characterSkills) {
-            final catalogEntry = catalog.firstWhere(
-                (c) => c.id == s.skillId,
+            final catalogEntry = catalog.firstWhere((c) => c.id == s.skillId,
                 orElse: () => catalog.first);
             totalPoints += s.currentRank * catalogEntry.pointCostPerRank;
           }
@@ -773,7 +889,10 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
                         const Text('Total Points Spent'),
                         Text(
                           '$totalPoints / 200',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
                                 color: totalPoints > 200 ? Colors.red : null,
                               ),
                         ),
@@ -811,13 +930,15 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
                               final isEquipped = charSkill?.isEquipped ?? false;
 
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       flex: 2,
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(skill.name,
                                               style: const TextStyle(
@@ -841,7 +962,8 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
                                     Expanded(
                                       flex: 3,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           if (skill.type == 'active' ||
                                               skill.type == 'technique') ...[
@@ -849,53 +971,91 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
                                             Checkbox(
                                               value: isEquipped,
                                               onChanged: currentRank > 0
-                                                  ? (val) => _updateSkill(skill,
-                                                      charSkill, currentRank, targetRank, val ?? false)
+                                                  ? (val) => _updateSkill(
+                                                      skill,
+                                                      charSkill,
+                                                      currentRank,
+                                                      targetRank,
+                                                      val ?? false)
                                                   : null,
                                             ),
                                           ],
                                           const SizedBox(width: 8),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: [
                                               Row(
                                                 children: [
-                                                  const Text('Rank: ', style: TextStyle(fontSize: 12)),
+                                                  const Text('Rank: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12)),
                                                   IconButton(
-                                                    icon: const Icon(Icons.remove, size: 16),
+                                                    icon: const Icon(
+                                                        Icons.remove,
+                                                        size: 16),
                                                     onPressed: currentRank > 0
-                                                        ? () => _updateSkill(skill,
-                                                            charSkill, currentRank - 1, targetRank, isEquipped)
+                                                        ? () => _updateSkill(
+                                                            skill,
+                                                            charSkill,
+                                                            currentRank - 1,
+                                                            targetRank,
+                                                            isEquipped)
                                                         : null,
                                                   ),
-                                                  Text('$currentRank / ${skill.maxRank}'),
+                                                  Text(
+                                                      '$currentRank / ${skill.maxRank}'),
                                                   IconButton(
-                                                    icon: const Icon(Icons.add, size: 16),
-                                                    onPressed: currentRank < skill.maxRank
-                                                        ? () => _updateSkill(skill,
-                                                            charSkill, currentRank + 1, targetRank, isEquipped)
+                                                    icon: const Icon(Icons.add,
+                                                        size: 16),
+                                                    onPressed: currentRank <
+                                                            skill.maxRank
+                                                        ? () => _updateSkill(
+                                                            skill,
+                                                            charSkill,
+                                                            currentRank + 1,
+                                                            targetRank,
+                                                            isEquipped)
                                                         : null,
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 children: [
-                                                  const Text('Target: ', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                                  const Text('Target: ',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.grey)),
                                                   IconButton(
-                                                    icon: const Icon(Icons.remove, size: 16),
+                                                    icon: const Icon(
+                                                        Icons.remove,
+                                                        size: 16),
                                                     color: Colors.grey,
                                                     onPressed: targetRank > 0
-                                                        ? () => _updateSkill(skill,
-                                                            charSkill, currentRank, targetRank - 1, isEquipped)
+                                                        ? () => _updateSkill(
+                                                            skill,
+                                                            charSkill,
+                                                            currentRank,
+                                                            targetRank - 1,
+                                                            isEquipped)
                                                         : null,
                                                   ),
-                                                  Text('$targetRank / ${skill.maxRank}', style: const TextStyle(color: Colors.grey)),
+                                                  Text(
+                                                      '$targetRank / ${skill.maxRank}',
+                                                      style: const TextStyle(
+                                                          color: Colors.grey)),
                                                   IconButton(
-                                                    icon: const Icon(Icons.add, size: 16),
+                                                    icon: const Icon(Icons.add,
+                                                        size: 16),
                                                     color: Colors.grey,
-                                                    onPressed: targetRank < skill.maxRank
-                                                        ? () => _updateSkill(skill,
-                                                            charSkill, currentRank, targetRank + 1, isEquipped)
+                                                    onPressed: targetRank <
+                                                            skill.maxRank
+                                                        ? () => _updateSkill(
+                                                            skill,
+                                                            charSkill,
+                                                            currentRank,
+                                                            targetRank + 1,
+                                                            isEquipped)
                                                         : null,
                                                   ),
                                                 ],
@@ -928,7 +1088,7 @@ class _SkillPlannerTabState extends ConsumerState<_SkillPlannerTab> {
   void _updateSkill(SkillCatalogEntry catalogEntry, CharacterSkill? existing,
       int newCurrent, int newTarget, bool newEquipped) {
     if (newTarget < newCurrent) newTarget = newCurrent;
-    
+
     if (newCurrent == 0) newEquipped = false;
 
     final updated = (existing ??

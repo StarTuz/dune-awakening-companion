@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-23 (Deep Desert T5 + T6 catalogued — base catalog complete)
+Last updated: 2026-05-23 (source sections added for regional, dynamic, DLC, and class-reward tracking)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -41,6 +41,7 @@ multiple rolls before it lands."
 | `BlueprintCatalogEntry.name` | Unique across the whole catalog. Duplicate-name schematics that drop in multiple sites are collapsed into one entry with multiple sources. |
 | `BlueprintCatalogEntry.category` | One of `Weapon` / `Armor` / `Tool` / `Vehicle` / `Utility` / `Building` / `Schematic` / `Other`. Used for the card subtitle and the edit dialog dropdown. |
 | `BlueprintCatalogEntry.sources` | List of `BlueprintSource(region, location)` pairs. Each source describes one in-world chest where the schematic can drop. |
+| `BlueprintCatalogEntry.sourceGroup` | Presentational source section: `worldChest`, `deepDesert`, `dlc`, or `classQuestReward`. This keeps non-map rewards out of regional chest-pool counts without changing persistence. |
 | `Blueprint.region` (persisted) | Stores the *one* region the player marked the schematic discovered at — defaults to the active region filter. The catalog still surfaces every source even after the player marks it found. |
 
 Persistence schema (migration 009 + 010, **DB v12**) is unchanged by the
@@ -63,6 +64,43 @@ multi-region rewrite — the catalog shape is presentational only.
 
 ---
 
+## Source sections
+
+The tracker now separates schematics by source section instead of forcing
+everything into ordinary map regions:
+
+- **World / Chest Drops**: static regional chest pools. These remain covered by
+  the region/site canon test and the source-row totals above.
+- **Deep Desert**: stable ownership checklist for known Deep Desert schematic
+  pools. Current-week POI/grid locations rotate and are intentionally not
+  auto-synced.
+- **DLC / Lost Harvest**: reward/unlock schematics that should not appear as
+  farmable regional chest drops. Current verified rows are
+  `Steady Treadwheel Boost Module Mk4` and `Swift Treadwheel Engine Mk4`.
+- **Class Quest Rewards**: blueprint-style class quest completion rewards.
+  Current seeded rows are conservative set-level entries for the confirmed
+  Trooper and Swordmaster archetype armor rewards. Exact armor-piece names and
+  additional class rewards should be added only after in-game confirmation.
+
+The persisted `Blueprint` shape is unchanged. Section filtering is a catalog/UI
+concern, so existing checked-off rows, import/export, and custom rows keep
+working without a database migration.
+
+### Blueprint vs augmentation rows
+
+dune.gaming.tools "unique" lists mix several item families: schematics,
+augmentations, components, and miscellaneous items. Rows whose category starts
+with `Augmentations - ...` are intentionally **not** seeded into the blueprint
+catalog. They live in `lib/features/augmentations/models/augmentation_catalog.dart`
+and are tracked from the character Augments tab.
+
+The current augmentation catalog seeds the verified Tier 6 unique augment rows
+from the Deep Desert list across Melee, Ranged, Garment, and Generic slots.
+Ambiguous rows such as `House Heavy Caliber Upgrade` (`Items`) stay out of both
+catalogs until their in-game type is verified.
+
+---
+
 ## Region coverage
 
 | Region | Sites | Source rows | Unique schematics within region |
@@ -75,15 +113,15 @@ multi-region rewrite — the catalog shape is presentational only.
 | Jabal Eifrit Al-Janub | 4 | 29 | 22 |
 | Jabal Eifrit Al-sharq | 3 | 20 | 13 |
 | Eastern Shield Wall | 4 | 45 | 35 |
-| Western Shield Wall | 4 | 48 | 25 |
+| Western Shield Wall | 4 | 49 | 26 |
 | The O'odham | 5 | 52 | 13 |
 | Mysa Tarill | 2 | 20 | 12 |
 | Sheol | 5 | 40 | 26 |
-| Hagga Basin (event) | 1 | 15 | 6 |
+| Hagga Basin (event) | 1 | 16 | 7 |
 | Deep Desert T5 (A row) | 17 | 140 | 48 |
 | Deep Desert T6 (B-I rows) | 6 | 159 | 98 |
-| **Total source rows** | — | **699** | — |
-| **Unique catalog entries** | — | — | **330** (17 Hagga + 41 VG + 28 Hagga Rift¹ + 8 Jabal Eifrit² + 54 Shield Wall³ + 4 O'odham⁴ + 1 Mysa Tarill⁵ + 26 Sheol⁶ + 6 Hagga Basin⁷ + 48 Deep Desert T5⁸ + 98 Deep Desert T6⁹) |
+| **Total source rows** | — | **701** | — |
+| **Unique catalog entries** | — | — | **332** (17 Hagga + 41 VG + 28 Hagga Rift¹ + 8 Jabal Eifrit² + 55 Shield Wall³ + 4 O'odham⁴ + 1 Mysa Tarill⁵ + 26 Sheol⁶ + 7 Hagga Basin⁷ + 48 Deep Desert T5⁸ + 98 Deep Desert T6⁹) |
 
 ¹ Hagga Rift has 29 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
@@ -140,9 +178,9 @@ Cave outer (B7/D4/D9), Cave inner (F1/F6), BTS standard (F9/H2), BTS deep
 
 ⁷ "Hagga Basin" is a catch-all region for the dynamic Fallen Shipwreck
 event, which occurs across all Hagga Basin sub-regions except the
-south. The 6 unique entries (Bite Back Blade, Desert Dasher Garment,
-Dune Dancer Stillsuit Garment, Sprinter's Stillsuit Garment,
-Steady Treadwheel Boost Module Mk5,
+south. The 7 unique entries (Bite Back Blade, Desert Dasher Garment,
+Dune Dancer Stillsuit Garment, Sand Strider Stillsuit Garment,
+Sprinter's Stillsuit Garment, Steady Treadwheel Boost Module Mk5,
 Swift Treadwheel Engine Mk5) live in `sheol.dart` for proximity; the region string in their
 source is `'Hagga Basin'`, not `'Sheol'`. The remaining 9 schematics
 in the Fallen Shipwreck pool are Sheol entries that gained this event
@@ -392,7 +430,7 @@ Hagga Rift Stepstone Cavern *and* Al-sharq Farhold observation point.
 |------|------------|
 | Passage of Artemis | Sentinel set + Mk4 buggy/tool pool⁹, Spice-infused Aluminum Dust¹⁰ — same 12 entries as Southern Comms |
 | Sirr'asraar Vault | Same 12-entry pool as Southern Comms / Passage of Artemis⁹ |
-| Wreck of the Alecto | Denira's Gift¹¹, House Disruptor Pistol¹¹, Quirth's set¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹, Spice-infused Aluminum Dust¹⁰ |
+| Wreck of the Alecto | Denira's Gift¹¹, House Disruptor Pistol¹¹, Shadrath's Edge¹⁹, Quirth's set¹¹, Sinner's Bloodbag¹¹, Way of the Fighter¹¹, Spice-infused Aluminum Dust¹⁰ |
 | Imperial Testing Station No. 60 | Albatross Wing Module Mk4, Bluddshot Buggy Engine Mk4, Compact Compactor Mk4, Eviscerator, Experimental Vulcan GAU-94, Hajra Literjon Mk4, Improved Suspensor Jacket, Miner's Blessing, Night Rider Sandbike Boost Mk4, Pipecleaner, Sandflies Carver¹⁸, Shadrath's Drinker, Spice-infused Aluminum Dust¹⁰, Spice-infused Copper Dust¹² |
 
 ⁹ The Southern Comms (E) / Passage of Artemis (W) / Sirr'asraar Vault (W) tri-source pool.
@@ -424,9 +462,10 @@ see "Known IGN-vs-in-game discrepancies".)
 second source.
 
 ¹⁸ Sandflies Carver was swapped INTO this site (and the O'odham
-tri-pool) by patch 1.1.20 as a T4 replacement for Tarl Cutteray. Its
-catalog row lives in `oodham.dart` since 3 of its 4 sources are in
-The O'odham.
+tri-pool) by patch 1.1.20.
+
+¹⁹ Shadrath's Edge is listed by Game8 at Wreck of the Alecto; IGN's table
+does not currently list it.
 
 ### Mysa Tarill
 
@@ -456,7 +495,7 @@ open-PvP shipwreck, and the only place Tarl Cutteray drops post-patch.
 | Wreck of the Delphis | Adept Tripleshot Repeating Rifle²⁴, Bigger Buggy Boot Mk5²⁰, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, Jolt-knife²⁷, Stim-Leggings, Syndicate Gauntlets²⁷, Syndicate Helmet²², **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
 | Wreck of the Euporia | Acheronian Helmet¹⁹, Adept Tripleshot Repeating Rifle²⁴, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
 | Downed Ships | Syndicate Chestplate²¹, Syndicate Pants²¹, Thufir's Best²⁶, Way of the Desert²³ |
-| Fallen Shipwreck | Adept Burst Drillshot²⁷, Bigger Buggy Boot Mk5²⁰, **Bite Back Blade**, **Desert Dasher Garment**, **Dune Dancer Stillsuit Garment**, Jolt-knife²⁷, **Sprinter's Stillsuit Garment**, **Steady Treadwheel Boost Module Mk5**, **Swift Treadwheel Engine Mk5**, Syndicate Boots²⁷, Syndicate Chestplate²¹, Syndicate Gauntlets²⁷, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
+| Fallen Shipwreck | Adept Burst Drillshot²⁷, Bigger Buggy Boot Mk5²⁰, **Bite Back Blade**, **Desert Dasher Garment**, **Dune Dancer Stillsuit Garment**, Jolt-knife²⁷, **Sand Strider Stillsuit Garment**, **Sprinter's Stillsuit Garment**, **Steady Treadwheel Boost Module Mk5**, **Swift Treadwheel Engine Mk5**, Syndicate Boots²⁷, Syndicate Chestplate²¹, Syndicate Gauntlets²⁷, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
 
 ¹⁹ Acheronian Helmet drops at Shaitan's Grotto *and* Wreck of the Euporia.
 ²⁰ Bigger Buggy Boot Mk5 drops at Edge of Acheron, Wreck of the Delphis, *and* Fallen Shipwreck.
@@ -588,6 +627,19 @@ the canon test's deviations from raw IGN data don't look mysterious:
   level), and Sprinter's Stillsuit Garment (dune.gaming.tools:
   Hagga Basin Fallen Shipwreck).
 
+- **Tier 4 audit against dune.gaming.tools.** User-provided Tier 4
+  unique list surfaced two normal-catalog misses now added here:
+  Shadrath's Edge (Game8: Western Shield Wall, Wreck of the Alecto)
+  and Sand Strider Stillsuit Garment (dune.gaming.tools: Hagga Basin
+  Fallen Shipwreck). Several remaining Tier 4 names are real items but
+  are not seeded yet because their source is not a normal verified
+  schematic chest: Shadow Hood has conflicting reports/no confirmed
+  drop, and Sword of Seven Sorrows appears as both a unique sword item
+  and a cosmetic reward/variant in available sources without a reliable
+  schematic-chest location. Steady Treadwheel Boost Module Mk4 and Swift
+  Treadwheel Engine Mk4 are seeded separately under DLC / Lost Harvest so
+  they do not inflate regional chest-pool counts.
+
 ## Future regions & content (deferred)
 
 All Funcom-released regions in the base game are catalogued as of
@@ -596,17 +648,35 @@ documenting now so they aren't forgotten:
 
 ### Lost Harvest DLC
 
-DLC content that unlocks the **treadwheel** (vehicle / device — to
-confirm category when adding). Conditional on DLC ownership.
+DLC content that unlocks treadwheel-related Mk4 schematics is tracked in
+`dlc.dart` under the DLC / Lost Harvest section. Conditional on DLC
+ownership. Keep future DLC entries in this section unless they are
+confirmed as normal regional chest drops.
 
-Open questions to resolve when adding:
-- Does the treadwheel come with its own schematic chest(s), or is it
-  unlocked via a quest/purchase rather than a chest pool? If
-  quest/purchase only, it may not fit the current catalog model
-  cleanly.
-- DLC gating — the catalog doesn't currently have a "requires DLC"
-  flag on `BlueprintCatalogEntry`; consider whether to add one or
-  leave it implicit in the location/region name.
+Open questions to resolve before expanding:
+- Whether the base treadwheel itself should be a checklist row, or only
+  its blueprint-style Mk4 component unlocks.
+- Whether the catalog eventually needs an explicit `requiresDlc` field, or
+  whether the source section and source label are enough.
+
+### Class quest reward schematics
+
+Advanced class quest chains can grant blueprint-style class armor and weapon
+rewards. These are tracked in `class_rewards.dart` under Class Quest Rewards
+instead of regional chest sections.
+
+Seeded now:
+- Trooper Archetype Armor Set — reward text is verified in the class quest
+  catalog as part of Trooper advanced training.
+- Swordmaster Archetype Armor Set — reward text is verified in the class quest
+  catalog as part of Swordmaster advanced training.
+
+Deferred until verified:
+- Exact individual armor-piece names for class archetype sets.
+- Other class rewards whose catalog reward text is not specific enough to
+  create a non-misleading checklist row.
+- Automatic unlock linkage between class quest completion and blueprint
+  tracking. For now, the checklist row is manual.
 
 ### 10 overland map locations (T6 gear + augments)
 

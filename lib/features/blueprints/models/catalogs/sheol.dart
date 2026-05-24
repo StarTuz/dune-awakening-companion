@@ -298,6 +298,13 @@ const sheolBlueprintCatalog = [
     ],
   ),
   BlueprintCatalogEntry(
+    name: 'Sand Strider Stillsuit Garment',
+    category: 'Armor',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
     name: "Sprinter's Stillsuit Garment",
     category: 'Armor',
     sources: [

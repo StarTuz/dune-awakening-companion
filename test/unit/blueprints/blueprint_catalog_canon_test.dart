@@ -742,6 +742,7 @@ const Map<String, Map<String, List<String>>> _canon = {
     'Wreck of the Alecto': [
       "Denira's Gift",
       'House Disruptor Pistol',
+      "Shadrath's Edge",
       "Quirth's Boots",
       "Quirth's Gauntlets",
       "Quirth's Helmet",
@@ -895,6 +896,7 @@ const Map<String, Map<String, List<String>>> _canon = {
       'Desert Dasher Garment',
       'Dune Dancer Stillsuit Garment',
       'Jolt-knife',
+      'Sand Strider Stillsuit Garment',
       "Sprinter's Stillsuit Garment",
       'Steady Treadwheel Boost Module Mk5',
       'Swift Treadwheel Engine Mk5',
@@ -960,10 +962,15 @@ const Map<String, Map<String, List<String>>> _canon = {
   },
 };
 
+bool _hasCanonicalSitePools(BlueprintCatalogEntry entry) {
+  return entry.effectiveSourceGroup == BlueprintSourceGroup.worldChest ||
+      entry.effectiveSourceGroup == BlueprintSourceGroup.deepDesert;
+}
+
 /// Catalog as `region -> site -> set of schematic names`.
 Map<String, Map<String, Set<String>>> _catalogIndex() {
   final out = <String, Map<String, Set<String>>>{};
-  for (final entry in blueprintCatalog) {
+  for (final entry in blueprintCatalog.where(_hasCanonicalSitePools)) {
     for (final source in entry.sources) {
       final byRegion = out.putIfAbsent(source.region, () => {});
       final names = byRegion.putIfAbsent(source.location, () => {});
@@ -1020,9 +1027,40 @@ void main() {
           .expand((sites) => sites.values)
           .fold<int>(0, (sum, names) => sum + names.length);
       final actual = blueprintCatalog.fold<int>(
-          0, (sum, entry) => sum + entry.sources.length);
+          0,
+          (sum, entry) =>
+              _hasCanonicalSitePools(entry) ? sum + entry.sources.length : sum);
       expect(actual, expected,
           reason: 'catalog has $actual source rows, canon has $expected');
+    });
+
+    test('non-map source groups stay out of regional canon', () {
+      expect(
+        blueprintCatalogSourceGroups(),
+        containsAll([
+          BlueprintSourceGroup.worldChest,
+          BlueprintSourceGroup.deepDesert,
+          BlueprintSourceGroup.dlc,
+          BlueprintSourceGroup.classQuestReward,
+        ]),
+      );
+
+      final dlcNames = blueprintCatalog
+          .where(
+              (entry) => entry.effectiveSourceGroup == BlueprintSourceGroup.dlc)
+          .map((entry) => entry.name)
+          .toSet();
+      expect(dlcNames, contains('Steady Treadwheel Boost Module Mk4'));
+      expect(dlcNames, contains('Swift Treadwheel Engine Mk4'));
+
+      final classRewardNames = blueprintCatalog
+          .where((entry) =>
+              entry.effectiveSourceGroup ==
+              BlueprintSourceGroup.classQuestReward)
+          .map((entry) => entry.name)
+          .toSet();
+      expect(classRewardNames, contains('Trooper Archetype Armor Set'));
+      expect(classRewardNames, contains('Swordmaster Archetype Armor Set'));
     });
   });
 }
