@@ -544,19 +544,37 @@ class _FactionProgressTab extends ConsumerWidget {
   }
 }
 
-class _AugmentationsTab extends ConsumerWidget {
+class _AugmentationsTab extends ConsumerStatefulWidget {
   const _AugmentationsTab({required this.character});
 
   final Character character;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final augmentationsAsync = ref.watch(augmentationsProvider(character.id));
+  ConsumerState<_AugmentationsTab> createState() => _AugmentationsTabState();
+}
+
+class _AugmentationsTabState extends ConsumerState<_AugmentationsTab> {
+  String _augmentationSearchQuery = '';
+  final TextEditingController _augmentationSearchController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _augmentationSearchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final augmentationsAsync =
+        ref.watch(augmentationsProvider(widget.character.id));
 
     return Scaffold(
       body: augmentationsAsync.when(
         data: (augmentations) {
           final rows = _buildAugmentationRows(augmentations);
+          final visibleRows =
+              rows.where(_passesAugmentationSearchFilter).toList();
           final acquiredCount = rows.where((row) => row.isAcquired).length;
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -571,7 +589,29 @@ class _AugmentationsTab extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              ...rows.map(
+              TextField(
+                controller: _augmentationSearchController,
+                decoration: InputDecoration(
+                  labelText: 'Search augments',
+                  hintText: 'Name, slot, source, notes',
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: _augmentationSearchQuery.isEmpty
+                      ? null
+                      : IconButton(
+                          tooltip: 'Clear search',
+                          onPressed: () {
+                            _augmentationSearchController.clear();
+                            setState(() => _augmentationSearchQuery = '');
+                          },
+                          icon: const Icon(Icons.clear),
+                        ),
+                  border: const OutlineInputBorder(),
+                ),
+                onChanged: (value) =>
+                    setState(() => _augmentationSearchQuery = value),
+              ),
+              const SizedBox(height: 8),
+              ...visibleRows.map(
                 (row) => Card(
                   child: ListTile(
                     leading: Checkbox(
@@ -610,9 +650,11 @@ class _AugmentationsTab extends ConsumerWidget {
                         ),
                         if (!row.isSeeded)
                           IconButton(
-                            onPressed: () => ref
-                                .read(augmentationEditorProvider)
-                                .delete(row.augmentation!.id, character.id),
+                            onPressed: () =>
+                                ref.read(augmentationEditorProvider).delete(
+                                      row.augmentation!.id,
+                                      widget.character.id,
+                                    ),
                             icon: const Icon(Icons.delete),
                           ),
                       ],
@@ -620,11 +662,11 @@ class _AugmentationsTab extends ConsumerWidget {
                   ),
                 ),
               ),
-              if (rows.isEmpty)
+              if (visibleRows.isEmpty)
                 const Card(
                   child: Padding(
                     padding: EdgeInsets.all(16),
-                    child: Text('No augmentations tracked yet.'),
+                    child: Text('No augmentations match this search.'),
                   ),
                 ),
             ],
@@ -666,6 +708,12 @@ class _AugmentationsTab extends ConsumerWidget {
     return [...catalogRows, ...customRows];
   }
 
+  bool _passesAugmentationSearchFilter(_AugmentationChecklistRow row) {
+    final query = _augmentationSearchQuery.trim().toLowerCase();
+    if (query.isEmpty) return true;
+    return row.searchText.contains(query);
+  }
+
   Future<void> _toggleAcquired(
     WidgetRef ref,
     _AugmentationChecklistRow row,
@@ -687,7 +735,7 @@ class _AugmentationsTab extends ConsumerWidget {
     await ref.read(augmentationEditorProvider).save(
           Augmentation(
             id: const Uuid().v4(),
-            characterId: character.id,
+            characterId: widget.character.id,
             name: entry.name,
             slot: entry.slot,
             sourceBoss: entry.sourceLabel,
@@ -760,7 +808,7 @@ class _AugmentationsTab extends ConsumerWidget {
                 final augmentation = (existing ??
                         Augmentation(
                           id: const Uuid().v4(),
-                          characterId: character.id,
+                          characterId: widget.character.id,
                           name: '',
                           slot: '',
                           updatedAt: DateTime.now(),
@@ -814,6 +862,16 @@ class _AugmentationChecklistRow {
       if (augmentation?.sourceBoss != null) augmentation!.sourceBoss!,
     ];
     return parts.join(' • ');
+  }
+
+  String get searchText {
+    return [
+      name,
+      slot,
+      subtitle,
+      entry?.sourceLabel,
+      augmentation?.notes,
+    ].whereType<String>().join(' ').toLowerCase();
   }
 }
 

@@ -38,6 +38,8 @@ class _BlueprintTrackerScreenState
     extends ConsumerState<BlueprintTrackerScreen> {
   String? _selectedCharacterId;
   String _statusFilter = 'all';
+  String _searchQuery = '';
+  final TextEditingController _searchController = TextEditingController();
 
   /// Selected region filter — sentinel `_allRegions` means show every region.
   /// Cached per-character in-memory so flipping between characters is snappy.
@@ -61,6 +63,12 @@ class _BlueprintTrackerScreenState
 
   String _viewMode(String characterId) =>
       _viewModeByCharacter[characterId] ?? _viewBySchematic;
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   Future<void> _ensureRegionPrefLoaded(String characterId) async {
     if (_regionPrefLoadedFor.contains(characterId)) return;
@@ -338,6 +346,27 @@ class _BlueprintTrackerScreenState
               const _DeepDesertNotice(),
             ],
             const SizedBox(height: 12),
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Search schematics',
+                hintText: 'Name, category, source, region, notes',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: _searchQuery.isEmpty
+                    ? null
+                    : IconButton(
+                        tooltip: 'Clear search',
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() => _searchQuery = '');
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                border: const OutlineInputBorder(),
+              ),
+              onChanged: (value) => setState(() => _searchQuery = value),
+            ),
+            const SizedBox(height: 12),
             const Text('Status'),
             const SizedBox(height: 4),
             Wrap(
@@ -397,7 +426,8 @@ class _BlueprintTrackerScreenState
   Widget _buildBlueprintList(String characterId, List<Blueprint> blueprints) {
     final rows = _buildChecklistRows(characterId, blueprints);
     final collectedCount = rows.where((row) => row.isUnlocked).length;
-    final filtered = rows.where(_passesStatusFilter).toList();
+    final filtered =
+        rows.where(_passesStatusFilter).where(_passesSearchFilter).toList();
 
     if (filtered.isEmpty) {
       return const Center(
@@ -443,6 +473,12 @@ class _BlueprintTrackerScreenState
     };
   }
 
+  bool _passesSearchFilter(_BlueprintChecklistRow row) {
+    final query = _searchQuery.trim().toLowerCase();
+    if (query.isEmpty) return true;
+    return row.searchText.contains(query);
+  }
+
   Widget _buildSchematicBody(
     String characterId,
     List<_BlueprintChecklistRow> filtered,
@@ -470,7 +506,10 @@ class _BlueprintTrackerScreenState
         .map((section) => _PoolSection(
               region: section.region,
               location: section.location,
-              rows: section.rows.where(_passesStatusFilter).toList(),
+              rows: section.rows
+                  .where(_passesStatusFilter)
+                  .where(_passesSearchFilter)
+                  .toList(),
               totalRows: section.rows.length,
               unlockedRows: section.rows.where((r) => r.isUnlocked).length,
             ))
@@ -1042,6 +1081,20 @@ class _BlueprintChecklistRow {
   bool get respawnTimerEnabled => blueprint?.respawnTimerEnabled ?? false;
 
   bool get isSeeded => entry != null;
+
+  String get searchText {
+    return [
+      name,
+      category,
+      location,
+      regionLabel,
+      sourceType,
+      notes,
+      questId,
+      mapPinId,
+      ...requiredMaterials,
+    ].whereType<String>().join(' ').toLowerCase();
+  }
 }
 
 class _DeepDesertNotice extends StatelessWidget {
