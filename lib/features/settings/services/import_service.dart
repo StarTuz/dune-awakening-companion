@@ -19,6 +19,8 @@ import '../../factions/services/faction_progress_repository.dart';
 import '../../quest_journal/models/quest.dart';
 import '../../quest_journal/models/quest_step.dart';
 import '../../quest_journal/services/quest_repository.dart';
+import '../../skills/models/character_skill.dart';
+import '../../skills/services/character_skill_repository.dart';
 import '../../specializations/models/character_specialization.dart';
 import '../../specializations/services/character_specialization_repository.dart';
 
@@ -52,6 +54,7 @@ class ImportService {
   final QuestRepository? _questRepository;
   final BlueprintRepository? _blueprintRepository;
   final ClassQuestRepository? _classQuestRepository;
+  final CharacterSkillRepository? _characterSkillRepository;
 
   ImportService(
     this._characterRepository,
@@ -62,12 +65,14 @@ class ImportService {
     QuestRepository? questRepository,
     BlueprintRepository? blueprintRepository,
     ClassQuestRepository? classQuestRepository,
+    CharacterSkillRepository? characterSkillRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
         _questRepository = questRepository,
         _blueprintRepository = blueprintRepository,
-        _classQuestRepository = classQuestRepository;
+        _classQuestRepository = classQuestRepository,
+        _characterSkillRepository = characterSkillRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -352,6 +357,7 @@ class ImportService {
     final questRepository = _questRepository;
     final blueprintRepository = _blueprintRepository;
     final classQuestRepository = _classQuestRepository;
+    final characterSkillRepository = _characterSkillRepository;
 
     if (specializationRepository != null) {
       final items =
@@ -417,6 +423,14 @@ class ImportService {
         final step =
             ClassQuestStepProgress.fromJson(item as Map<String, dynamic>);
         await classQuestRepository.upsertStep(step);
+      }
+    }
+
+    if (characterSkillRepository != null) {
+      final items = (data['characterSkills'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final skill = CharacterSkill.fromJson(item as Map<String, dynamic>);
+        await characterSkillRepository.upsert(skill);
       }
     }
   }

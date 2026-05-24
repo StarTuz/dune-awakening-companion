@@ -14,6 +14,8 @@ const _schematicRespawnDuration = Duration(minutes: 45);
 
 /// Sentinel value for the "All regions" filter.
 const String _allRegions = '__all__';
+const String _deepDesertRegion = 'Deep Desert';
+const String _deepDesertRotatingPool = 'Deep Desert weekly rotating drop pool';
 
 String _regionPrefKey(String characterId) => 'blueprint_region:$characterId';
 String _viewModePrefKey(String characterId) => 'blueprint_view:$characterId';
@@ -258,6 +260,10 @@ class _BlueprintTrackerScreenState
                 _setRegionFilter(selectedCharacterId, value);
               },
             ),
+            if (activeRegion == _deepDesertRegion) ...[
+              const SizedBox(height: 12),
+              const _DeepDesertNotice(),
+            ],
             const SizedBox(height: 12),
             const Text('Status'),
             const SizedBox(height: 4),
@@ -416,7 +422,8 @@ class _BlueprintTrackerScreenState
       itemBuilder: (context, index) {
         final section = visibleSections[index];
         return Padding(
-          padding: EdgeInsets.only(bottom: index == visibleSections.length - 1 ? 0 : 16),
+          padding: EdgeInsets.only(
+              bottom: index == visibleSections.length - 1 ? 0 : 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -485,6 +492,19 @@ class _BlueprintTrackerScreenState
     }
 
     for (final entry in blueprintCatalog) {
+      if (entry.isDeepDesert) {
+        if (regionFilter != _allRegions && regionFilter != _deepDesertRegion) {
+          continue;
+        }
+        sectionFor(_deepDesertRegion, _deepDesertRotatingPool).rows.add(
+              _BlueprintChecklistRow(
+                entry: entry,
+                blueprint: byName[_key(entry.name)],
+              ),
+            );
+        continue;
+      }
+
       for (final source in entry.sources) {
         if (regionFilter != _allRegions && source.region != regionFilter) {
           continue;
@@ -507,10 +527,10 @@ class _BlueprintTrackerScreenState
       if (regionFilter != _allRegions && blueprint.region != regionFilter) {
         continue;
       }
-      final location =
-          (blueprint.sourceLocation == null || blueprint.sourceLocation!.trim().isEmpty)
-              ? '(unspecified)'
-              : blueprint.sourceLocation!;
+      final location = (blueprint.sourceLocation == null ||
+              blueprint.sourceLocation!.trim().isEmpty)
+          ? '(unspecified)'
+          : blueprint.sourceLocation!;
       sectionFor(blueprint.region, location).rows.add(
             _BlueprintChecklistRow(blueprint: blueprint),
           );
@@ -582,8 +602,7 @@ class _BlueprintTrackerScreenState
     String characterId,
     _BlueprintChecklistRow row,
   ) async {
-    final autoStart =
-        ref.read(blueprintSettingsProvider).autoStartRespawnTimer;
+    final autoStart = ref.read(blueprintSettingsProvider).autoStartRespawnTimer;
     final existing = row.blueprint;
     if (existing != null) {
       await ref.read(blueprintEditorProvider).toggleUnlocked(
@@ -866,6 +885,11 @@ class _BlueprintChecklistRow {
   /// with multiple drop sites, lists them all separated by " · ".
   String get location {
     if (entry != null) {
+      if (entry!.isDeepDesert) {
+        return 'Known Deep Desert schematic. Current-week POI and grid '
+            'locations rotate after the Coriolis Storm and are not synced '
+            'by this app.';
+      }
       return entry!.sources.map((s) => s.label).join(' · ');
     }
     final bp = blueprint!;
@@ -884,7 +908,12 @@ class _BlueprintChecklistRow {
   }
 
   String? get sourceType =>
-      blueprint?.sourceType ?? (entry == null ? null : 'Chest');
+      blueprint?.sourceType ??
+      (entry == null
+          ? null
+          : entry!.isDeepDesert
+              ? 'Weekly rotating pool'
+              : 'Chest');
 
   List<String> get requiredMaterials =>
       blueprint?.requiredMaterials ?? const [];
@@ -902,6 +931,45 @@ class _BlueprintChecklistRow {
   bool get respawnTimerEnabled => blueprint?.respawnTimerEnabled ?? false;
 
   bool get isSeeded => entry != null;
+}
+
+class _DeepDesertNotice extends StatelessWidget {
+  const _DeepDesertNotice();
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.info_outline,
+              color: colorScheme.onSecondaryContainer,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Deep Desert tracking is a schematic ownership checklist. '
+                'Weekly POI/grid locations and loot-table availability rotate '
+                'after the Coriolis Storm and are not auto-synced from '
+                'community maps.',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSecondaryContainer,
+                    ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _BlueprintCard extends StatelessWidget {
@@ -1105,8 +1173,7 @@ class _PoolSection {
     int? totalRows,
     int? unlockedRows,
   })  : totalRows = totalRows ?? rows.length,
-        unlockedRows =
-            unlockedRows ?? rows.where((r) => r.isUnlocked).length;
+        unlockedRows = unlockedRows ?? rows.where((r) => r.isUnlocked).length;
 }
 
 /// Compact in-header toggle for the per-user "auto-start respawn timer

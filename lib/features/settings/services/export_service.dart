@@ -12,6 +12,7 @@ import '../../characters/services/character_repository.dart';
 import '../../factions/services/faction_progress_repository.dart';
 import '../../bases/services/base_repository.dart';
 import '../../quest_journal/services/quest_repository.dart';
+import '../../skills/services/character_skill_repository.dart';
 import '../../specializations/services/character_specialization_repository.dart';
 
 class ExportService {
@@ -23,6 +24,7 @@ class ExportService {
   final QuestRepository? _questRepository;
   final BlueprintRepository? _blueprintRepository;
   final ClassQuestRepository? _classQuestRepository;
+  final CharacterSkillRepository? _characterSkillRepository;
 
   ExportService(
     this._characterRepository,
@@ -33,12 +35,14 @@ class ExportService {
     QuestRepository? questRepository,
     BlueprintRepository? blueprintRepository,
     ClassQuestRepository? classQuestRepository,
+    CharacterSkillRepository? characterSkillRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
         _questRepository = questRepository,
         _blueprintRepository = blueprintRepository,
-        _classQuestRepository = classQuestRepository;
+        _classQuestRepository = classQuestRepository,
+        _characterSkillRepository = characterSkillRepository;
 
   /// Export all data to ZIP file (includes portraits)
   /// Returns the file path if successful, null otherwise
@@ -53,6 +57,7 @@ class ExportService {
       final questRepository = _questRepository;
       final blueprintRepository = _blueprintRepository;
       final classQuestRepository = _classQuestRepository;
+      final characterSkillRepository = _characterSkillRepository;
       final specializations = specializationRepository == null
           ? <dynamic>[]
           : await specializationRepository.getAll();
@@ -63,12 +68,14 @@ class ExportService {
       final blueprints = <dynamic>[];
       final classQuests = <dynamic>[];
       final classQuestSteps = <dynamic>[];
+      final characterSkills = <dynamic>[];
 
       if (factionRepository != null ||
           augmentationRepository != null ||
           questRepository != null ||
           blueprintRepository != null ||
-          classQuestRepository != null) {
+          classQuestRepository != null ||
+          characterSkillRepository != null) {
         for (final character in characters) {
           if (factionRepository != null) {
             factionProgress
@@ -99,6 +106,11 @@ class ExportService {
                 await classQuestRepository.getSteps(progress.id),
               );
             }
+          }
+          if (characterSkillRepository != null) {
+            characterSkills.addAll(
+              await characterSkillRepository.getByCharacterId(character.id),
+            );
           }
         }
       }
@@ -137,7 +149,7 @@ class ExportService {
       final exportData = {
         'version': '1.3.0-beta',
         'exportDate': DateTime.now().toIso8601String(),
-        'databaseVersion': 11,
+        'databaseVersion': 12,
         'format': 'zip',
         'characters': exportCharacters,
         'bases': bases.map((b) => b.toJson()).toList(),
@@ -150,6 +162,7 @@ class ExportService {
         'blueprints': blueprints.map((b) => b.toJson()).toList(),
         'classQuests': classQuests.map((q) => q.toJson()).toList(),
         'classQuestSteps': classQuestSteps.map((s) => s.toJson()).toList(),
+        'characterSkills': characterSkills.map((s) => s.toJson()).toList(),
       };
 
       // Add JSON to archive

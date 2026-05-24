@@ -1,6 +1,6 @@
 # Unique Schematic Blueprints Research
 
-Last updated: 2026-05-22 (Sheol added — all regions catalogued)
+Last updated: 2026-05-23 (Deep Desert T5 + T6 catalogued — base catalog complete)
 
 This document tracks the **unique schematic** catalog that powers the
 Blueprints / Schematics tracker. Schematics are static drops the app cannot
@@ -69,8 +69,8 @@ multi-region rewrite — the catalog shape is presentational only.
 |--------|-------|-------------|-------------------|
 | Hagga Basin South | 7 | 17 | 17 |
 | Vermillius Gap West | 7 | 29 | 29 |
-| Vermillius Gap East | 4 | 25 | 25 |
-| Hagga Rift | 6 | 41 | 27 |
+| Vermillius Gap East | 4 | 27 | 27 |
+| Hagga Rift | 6 | 43 | 29 |
 | Jabal Eifrit Al-gharb | 2 | 16 | 16 |
 | Jabal Eifrit Al-Janub | 4 | 29 | 22 |
 | Jabal Eifrit Al-sharq | 3 | 20 | 13 |
@@ -79,12 +79,15 @@ multi-region rewrite — the catalog shape is presentational only.
 | The O'odham | 5 | 52 | 13 |
 | Mysa Tarill | 2 | 20 | 12 |
 | Sheol | 5 | 40 | 26 |
-| **Total source rows** | — | **382** | — |
-| **Unique catalog entries** | — | — | **175** (17 Hagga + 39 VG + 26 Hagga Rift¹ + 8 Jabal Eifrit² + 54 Shield Wall³ + 4 O'odham⁴ + 1 Mysa Tarill⁵ + 26 Sheol⁶) |
+| Hagga Basin (event) | 1 | 15 | 6 |
+| Deep Desert T5 (A row) | 17 | 140 | 48 |
+| Deep Desert T6 (B-I rows) | 6 | 159 | 98 |
+| **Total source rows** | — | **699** | — |
+| **Unique catalog entries** | — | — | **330** (17 Hagga + 41 VG + 28 Hagga Rift¹ + 8 Jabal Eifrit² + 54 Shield Wall³ + 4 O'odham⁴ + 1 Mysa Tarill⁵ + 26 Sheol⁶ + 6 Hagga Basin⁷ + 48 Deep Desert T5⁸ + 98 Deep Desert T6⁹) |
 
-¹ Hagga Rift has 27 unique schematic *names* internally, but one of them
+¹ Hagga Rift has 29 unique schematic *names* internally, but one of them
 (`Buoyant Reaper Mk3`) is shared with Vermillius Gap East — so it
-contributes 26 *new* catalog entries on top of the existing VG row, which
+contributes 28 *new* catalog entries on top of the existing VG row, which
 gains a second source.
 
 ² Jabal Eifrit reuses **most** of the Hagga Rift + Vermillius Gap drop
@@ -124,6 +127,26 @@ Cutteray, which was **moved here from the T4 zones by patch 1.1.20**
 Sandflies Carver was swapped INTO the vacated T4 sites; its catalog
 row lives in `oodham.dart` since 3 of its 4 sources are in The
 O'odham.
+
+⁸ Deep Desert T5 (A row): 17 named sites across 7 pool types (Forgotten Cave,
+ITS 148+93, ITS 185+37, ITS 186+217, three wreck groups). Wayfinder Helm also
+appears in the T6 Forgotten Cave (outer) pool, so the T5 source-row count for
+this tier is 140 (139 base + 1 for that cross-tier source).
+
+⁹ Deep Desert T6 (B-I rows): 6 site types across 5 pool groups — Forgotten
+Cave outer (B7/D4/D9), Cave inner (F1/F6), BTS standard (F9/H2), BTS deep
+(D2), Fallen Shipwreck (dynamic, PvE+PvP combined), Unrecovered Shipwreck
+(H2/H8/I5). "Outer/inner" labels are provisional — verify in-game.
+
+⁷ "Hagga Basin" is a catch-all region for the dynamic Fallen Shipwreck
+event, which occurs across all Hagga Basin sub-regions except the
+south. The 6 unique entries (Bite Back Blade, Desert Dasher Garment,
+Dune Dancer Stillsuit Garment, Sprinter's Stillsuit Garment,
+Steady Treadwheel Boost Module Mk5,
+Swift Treadwheel Engine Mk5) live in `sheol.dart` for proximity; the region string in their
+source is `'Hagga Basin'`, not `'Sheol'`. The remaining 9 schematics
+in the Fallen Shipwreck pool are Sheol entries that gained this event
+as an additional source.
 
 ³ Shield Wall is mostly Mk4 versions of earlier-tier schematics
 (Bigger Buggy Boot Mk4, Filter Extractor Mk4, Focused Buggy Cutteray
@@ -211,6 +234,61 @@ alternatives.
 
 ## Site → schematic map
 
+### Deep Desert
+
+The endgame region, accessible by ornithopter only. **Coriolis Storm** resets
+the entire zone weekly. The app treats Deep Desert differently from static
+regions such as Hagga Basin / Sheol:
+
+- The seeded catalog is a **schematic ownership checklist**: "does this
+  character know this schematic yet?"
+- Current-week POI/grid locations and loot-table availability are **not**
+  canonical in the app. Community tools such as dune.gaming.tools publish
+  weekly maps, but there is no stable source/API we can safely sync against.
+- UI should avoid implying "go to this fixed location" for Deep Desert rows.
+  It should label them as known Deep Desert drop-pool entries unless/until a
+  user manually records current-week information.
+
+**T5 A row** — Spice-infused Duraluminum Dust drops at all 17 named sites (100%).
+
+| Site | Schematics |
+|------|------------|
+| Forgotten Cave (×3 per week) | Spice-infused Duraluminum Dust only |
+| Imperial Testing Station No. 148 / No. 93 | Cope, Extravagant Message, Filter Extractor Mk5, Hummingbird Wing Module Mk5, Maas Kharet Bloodbag, Saturnine Stillsuit (Boots/Garment/Gloves/Mask), Wayfinder Helm¹ |
+| Imperial Testing Station No. 185 / No. 37 | Arhun K-28 Lasgun (low rate), Collapsible Dew Reaper Mk5, Compact Compactor Mk5, Double-sealed Stilltent, Mendek's Rattle, Night Rider Sandbike Boost Mk5, Station Gauntlets, Steady Assault Boost Module Mk5 |
+| Imperial Testing Station No. 186 / No. 217 | Albatross Wing Module Mk5, Focused Reaper Mk5, Jolt-sword, Long Range Scanner, Scrubber, Station Garb, Taqwa's Double, The Emperor's Wings Mk5 |
+| Wreck of the Archidamas III / Proxenus / Stasanor | Adept Disruptor Pistol, Advanced Reaper Gloves, Focused Buggy Cutteray Mk5, Impure Extractor Mk5, Piter's Disruptor, Shaded Hood, Shaitan's Tongue |
+| Wreck of the Cycliadas / Dioedas / Eumenes / Hyperbatas / Orsippus | Advanced Suspensor Jacket, Mendek's set ×5, Tarl Softstep Boots |
+| Wreck of the Hicetas / Xenophon | Batigh Stillsuit (Boots/Garment/Gloves/Mask), Kharet Viper, Stormrider Boost Module Mk5, Syndicate Impaler |
+
+**T6 ownership model:** the schematic list is useful and should stay seeded.
+The source/site labels below are historical/current-week examples from public
+community tables, not durable static sources. In app UI, Deep Desert entries
+collapse to "Deep Desert weekly rotating drop pool" rather than presenting
+these POIs like fixed Hagga Basin chest locations.
+
+**T6 B-I rows** — Spice-infused Plastanium Dust drops at all static sites (100%);
+Fallen Shipwreck (dynamic event) does **not** drop Plastanium Dust.
+"Outer/inner" cave labels are provisional — pending in-game verification.
+
+| Site | Schematics |
+|------|------------|
+| Forgotten Cave (outer) — B7/D4/D9 | Desert Garb, Filter Extractor Mk6, Focused Buggy Cutteray Mk6, Hook-claw Gloves, Mohandis Sandbike Engine Mk6, Night Rider Sandbike Boost Mk6, Pardot's Hood, Rattler Boost Module Mk6, Shaddam's Bladder, Swift Treadwheel Engine Mk6, Tabr Softstep Boots, Villari's Stillsuit (Boots/Garment/Gloves/Mask), Walker Sandcrawler Engine Mk6, Wayfinder Helm¹; also: Collapsible Dew Reaper Mk6², Compact Compactor Mk6³, Crew Chief's Stillsuit Garment³, Imperial Stillsuit (Boots/Garment/Gloves/Mask)³, Impure Extractor Mk6³, Ix-core Leggings³, Replica Pulse-sword⁴, The Baron's Bloodbag⁴ |
+| Forgotten Cave (inner) — F1/F6 | Indara's Lullaby, Pincushion set ×5, Regis Tripleshot Repeating Rifle; also: Circuit Gauntlets⁵, Idaho's Charge⁵, Kynes's Cutteray⁵, Steady Assault Boost Module Mk6⁵, Compact Compactor Mk6³, Crew Chief's Stillsuit Garment³, Imperial Stillsuit (Boots/Garment/Gloves/Mask)³, Impure Extractor Mk6³, Ix-core Leggings³ |
+| Buried Testing Station — F9/H2 | Black Market K-28 Lasgun, Bulwark set ×5, Cauterizer, Dunewatcher, Plasma Cannon, Regis Burst Drillshot, Sardaukar Intimidator, Spike Hilt Sword, Schematic Pattern Grade 1-5⁶; also: A Dart for Every Man⁷, Adaptive Holtzman Shield⁷, Collapsible Dew Reaper Mk6², Feyd's Drinker⁷, Glasser⁷, Halleck's Pick⁷, Penetrator⁷, Power Harness⁷, Salusan Vengeance⁷, Stormrider Boost Module Mk6⁷, Young Sparky Mk6⁷ |
+| Buried Testing Station (deep) — D2 | Albatross Wing Module Mk6, Bigger Buggy Boot Mk6, Bluddshot Buggy Engine Mk6, Burning Blades, Omni Focused Dew Scythe, Roc Carrier Wing, Steady Carrier Boost Module Mk6, Tactical Radiation Suit, The Emperor's Wings Mk6, The Forge set ×5, Yueh's Reaper Gloves; also: A Dart for Every Man⁷, Adaptive Holtzman Shield⁷, Circuit Gauntlets⁵, Executor's set ×5⁸, Feyd's Drinker⁷, Glasser⁷, Halleck's Pick⁷, Hummingbird Wing Module Mk6⁸, Idaho's Charge⁵, Kynes's Cutteray⁵, Penetrator⁷, Power Harness⁷, Replica Pulse-knife⁸, Salusan Vengeance⁷, Schematic Pattern Grade 1-5⁶, Steady Assault Boost Module Mk6⁵, Steady Treadwheel Boost Module Mk6⁸, Stormrider Boost Module Mk6⁷, Young Sparky Mk6⁷ |
+| Fallen Shipwreck (Deep Desert) — dynamic | Executor's set ×5⁸, Hummingbird Wing Module Mk6⁸, Replica Pulse-knife⁸, Steady Treadwheel Boost Module Mk6⁸, Replica Pulse-sword⁴, The Baron's Bloodbag⁴, Bashar's Command, Perforator, Regis Disruptor Pistol, Seethe, Shellburster, Shishakli's Bite, Static Needle, Vaporizer, Way of the Misr |
+| Unrecovered Shipwreck — H2/H8/I5 | Same 19 as Fallen Shipwreck (above), plus Spice-infused Plastanium Dust |
+
+¹ Wayfinder Helm drops at ITS 148, ITS 93, *and* Forgotten Cave (outer) — spans T5 and T6 pools.
+² Collapsible Dew Reaper Mk6 drops at Forgotten Cave (outer) *and* Buried Testing Station.
+³ These 8 entries drop at Forgotten Cave (outer) *and* inner.
+⁴ Replica Pulse-sword and The Baron's Bloodbag drop at Cave (outer), Fallen Shipwreck, *and* Unrecovered Shipwreck.
+⁵ These 4 entries drop at BTS (deep) *and* Cave (inner).
+⁶ Schematic Pattern Grade 1-5 drop at BTS (deep) *and* BTS (standard).
+⁷ These 10 entries drop at BTS (deep) *and* BTS (standard).
+⁸ Executor's set ×5, Hummingbird Wing Module Mk6, Replica Pulse-knife, Steady Treadwheel Boost Module Mk6 drop at BTS (deep), Fallen Shipwreck, *and* Unrecovered Shipwreck.
+
 ### Hagga Basin South
 
 | Site | Schematics |
@@ -240,12 +318,17 @@ alternatives.
 | Site | Schematics |
 |------|------------|
 | Mirzabah's Head | Buoyant Reaper Mk3², Hajra Literjon Mk2¹, Old Sparky Mk2¹, Scipio's Bloodbag¹, The Emperor's Wings Mk2¹ |
-| Suk Alusus | Oathbreaker set¹ |
+| Suk Alusus | Oathbreaker set¹, Shredder³ |
 | Ghanima Cavern | Menol's Stillsuit (Boots, Garment, Gloves, Mask), Night Rider Sandbike Boost Mk2 |
-| Imperial Testing Station No. 10 | Pseudo-Pulse-Sword¹, Bigger Buggy Boot Mk3, Bluddshot Buggy Engine Mk3, Mendia's set¹, Mohandis Sandbike Engine Mk3, Night Rider Sandbike Boost Mk3 |
+| Imperial Testing Station No. 10 | Pseudo-Pulse-Sword¹, Bigger Buggy Boot Mk3, Bluddshot Buggy Engine Mk3, Mendia's set¹, Mohandis Sandbike Engine Mk3, Night Rider Sandbike Boost Mk3, Rattler Boost Module Mk3³ |
 
 ¹ Also drops in the other Vermillius Gap sub-region.
 ² Also drops in Hagga Rift (Stepstone Cavern).
+³ Shredder was player-verified from Suk Alusus' hidden big chest above the
+poison-container room during First Blood; Game8 comments corroborate the
+location, while IGN's table does not currently list it.
+⁴ Rattler Boost Module Mk3 is listed by Game8 at Imperial Testing Station
+No. 10; IGN's table does not currently list it.
 
 ### Hagga Rift
 
@@ -253,14 +336,16 @@ alternatives.
 |------|------------|
 | The Spiral | Inkvine set (Mask, Jacket, Gauntlets, Pants, Boots)³, Handheld Life Scanner Mk3³, Assassin's Rifle³ |
 | Arctus Cavern | Inkvine set³, Handheld Life Scanner Mk3³, Assassin's Rifle³ |
-| Deserter Camp in Imperial Testing Station No. 29 | Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴ |
-| Choam Mineral Extraction Facility No. 6 | Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴ |
+| Deserter Camp in Imperial Testing Station No. 29 | Artisan Disruptor Pistol, Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴ |
+| Choam Mineral Extraction Facility No. 6 | Callie's Breaker⁴, Glutton's Bloodbag⁵, Old Sparky Mk3⁴, Seb's Kisser⁴, Shock-sword⁴, Focused Buggy Cutteray Mk3⁴, Shock-Knife⁶ |
 | Stepstone Cavern | Buoyant Reaper Mk3², Glutton's Bloodbag⁵, Hajra Literjon Mk3, Shock Gauntlets, Skin-Lined Jacket, Ta'lab Softstep Boots, The Emperor's Wings Mk3 |
 | Wreck of Kytheria | Karak's set (Helmet, Jacket, Gauntlets, Pants, Boots), Way of the Lost Maula Pistol, Zaal's Companion Assault Rifle, Ripper Scattergun |
 
 ³ Drops at *either* The Spiral *or* Arctus Cavern (and at Khidr's Shadow in Jabal Eifrit Al-Janub).
 ⁴ Drops at *either* the Deserter Camp *or* Choam Mineral Extraction Facility No. 6 (and at one site in each Jabal Eifrit sub-region).
 ⁵ Glutton's Bloodbag drops at *all three* of Deserter Camp, Choam #6, and Stepstone Cavern (plus three Jabal Eifrit sites).
+⁶ Shock-Knife is listed by Community Wiki on the Shock-Knife Corpse across
+from Choam #6, up a level.
 
 ### Jabal Eifrit Al-gharb
 
@@ -367,19 +452,21 @@ open-PvP shipwreck, and the only place Tarl Cutteray drops post-patch.
 | Site | Schematics |
 |------|------------|
 | Shaitan's Grotto | Acheronian set (Boots, Chestplate, Gauntlets, Helmet¹⁹, Pants), Buoyant Reaper Mk5, Moisture Sealer, Rattler Boost Module Mk5, Relentless |
-| Edge of Acheron | Adept Burst Drillshot, Bigger Buggy Boot Mk5²⁰, Syndicate Boots, Syndicate Chestplate²¹, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
-| Wreck of the Delphis | Adept Tripleshot Repeating Rifle²⁴, Bigger Buggy Boot Mk5²⁰, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, Jolt-knife, Stim-Leggings, Syndicate Gauntlets, Syndicate Helmet²², **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
+| Edge of Acheron | Adept Burst Drillshot²⁷, Bigger Buggy Boot Mk5²⁰, Syndicate Boots²⁷, Syndicate Chestplate²¹, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
+| Wreck of the Delphis | Adept Tripleshot Repeating Rifle²⁴, Bigger Buggy Boot Mk5²⁰, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, Jolt-knife²⁷, Stim-Leggings, Syndicate Gauntlets²⁷, Syndicate Helmet²², **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
 | Wreck of the Euporia | Acheronian Helmet¹⁹, Adept Tripleshot Repeating Rifle²⁴, Bluddshot Buggy Engine Mk5²⁴, Fivefinger's Tripleshot Rifle²⁴, Hajra Literjon Mk5²⁴, **Tarl Cutteray**²⁵, Thufir's Best²⁶, Young Sparky Mk5²⁴ |
 | Downed Ships | Syndicate Chestplate²¹, Syndicate Pants²¹, Thufir's Best²⁶, Way of the Desert²³ |
+| Fallen Shipwreck | Adept Burst Drillshot²⁷, Bigger Buggy Boot Mk5²⁰, **Bite Back Blade**, **Desert Dasher Garment**, **Dune Dancer Stillsuit Garment**, Jolt-knife²⁷, **Sprinter's Stillsuit Garment**, **Steady Treadwheel Boost Module Mk5**, **Swift Treadwheel Engine Mk5**, Syndicate Boots²⁷, Syndicate Chestplate²¹, Syndicate Gauntlets²⁷, Syndicate Helmet²², Syndicate Pants²¹, Way of the Desert²³ |
 
 ¹⁹ Acheronian Helmet drops at Shaitan's Grotto *and* Wreck of the Euporia.
-²⁰ Bigger Buggy Boot Mk5 drops at Edge of Acheron *and* Wreck of the Delphis.
-²¹ Syndicate Chestplate / Pants drop at Edge of Acheron *and* Downed Ships.
-²² Syndicate Helmet drops at Edge of Acheron *and* Wreck of the Delphis.
-²³ Way of the Desert drops at Edge of Acheron *and* Downed Ships.
+²⁰ Bigger Buggy Boot Mk5 drops at Edge of Acheron, Wreck of the Delphis, *and* Fallen Shipwreck.
+²¹ Syndicate Chestplate / Pants drop at Edge of Acheron, Downed Ships, *and* Fallen Shipwreck.
+²² Syndicate Helmet drops at Edge of Acheron, Wreck of the Delphis, *and* Fallen Shipwreck.
+²³ Way of the Desert drops at Edge of Acheron, Downed Ships, *and* Fallen Shipwreck.
 ²⁴ The Delphis + Euporia dual-pool: most Mk5 weapons and the buggy/vehicle Mk5 schematics drop at both wrecks.
 ²⁵ **Tarl Cutteray** drops *only* at the two Sheol wrecks post-patch (~12.5-15% chance per the patch notes). Pre-patch state had it in O'odham + Western Shield Wall — see "Known IGN-vs-in-game discrepancies".
-²⁶ Thufir's Best drops at Delphis, Euporia, *and* Downed Ships — the broadest Sheol distribution.
+²⁶ Thufir's Best drops at Delphis, Euporia, *and* Downed Ships — the broadest static Sheol distribution.
+²⁷ Fallen Shipwreck pool (13 uniques, ~3.3% each, sourced from dune.gaming.tools). Bold entries are unique to this pool; the remaining nine are shared with Edge of Acheron, Wreck of the Delphis, or both. Fallen Shipwreck is a **dynamic event** — a ship falls from the sky, burns into the sand, and must be opened with a Cutteray before a Sandworm arrives and swallows it. Also spawns in Deep Desert. Distinct from "Downed Ships" (static PvP wrecks in Sheol).
 
 ---
 
@@ -492,27 +579,20 @@ the canon test's deviations from raw IGN data don't look mysterious:
   stores Sentinel Pants. The Sentinel armor set is now consistent
   across all 4 sites it drops at.
 
+- **Tier 3 audit against dune.gaming.tools.** User-provided Tier 3
+  unique list surfaced four catalog misses now added here:
+  Artisan Disruptor Pistol (user-verified random drop from Hagga Rift,
+  ITS 29),
+  Rattler Boost Module Mk3 (Game8: Vermillius Gap East, ITS 10),
+  Shock-Knife (Community Wiki: corpse across from Choam #6, up a
+  level), and Sprinter's Stillsuit Garment (dune.gaming.tools:
+  Hagga Basin Fallen Shipwreck).
+
 ## Future regions & content (deferred)
 
 All Funcom-released regions in the base game are catalogued as of
-2026-05-22. Known-pending additions worth documenting now so they
-aren't forgotten:
-
-### Deep Desert
-
-The remaining base-game region. **Defer for now** — it has undergone
-significant rework across multiple patches since release, so IGN data
-is more volatile than the relatively stable inner-zone regions. Worth
-waiting for a stable state, then importing in a single pass.
-
-When ready: same pattern as the other regions — new
-`deep_desert.dart` under `catalogs/`, canon-test entry, doc section.
-Special considerations to look out for:
-- Deep Desert is partially or fully open-PvP and may have moved
-  schematics in/out as Funcom tuned the loot economy.
-- It may use distinct chest mechanics (PvP boxes, faction-tied drops)
-  that the current `BlueprintSource` model handles fine but the docs
-  should explain.
+2026-05-23 (Deep Desert T5 + T6 added). Known-pending additions worth
+documenting now so they aren't forgotten:
 
 ### Lost Harvest DLC
 
@@ -637,3 +717,31 @@ ergonomic default for farming-oriented players.
 - **Cross-character schematic unlocks** — if Funcom confirms unique
   schematics are per-account rather than per-character, the persistence
   layer needs to denormalise `is_unlocked` out of the per-character row.
+
+### Deep Desert weekly availability overlay
+
+Do **not** model this as a mandatory auto-sync with dune.gaming.tools,
+Method, or any other community map. Those sources are useful references, but
+they are not stable APIs and can change layout, naming, timing, or access
+without notice.
+
+Future-friendly model if we decide to support current-week planning:
+
+- `serverRegion`: NA / SA / EU / AS / OCE or a freeform server label.
+- `weekStart` / `weekEnd`: the Coriolis Storm window the data applies to.
+- `poiType`: cave, testing station, shipwreck, fallen shipwreck, loot
+  container, etc.
+- `grid`: current-week map coordinate such as `F9` or `H2`.
+- `displayName`: current POI name, if known.
+- `lootRows`: schematic name, rarity/tier, drop rate, and optional notes.
+- `sourceNote`: where the player got the current-week data from, stored as a
+  note rather than treated as authoritative.
+
+Product behavior:
+
+- The default Deep Desert screen remains an ownership checklist.
+- A future "Current week" panel can be manually filled/imported by the user.
+- If no current-week data exists, the app should explicitly say weekly
+  locations are not synced and point players to their preferred external map.
+- Imported/manual weekly data should expire or visually stale after
+  `weekEnd`; it should never rewrite the stable schematic catalog.

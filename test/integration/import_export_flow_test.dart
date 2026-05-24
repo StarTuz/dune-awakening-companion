@@ -10,6 +10,7 @@ import 'package:dune_awakening_companion/features/bases/services/base_repository
 import 'package:dune_awakening_companion/features/characters/models/character.dart';
 import 'package:dune_awakening_companion/features/characters/services/character_repository.dart';
 import 'package:dune_awakening_companion/features/settings/services/import_service.dart';
+import 'package:dune_awakening_companion/features/skills/services/character_skill_repository.dart';
 
 class _TestPathProvider extends PathProviderPlatform {
   _TestPathProvider(this.basePath);
@@ -25,6 +26,7 @@ void main() {
   late Directory tempDir;
   late CharacterRepository characterRepo;
   late BaseRepository baseRepo;
+  late CharacterSkillRepository skillRepo;
   late ImportService importService;
 
   setUpAll(() async {
@@ -34,7 +36,12 @@ void main() {
     await AppDatabase.instance.initialize();
     characterRepo = CharacterRepository(AppDatabase.instance);
     baseRepo = BaseRepository(AppDatabase.instance);
-    importService = ImportService(characterRepo, baseRepo);
+    skillRepo = CharacterSkillRepository(AppDatabase.instance);
+    importService = ImportService(
+      characterRepo,
+      baseRepo,
+      characterSkillRepository: skillRepo,
+    );
   });
 
   tearDownAll(() async {
@@ -46,6 +53,7 @@ void main() {
 
   setUp(() async {
     final db = await AppDatabase.instance.database;
+    await db.delete('character_skills');
     await db.delete('bases');
     await db.delete('characters');
   });
@@ -111,6 +119,55 @@ void main() {
     // Existing character should still be there
     final allChars = await characterRepo.getAll();
     expect(allChars.length, 2);
+  });
+
+  test('import restores character skill planner rows', () async {
+    final now = DateTime.now();
+
+    final exportData = {
+      'version': '1.3.0-beta',
+      'exportDate': now.toIso8601String(),
+      'databaseVersion': 12,
+      'characters': [
+        {
+          'id': 'skill-char',
+          'name': 'Skill Planner',
+          'region': 'NA',
+          'serverType': 'Official',
+          'world': 'Arrakis',
+          'sietch': 'Tabr',
+          'createdAt': now.toIso8601String(),
+          'updatedAt': now.toIso8601String(),
+        },
+      ],
+      'bases': [],
+      'characterSkills': [
+        {
+          'id': 'skill-row-1',
+          'characterId': 'skill-char',
+          'skillId': 'benegesserit-bindu-dodge',
+          'currentRank': 2,
+          'targetRank': 3,
+          'isEquipped': true,
+          'createdAt': now.toIso8601String(),
+          'updatedAt': now.toIso8601String(),
+        },
+      ],
+    };
+
+    final jsonFile = File('${tempDir.path}/skills.json');
+    await jsonFile.writeAsString(json.encode(exportData));
+
+    final result =
+        await importService.importData(jsonFile.path, ImportMode.replace);
+    expect(result.success, isTrue);
+
+    final restored = await skillRepo.getByCharacterId('skill-char');
+    expect(restored, hasLength(1));
+    expect(restored.single.skillId, 'benegesserit-bindu-dodge');
+    expect(restored.single.currentRank, 2);
+    expect(restored.single.targetRank, 3);
+    expect(restored.single.isEquipped, isTrue);
   });
 
   // ---------------------------------------------------------------

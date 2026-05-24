@@ -1,6 +1,8 @@
 import 'package:uuid/uuid.dart';
 
 import 'blueprint.dart';
+import 'catalogs/deep_desert.dart';
+import 'catalogs/deep_desert_t6.dart';
 import 'catalogs/hagga_basin_south.dart';
 import 'catalogs/hagga_rift.dart';
 import 'catalogs/jabal_eifrit.dart';
@@ -47,8 +49,15 @@ class BlueprintCatalogEntry {
   /// Display-friendly joined source labels (region, location pairs).
   String get sourceSummary => sources.map((s) => s.label).join(' / ');
 
+  bool get isDeepDesert => regions.contains('Deep Desert');
+
   Blueprint toBlueprint(String characterId, {BlueprintSource? source}) {
     final src = source ?? sources.first;
+    final sourceLocation =
+        isDeepDesert ? 'Deep Desert weekly rotating drop pool' : src.location;
+    final notes = isDeepDesert
+        ? 'Seeded from known Deep Desert schematic pools. Current-week POI/grid locations rotate after the Coriolis Storm and are not synced by this app.'
+        : 'Seeded from IGN unique schematics guide; verify in-game before treating as confirmed.';
     final now = DateTime.now();
     return Blueprint(
       id: const Uuid().v4(),
@@ -57,9 +66,8 @@ class BlueprintCatalogEntry {
       category: category,
       region: src.region,
       sourceType: 'Chest',
-      sourceLocation: src.location,
-      notes:
-          'Seeded from IGN unique schematics guide; verify in-game before treating as confirmed.',
+      sourceLocation: sourceLocation,
+      notes: notes,
       createdAt: now,
       updatedAt: now,
     );
@@ -69,6 +77,8 @@ class BlueprintCatalogEntry {
 /// Aggregate catalog across every region the app knows about. Per-region
 /// lists live under `catalogs/`.
 const blueprintCatalog = [
+  ...deepDesertBlueprintCatalog,
+  ...deepDesertT6BlueprintCatalog,
   ...haggaBasinSouthBlueprintCatalog,
   ...vermilliusGapBlueprintCatalog,
   ...haggaRiftBlueprintCatalog,

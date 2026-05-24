@@ -149,7 +149,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Weapon',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -157,7 +158,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -165,7 +167,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -173,7 +176,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -181,7 +185,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -189,7 +194,8 @@ const vermilliusGapBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _west, location: "Miner's Watch"),
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
@@ -234,6 +240,15 @@ const vermilliusGapBlueprintCatalog = [
   ),
 
   // ─── East-only ───────────────────────────────────────────────────────
+  // Player-verified / Game8-comment source: Shredder drops from the big
+  // hidden chest above Suk Alusus' poison-container room during First Blood.
+  BlueprintCatalogEntry(
+    name: 'Shredder',
+    category: 'Weapon',
+    sources: [
+      BlueprintSource(region: _east, location: 'Suk Alusus'),
+    ],
+  ),
   // Buoyant Reaper Mk3 also drops in Hagga Rift (Stepstone Cavern) plus
   // three Jabal Eifrit sites. Kept here so the entry lives next to its
   // other Vermillius Gap siblings; cross-region sources are appended.
@@ -292,28 +307,41 @@ const vermilliusGapBlueprintCatalog = [
     name: 'Bigger Buggy Boot Mk3',
     category: 'Vehicle',
     sources: [
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
     name: 'Bluddshot Buggy Engine Mk3',
     category: 'Vehicle',
     sources: [
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
     name: 'Mohandis Sandbike Engine Mk3',
     category: 'Vehicle',
     sources: [
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
   BlueprintCatalogEntry(
     name: 'Night Rider Sandbike Boost Mk3',
     category: 'Vehicle',
     sources: [
-      BlueprintSource(region: _east, location: 'Imperial Testing Station No. 10'),
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
+    ],
+  ),
+  // Game8 lists Rattler Boost Module Mk3 as another ITS 10 chest schematic.
+  BlueprintCatalogEntry(
+    name: 'Rattler Boost Module Mk3',
+    category: 'Vehicle',
+    sources: [
+      BlueprintSource(
+          region: _east, location: 'Imperial Testing Station No. 10'),
     ],
   ),
 ];

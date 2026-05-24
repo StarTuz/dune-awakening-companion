@@ -113,6 +113,13 @@ const haggaRiftBlueprintCatalog = [
   // Most of these also drop in all three Jabal Eifrit sub-regions; the
   // exception is Focused Buggy Cutteray Mk3 (Hagga Rift only).
   BlueprintCatalogEntry(
+    name: 'Artisan Disruptor Pistol',
+    category: 'Weapon',
+    sources: [
+      BlueprintSource(region: _region, location: _deserterCamp),
+    ],
+  ),
+  BlueprintCatalogEntry(
     name: "Callie's Breaker",
     category: 'Weapon',
     sources: [
@@ -161,6 +168,15 @@ const haggaRiftBlueprintCatalog = [
     category: 'Vehicle',
     sources: [
       BlueprintSource(region: _region, location: _deserterCamp),
+      BlueprintSource(region: _region, location: _choamFacility),
+    ],
+  ),
+  // Community wiki places the schematic on the Shock-Knife Corpse across
+  // from Choam #6, up a level.
+  BlueprintCatalogEntry(
+    name: 'Shock-Knife',
+    category: 'Weapon',
+    sources: [
       BlueprintSource(region: _region, location: _choamFacility),
     ],
   ),

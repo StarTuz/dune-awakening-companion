@@ -1,15 +1,19 @@
 import '../blueprint_catalog.dart';
 
 const _region = 'Sheol';
+const _haggaBasin = 'Hagga Basin';
 
 const _edgeOfAcheron = 'Edge of Acheron';
 const _shaitan = "Shaitan's Grotto";
 const _delphis = 'Wreck of the Delphis';
 const _euporia = 'Wreck of the Euporia';
 const _downedShips = 'Downed Ships';
+const _fallenShipwreck = 'Fallen Shipwreck';
 
 /// Seed list from IGN's Sheol unique schematics guide:
 /// https://www.ign.com/wikis/dune-awakening/All_Sheol_Unique_Schematics_and_Locations
+///
+/// Additional source: dune.gaming.tools loot tables (Fallen Shipwreck pool).
 ///
 /// Sheol is the endgame Duraluminum (Mk5/T5) region — the radiated zone
 /// at the centre of the map. Chests are gated behind radiation, ID
@@ -32,7 +36,17 @@ const _downedShips = 'Downed Ships';
 /// "Downed Ships" is a deliberate location label (not a named site) —
 /// IGN uses it for schematics that drop at the random ship wrecks
 /// scattered around Sheol, distinct from the two named wrecks
-/// (Delphis, Euporia).
+/// (Delphis, Euporia) and the dynamic Fallen Shipwreck event.
+///
+/// "Fallen Shipwreck" is a dynamic, time-limited world event: a ship
+/// falls from the sky, crashes into the sand (Hagga Basin or Deep
+/// Desert), and burns. Players must use a Cutteray to cut open external
+/// hatches before a Sandworm arrives and swallows the wreck. Its 13-
+/// entry unique-schematic pool was sourced from dune.gaming.tools.
+/// Desert Dasher Garment was later confirmed in the same pool as a
+/// Tier 2 unique. Five schematics are unique to this pool; the
+/// remaining nine are shared with Edge of Acheron, Wreck of the
+/// Delphis, or both. Distinct from "Downed Ships" (static PvP wrecks).
 const sheolBlueprintCatalog = [
   // ─── Shaitan's Grotto ────────────────────────────────────────────────
   BlueprintCatalogEntry(
@@ -101,12 +115,13 @@ const sheolBlueprintCatalog = [
     ],
   ),
 
-  // ─── Edge of Acheron ─────────────────────────────────────────────────
+  // ─── Edge of Acheron + Fallen Shipwreck ──────────────────────────────
   BlueprintCatalogEntry(
     name: 'Adept Burst Drillshot',
     category: 'Weapon',
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
   BlueprintCatalogEntry(
@@ -114,14 +129,18 @@ const sheolBlueprintCatalog = [
     category: 'Armor',
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
+
+  // ─── Edge of Acheron + Downed Ships + Fallen Shipwreck ───────────────
   BlueprintCatalogEntry(
     name: 'Syndicate Chestplate',
     category: 'Armor',
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
       BlueprintSource(region: _region, location: _downedShips),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
   BlueprintCatalogEntry(
@@ -130,6 +149,7 @@ const sheolBlueprintCatalog = [
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
       BlueprintSource(region: _region, location: _downedShips),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
   BlueprintCatalogEntry(
@@ -138,16 +158,18 @@ const sheolBlueprintCatalog = [
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
       BlueprintSource(region: _region, location: _downedShips),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
 
-  // ─── Edge of Acheron + Wreck of the Delphis ──────────────────────────
+  // ─── Edge of Acheron + Wreck of the Delphis + Fallen Shipwreck ───────
   BlueprintCatalogEntry(
     name: 'Bigger Buggy Boot Mk5',
     category: 'Vehicle',
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
       BlueprintSource(region: _region, location: _delphis),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
   BlueprintCatalogEntry(
@@ -156,22 +178,17 @@ const sheolBlueprintCatalog = [
     sources: [
       BlueprintSource(region: _region, location: _edgeOfAcheron),
       BlueprintSource(region: _region, location: _delphis),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
 
-  // ─── Wreck of the Delphis only ───────────────────────────────────────
+  // ─── Wreck of the Delphis + Fallen Shipwreck ─────────────────────────
   BlueprintCatalogEntry(
     name: 'Jolt-knife',
     category: 'Weapon',
     sources: [
       BlueprintSource(region: _region, location: _delphis),
-    ],
-  ),
-  BlueprintCatalogEntry(
-    name: 'Stim-Leggings',
-    category: 'Armor',
-    sources: [
-      BlueprintSource(region: _region, location: _delphis),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
   // IGN lists this as "Syndicate Gauntlets" in the schematic name column
@@ -179,6 +196,16 @@ const sheolBlueprintCatalog = [
   // schematic name column.
   BlueprintCatalogEntry(
     name: 'Syndicate Gauntlets',
+    category: 'Armor',
+    sources: [
+      BlueprintSource(region: _region, location: _delphis),
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+
+  // ─── Wreck of the Delphis only ───────────────────────────────────────
+  BlueprintCatalogEntry(
+    name: 'Stim-Leggings',
     category: 'Armor',
     sources: [
       BlueprintSource(region: _region, location: _delphis),
@@ -245,6 +272,50 @@ const sheolBlueprintCatalog = [
       BlueprintSource(region: _region, location: _delphis),
       BlueprintSource(region: _region, location: _euporia),
       BlueprintSource(region: _region, location: _downedShips),
+    ],
+  ),
+
+  // ─── Fallen Shipwreck only ───────────────────────────────────────────
+  BlueprintCatalogEntry(
+    name: 'Bite Back Blade',
+    category: 'Weapon',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
+    name: 'Dune Dancer Stillsuit Garment',
+    category: 'Armor',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
+    name: 'Desert Dasher Garment',
+    category: 'Armor',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
+    name: "Sprinter's Stillsuit Garment",
+    category: 'Armor',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
+    name: 'Steady Treadwheel Boost Module Mk5',
+    category: 'Vehicle',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
+    ],
+  ),
+  BlueprintCatalogEntry(
+    name: 'Swift Treadwheel Engine Mk5',
+    category: 'Vehicle',
+    sources: [
+      BlueprintSource(region: _haggaBasin, location: _fallenShipwreck),
     ],
   ),
 ];

@@ -4,6 +4,7 @@ import '../../blueprints/providers/blueprint_provider.dart';
 import '../../class_quests/providers/class_quest_provider.dart';
 import '../../factions/providers/faction_progress_provider.dart';
 import '../../quest_journal/providers/quest_provider.dart';
+import '../../skills/providers/skill_provider.dart';
 import '../../specializations/providers/character_specialization_provider.dart';
 import '../services/export_service.dart';
 import '../services/import_service.dart';
@@ -20,6 +21,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
   final questRepo = ref.watch(questRepositoryProvider);
   final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   final classQuestRepo = ref.watch(classQuestRepositoryProvider);
+  final skillRepo = ref.watch(characterSkillRepositoryProvider);
   return ExportService(
     characterRepo,
     baseRepo,
@@ -29,6 +31,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     questRepository: questRepo,
     blueprintRepository: blueprintRepo,
     classQuestRepository: classQuestRepo,
+    characterSkillRepository: skillRepo,
   );
 });
 
@@ -42,6 +45,7 @@ final importServiceProvider = Provider<ImportService>((ref) {
   final questRepo = ref.watch(questRepositoryProvider);
   final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   final classQuestRepo = ref.watch(classQuestRepositoryProvider);
+  final skillRepo = ref.watch(characterSkillRepositoryProvider);
   return ImportService(
     characterRepo,
     baseRepo,
@@ -51,5 +55,6 @@ final importServiceProvider = Provider<ImportService>((ref) {
     questRepository: questRepo,
     blueprintRepository: blueprintRepo,
     classQuestRepository: classQuestRepo,
+    characterSkillRepository: skillRepo,
   );
 });
