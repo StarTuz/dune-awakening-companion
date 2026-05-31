@@ -272,8 +272,7 @@ void main() {
 
       test('$className: skill types match canon', () {
         final catalogByName = {
-          for (final s
-              in skillCatalog.where((s) => s.className == className))
+          for (final s in skillCatalog.where((s) => s.className == className))
             _baseName(s.name): s,
         };
         final mismatches = <String>[];
@@ -289,13 +288,13 @@ void main() {
           }
         }
         expect(mismatches, isEmpty,
-            reason: '$className type mismatches:\n  ${mismatches.join('\n  ')}');
+            reason:
+                '$className type mismatches:\n  ${mismatches.join('\n  ')}');
       });
 
       test('$className: skill tree assignments match canon', () {
         final catalogByName = {
-          for (final s
-              in skillCatalog.where((s) => s.className == className))
+          for (final s in skillCatalog.where((s) => s.className == className))
             _baseName(s.name): s,
         };
         final mismatches = <String>[];
@@ -309,7 +308,8 @@ void main() {
           }
         }
         expect(mismatches, isEmpty,
-            reason: '$className tree mismatches:\n  ${mismatches.join('\n  ')}');
+            reason:
+                '$className tree mismatches:\n  ${mismatches.join('\n  ')}');
       });
 
       test('$className: catalog uses only canonical tree names', () {

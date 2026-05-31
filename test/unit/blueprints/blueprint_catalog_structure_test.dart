@@ -6,8 +6,7 @@ void main() {
   group('blueprint catalog structure', () {
     test('every entry has a non-empty name and at least one source', () {
       for (final entry in blueprintCatalog) {
-        expect(entry.name.trim(), isNotEmpty,
-            reason: 'empty name on entry');
+        expect(entry.name.trim(), isNotEmpty, reason: 'empty name on entry');
         expect(entry.sources, isNotEmpty,
             reason: '${entry.name} has no sources');
       }

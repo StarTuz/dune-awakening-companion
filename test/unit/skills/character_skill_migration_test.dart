@@ -19,22 +19,25 @@ void main() {
     return db;
   }
 
-  test('migration creates character_skills table with expected columns', () async {
+  test('migration creates character_skills table with expected columns',
+      () async {
     final db = await openFresh();
     addTearDown(db.close);
 
     final cols = await db.rawQuery('PRAGMA table_info(character_skills)');
     final names = cols.map((c) => c['name'] as String).toSet();
 
-    expect(names, containsAll(<String>{
-      'id',
-      'character_id',
-      'skill_id',
-      'current_rank',
-      'target_rank',
-      'is_equipped',
-      'updated_at',
-    }));
+    expect(
+        names,
+        containsAll(<String>{
+          'id',
+          'character_id',
+          'skill_id',
+          'current_rank',
+          'target_rank',
+          'is_equipped',
+          'updated_at',
+        }));
   });
 
   test('migration creates the character_id index', () async {
@@ -74,7 +77,8 @@ void main() {
     expect(row['updated_at'], now);
   });
 
-  test('UNIQUE(character_id, skill_id) prevents duplicate skill rows', () async {
+  test('UNIQUE(character_id, skill_id) prevents duplicate skill rows',
+      () async {
     final db = await openFresh();
     addTearDown(db.close);
 
