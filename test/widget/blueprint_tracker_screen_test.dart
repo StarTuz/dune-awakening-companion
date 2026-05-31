@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dune_awakening_companion/features/blueprints/models/blueprint.dart';
+import 'package:dune_awakening_companion/features/blueprints/models/blueprint_catalog.dart';
 import 'package:dune_awakening_companion/features/blueprints/providers/blueprint_provider.dart';
 import 'package:dune_awakening_companion/features/blueprints/screens/blueprint_tracker_screen.dart';
 import 'package:dune_awakening_companion/features/blueprints/services/blueprint_repository.dart';
@@ -82,6 +83,20 @@ void main() {
     addTearDown(() => tester.binding.setSurfaceSize(null));
   }
 
+  // The full catalog is rendered in a lazy ListView, so a specific seeded row
+  // (e.g. "Kaleff's Drinker", deep in the aggregate list) is off-screen until
+  // filtered. Typing into the search box narrows the list to that row without
+  // affecting the unfiltered "X / N collected" tally shown in the header.
+  Future<void> searchFor(WidgetTester tester, String query) async {
+    await tester.enterText(find.byType(TextField), query);
+    await tester.pumpAndSettle();
+  }
+
+  // Total seeded checklist rows == number of catalog entries (one row each in
+  // the schematic view), derived rather than hardcoded so it survives catalog
+  // additions.
+  final catalogTotal = blueprintCatalog.length;
+
   Widget buildScreen({
     List<Character> characters = const [],
     List<Blueprint> blueprints = const [],
@@ -140,8 +155,9 @@ void main() {
     // The text now appears in two places (header title + dropdown selected
     // value), so just assert it's present somewhere.
     expect(find.text('All Regions'), findsWidgets);
+    await searchFor(tester, "Kaleff");
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('0 / 175 collected'), findsOneWidget);
+    expect(find.text('0 / $catalogTotal collected'), findsOneWidget);
   });
 
   testWidgets('marks seeded checklist rows collected per character',
@@ -179,8 +195,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await searchFor(tester, "Kaleff");
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
-    expect(find.text('1 / 175 collected'), findsOneWidget);
+    expect(find.text('1 / $catalogTotal collected'), findsOneWidget);
     expect(
       find.byWidgetPredicate(
         (widget) => widget is Checkbox && widget.value == true,
@@ -223,6 +240,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await searchFor(tester, "Kaleff");
 
     expect(find.text('Respawn timer'), findsOneWidget);
     expect(find.textContaining('Respawns in'), findsNothing);
@@ -262,6 +280,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+    await searchFor(tester, "Kaleff");
 
     expect(find.textContaining('Respawns in'), findsOneWidget);
   });
