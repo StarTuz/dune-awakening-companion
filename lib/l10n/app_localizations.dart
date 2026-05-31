@@ -2159,6 +2159,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'## Character arc\n\n'**
   String get journalTemplateArcBody;
+
+  /// Navigation label for the Base Calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Calculator'**
+  String get navCalculator;
+
+  /// Title for the Base Calculator screen
+  ///
+  /// In en, this message translates to:
+  /// **'Base Calculator'**
+  String get baseCalculatorTitle;
+
+  /// Label for the Deep Desert 50% material discount toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Deep Desert build'**
+  String get baseCalculatorDeepDesertToggle;
+
+  /// Explanation that the Deep Desert discount applies to materials only
+  ///
+  /// In en, this message translates to:
+  /// **'Halves material costs only — power is unaffected.'**
+  String get baseCalculatorDeepDesertSubtitle;
+
+  /// Button that clears all selected items
+  ///
+  /// In en, this message translates to:
+  /// **'Reset all'**
+  String get baseCalculatorResetAll;
+
+  /// Header for the power/materials summary panel
+  ///
+  /// In en, this message translates to:
+  /// **'Build Summary'**
+  String get baseCalculatorSummaryTitle;
+
+  /// Label for total generated power
+  ///
+  /// In en, this message translates to:
+  /// **'Generated'**
+  String get baseCalculatorGenerated;
+
+  /// Label for total consumed power
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get baseCalculatorUsed;
+
+  /// Label for net power (generated minus used)
+  ///
+  /// In en, this message translates to:
+  /// **'Net power'**
+  String get baseCalculatorNetPower;
+
+  /// Warning shown when the build consumes more power than it generates
+  ///
+  /// In en, this message translates to:
+  /// **'Needs {power} more power'**
+  String baseCalculatorPowerDeficit(int power);
+
+  /// Status shown when the build generates more power than it consumes
+  ///
+  /// In en, this message translates to:
+  /// **'{power} power to spare'**
+  String baseCalculatorPowerSurplus(int power);
+
+  /// Status shown when generated power equals used power
+  ///
+  /// In en, this message translates to:
+  /// **'Power exactly balanced'**
+  String get baseCalculatorPowerBalanced;
+
+  /// Header for the list of total resource costs
+  ///
+  /// In en, this message translates to:
+  /// **'Materials needed'**
+  String get baseCalculatorMaterialsTitle;
+
+  /// Placeholder shown when no items are selected
+  ///
+  /// In en, this message translates to:
+  /// **'Add items below to calculate power and materials.'**
+  String get baseCalculatorEmpty;
+
+  /// Disclaimer that catalog values should be verified in-game
+  ///
+  /// In en, this message translates to:
+  /// **'Community-sourced values — verify in-game.'**
+  String get baseCalculatorVerifyInGame;
+
+  /// Category label for utility/power items
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get baseCalculatorCategoryUtilities;
+
+  /// Category label for fabricator items
+  ///
+  /// In en, this message translates to:
+  /// **'Fabricators'**
+  String get baseCalculatorCategoryFabricators;
 }
 
 class _AppLocalizationsDelegate

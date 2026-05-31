@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/blueprints/screens/blueprint_tracker_screen.dart';
+import '../../features/base_calculator/screens/base_calculator_screen.dart';
 import '../../features/characters/screens/character_management_screen.dart';
 import '../../features/quest_journal/screens/quest_journal_screen.dart';
 import '../../features/alerts/screens/alerts_screen.dart';
@@ -31,6 +32,7 @@ class MainNavigationScreen extends ConsumerWidget {
       const CharacterManagementScreen(),
       const QuestJournalScreen(),
       const BlueprintTrackerScreen(),
+      const BaseCalculatorScreen(),
       const AlertsScreen(),
       const SettingsScreen(),
     ];
@@ -102,6 +104,11 @@ class MainNavigationScreen extends ConsumerWidget {
                   label: Text('Blueprints'),
                 ),
                 NavigationRailDestination(
+                  icon: const Icon(Icons.calculate_outlined),
+                  selectedIcon: const Icon(Icons.calculate),
+                  label: Text(l10n.navCalculator),
+                ),
+                NavigationRailDestination(
                   icon: Badge(
                     label: Text('$alertCount'),
                     isLabelVisible: alertCount > 0,
@@ -166,6 +173,10 @@ class MainNavigationScreen extends ConsumerWidget {
           const NavigationDestination(
             icon: Icon(Icons.construction),
             label: 'Blueprints',
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.calculate),
+            label: l10n.navCalculator,
           ),
           NavigationDestination(
             icon: Badge(

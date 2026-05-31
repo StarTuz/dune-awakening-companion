@@ -1113,4 +1113,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journalTemplateArcBody => '## Character arc\n\n';
+
+  @override
+  String get navCalculator => 'Calculator';
+
+  @override
+  String get baseCalculatorTitle => 'Base Calculator';
+
+  @override
+  String get baseCalculatorDeepDesertToggle => 'Deep Desert build';
+
+  @override
+  String get baseCalculatorDeepDesertSubtitle =>
+      'Halves material costs only — power is unaffected.';
+
+  @override
+  String get baseCalculatorResetAll => 'Reset all';
+
+  @override
+  String get baseCalculatorSummaryTitle => 'Build Summary';
+
+  @override
+  String get baseCalculatorGenerated => 'Generated';
+
+  @override
+  String get baseCalculatorUsed => 'Used';
+
+  @override
+  String get baseCalculatorNetPower => 'Net power';
+
+  @override
+  String baseCalculatorPowerDeficit(int power) {
+    return 'Needs $power more power';
+  }
+
+  @override
+  String baseCalculatorPowerSurplus(int power) {
+    return '$power power to spare';
+  }
+
+  @override
+  String get baseCalculatorPowerBalanced => 'Power exactly balanced';
+
+  @override
+  String get baseCalculatorMaterialsTitle => 'Materials needed';
+
+  @override
+  String get baseCalculatorEmpty =>
+      'Add items below to calculate power and materials.';
+
+  @override
+  String get baseCalculatorVerifyInGame =>
+      'Community-sourced values — verify in-game.';
+
+  @override
+  String get baseCalculatorCategoryUtilities => 'Utilities';
+
+  @override
+  String get baseCalculatorCategoryFabricators => 'Fabricators';
 }

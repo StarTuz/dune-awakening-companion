@@ -294,5 +294,22 @@
   "journalTemplateCharacterArc": "Arco del personaggio",
   "journalTemplateSessionBody": "## Cosa è successo\n\n## Bottino e risorse\n\n## Prossimi passi\n",
   "journalTemplateLoreBody": "## Lore\n\n",
-  "journalTemplateArcBody": "## Arco del personaggio\n\n"
+  "journalTemplateArcBody": "## Arco del personaggio\n\n",
+  "navCalculator": "Calcolatrice",
+  "baseCalculatorTitle": "Calcolatrice Base",
+  "baseCalculatorDeepDesertToggle": "Costruzione nel Deserto Profondo",
+  "baseCalculatorDeepDesertSubtitle": "Dimezza solo i materiali — l'energia non è influenzata.",
+  "baseCalculatorResetAll": "Reimposta tutto",
+  "baseCalculatorSummaryTitle": "Riepilogo costruzione",
+  "baseCalculatorGenerated": "Generata",
+  "baseCalculatorUsed": "Usata",
+  "baseCalculatorNetPower": "Energia netta",
+  "baseCalculatorPowerDeficit": "Servono {power} di energia in più",
+  "baseCalculatorPowerSurplus": "{power} di energia in eccesso",
+  "baseCalculatorPowerBalanced": "Energia perfettamente bilanciata",
+  "baseCalculatorMaterialsTitle": "Materiali necessari",
+  "baseCalculatorEmpty": "Aggiungi oggetti qui sotto per calcolare energia e materiali.",
+  "baseCalculatorVerifyInGame": "Valori della community — verifica nel gioco.",
+  "baseCalculatorCategoryUtilities": "Utilità",
+  "baseCalculatorCategoryFabricators": "Fabbricatori"
 }

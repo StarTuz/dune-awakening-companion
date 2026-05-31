@@ -294,5 +294,22 @@
   "journalTemplateCharacterArc": "Арка персонажа",
   "journalTemplateSessionBody": "## Що сталося\n\n## Здобич і ресурси\n\n## Наступні кроки\n",
   "journalTemplateLoreBody": "## Лор\n\n",
-  "journalTemplateArcBody": "## Арка персонажа\n\n"
+  "journalTemplateArcBody": "## Арка персонажа\n\n",
+  "navCalculator": "Калькулятор",
+  "baseCalculatorTitle": "Калькулятор бази",
+  "baseCalculatorDeepDesertToggle": "Будівництво в Глибокій пустелі",
+  "baseCalculatorDeepDesertSubtitle": "Зменшує вдвічі лише вартість матеріалів — енергія не змінюється.",
+  "baseCalculatorResetAll": "Скинути все",
+  "baseCalculatorSummaryTitle": "Підсумок будівництва",
+  "baseCalculatorGenerated": "Вироблено",
+  "baseCalculatorUsed": "Використано",
+  "baseCalculatorNetPower": "Чиста енергія",
+  "baseCalculatorPowerDeficit": "Потрібно ще {power} енергії",
+  "baseCalculatorPowerSurplus": "{power} енергії в запасі",
+  "baseCalculatorPowerBalanced": "Енергія точно збалансована",
+  "baseCalculatorMaterialsTitle": "Потрібні матеріали",
+  "baseCalculatorEmpty": "Додайте об'єкти нижче, щоб розрахувати енергію та матеріали.",
+  "baseCalculatorVerifyInGame": "Значення від спільноти — перевірте у грі.",
+  "baseCalculatorCategoryUtilities": "Обладнання",
+  "baseCalculatorCategoryFabricators": "Фабрикатори"
 }

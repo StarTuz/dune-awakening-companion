@@ -1121,4 +1121,62 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get journalTemplateArcBody => '## Arc cymeriad\n\n';
+
+  @override
+  String get navCalculator => 'Cyfrifiannell';
+
+  @override
+  String get baseCalculatorTitle => 'Cyfrifiannell Gwaelodfa';
+
+  @override
+  String get baseCalculatorDeepDesertToggle => 'Adeiladu Diffeithwch Dwfn';
+
+  @override
+  String get baseCalculatorDeepDesertSubtitle =>
+      'Yn haneru cost deunyddiau yn unig — nid effeithir ar bŵer.';
+
+  @override
+  String get baseCalculatorResetAll => 'Ailosod popeth';
+
+  @override
+  String get baseCalculatorSummaryTitle => 'Crynodeb Adeiladu';
+
+  @override
+  String get baseCalculatorGenerated => 'Cynhyrchwyd';
+
+  @override
+  String get baseCalculatorUsed => 'Defnyddiwyd';
+
+  @override
+  String get baseCalculatorNetPower => 'Pŵer net';
+
+  @override
+  String baseCalculatorPowerDeficit(int power) {
+    return 'Angen $power yn fwy o bŵer';
+  }
+
+  @override
+  String baseCalculatorPowerSurplus(int power) {
+    return '$power o bŵer dros ben';
+  }
+
+  @override
+  String get baseCalculatorPowerBalanced => 'Pŵer wedi\'i gydbwyso\'n union';
+
+  @override
+  String get baseCalculatorMaterialsTitle => 'Deunyddiau angenrheidiol';
+
+  @override
+  String get baseCalculatorEmpty =>
+      'Ychwanegwch eitemau isod i gyfrifo pŵer a deunyddiau.';
+
+  @override
+  String get baseCalculatorVerifyInGame =>
+      'Gwerthoedd gan y gymuned — gwiriwch yn y gêm.';
+
+  @override
+  String get baseCalculatorCategoryUtilities => 'Cyfleustodau';
+
+  @override
+  String get baseCalculatorCategoryFabricators => 'Ffabrigwyr';
 }

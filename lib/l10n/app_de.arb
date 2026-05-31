@@ -294,5 +294,22 @@
   "journalTemplateCharacterArc": "Charakterbogen",
   "journalTemplateSessionBody": "## Was geschah\n\n## Beute & Ressourcen\n\n## Nächste Schritte\n",
   "journalTemplateLoreBody": "## Lore\n\n",
-  "journalTemplateArcBody": "## Charakterbogen\n\n"
+  "journalTemplateArcBody": "## Charakterbogen\n\n",
+  "navCalculator": "Rechner",
+  "baseCalculatorTitle": "Basis-Rechner",
+  "baseCalculatorDeepDesertToggle": "Bau in der Tiefen Wüste",
+  "baseCalculatorDeepDesertSubtitle": "Halbiert nur die Materialkosten — Energie bleibt unverändert.",
+  "baseCalculatorResetAll": "Alles zurücksetzen",
+  "baseCalculatorSummaryTitle": "Bauübersicht",
+  "baseCalculatorGenerated": "Erzeugt",
+  "baseCalculatorUsed": "Verbraucht",
+  "baseCalculatorNetPower": "Netto-Energie",
+  "baseCalculatorPowerDeficit": "Benötigt {power} mehr Energie",
+  "baseCalculatorPowerSurplus": "{power} Energie übrig",
+  "baseCalculatorPowerBalanced": "Energie genau ausgeglichen",
+  "baseCalculatorMaterialsTitle": "Benötigte Materialien",
+  "baseCalculatorEmpty": "Füge unten Objekte hinzu, um Energie und Materialien zu berechnen.",
+  "baseCalculatorVerifyInGame": "Von der Community erfasste Werte — im Spiel prüfen.",
+  "baseCalculatorCategoryUtilities": "Versorgung",
+  "baseCalculatorCategoryFabricators": "Fabrikatoren"
 }

@@ -294,5 +294,22 @@
   "journalTemplateCharacterArc": "Arco del personaje",
   "journalTemplateSessionBody": "## Qué pasó\n\n## Botín y recursos\n\n## Próximos pasos\n",
   "journalTemplateLoreBody": "## Lore\n\n",
-  "journalTemplateArcBody": "## Arco del personaje\n\n"
+  "journalTemplateArcBody": "## Arco del personaje\n\n",
+  "navCalculator": "Calculadora",
+  "baseCalculatorTitle": "Calculadora de Base",
+  "baseCalculatorDeepDesertToggle": "Construcción en Desierto Profundo",
+  "baseCalculatorDeepDesertSubtitle": "Reduce a la mitad solo los materiales; la energía no se ve afectada.",
+  "baseCalculatorResetAll": "Restablecer todo",
+  "baseCalculatorSummaryTitle": "Resumen de construcción",
+  "baseCalculatorGenerated": "Generada",
+  "baseCalculatorUsed": "Usada",
+  "baseCalculatorNetPower": "Energía neta",
+  "baseCalculatorPowerDeficit": "Necesita {power} de energía más",
+  "baseCalculatorPowerSurplus": "{power} de energía de sobra",
+  "baseCalculatorPowerBalanced": "Energía exactamente equilibrada",
+  "baseCalculatorMaterialsTitle": "Materiales necesarios",
+  "baseCalculatorEmpty": "Añade objetos abajo para calcular energía y materiales.",
+  "baseCalculatorVerifyInGame": "Valores de la comunidad: verifícalos en el juego.",
+  "baseCalculatorCategoryUtilities": "Utilidades",
+  "baseCalculatorCategoryFabricators": "Fabricadores"
 }

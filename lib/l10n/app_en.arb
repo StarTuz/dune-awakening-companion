@@ -1361,5 +1361,83 @@
   "journalTemplateArcBody": "## Character arc\n\n",
   "@journalTemplateArcBody": {
     "description": "Prefilled Markdown body for the character arc template"
+  },
+  "navCalculator": "Calculator",
+  "@navCalculator": {
+    "description": "Navigation label for the Base Calculator"
+  },
+  "baseCalculatorTitle": "Base Calculator",
+  "@baseCalculatorTitle": {
+    "description": "Title for the Base Calculator screen"
+  },
+  "baseCalculatorDeepDesertToggle": "Deep Desert build",
+  "@baseCalculatorDeepDesertToggle": {
+    "description": "Label for the Deep Desert 50% material discount toggle"
+  },
+  "baseCalculatorDeepDesertSubtitle": "Halves material costs only — power is unaffected.",
+  "@baseCalculatorDeepDesertSubtitle": {
+    "description": "Explanation that the Deep Desert discount applies to materials only"
+  },
+  "baseCalculatorResetAll": "Reset all",
+  "@baseCalculatorResetAll": {
+    "description": "Button that clears all selected items"
+  },
+  "baseCalculatorSummaryTitle": "Build Summary",
+  "@baseCalculatorSummaryTitle": {
+    "description": "Header for the power/materials summary panel"
+  },
+  "baseCalculatorGenerated": "Generated",
+  "@baseCalculatorGenerated": {
+    "description": "Label for total generated power"
+  },
+  "baseCalculatorUsed": "Used",
+  "@baseCalculatorUsed": {
+    "description": "Label for total consumed power"
+  },
+  "baseCalculatorNetPower": "Net power",
+  "@baseCalculatorNetPower": {
+    "description": "Label for net power (generated minus used)"
+  },
+  "baseCalculatorPowerDeficit": "Needs {power} more power",
+  "@baseCalculatorPowerDeficit": {
+    "description": "Warning shown when the build consumes more power than it generates",
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
+  "baseCalculatorPowerSurplus": "{power} power to spare",
+  "@baseCalculatorPowerSurplus": {
+    "description": "Status shown when the build generates more power than it consumes",
+    "placeholders": {
+      "power": {
+        "type": "int"
+      }
+    }
+  },
+  "baseCalculatorPowerBalanced": "Power exactly balanced",
+  "@baseCalculatorPowerBalanced": {
+    "description": "Status shown when generated power equals used power"
+  },
+  "baseCalculatorMaterialsTitle": "Materials needed",
+  "@baseCalculatorMaterialsTitle": {
+    "description": "Header for the list of total resource costs"
+  },
+  "baseCalculatorEmpty": "Add items below to calculate power and materials.",
+  "@baseCalculatorEmpty": {
+    "description": "Placeholder shown when no items are selected"
+  },
+  "baseCalculatorVerifyInGame": "Community-sourced values — verify in-game.",
+  "@baseCalculatorVerifyInGame": {
+    "description": "Disclaimer that catalog values should be verified in-game"
+  },
+  "baseCalculatorCategoryUtilities": "Utilities",
+  "@baseCalculatorCategoryUtilities": {
+    "description": "Category label for utility/power items"
+  },
+  "baseCalculatorCategoryFabricators": "Fabricators",
+  "@baseCalculatorCategoryFabricators": {
+    "description": "Category label for fabricator items"
   }
 }

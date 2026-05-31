@@ -1117,4 +1117,62 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get journalTemplateArcBody => '## Арка персонажа\n\n';
+
+  @override
+  String get navCalculator => 'Калькулятор';
+
+  @override
+  String get baseCalculatorTitle => 'Калькулятор бази';
+
+  @override
+  String get baseCalculatorDeepDesertToggle => 'Будівництво в Глибокій пустелі';
+
+  @override
+  String get baseCalculatorDeepDesertSubtitle =>
+      'Зменшує вдвічі лише вартість матеріалів — енергія не змінюється.';
+
+  @override
+  String get baseCalculatorResetAll => 'Скинути все';
+
+  @override
+  String get baseCalculatorSummaryTitle => 'Підсумок будівництва';
+
+  @override
+  String get baseCalculatorGenerated => 'Вироблено';
+
+  @override
+  String get baseCalculatorUsed => 'Використано';
+
+  @override
+  String get baseCalculatorNetPower => 'Чиста енергія';
+
+  @override
+  String baseCalculatorPowerDeficit(int power) {
+    return 'Потрібно ще $power енергії';
+  }
+
+  @override
+  String baseCalculatorPowerSurplus(int power) {
+    return '$power енергії в запасі';
+  }
+
+  @override
+  String get baseCalculatorPowerBalanced => 'Енергія точно збалансована';
+
+  @override
+  String get baseCalculatorMaterialsTitle => 'Потрібні матеріали';
+
+  @override
+  String get baseCalculatorEmpty =>
+      'Додайте об\'єкти нижче, щоб розрахувати енергію та матеріали.';
+
+  @override
+  String get baseCalculatorVerifyInGame =>
+      'Значення від спільноти — перевірте у грі.';
+
+  @override
+  String get baseCalculatorCategoryUtilities => 'Обладнання';
+
+  @override
+  String get baseCalculatorCategoryFabricators => 'Фабрикатори';
 }

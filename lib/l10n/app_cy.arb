@@ -294,5 +294,22 @@
   "journalTemplateCharacterArc": "Arc cymeriad",
   "journalTemplateSessionBody": "## Beth ddigwyddodd\n\n## Ysbail ac adnoddau\n\n## Camau nesaf\n",
   "journalTemplateLoreBody": "## Llên\n\n",
-  "journalTemplateArcBody": "## Arc cymeriad\n\n"
+  "journalTemplateArcBody": "## Arc cymeriad\n\n",
+  "navCalculator": "Cyfrifiannell",
+  "baseCalculatorTitle": "Cyfrifiannell Gwaelodfa",
+  "baseCalculatorDeepDesertToggle": "Adeiladu Diffeithwch Dwfn",
+  "baseCalculatorDeepDesertSubtitle": "Yn haneru cost deunyddiau yn unig — nid effeithir ar bŵer.",
+  "baseCalculatorResetAll": "Ailosod popeth",
+  "baseCalculatorSummaryTitle": "Crynodeb Adeiladu",
+  "baseCalculatorGenerated": "Cynhyrchwyd",
+  "baseCalculatorUsed": "Defnyddiwyd",
+  "baseCalculatorNetPower": "Pŵer net",
+  "baseCalculatorPowerDeficit": "Angen {power} yn fwy o bŵer",
+  "baseCalculatorPowerSurplus": "{power} o bŵer dros ben",
+  "baseCalculatorPowerBalanced": "Pŵer wedi'i gydbwyso'n union",
+  "baseCalculatorMaterialsTitle": "Deunyddiau angenrheidiol",
+  "baseCalculatorEmpty": "Ychwanegwch eitemau isod i gyfrifo pŵer a deunyddiau.",
+  "baseCalculatorVerifyInGame": "Gwerthoedd gan y gymuned — gwiriwch yn y gêm.",
+  "baseCalculatorCategoryUtilities": "Cyfleustodau",
+  "baseCalculatorCategoryFabricators": "Ffabrigwyr"
 }

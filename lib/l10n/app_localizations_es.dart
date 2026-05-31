@@ -1121,4 +1121,63 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get journalTemplateArcBody => '## Arco del personaje\n\n';
+
+  @override
+  String get navCalculator => 'Calculadora';
+
+  @override
+  String get baseCalculatorTitle => 'Calculadora de Base';
+
+  @override
+  String get baseCalculatorDeepDesertToggle =>
+      'Construcción en Desierto Profundo';
+
+  @override
+  String get baseCalculatorDeepDesertSubtitle =>
+      'Reduce a la mitad solo los materiales; la energía no se ve afectada.';
+
+  @override
+  String get baseCalculatorResetAll => 'Restablecer todo';
+
+  @override
+  String get baseCalculatorSummaryTitle => 'Resumen de construcción';
+
+  @override
+  String get baseCalculatorGenerated => 'Generada';
+
+  @override
+  String get baseCalculatorUsed => 'Usada';
+
+  @override
+  String get baseCalculatorNetPower => 'Energía neta';
+
+  @override
+  String baseCalculatorPowerDeficit(int power) {
+    return 'Necesita $power de energía más';
+  }
+
+  @override
+  String baseCalculatorPowerSurplus(int power) {
+    return '$power de energía de sobra';
+  }
+
+  @override
+  String get baseCalculatorPowerBalanced => 'Energía exactamente equilibrada';
+
+  @override
+  String get baseCalculatorMaterialsTitle => 'Materiales necesarios';
+
+  @override
+  String get baseCalculatorEmpty =>
+      'Añade objetos abajo para calcular energía y materiales.';
+
+  @override
+  String get baseCalculatorVerifyInGame =>
+      'Valores de la comunidad: verifícalos en el juego.';
+
+  @override
+  String get baseCalculatorCategoryUtilities => 'Utilidades';
+
+  @override
+  String get baseCalculatorCategoryFabricators => 'Fabricadores';
 }
