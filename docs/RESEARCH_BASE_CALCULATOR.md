@@ -141,21 +141,34 @@ complexity.
 - Unit tests for power/resource math.
 - Widget test for selecting items and seeing resource totals.
 
-### Phase 2: Storage & Trip Planning
+### Phase 2: Storage & Trip Planning — IMPLEMENTED
 
-Goal: match the most useful differentiator in TCNO/DuneCalc.
+Shipped:
 
-- Storage configuration model:
-  - vehicle/container name
-  - volume capacity
-  - slot capacity when known
-  - quantity
-- Build summary:
-  - total resource volume
-  - total storage capacity
-  - estimated trips required
-- Support "show volumes" toggle if the UI becomes too dense.
-- Unit tests for volume and trip formulas.
+- `models/resource_volumes.dart` — sourced per-unit material volumes (DuneCalc
+  Materials tab) used to convert material totals into transport volume. A
+  coverage test asserts every catalog resource has a volume.
+- `models/storage_option.dart` + `models/storage_catalog.dart` — 15 storage
+  containers (player inventory, sandbikes, ornithopters, buggies, sandcrawler,
+  Regis container) with volume + slot capacity.
+- `models/storage_summary.dart` — pure capacity aggregation plus a `tripsNeeded`
+  helper (`ceil(volume / capacity)`; `null` when no storage configured).
+- `BaseCalculatorSummary.totalVolume` — transport volume derived from the
+  discounted material totals (Deep Desert halves volume too, since you haul
+  less).
+- Provider extended with storage quantities and a derived `trips`.
+- Screen: a "Storage & Transport" catalog section, a transport block in the
+  summary (total volume, storage capacity, trips), and a "Show volumes" toggle
+  that reveals per-material volume.
+- New unit tests (`storage_and_volume_test.dart`) and a widget test for the
+  trip flow.
+
+Notes / deferred refinements:
+
+- Trips are **volume-based**. Slot capacity is shown but does not yet bind the
+  trip count; per-stack slot limits are a future refinement (Audit Findings).
+
+Original goal: match the most useful differentiator in TCNO/DuneCalc.
 
 ### Phase 3: Saved Plans
 

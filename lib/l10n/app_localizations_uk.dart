@@ -1175,4 +1175,31 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get baseCalculatorCategoryFabricators => 'Фабрикатори';
+
+  @override
+  String get baseCalculatorStorageTitle => 'Сховище та транспорт';
+
+  @override
+  String baseCalculatorStorageSpec(int volume, int slots) {
+    return '${volume}V · $slots комірок';
+  }
+
+  @override
+  String get baseCalculatorTransportTitle => 'Транспорт';
+
+  @override
+  String get baseCalculatorTotalVolume => 'Загальний об\'єм';
+
+  @override
+  String get baseCalculatorStorageCapacity => 'Місткість сховища';
+
+  @override
+  String get baseCalculatorTripsNeeded => 'Потрібно поїздок';
+
+  @override
+  String get baseCalculatorConfigureStorage =>
+      'Додайте сховище нижче, щоб оцінити поїздки.';
+
+  @override
+  String get baseCalculatorShowVolumes => 'Показати об\'єми';
 }

@@ -311,5 +311,13 @@
   "baseCalculatorEmpty": "Ajoutez des éléments ci-dessous pour calculer l'énergie et les matériaux.",
   "baseCalculatorVerifyInGame": "Valeurs communautaires — à vérifier en jeu.",
   "baseCalculatorCategoryUtilities": "Utilitaires",
-  "baseCalculatorCategoryFabricators": "Fabricateurs"
+  "baseCalculatorCategoryFabricators": "Fabricateurs",
+  "baseCalculatorStorageTitle": "Stockage et transport",
+  "baseCalculatorStorageSpec": "{volume}V · {slots} emplacements",
+  "baseCalculatorTransportTitle": "Transport",
+  "baseCalculatorTotalVolume": "Volume total",
+  "baseCalculatorStorageCapacity": "Capacité de stockage",
+  "baseCalculatorTripsNeeded": "Trajets nécessaires",
+  "baseCalculatorConfigureStorage": "Ajoutez du stockage ci-dessous pour estimer les trajets.",
+  "baseCalculatorShowVolumes": "Afficher les volumes"
 }

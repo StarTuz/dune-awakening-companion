@@ -7,12 +7,29 @@ import '../../../shared/theme/app_colors.dart';
 import '../models/base_calculator_catalog.dart';
 import '../models/base_calculator_item.dart';
 import '../models/base_calculator_summary.dart';
+import '../models/storage_catalog.dart';
+import '../models/storage_option.dart';
 import '../providers/base_calculator_provider.dart';
 
-/// Phase 1 Base Calculator: pick placeable items and see live power netting and
-/// material totals, with an optional Deep Desert 50% material discount.
-class BaseCalculatorScreen extends ConsumerWidget {
+String _formatVolume(double v) {
+  final rounded = v.roundToDouble();
+  final text = (v == rounded) ? v.toStringAsFixed(0) : v.toStringAsFixed(1);
+  return '${text}V';
+}
+
+/// Base Calculator: pick placeable items and storage, and see live power
+/// netting, material totals, transport volume, and estimated hauling trips.
+/// An optional Deep Desert 50% material discount applies to materials only.
+class BaseCalculatorScreen extends ConsumerStatefulWidget {
   const BaseCalculatorScreen({super.key});
+
+  @override
+  ConsumerState<BaseCalculatorScreen> createState() =>
+      _BaseCalculatorScreenState();
+}
+
+class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
+  bool _showVolumes = false;
 
   String _categoryLabel(AppLocalizations l10n, BaseCalculatorCategory c) {
     switch (c) {
@@ -24,10 +41,9 @@ class BaseCalculatorScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(baseCalculatorProvider);
-    final summary = state.summary;
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +52,7 @@ class BaseCalculatorScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.restart_alt),
             tooltip: l10n.baseCalculatorResetAll,
-            onPressed: state.totalItems == 0 && !state.deepDesertDiscount
+            onPressed: state.isPristine
                 ? null
                 : () => ref.read(baseCalculatorProvider.notifier).reset(),
           ),
@@ -45,7 +61,11 @@ class BaseCalculatorScreen extends ConsumerWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isWide = constraints.maxWidth >= 900;
-          final controls = _ControlsAndSummary(summary: summary, state: state);
+          final controls = _ControlsAndSummary(
+            state: state,
+            showVolumes: _showVolumes,
+            onShowVolumesChanged: (v) => setState(() => _showVolumes = v),
+          );
           final catalog = _CatalogList(categoryLabel: _categoryLabel);
 
           if (isWide) {
@@ -82,10 +102,15 @@ class BaseCalculatorScreen extends ConsumerWidget {
 }
 
 class _ControlsAndSummary extends ConsumerWidget {
-  const _ControlsAndSummary({required this.summary, required this.state});
+  const _ControlsAndSummary({
+    required this.state,
+    required this.showVolumes,
+    required this.onShowVolumesChanged,
+  });
 
-  final BaseCalculatorSummary summary;
   final BaseCalculatorState state;
+  final bool showVolumes;
+  final ValueChanged<bool> onShowVolumesChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,21 +132,33 @@ class _ControlsAndSummary extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 12),
-        _SummaryCard(summary: summary),
+        _SummaryCard(
+          state: state,
+          showVolumes: showVolumes,
+          onShowVolumesChanged: onShowVolumesChanged,
+        ),
       ],
     );
   }
 }
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.summary});
+  const _SummaryCard({
+    required this.state,
+    required this.showVolumes,
+    required this.onShowVolumesChanged,
+  });
 
-  final BaseCalculatorSummary summary;
+  final BaseCalculatorState state;
+  final bool showVolumes;
+  final ValueChanged<bool> onShowVolumesChanged;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final summary = state.summary;
+    final resourceVolumes = summary.resourceVolumes;
 
     return Card(
       margin: EdgeInsets.zero,
@@ -175,19 +212,51 @@ class _SummaryCard extends StatelessWidget {
               const SizedBox(height: 12),
               _PowerStatusBanner(summary: summary),
               const SizedBox(height: 16),
-              Text(
-                l10n.baseCalculatorMaterialsTitle,
-                style: theme.textTheme.titleSmall
-                    ?.copyWith(fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l10n.baseCalculatorMaterialsTitle,
+                      style: theme.textTheme.titleSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      l10n.baseCalculatorShowVolumes,
+                      style: theme.textTheme.bodySmall
+                          ?.copyWith(color: DuneColors.mutedText),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                  Switch(
+                    value: showVolumes,
+                    onChanged: onShowVolumesChanged,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               ...summary.resourceTotals.entries.map(
                 (e) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: Text(e.key)),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(e.key),
+                            if (showVolumes && resourceVolumes[e.key] != null)
+                              Text(
+                                _formatVolume(resourceVolumes[e.key]!),
+                                style: theme.textTheme.bodySmall
+                                    ?.copyWith(color: DuneColors.mutedText),
+                              ),
+                          ],
+                        ),
+                      ),
                       Text(
                         '${e.value}',
                         style: const TextStyle(fontWeight: FontWeight.w600),
@@ -196,6 +265,8 @@ class _SummaryCard extends StatelessWidget {
                   ),
                 ),
               ),
+              const Divider(height: 24),
+              _TransportSection(state: state),
               const SizedBox(height: 12),
               Text(
                 l10n.baseCalculatorVerifyInGame,
@@ -207,6 +278,91 @@ class _SummaryCard extends StatelessWidget {
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _TransportSection extends StatelessWidget {
+  const _TransportSection({required this.state});
+
+  final BaseCalculatorState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final summary = state.summary;
+    final storage = state.storageSummary;
+    final trips = state.trips;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.baseCalculatorTransportTitle,
+          style:
+              theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        _SummaryRow(
+          label: l10n.baseCalculatorTotalVolume,
+          value: _formatVolume(summary.totalVolume),
+        ),
+        _SummaryRow(
+          label: l10n.baseCalculatorStorageCapacity,
+          value: '${storage.totalVolumeCapacity}V',
+        ),
+        if (trips == null)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(
+              l10n.baseCalculatorConfigureStorage,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: DuneColors.mutedText),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  l10n.baseCalculatorTripsNeeded,
+                  style: theme.textTheme.titleSmall,
+                ),
+                Text(
+                  '$trips',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: DuneColors.primaryAccent,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _SummaryRow extends StatelessWidget {
+  const _SummaryRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
+        ],
       ),
     );
   }
@@ -302,26 +458,27 @@ class _CatalogList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     final byCategory = <BaseCalculatorCategory, List<BaseCalculatorItem>>{};
     for (final item in baseCalculatorCatalog) {
       byCategory.putIfAbsent(item.category, () => []).add(item);
     }
 
+    Widget sectionHeader(String text) => Padding(
+          padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
+          child: Text(
+            text,
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        );
+
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
         for (final category in byCategory.keys) ...[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(4, 8, 4, 8),
-            child: Text(
-              categoryLabel(l10n, category),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
+          sectionHeader(categoryLabel(l10n, category)),
           Card(
             margin: EdgeInsets.zero,
             child: Column(
@@ -332,6 +489,17 @@ class _CatalogList extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
         ],
+        sectionHeader(l10n.baseCalculatorStorageTitle),
+        Card(
+          margin: EdgeInsets.zero,
+          child: Column(
+            children: [
+              for (final option in baseCalculatorStorageOptions)
+                _StorageRow(option: option),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
       ],
     );
   }
@@ -364,30 +532,82 @@ class _ItemRow extends ConsumerWidget {
           ),
         ],
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
-            onPressed:
-                quantity == 0 ? null : () => notifier.decrement(item.code),
-            visualDensity: VisualDensity.compact,
-          ),
-          SizedBox(
-            width: 28,
-            child: Text(
-              '$quantity',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () => notifier.increment(item.code),
-            visualDensity: VisualDensity.compact,
-          ),
-        ],
+      trailing: _Stepper(
+        quantity: quantity,
+        onRemove: quantity == 0 ? null : () => notifier.decrement(item.code),
+        onAdd: () => notifier.increment(item.code),
       ),
+    );
+  }
+}
+
+class _StorageRow extends ConsumerWidget {
+  const _StorageRow({required this.option});
+
+  final StorageOption option;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final notifier = ref.read(baseCalculatorProvider.notifier);
+    final quantity = ref.watch(
+      baseCalculatorProvider
+          .select((s) => s.storageQuantities[option.code] ?? 0),
+    );
+
+    return ListTile(
+      title: Text(option.name),
+      subtitle: Text(
+        l10n.baseCalculatorStorageSpec(
+          option.volumeCapacity,
+          option.slotCapacity,
+        ),
+      ),
+      trailing: _Stepper(
+        quantity: quantity,
+        onRemove:
+            quantity == 0 ? null : () => notifier.decrementStorage(option.code),
+        onAdd: () => notifier.incrementStorage(option.code),
+      ),
+    );
+  }
+}
+
+class _Stepper extends StatelessWidget {
+  const _Stepper({
+    required this.quantity,
+    required this.onRemove,
+    required this.onAdd,
+  });
+
+  final int quantity;
+  final VoidCallback? onRemove;
+  final VoidCallback? onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.remove_circle_outline),
+          onPressed: onRemove,
+          visualDensity: VisualDensity.compact,
+        ),
+        SizedBox(
+          width: 28,
+          child: Text(
+            '$quantity',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.add_circle_outline),
+          onPressed: onAdd,
+          visualDensity: VisualDensity.compact,
+        ),
+      ],
     );
   }
 }

@@ -311,5 +311,13 @@
   "baseCalculatorEmpty": "Añade objetos abajo para calcular energía y materiales.",
   "baseCalculatorVerifyInGame": "Valores de la comunidad: verifícalos en el juego.",
   "baseCalculatorCategoryUtilities": "Utilidades",
-  "baseCalculatorCategoryFabricators": "Fabricadores"
+  "baseCalculatorCategoryFabricators": "Fabricadores",
+  "baseCalculatorStorageTitle": "Almacenamiento y transporte",
+  "baseCalculatorStorageSpec": "{volume}V · {slots} ranuras",
+  "baseCalculatorTransportTitle": "Transporte",
+  "baseCalculatorTotalVolume": "Volumen total",
+  "baseCalculatorStorageCapacity": "Capacidad de almacenamiento",
+  "baseCalculatorTripsNeeded": "Viajes necesarios",
+  "baseCalculatorConfigureStorage": "Añade almacenamiento abajo para estimar los viajes.",
+  "baseCalculatorShowVolumes": "Mostrar volúmenes"
 }

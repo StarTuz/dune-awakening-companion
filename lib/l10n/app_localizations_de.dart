@@ -1180,4 +1180,31 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get baseCalculatorCategoryFabricators => 'Fabrikatoren';
+
+  @override
+  String get baseCalculatorStorageTitle => 'Lager & Transport';
+
+  @override
+  String baseCalculatorStorageSpec(int volume, int slots) {
+    return '${volume}V · $slots Plätze';
+  }
+
+  @override
+  String get baseCalculatorTransportTitle => 'Transport';
+
+  @override
+  String get baseCalculatorTotalVolume => 'Gesamtvolumen';
+
+  @override
+  String get baseCalculatorStorageCapacity => 'Lagerkapazität';
+
+  @override
+  String get baseCalculatorTripsNeeded => 'Benötigte Fahrten';
+
+  @override
+  String get baseCalculatorConfigureStorage =>
+      'Füge unten Lager hinzu, um Fahrten zu schätzen.';
+
+  @override
+  String get baseCalculatorShowVolumes => 'Volumen anzeigen';
 }

@@ -1439,5 +1439,45 @@
   "baseCalculatorCategoryFabricators": "Fabricators",
   "@baseCalculatorCategoryFabricators": {
     "description": "Category label for fabricator items"
+  },
+  "baseCalculatorStorageTitle": "Storage & Transport",
+  "@baseCalculatorStorageTitle": {
+    "description": "Section header for storage container selection"
+  },
+  "baseCalculatorStorageSpec": "{volume}V · {slots} slots",
+  "@baseCalculatorStorageSpec": {
+    "description": "Capacity spec shown under each storage container",
+    "placeholders": {
+      "volume": {
+        "type": "int"
+      },
+      "slots": {
+        "type": "int"
+      }
+    }
+  },
+  "baseCalculatorTransportTitle": "Transport",
+  "@baseCalculatorTransportTitle": {
+    "description": "Sub-header for the transport (volume/trips) summary"
+  },
+  "baseCalculatorTotalVolume": "Total volume",
+  "@baseCalculatorTotalVolume": {
+    "description": "Label for the total material transport volume"
+  },
+  "baseCalculatorStorageCapacity": "Storage capacity",
+  "@baseCalculatorStorageCapacity": {
+    "description": "Label for the total configured storage capacity"
+  },
+  "baseCalculatorTripsNeeded": "Trips needed",
+  "@baseCalculatorTripsNeeded": {
+    "description": "Label for the estimated number of hauling trips"
+  },
+  "baseCalculatorConfigureStorage": "Add storage below to estimate trips.",
+  "@baseCalculatorConfigureStorage": {
+    "description": "Hint shown when no storage is configured yet"
+  },
+  "baseCalculatorShowVolumes": "Show volumes",
+  "@baseCalculatorShowVolumes": {
+    "description": "Toggle to show per-material transport volume"
   }
 }

@@ -1179,4 +1179,31 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get baseCalculatorCategoryFabricators => 'Ffabrigwyr';
+
+  @override
+  String get baseCalculatorStorageTitle => 'Storfa a Chludiant';
+
+  @override
+  String baseCalculatorStorageSpec(int volume, int slots) {
+    return '${volume}V · $slots slot';
+  }
+
+  @override
+  String get baseCalculatorTransportTitle => 'Cludiant';
+
+  @override
+  String get baseCalculatorTotalVolume => 'Cyfaint cyfan';
+
+  @override
+  String get baseCalculatorStorageCapacity => 'Capasiti storfa';
+
+  @override
+  String get baseCalculatorTripsNeeded => 'Teithiau angenrheidiol';
+
+  @override
+  String get baseCalculatorConfigureStorage =>
+      'Ychwanegwch storfa isod i amcangyfrif teithiau.';
+
+  @override
+  String get baseCalculatorShowVolumes => 'Dangos cyfeintiau';
 }

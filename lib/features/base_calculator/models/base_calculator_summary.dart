@@ -1,4 +1,5 @@
 import 'base_calculator_catalog.dart';
+import 'resource_volumes.dart';
 
 /// Aggregated results for a set of item selections.
 ///
@@ -16,6 +17,10 @@ class BaseCalculatorSummary {
   /// Sorted by descending quantity then name for stable display.
   final Map<String, int> resourceTotals;
 
+  /// Total transport volume (in "V") of all required materials, after any Deep
+  /// Desert discount. Resources without a known per-unit volume contribute 0.
+  final double totalVolume;
+
   /// Whether the Deep Desert 50% material discount was applied.
   final bool deepDesertDiscountApplied;
 
@@ -23,8 +28,20 @@ class BaseCalculatorSummary {
     required this.generatedPower,
     required this.usedPower,
     required this.resourceTotals,
+    required this.totalVolume,
     required this.deepDesertDiscountApplied,
   });
+
+  /// Per-resource transport volume (in "V"), after any Deep Desert discount.
+  /// Only includes resources with a known per-unit volume.
+  Map<String, double> get resourceVolumes {
+    final out = <String, double>{};
+    resourceTotals.forEach((resource, qty) {
+      final vol = resourceVolume(resource);
+      if (vol != null) out[resource] = vol * qty;
+    });
+    return out;
+  }
 
   /// Net power: generated minus used. Negative means the build needs more
   /// generation. Power is never affected by the Deep Desert discount.
@@ -77,10 +94,17 @@ class BaseCalculatorSummary {
         return byQty != 0 ? byQty : a.key.compareTo(b.key);
       });
 
+    var volume = 0.0;
+    adjusted.forEach((resource, total) {
+      final vol = resourceVolume(resource);
+      if (vol != null) volume += vol * total;
+    });
+
     return BaseCalculatorSummary(
       generatedPower: generated,
       usedPower: used,
       resourceTotals: {for (final e in sortedEntries) e.key: e.value},
+      totalVolume: volume,
       deepDesertDiscountApplied: deepDesertDiscount,
     );
   }

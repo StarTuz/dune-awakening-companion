@@ -311,5 +311,13 @@
   "baseCalculatorEmpty": "Füge unten Objekte hinzu, um Energie und Materialien zu berechnen.",
   "baseCalculatorVerifyInGame": "Von der Community erfasste Werte — im Spiel prüfen.",
   "baseCalculatorCategoryUtilities": "Versorgung",
-  "baseCalculatorCategoryFabricators": "Fabrikatoren"
+  "baseCalculatorCategoryFabricators": "Fabrikatoren",
+  "baseCalculatorStorageTitle": "Lager & Transport",
+  "baseCalculatorStorageSpec": "{volume}V · {slots} Plätze",
+  "baseCalculatorTransportTitle": "Transport",
+  "baseCalculatorTotalVolume": "Gesamtvolumen",
+  "baseCalculatorStorageCapacity": "Lagerkapazität",
+  "baseCalculatorTripsNeeded": "Benötigte Fahrten",
+  "baseCalculatorConfigureStorage": "Füge unten Lager hinzu, um Fahrten zu schätzen.",
+  "baseCalculatorShowVolumes": "Volumen anzeigen"
 }

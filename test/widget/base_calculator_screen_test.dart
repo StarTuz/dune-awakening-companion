@@ -74,4 +74,37 @@ void main() {
     // Windtrap consumes 75 power with no generation -> deficit warning.
     expect(find.text('Needs 75 more power'), findsOneWidget);
   });
+
+  testWidgets('estimates trips once storage is configured', (tester) async {
+    await useLargeSurface(tester);
+    await tester.pumpWidget(buildScreen());
+    await tester.pumpAndSettle();
+
+    // Select a build item so the transport section appears.
+    final itemRow = find.widgetWithText(ListTile, 'Fuel-Powered Generator');
+    await tester.tap(find.descendant(
+      of: itemRow,
+      matching: find.byIcon(Icons.add_circle_outline),
+    ));
+    await tester.pump();
+
+    // No storage yet -> hint instead of a trip count.
+    expect(
+      find.text('Add storage below to estimate trips.'),
+      findsOneWidget,
+    );
+
+    // Add a storage container.
+    final storageRow = find.widgetWithText(ListTile, 'Player (Inventory)');
+    await tester.ensureVisible(storageRow);
+    await tester.pump();
+    await tester.tap(find.descendant(
+      of: storageRow,
+      matching: find.byIcon(Icons.add_circle_outline),
+    ));
+    await tester.pump();
+
+    expect(find.text('Trips needed'), findsOneWidget);
+    expect(find.text('Add storage below to estimate trips.'), findsNothing);
+  });
 }

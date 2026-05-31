@@ -2261,6 +2261,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fabricators'**
   String get baseCalculatorCategoryFabricators;
+
+  /// Section header for storage container selection
+  ///
+  /// In en, this message translates to:
+  /// **'Storage & Transport'**
+  String get baseCalculatorStorageTitle;
+
+  /// Capacity spec shown under each storage container
+  ///
+  /// In en, this message translates to:
+  /// **'{volume}V · {slots} slots'**
+  String baseCalculatorStorageSpec(int volume, int slots);
+
+  /// Sub-header for the transport (volume/trips) summary
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get baseCalculatorTransportTitle;
+
+  /// Label for the total material transport volume
+  ///
+  /// In en, this message translates to:
+  /// **'Total volume'**
+  String get baseCalculatorTotalVolume;
+
+  /// Label for the total configured storage capacity
+  ///
+  /// In en, this message translates to:
+  /// **'Storage capacity'**
+  String get baseCalculatorStorageCapacity;
+
+  /// Label for the estimated number of hauling trips
+  ///
+  /// In en, this message translates to:
+  /// **'Trips needed'**
+  String get baseCalculatorTripsNeeded;
+
+  /// Hint shown when no storage is configured yet
+  ///
+  /// In en, this message translates to:
+  /// **'Add storage below to estimate trips.'**
+  String get baseCalculatorConfigureStorage;
+
+  /// Toggle to show per-material transport volume
+  ///
+  /// In en, this message translates to:
+  /// **'Show volumes'**
+  String get baseCalculatorShowVolumes;
 }
 
 class _AppLocalizationsDelegate
