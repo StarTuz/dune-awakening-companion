@@ -154,6 +154,30 @@ const List<BaseCalculatorItem> baseCalculatorCatalog = [
     resourceCosts: {'Salvaged Metal': 75},
   ),
   BaseCalculatorItem(
+    code: 'survival_fabricator',
+    name: 'Survival Fabricator',
+    category: BaseCalculatorCategory.fabricators,
+    powerDelta: -40,
+    resourceCosts: {
+      'Steel Ingot': 40,
+      'Complex Machinery': 30,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'advanced_survival_fabricator',
+    name: 'Advanced Survival Fabricator',
+    category: BaseCalculatorCategory.fabricators,
+    powerDelta: -150,
+    resourceCosts: {
+      'Plastanium Ingot': 140,
+      'Silicone Block': 180,
+      'Complex Machinery': 100,
+      'Spice Melange': 45,
+      'Cobalt Paste': 150,
+      'Thermoelectric Cooler': 30,
+    },
+  ),
+  BaseCalculatorItem(
     code: 'garment_fabricator',
     name: 'Garment Fabricator',
     category: BaseCalculatorCategory.fabricators,
