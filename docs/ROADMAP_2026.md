@@ -43,6 +43,7 @@ Product:
 - Returning player flow (return packages, re-onboarding).
 - Advanced analytics dashboard (local-only summaries).
 - **Player RPG journal and notes:** per-character chronicle/journal with biography, tags, search, location/mood, quest links and screenshots — see `docs/RESEARCH_RPG_JOURNAL_NOTES.md` (Phases 1–3 implemented; markdown rendering deferred).
+- **Base Calculator:** local-first build planner for power, materials, Deep Desert discount, storage trips, saved plans and shareable configs — see `docs/RESEARCH_BASE_CALCULATOR.md` (assessment phase; not yet scoped for implementation).
 
 ## Risks and Dependencies
 - CI changes should land before expanding tests to avoid slow feedback.
