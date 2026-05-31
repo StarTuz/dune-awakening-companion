@@ -52,7 +52,7 @@ class Character implements BaseModel {
     String? sietch,
     String? primaryClass,
     String? portraitPath,
-    String? biography,
+    Object? biography = _unset,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -66,9 +66,14 @@ class Character implements BaseModel {
       sietch: sietch ?? this.sietch,
       primaryClass: primaryClass ?? this.primaryClass,
       portraitPath: portraitPath ?? this.portraitPath,
-      biography: biography ?? this.biography,
+      // Sentinel lets callers clear the biography by passing `null` (a plain
+      // `?? this.biography` would silently keep the old value).
+      biography:
+          identical(biography, _unset) ? this.biography : biography as String?,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  static const Object _unset = Object();
 }
