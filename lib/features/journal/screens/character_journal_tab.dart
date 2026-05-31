@@ -46,13 +46,18 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
     const parchment = Color(0xFFF4EAD2);
     const surface = Color(0xFFFBF4E1);
     const ink = Color(0xFF4A3B2A);
+    const inkMuted = Color(0xFF6B5B47);
     return base.copyWith(
       scaffoldBackgroundColor: parchment,
       cardTheme: base.cardTheme.copyWith(color: surface),
       colorScheme: base.colorScheme.copyWith(
         surface: surface,
         onSurface: ink,
+        // Material 3 IconButtons tint with onSurfaceVariant; without this the
+        // edit/delete icons render near-invisible on the parchment card.
+        onSurfaceVariant: inkMuted,
       ),
+      iconTheme: base.iconTheme.copyWith(color: ink),
       textTheme: base.textTheme.apply(bodyColor: ink, displayColor: ink),
     );
   }
@@ -88,7 +93,7 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
                 children: [
                   _BiographyCard(
                     character: character,
-                    onEdit: () => _editBiography(context, character),
+                    onEdit: () => _editBiography(character),
                   ),
                   const SizedBox(height: 12),
                   TextField(
@@ -142,8 +147,8 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
                     ...visibleEntries.map(
                       (entry) => _JournalEntryCard(
                         entry: entry,
-                        onEdit: () => _showEditor(context, entry),
-                        onDelete: () => _confirmDelete(context, entry),
+                        onEdit: () => _showEditor(entry),
+                        onDelete: () => _confirmDelete(entry),
                       ),
                     ),
                 ],
@@ -153,7 +158,7 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
             error: (error, stack) => Center(child: Text('Error: $error')),
           ),
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () => _showEditor(context, null),
+            onPressed: () => _showEditor(null),
             icon: const Icon(Icons.add),
             label: Text(l10n.journalNewEntry),
           ),
@@ -178,7 +183,11 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
     return haystack.contains(query);
   }
 
-  Future<void> _editBiography(BuildContext context, Character character) async {
+  // Dialogs deliberately use the State's `context`, which sits above the
+  // parchment Theme, so editors render in the normal app theme rather than
+  // inheriting half-overridden parchment colors (which made dialog text
+  // unreadable).
+  Future<void> _editBiography(Character character) async {
     final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: character.biography ?? '');
 
@@ -217,7 +226,7 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
               updatedAt: DateTime.now(),
             ),
           );
-      if (context.mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l10n.journalBiographySaved)),
         );
@@ -226,7 +235,7 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
     controller.dispose();
   }
 
-  Future<void> _confirmDelete(BuildContext context, JournalEntry entry) async {
+  Future<void> _confirmDelete(JournalEntry entry) async {
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
@@ -248,18 +257,18 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
 
     if (confirmed != true) return;
     await ref.read(journalEditorProvider).delete(entry.id, widget.character.id);
-    if (context.mounted) {
+    if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.journalDeletedSnack)),
       );
     }
   }
 
-  Future<void> _showEditor(BuildContext context, JournalEntry? existing) async {
+  Future<void> _showEditor(JournalEntry? existing) async {
     final l10n = AppLocalizations.of(context)!;
     final quests =
         await ref.read(questsByCharacterProvider(widget.character.id).future);
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     final result = await showDialog<JournalEntry>(
       context: context,
@@ -272,7 +281,7 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
 
     if (result == null) return;
     await ref.read(journalEditorProvider).save(result);
-    if (context.mounted) {
+    if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(l10n.journalSavedSnack)),
       );
@@ -311,36 +320,40 @@ class _BiographyCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final bio = character.biography?.trim() ?? '';
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    l10n.journalBiographyTitle,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                IconButton(
-                  tooltip: l10n.journalEditBiography,
-                  onPressed: onEdit,
-                  icon: const Icon(Icons.edit),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Text(
-                bio.isEmpty ? l10n.journalBiographyEmpty : bio,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontStyle: FontStyle.italic,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onEdit,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      l10n.journalBiographyTitle,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
+                  ),
+                  IconButton(
+                    tooltip: l10n.journalEditBiography,
+                    onPressed: onEdit,
+                    icon: const Icon(Icons.edit),
+                  ),
+                ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Text(
+                  bio.isEmpty ? l10n.journalBiographyEmpty : bio,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

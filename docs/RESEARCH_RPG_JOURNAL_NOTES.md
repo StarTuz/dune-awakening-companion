@@ -19,8 +19,9 @@ Status: **Phases 1–3 implemented.**
   surface.
 
 **Deferred:** true Markdown rendering/editor for entry bodies. The Flutter
-team discontinued `flutter_markdown` in 2025, so this is intentionally left
-out until a maintained renderer (e.g. `markdown_widget`) is chosen. Cursive
+team discontinued `flutter_markdown` in 2025; a maintained drop-in successor
+now exists (`flutter_markdown_plus`, see the expansion analysis below), so
+this is a ready-to-pick Phase 4 item rather than a blocked one. Cursive
 Google Fonts are likewise deferred to avoid a network font dependency; the
 parchment theme uses italics + warm tones instead. Journal screenshots are
 stored as local file-path links and are not yet bundled into the ZIP backup.
@@ -190,3 +191,82 @@ flow initially, it inherits that placement.
 - **`NEXT_STEPS.md` item #6** is the historical source for this idea; treat *this*
   document as the authoritative design going forward, since the NEXT_STEPS copy
   references an outdated migration number and a pre-Chapter-3 character model.
+
+---
+
+## Feature-rich expansion analysis (research)
+
+This section answers "how feature-rich could the journal become?" It catalogs
+candidate features with rough value/effort, the dependencies each implies, and a
+recommended sequencing. Nothing here is committed — it is a menu for future
+phases. The app's guardrails still apply: **local-first, repository-only DB
+access, full localization, adaptive UI, and a test per feature.**
+
+### Rich-text / Markdown body (highest-value next step)
+
+Players want formatted chronicles (headings, bold, lists, links). Two routes:
+
+| Option | What it is | Storage | Fit |
+|--------|-----------|---------|-----|
+| **`flutter_markdown_plus`** | Maintained drop-in successor to the discontinued `flutter_markdown`; Google-endorsed community handover, ~140k weekly downloads, perfect pub score ([Foresight Mobile](https://foresightmobile.com/blog/flutter-markdown-plus-google-handover), [pub.dev](https://pub.dev/packages/flutter_markdown_plus)) | Plain Markdown text (no schema change) | **Recommended.** Keeps `body` as text, renders Markdown in the card + a preview in the editor; a small toolbar can insert syntax. Low risk, reversible. |
+| **`flutter_quill`** | Established WYSIWYG editor, Delta JSON format, ~177k downloads ([Flutter Gems](https://fluttergems.dev/richtext-markdown-editor/), [Walturn](https://www.walturn.com/insights/a-comparison-between-various-rich-text-editors-for-flutter)) | Delta JSON in a new column | Heavier; full WYSIWYG. Consider only if true rich editing (not just Markdown) becomes a core ask. `super_editor`/`appflowy_editor` are the Notion-style alternatives. |
+
+**Recommendation:** ship Markdown rendering with `flutter_markdown_plus` first
+(body stays text, fully backward compatible); revisit Quill only if users want a
+toolbar-driven WYSIWYG.
+
+### Visual & immersion
+
+| Feature | Value | Effort | Notes / deps |
+|---------|-------|--------|--------------|
+| Bundle screenshots into ZIP backup | High | S–M | Copy picked images into an app `journal_images/` dir (mirror the portrait flow via `ImageService`) and add them to the export archive. Closes the current "paths only" gap. |
+| Multiple images / gallery per entry | Med | M | New `journal_entry_images` table (1‑N); carousel in card. |
+| Cursive/parchment polish | Med | S | Add `google_fonts` (Dancing Script/Caveat) **or** bundle a font asset to avoid network fetch; optional aged-paper background texture asset. |
+| Distraction-free reading view | Med | S | Full-screen entry route with parchment theme + large type. |
+
+### Structure & organization
+
+| Feature | Value | Effort | Notes / deps |
+|---------|-------|--------|--------------|
+| Entry templates (session log, lore note, character arc) | High | S | Pre-fill title/body/tags; pure UI, no schema change. |
+| Structured mood/weather pickers (icons) | Med | S | Replace free-text mood with a chip/enum; keep free text as fallback. |
+| Pinned / favourite entries | Med | S | `is_pinned` column; sort pinned first. |
+| Multi-tag filter (AND/OR) + tag autocomplete | Med | M | Builds on existing tag chips; consider normalized `journal_tags` table if tag features grow. |
+| Date-range filter | Low–Med | S | Pairs with the existing search. |
+
+### Cross-linking (leverages existing modules)
+
+| Feature | Value | Effort | Notes |
+|---------|-------|--------|-------|
+| Entry ↔ base link | Med | S | Reuse the quest-link pattern with `BaseRepository`. |
+| Entry ↔ blueprint link | Med | S | Same pattern; ties the chronicle to crafting milestones. |
+| Entry ↔ map pin | Med | L | Depends on `docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md` shipping first. |
+| Quest auto-journaling | Med | M | Offer to create a journal entry when a quest is completed (hook into `QuestEditor`). |
+
+### Insight & engagement
+
+| Feature | Value | Effort | Notes / deps |
+|---------|-------|--------|--------------|
+| Journal statistics (entries/week, top tags, activity heatmap) | Med | M | `fl_chart` is already a dependency. |
+| "Journal reminder" notifications | Med | S–M | Reuse `NotificationCoordinator`/quest-reminder plumbing. |
+| Export single entry / whole journal to Markdown or PDF | Med | M | Markdown export is trivial; PDF needs `printing`/`pdf`. |
+| RPG character sheet (spice tolerance, etc.) | Low | M | Cosmetic; only if community asks. Lives next to biography. |
+
+### Explicitly out of scope (conflicts with local-first posture)
+
+- Cloud sync, community sharing / "story showcase", and online profiles —
+  imply accounts, storage and network surface the app deliberately avoids.
+- Voice notes — large dependency/permission surface for niche value.
+- End-to-end encryption of entries — revisit only if cloud sync is ever added.
+
+### Suggested sequencing
+
+1. **Phase 4 — Rich text:** `flutter_markdown_plus` rendering + lightweight
+   toolbar; bundle screenshots into the ZIP backup; entry templates.
+2. **Phase 5 — Organization:** pinned entries, structured mood, multi-tag
+   filtering, base/blueprint cross-links.
+3. **Phase 6 — Immersion & insight:** reading view, cursive fonts/texture,
+   journal stats, optional reminders and Markdown/PDF export.
+
+Each phase is independently shippable and adds at most one new dependency,
+keeping review and regression risk low.
