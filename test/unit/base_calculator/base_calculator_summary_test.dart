@@ -95,5 +95,20 @@ void main() {
       final sorted = [...values]..sort((a, b) => b.compareTo(a));
       expect(values, sorted);
     });
+    test('TCNO shared config s:W:1,FPG:2,MCR:1 reconciles to -275 net power',
+        () {
+      final summary = BaseCalculatorSummary.fromQuantities(
+        {
+          'windtrap': 1,
+          'fuel_powered_generator': 2,
+          'medium_spice_refinery': 1,
+        },
+        deepDesertDiscount: false,
+      );
+      expect(summary.generatedPower, 150);
+      expect(summary.usedPower, 425);
+      expect(summary.netPower, -275);
+      expect(summary.hasPowerDeficit, isTrue);
+    });
   });
 }

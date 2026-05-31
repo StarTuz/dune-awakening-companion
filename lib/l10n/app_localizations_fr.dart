@@ -1183,7 +1183,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String get baseCalculatorCategoryFabricators => 'Fabricateurs';
 
   @override
-  String get baseCalculatorStorageTitle => 'Stockage et transport';
+  String get baseCalculatorCategoryRefineries => 'Raffineries';
+
+  @override
+  String get baseCalculatorCategoryStorage => 'Stockage';
+
+  @override
+  String get baseCalculatorNoPowerDraw => 'Aucune consommation d\'énergie';
+
+  @override
+  String get baseCalculatorStorageTitle => 'Transport et trajets';
+
+  @override
+  String get baseCalculatorHaulingOptional =>
+      'Optionnel — estimez le nombre de trajets';
 
   @override
   String baseCalculatorStorageSpec(int volume, int slots) {
@@ -1204,7 +1217,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get baseCalculatorConfigureStorage =>
-      'Ajoutez du stockage ci-dessous pour estimer les trajets.';
+      'Ajoutez un conteneur ci-dessous pour estimer les trajets.';
 
   @override
   String get baseCalculatorShowVolumes => 'Afficher les volumes';

@@ -37,6 +37,10 @@ class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
         return l10n.baseCalculatorCategoryUtilities;
       case BaseCalculatorCategory.fabricators:
         return l10n.baseCalculatorCategoryFabricators;
+      case BaseCalculatorCategory.refineries:
+        return l10n.baseCalculatorCategoryRefineries;
+      case BaseCalculatorCategory.storage:
+        return l10n.baseCalculatorCategoryStorage;
     }
   }
 
@@ -265,8 +269,6 @@ class _SummaryCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(height: 24),
-              _TransportSection(state: state),
               const SizedBox(height: 12),
               Text(
                 l10n.baseCalculatorVerifyInGame,
@@ -275,9 +277,48 @@ class _SummaryCard extends StatelessWidget {
                   fontStyle: FontStyle.italic,
                 ),
               ),
+              const SizedBox(height: 8),
+              _HaulingSummaryTile(state: state),
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Collapsed-by-default trip summary — secondary to power and materials.
+class _HaulingSummaryTile extends StatelessWidget {
+  const _HaulingSummaryTile({required this.state});
+
+  final BaseCalculatorState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final trips = state.trips;
+    final hasHauling = state.totalStorage > 0;
+
+    return Card(
+      margin: EdgeInsets.zero,
+      clipBehavior: Clip.antiAlias,
+      child: ExpansionTile(
+        initiallyExpanded: false,
+        title: Text(l10n.baseCalculatorStorageTitle),
+        subtitle: Text(
+          hasHauling && trips != null
+              ? '${l10n.baseCalculatorTripsNeeded}: $trips'
+              : l10n.baseCalculatorHaulingOptional,
+          style:
+              theme.textTheme.bodySmall?.copyWith(color: DuneColors.mutedText),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            child: _TransportSection(state: state),
+          ),
+        ],
       ),
     );
   }
@@ -299,12 +340,6 @@ class _TransportSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.baseCalculatorTransportTitle,
-          style:
-              theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
         _SummaryRow(
           label: l10n.baseCalculatorTotalVolume,
           value: _formatVolume(summary.totalVolume),
@@ -477,22 +512,31 @@ class _CatalogList extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
-        for (final category in byCategory.keys) ...[
-          sectionHeader(categoryLabel(l10n, category)),
-          Card(
-            margin: EdgeInsets.zero,
-            child: Column(
-              children: [
-                for (final item in byCategory[category]!) _ItemRow(item: item),
-              ],
+        for (final category in baseCalculatorCategoryOrder)
+          if ((byCategory[category] ?? []).isNotEmpty) ...[
+            sectionHeader(categoryLabel(l10n, category)),
+            Card(
+              margin: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  for (final item in byCategory[category]!)
+                    _ItemRow(item: item),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-        ],
-        sectionHeader(l10n.baseCalculatorStorageTitle),
+            const SizedBox(height: 8),
+          ],
         Card(
           margin: EdgeInsets.zero,
-          child: Column(
+          clipBehavior: Clip.antiAlias,
+          child: ExpansionTile(
+            initiallyExpanded: false,
+            title: Text(l10n.baseCalculatorStorageTitle),
+            subtitle: Text(
+              l10n.baseCalculatorHaulingOptional,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: DuneColors.mutedText),
+            ),
             children: [
               for (final option in baseCalculatorStorageOptions)
                 _StorageRow(option: option),
@@ -512,22 +556,29 @@ class _ItemRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final notifier = ref.read(baseCalculatorProvider.notifier);
     final quantity = ref.watch(
       baseCalculatorProvider.select((s) => s.quantities[item.code] ?? 0),
     );
-    final powerColor =
-        item.isGenerator ? DuneColors.success : DuneColors.warningPrimary;
-    final powerText =
-        item.powerDelta >= 0 ? '+${item.powerDelta}' : '${item.powerDelta}';
+    final powerColor = item.isPassive
+        ? DuneColors.mutedText
+        : item.isGenerator
+            ? DuneColors.success
+            : DuneColors.warningPrimary;
+    final powerText = item.isPassive
+        ? '0'
+        : item.powerDelta >= 0
+            ? '+${item.powerDelta}'
+            : '${item.powerDelta}';
 
     return ListTile(
       title: Text(item.name),
       subtitle: Row(
         children: [
-          Icon(Icons.bolt, size: 14, color: powerColor),
+          if (!item.isPassive) Icon(Icons.bolt, size: 14, color: powerColor),
           Text(
-            powerText,
+            item.isPassive ? l10n.baseCalculatorNoPowerDraw : powerText,
             style: TextStyle(color: powerColor, fontWeight: FontWeight.w600),
           ),
         ],

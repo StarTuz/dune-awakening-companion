@@ -5,6 +5,8 @@
 enum BaseCalculatorCategory {
   utilities,
   fabricators,
+  refineries,
+  storage,
 }
 
 /// A single placeable item in the Base Calculator catalog.
@@ -45,4 +47,7 @@ class BaseCalculatorItem {
 
   /// True when this item consumes power.
   bool get isConsumer => powerDelta < 0;
+
+  /// True for storage buildings that do not draw base power.
+  bool get isPassive => powerDelta == 0;
 }

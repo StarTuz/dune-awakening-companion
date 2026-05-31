@@ -1,23 +1,28 @@
 import 'base_calculator_item.dart';
 
-/// Static catalog for the Base Calculator (Phase 1).
+/// Static catalog for the Base Calculator.
 ///
 /// SOURCE & ACCURACY
 /// -----------------
-/// Power deltas and resource costs were transcribed from public Dune Awakening
-/// base-cost tools (DuneCalc base calculator and the TCNO planner) and
-/// cross-checked against an in-game build screenshot in 2026-05. The shared
-/// TCNO config `s:W:1,FPG:2,MCR:1` reconciles with these numbers
-/// (2x Fuel Generator +150 vs Windtrap -75 + a -350 refinery = net -275),
-/// which is why Utilities power values are treated as validated.
+/// Power deltas and resource costs were transcribed from the TCNO Dune base
+/// calculator (primary — including shared configs like `s:W:1,FPG:2,MCR:1`)
+/// and cross-checked against DuneCalc where available. The Medium Spice
+/// Refinery (`MCR`, -350 power) reconciles with the in-game screenshot in the
+/// audit (2× Fuel Generator +150 vs Windtrap -75 + MCR -350 = net -275).
 ///
-/// Only the **Utilities** (power) and **Fabricators** categories are included in
-/// Phase 1 because their costs were fully captured. Refineries, Storage,
-/// Buildings, and Vehicles are deferred until their per-item costs are verified
-/// in-game (see `docs/RESEARCH_BASE_CALCULATOR.md`, Audit Findings).
+/// Refineries and **storage buildings** (placeable containers/cisterns) were
+/// added from the TCNO catalog bundle (2026-05). **Hauling** containers for
+/// trip planning live separately in `storage_catalog.dart`.
 ///
-/// Treat all values as "verify in-game" until a maintainer confirms them; game
-/// patches can change build costs and power values.
+/// Treat all values as "verify in-game" until a maintainer confirms them.
+///
+/// Display order for UI sections (building categories before optional hauling).
+const baseCalculatorCategoryOrder = [
+  BaseCalculatorCategory.utilities,
+  BaseCalculatorCategory.fabricators,
+  BaseCalculatorCategory.refineries,
+  BaseCalculatorCategory.storage,
+];
 const List<BaseCalculatorItem> baseCalculatorCatalog = [
   // --- Utilities: power generators -----------------------------------------
   BaseCalculatorItem(
@@ -206,6 +211,185 @@ const List<BaseCalculatorItem> baseCalculatorCatalog = [
       'Complex Machinery': 100,
       'Spice Melange': 45,
       'Cobalt Paste': 150,
+    },
+  ),
+
+  // --- Refineries -----------------------------------------------------------
+  BaseCalculatorItem(
+    code: 'small_ore_refinery',
+    name: 'Small Ore Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -15,
+    resourceCosts: {'Salvaged Metal': 90},
+  ),
+  BaseCalculatorItem(
+    code: 'medium_ore_refinery',
+    name: 'Medium Ore Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -45,
+    resourceCosts: {
+      'Steel Ingot': 125,
+      'Cobalt Paste': 60,
+      'Complex Machinery': 50,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'large_ore_refinery',
+    name: 'Large Ore Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -350,
+    resourceCosts: {
+      'Plastanium Ingot': 380,
+      'Silicone Block': 540,
+      'Spice Melange': 400,
+      'Complex Machinery': 200,
+      'Cobalt Paste': 745,
+      'Advanced Machinery': 40,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'small_chemical_refinery',
+    name: 'Small Chemical Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -15,
+    resourceCosts: {'Copper Ingot': 45},
+  ),
+  BaseCalculatorItem(
+    code: 'medium_chemical_refinery',
+    name: 'Medium Chemical Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -350,
+    resourceCosts: {
+      'Duraluminum Ingot': 150,
+      'Silicone Block': 90,
+      'Complex Machinery': 50,
+      'Spice Melange': 35,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'spice_refinery',
+    name: 'Spice Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -200,
+    resourceCosts: {
+      'Duraluminum Ingot': 160,
+      'Silicone Block': 130,
+      'Cobalt Paste': 80,
+      'Complex Machinery': 70,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'medium_spice_refinery',
+    name: 'Medium Spice Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -350,
+    resourceCosts: {
+      'Plastanium Ingot': 285,
+      'Silicone Block': 225,
+      'Spice Melange': 135,
+      'Complex Machinery': 100,
+      'Cobalt Paste': 190,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'large_spice_refinery',
+    name: 'Large Spice Refinery',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -500,
+    resourceCosts: {
+      'Plastanium Ingot': 950,
+      'Silicone Block': 1080,
+      'Spice Melange': 1000,
+      'Complex Machinery': 350,
+      'Cobalt Paste': 1110,
+      'Advanced Machinery': 55,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'fremen_deathstill',
+    name: 'Fremen Deathstill',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -200,
+    resourceCosts: {
+      'Steel Ingot': 60,
+      'Silicone Block': 28,
+      'Complex Machinery': 32,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'advanced_fremen_deathstill',
+    name: 'Advanced Fremen Deathstill',
+    category: BaseCalculatorCategory.refineries,
+    powerDelta: -350,
+    resourceCosts: {
+      'Duraluminum Ingot': 240,
+      'Silicone Block': 170,
+      'Complex Machinery': 70,
+    },
+  ),
+
+  // --- Storage buildings (placeable containers) -----------------------------
+  BaseCalculatorItem(
+    code: 'small_storage_container',
+    name: 'Small Storage Container',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {'Salvaged Metal': 35},
+  ),
+  BaseCalculatorItem(
+    code: 'chest',
+    name: 'Chest',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {'Iron Ingot': 20},
+  ),
+  BaseCalculatorItem(
+    code: 'storage_container',
+    name: 'Storage Container',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {
+      'Aluminum Ingot': 45,
+      'Silicone Block': 8,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'medium_storage_container',
+    name: 'Medium Storage Container',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {
+      'Plastanium Ingot': 70,
+      'Silicone Block': 14,
+      'Spice Melange': 4,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'water_cistern',
+    name: 'Water Cistern',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {'Copper Ingot': 25},
+  ),
+  BaseCalculatorItem(
+    code: 'medium_water_cistern',
+    name: 'Medium Water Cistern',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {
+      'Steel Ingot': 60,
+      'Silicone Block': 30,
+    },
+  ),
+  BaseCalculatorItem(
+    code: 'large_water_cistern',
+    name: 'Large Water Cistern',
+    category: BaseCalculatorCategory.storage,
+    powerDelta: 0,
+    resourceCosts: {
+      'Duraluminum Ingot': 150,
+      'Silicone Block': 160,
+      'Industrial Pump': 25,
     },
   ),
 ];

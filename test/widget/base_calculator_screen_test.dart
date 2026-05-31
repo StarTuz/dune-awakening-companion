@@ -19,10 +19,24 @@ void main() {
   // Large surface so every catalog row is built and hit-testable (the catalog
   // uses a lazy ListView) and the wide two-pane layout is exercised.
   Future<void> useLargeSurface(WidgetTester tester) async {
-    tester.view.physicalSize = const Size(1400, 2200);
+    tester.view.physicalSize = const Size(1400, 3200);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
+  }
+
+  Future<void> expandCatalogHauling(WidgetTester tester) async {
+    final haulingTitle = find.text('Hauling & trips').first;
+    await tester.scrollUntilVisible(
+      haulingTitle,
+      500,
+      scrollable: find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(Scrollable),
+      ).first,
+    );
+    await tester.tap(haulingTitle);
+    await tester.pumpAndSettle();
   }
 
   testWidgets('shows the empty prompt before anything is selected',
@@ -75,12 +89,12 @@ void main() {
     expect(find.text('Needs 75 more power'), findsOneWidget);
   });
 
-  testWidgets('estimates trips once storage is configured', (tester) async {
+  testWidgets('estimates trips once hauling is configured', (tester) async {
     await useLargeSurface(tester);
     await tester.pumpWidget(buildScreen());
     await tester.pumpAndSettle();
 
-    // Select a build item so the transport section appears.
+    // Select a build item so the hauling summary tile appears.
     final itemRow = find.widgetWithText(ListTile, 'Fuel-Powered Generator');
     await tester.tap(find.descendant(
       of: itemRow,
@@ -88,13 +102,9 @@ void main() {
     ));
     await tester.pump();
 
-    // No storage yet -> hint instead of a trip count.
-    expect(
-      find.text('Add storage below to estimate trips.'),
-      findsOneWidget,
-    );
+    // Hauling is collapsed by default — expand the catalog section.
+    await expandCatalogHauling(tester);
 
-    // Add a storage container.
     final storageRow = find.widgetWithText(ListTile, 'Player (Inventory)');
     await tester.ensureVisible(storageRow);
     await tester.pump();
@@ -104,7 +114,7 @@ void main() {
     ));
     await tester.pump();
 
-    expect(find.text('Trips needed'), findsOneWidget);
-    expect(find.text('Add storage below to estimate trips.'), findsNothing);
+    // Trip count surfaces on the summary tile subtitle without expanding it.
+    expect(find.textContaining('Trips needed'), findsOneWidget);
   });
 }

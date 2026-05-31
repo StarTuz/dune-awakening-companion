@@ -312,12 +312,16 @@
   "baseCalculatorVerifyInGame": "Von der Community erfasste Werte — im Spiel prüfen.",
   "baseCalculatorCategoryUtilities": "Versorgung",
   "baseCalculatorCategoryFabricators": "Fabrikatoren",
-  "baseCalculatorStorageTitle": "Lager & Transport",
+  "baseCalculatorCategoryRefineries": "Raffinerien",
+  "baseCalculatorCategoryStorage": "Lager",
+  "baseCalculatorNoPowerDraw": "Kein Energieverbrauch",
+  "baseCalculatorStorageTitle": "Transport & Fahrten",
+  "baseCalculatorHaulingOptional": "Optional — schätze benötigte Fahrten",
   "baseCalculatorStorageSpec": "{volume}V · {slots} Plätze",
   "baseCalculatorTransportTitle": "Transport",
   "baseCalculatorTotalVolume": "Gesamtvolumen",
   "baseCalculatorStorageCapacity": "Lagerkapazität",
   "baseCalculatorTripsNeeded": "Benötigte Fahrten",
-  "baseCalculatorConfigureStorage": "Füge unten Lager hinzu, um Fahrten zu schätzen.",
+  "baseCalculatorConfigureStorage": "Füge unten einen Container hinzu, um Fahrten zu schätzen.",
   "baseCalculatorShowVolumes": "Volumen anzeigen"
 }

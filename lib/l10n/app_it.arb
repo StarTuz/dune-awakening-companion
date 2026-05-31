@@ -312,12 +312,16 @@
   "baseCalculatorVerifyInGame": "Valori della community — verifica nel gioco.",
   "baseCalculatorCategoryUtilities": "Utilità",
   "baseCalculatorCategoryFabricators": "Fabbricatori",
-  "baseCalculatorStorageTitle": "Stoccaggio e trasporto",
+  "baseCalculatorCategoryRefineries": "Raffinerie",
+  "baseCalculatorCategoryStorage": "Stoccaggio",
+  "baseCalculatorNoPowerDraw": "Nessun consumo energetico",
+  "baseCalculatorStorageTitle": "Trasporto e viaggi",
+  "baseCalculatorHaulingOptional": "Opzionale — stima i viaggi necessari",
   "baseCalculatorStorageSpec": "{volume}V · {slots} slot",
   "baseCalculatorTransportTitle": "Trasporto",
   "baseCalculatorTotalVolume": "Volume totale",
   "baseCalculatorStorageCapacity": "Capacità di stoccaggio",
   "baseCalculatorTripsNeeded": "Viaggi necessari",
-  "baseCalculatorConfigureStorage": "Aggiungi stoccaggio sotto per stimare i viaggi.",
+  "baseCalculatorConfigureStorage": "Aggiungi un contenitore sotto per stimare i viaggi.",
   "baseCalculatorShowVolumes": "Mostra volumi"
 }

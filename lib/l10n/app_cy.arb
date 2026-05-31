@@ -312,12 +312,16 @@
   "baseCalculatorVerifyInGame": "Gwerthoedd gan y gymuned — gwiriwch yn y gêm.",
   "baseCalculatorCategoryUtilities": "Cyfleustodau",
   "baseCalculatorCategoryFabricators": "Ffabrigwyr",
-  "baseCalculatorStorageTitle": "Storfa a Chludiant",
+  "baseCalculatorCategoryRefineries": "Gwaithyddau",
+  "baseCalculatorCategoryStorage": "Storfa",
+  "baseCalculatorNoPowerDraw": "Dim defnydd pŵer",
+  "baseCalculatorStorageTitle": "Cludiant a theithiau",
+  "baseCalculatorHaulingOptional": "Dewisol — amcangyfrif nifer y teithiau",
   "baseCalculatorStorageSpec": "{volume}V · {slots} slot",
   "baseCalculatorTransportTitle": "Cludiant",
   "baseCalculatorTotalVolume": "Cyfaint cyfan",
   "baseCalculatorStorageCapacity": "Capasiti storfa",
   "baseCalculatorTripsNeeded": "Teithiau angenrheidiol",
-  "baseCalculatorConfigureStorage": "Ychwanegwch storfa isod i amcangyfrif teithiau.",
+  "baseCalculatorConfigureStorage": "Ychwanegwch gontenwr isod i amcangyfrif teithiau.",
   "baseCalculatorShowVolumes": "Dangos cyfeintiau"
 }

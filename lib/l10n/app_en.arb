@@ -1440,9 +1440,25 @@
   "@baseCalculatorCategoryFabricators": {
     "description": "Category label for fabricator items"
   },
-  "baseCalculatorStorageTitle": "Storage & Transport",
+  "baseCalculatorCategoryRefineries": "Refineries",
+  "@baseCalculatorCategoryRefineries": {
+    "description": "Category label for refinery items"
+  },
+  "baseCalculatorCategoryStorage": "Storage",
+  "@baseCalculatorCategoryStorage": {
+    "description": "Category label for placeable storage buildings"
+  },
+  "baseCalculatorNoPowerDraw": "No power draw",
+  "@baseCalculatorNoPowerDraw": {
+    "description": "Label for storage buildings that do not consume power"
+  },
+  "baseCalculatorStorageTitle": "Hauling & trips",
   "@baseCalculatorStorageTitle": {
-    "description": "Section header for storage container selection"
+    "description": "Optional collapsed section for vehicle/container trip planning"
+  },
+  "baseCalculatorHaulingOptional": "Optional — estimate how many runs you'll need",
+  "@baseCalculatorHaulingOptional": {
+    "description": "Subtitle on the collapsed hauling section"
   },
   "baseCalculatorStorageSpec": "{volume}V · {slots} slots",
   "@baseCalculatorStorageSpec": {
@@ -1472,9 +1488,9 @@
   "@baseCalculatorTripsNeeded": {
     "description": "Label for the estimated number of hauling trips"
   },
-  "baseCalculatorConfigureStorage": "Add storage below to estimate trips.",
+  "baseCalculatorConfigureStorage": "Add a container below to estimate trips.",
   "@baseCalculatorConfigureStorage": {
-    "description": "Hint shown when no storage is configured yet"
+    "description": "Hint shown inside the hauling section when no containers are selected"
   },
   "baseCalculatorShowVolumes": "Show volumes",
   "@baseCalculatorShowVolumes": {

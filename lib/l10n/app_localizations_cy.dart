@@ -1181,7 +1181,20 @@ class AppLocalizationsCy extends AppLocalizations {
   String get baseCalculatorCategoryFabricators => 'Ffabrigwyr';
 
   @override
-  String get baseCalculatorStorageTitle => 'Storfa a Chludiant';
+  String get baseCalculatorCategoryRefineries => 'Gwaithyddau';
+
+  @override
+  String get baseCalculatorCategoryStorage => 'Storfa';
+
+  @override
+  String get baseCalculatorNoPowerDraw => 'Dim defnydd pŵer';
+
+  @override
+  String get baseCalculatorStorageTitle => 'Cludiant a theithiau';
+
+  @override
+  String get baseCalculatorHaulingOptional =>
+      'Dewisol — amcangyfrif nifer y teithiau';
 
   @override
   String baseCalculatorStorageSpec(int volume, int slots) {
@@ -1202,7 +1215,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get baseCalculatorConfigureStorage =>
-      'Ychwanegwch storfa isod i amcangyfrif teithiau.';
+      'Ychwanegwch gontenwr isod i amcangyfrif teithiau.';
 
   @override
   String get baseCalculatorShowVolumes => 'Dangos cyfeintiau';

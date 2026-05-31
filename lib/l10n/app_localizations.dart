@@ -2262,11 +2262,35 @@ abstract class AppLocalizations {
   /// **'Fabricators'**
   String get baseCalculatorCategoryFabricators;
 
-  /// Section header for storage container selection
+  /// Category label for refinery items
   ///
   /// In en, this message translates to:
-  /// **'Storage & Transport'**
+  /// **'Refineries'**
+  String get baseCalculatorCategoryRefineries;
+
+  /// Category label for placeable storage buildings
+  ///
+  /// In en, this message translates to:
+  /// **'Storage'**
+  String get baseCalculatorCategoryStorage;
+
+  /// Label for storage buildings that do not consume power
+  ///
+  /// In en, this message translates to:
+  /// **'No power draw'**
+  String get baseCalculatorNoPowerDraw;
+
+  /// Optional collapsed section for vehicle/container trip planning
+  ///
+  /// In en, this message translates to:
+  /// **'Hauling & trips'**
   String get baseCalculatorStorageTitle;
+
+  /// Subtitle on the collapsed hauling section
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — estimate how many runs you\'ll need'**
+  String get baseCalculatorHaulingOptional;
 
   /// Capacity spec shown under each storage container
   ///
@@ -2298,10 +2322,10 @@ abstract class AppLocalizations {
   /// **'Trips needed'**
   String get baseCalculatorTripsNeeded;
 
-  /// Hint shown when no storage is configured yet
+  /// Hint shown inside the hauling section when no containers are selected
   ///
   /// In en, this message translates to:
-  /// **'Add storage below to estimate trips.'**
+  /// **'Add a container below to estimate trips.'**
   String get baseCalculatorConfigureStorage;
 
   /// Toggle to show per-material transport volume

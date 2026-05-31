@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:dune_awakening_companion/features/base_calculator/models/base_calculator_catalog.dart';
+import 'package:dune_awakening_companion/features/base_calculator/models/base_calculator_item.dart';
 
 void main() {
   group('base calculator catalog structure', () {
@@ -38,11 +39,24 @@ void main() {
       }
     });
 
-    test('power delta is non-zero (item either generates or consumes)', () {
+    test(
+        'power delta is non-zero unless the item is a passive storage building',
+        () {
       for (final item in baseCalculatorCatalog) {
+        if (item.category == BaseCalculatorCategory.storage && item.isPassive) {
+          expect(item.powerDelta, 0,
+              reason: '${item.code} should be a passive storage building');
+          continue;
+        }
         expect(item.powerDelta, isNot(0),
             reason: '${item.code} has a zero power delta');
       }
+    });
+
+    test('category order lists building tabs before storage buildings', () {
+      expect(baseCalculatorCategoryOrder.last, BaseCalculatorCategory.storage);
+      expect(baseCalculatorCategoryOrder,
+          contains(BaseCalculatorCategory.refineries));
     });
 
     test('index covers every catalog item exactly once', () {
