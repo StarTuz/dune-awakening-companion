@@ -157,6 +157,32 @@ class ExportService {
         return json;
       }).toList();
 
+      // Track journal image mappings (old path -> archive filename) and bundle
+      // the screenshot files so backups are self-contained.
+      final journalImageMappings = <String, String>{};
+      for (final entry in journalEntries) {
+        final imagePath = entry.imagePath as String?;
+        if (imagePath != null && imagePath.isNotEmpty) {
+          final imageFile = File(imagePath);
+          if (await imageFile.exists()) {
+            final bytes = await imageFile.readAsBytes();
+            final filename =
+                'journal_images/${entry.id}${path.extension(imagePath)}';
+            archive.addFile(ArchiveFile(filename, bytes.length, bytes));
+            journalImageMappings[imagePath] = filename;
+          }
+        }
+      }
+
+      final exportJournalEntries = journalEntries.map((e) {
+        final json = e.toJson() as Map<String, dynamic>;
+        final imagePath = e.imagePath as String?;
+        if (imagePath != null && journalImageMappings.containsKey(imagePath)) {
+          json['imagePath'] = journalImageMappings[imagePath];
+        }
+        return json;
+      }).toList();
+
       // Create JSON data
       final exportData = {
         'version': '1.3.0-beta',
@@ -175,7 +201,7 @@ class ExportService {
         'classQuests': classQuests.map((q) => q.toJson()).toList(),
         'classQuestSteps': classQuestSteps.map((s) => s.toJson()).toList(),
         'characterSkills': characterSkills.map((s) => s.toJson()).toList(),
-        'journalEntries': journalEntries.map((e) => e.toJson()).toList(),
+        'journalEntries': exportJournalEntries,
       };
 
       // Add JSON to archive

@@ -280,5 +280,19 @@
   "journalEntryNoQuest": "Dim",
   "journalEntryImageLabel": "Sgrinlun",
   "journalAddImage": "Ychwanegu sgrinlun",
-  "journalRemoveImage": "Tynnu sgrinlun"
+  "journalRemoveImage": "Tynnu sgrinlun",
+  "journalMarkdownHint": "Yn cefnogi Markdown",
+  "journalFormatBold": "Trwm",
+  "journalFormatItalic": "Italig",
+  "journalFormatHeading": "Pennawd",
+  "journalFormatBulletList": "Rhestr bwled",
+  "journalTogglePreview": "Rhagolwg",
+  "journalToggleEdit": "Golygu",
+  "journalUseTemplate": "Defnyddio templed",
+  "journalTemplateSessionLog": "Cofnod sesiwn",
+  "journalTemplateLoreNote": "Nodyn llên",
+  "journalTemplateCharacterArc": "Arc cymeriad",
+  "journalTemplateSessionBody": "## Beth ddigwyddodd\n\n## Ysbail ac adnoddau\n\n## Camau nesaf\n",
+  "journalTemplateLoreBody": "## Llên\n\n",
+  "journalTemplateArcBody": "## Arc cymeriad\n\n"
 }

@@ -145,8 +145,16 @@ class ImportService {
         await portraitsDir.create(recursive: true);
       }
 
-      // Extract portrait files and build mapping
+      // Get journal images directory
+      final journalImagesDir =
+          Directory(path.join(appDir.path, 'journal_images'));
+      if (!await journalImagesDir.exists()) {
+        await journalImagesDir.create(recursive: true);
+      }
+
+      // Extract portrait + journal image files and build mappings
       final portraitMappings = <String, String>{};
+      final journalImageMappings = <String, String>{};
       int portraitsImported = 0;
 
       for (final file in archive) {
@@ -161,6 +169,14 @@ class ImportService {
           // Map archive path to new absolute path
           portraitMappings[file.name] = newPath;
           portraitsImported++;
+        } else if (file.name.startsWith('journal_images/') && file.isFile) {
+          final filename = path.basename(file.name);
+          final newPath = path.join(journalImagesDir.path, filename);
+
+          final outFile = File(newPath);
+          await outFile.writeAsBytes(file.content as List<int>);
+
+          journalImageMappings[file.name] = newPath;
         }
       }
 
@@ -210,7 +226,8 @@ class ImportService {
         }
       }
 
-      await _importExtendedData(data);
+      await _importExtendedData(data,
+          journalImageMappings: journalImageMappings);
 
       return ImportResult(
         success: true,
@@ -355,7 +372,10 @@ class ImportService {
     await _clearAllData();
   }
 
-  Future<void> _importExtendedData(Map<String, dynamic> data) async {
+  Future<void> _importExtendedData(
+    Map<String, dynamic> data, {
+    Map<String, String> journalImageMappings = const {},
+  }) async {
     final specializationRepository = _specializationRepository;
     final factionRepository = _factionRepository;
     final augmentationRepository = _augmentationRepository;
@@ -443,7 +463,14 @@ class ImportService {
     if (journalRepository != null) {
       final items = (data['journalEntries'] as List<dynamic>? ?? const []);
       for (final item in items) {
-        final entry = JournalEntry.fromJson(item as Map<String, dynamic>);
+        final entryMap = item as Map<String, dynamic>;
+        // Remap bundled screenshot paths to their extracted location; drop
+        // references that weren't bundled so we don't point at stale paths.
+        final imagePath = entryMap['imagePath'] as String?;
+        if (imagePath != null && imagePath.startsWith('journal_images/')) {
+          entryMap['imagePath'] = journalImageMappings[imagePath];
+        }
+        final entry = JournalEntry.fromJson(entryMap);
         await journalRepository.upsert(entry);
       }
     }

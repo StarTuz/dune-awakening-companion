@@ -280,5 +280,19 @@
   "journalEntryNoQuest": "Keine",
   "journalEntryImageLabel": "Screenshot",
   "journalAddImage": "Screenshot hinzufügen",
-  "journalRemoveImage": "Screenshot entfernen"
+  "journalRemoveImage": "Screenshot entfernen",
+  "journalMarkdownHint": "Unterstützt Markdown",
+  "journalFormatBold": "Fett",
+  "journalFormatItalic": "Kursiv",
+  "journalFormatHeading": "Überschrift",
+  "journalFormatBulletList": "Aufzählung",
+  "journalTogglePreview": "Vorschau",
+  "journalToggleEdit": "Bearbeiten",
+  "journalUseTemplate": "Vorlage verwenden",
+  "journalTemplateSessionLog": "Sitzungsprotokoll",
+  "journalTemplateLoreNote": "Lore-Notiz",
+  "journalTemplateCharacterArc": "Charakterbogen",
+  "journalTemplateSessionBody": "## Was geschah\n\n## Beute & Ressourcen\n\n## Nächste Schritte\n",
+  "journalTemplateLoreBody": "## Lore\n\n",
+  "journalTemplateArcBody": "## Charakterbogen\n\n"
 }

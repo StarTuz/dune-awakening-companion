@@ -280,5 +280,19 @@
   "journalEntryNoQuest": "Nessuna",
   "journalEntryImageLabel": "Screenshot",
   "journalAddImage": "Aggiungi screenshot",
-  "journalRemoveImage": "Rimuovi screenshot"
+  "journalRemoveImage": "Rimuovi screenshot",
+  "journalMarkdownHint": "Supporta Markdown",
+  "journalFormatBold": "Grassetto",
+  "journalFormatItalic": "Corsivo",
+  "journalFormatHeading": "Titolo",
+  "journalFormatBulletList": "Elenco puntato",
+  "journalTogglePreview": "Anteprima",
+  "journalToggleEdit": "Modifica",
+  "journalUseTemplate": "Usa modello",
+  "journalTemplateSessionLog": "Registro sessione",
+  "journalTemplateLoreNote": "Nota di lore",
+  "journalTemplateCharacterArc": "Arco del personaggio",
+  "journalTemplateSessionBody": "## Cosa è successo\n\n## Bottino e risorse\n\n## Prossimi passi\n",
+  "journalTemplateLoreBody": "## Lore\n\n",
+  "journalTemplateArcBody": "## Arco del personaggio\n\n"
 }

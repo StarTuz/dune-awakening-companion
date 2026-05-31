@@ -1078,4 +1078,47 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get journalRemoveImage => 'Tynnu sgrinlun';
+
+  @override
+  String get journalMarkdownHint => 'Yn cefnogi Markdown';
+
+  @override
+  String get journalFormatBold => 'Trwm';
+
+  @override
+  String get journalFormatItalic => 'Italig';
+
+  @override
+  String get journalFormatHeading => 'Pennawd';
+
+  @override
+  String get journalFormatBulletList => 'Rhestr bwled';
+
+  @override
+  String get journalTogglePreview => 'Rhagolwg';
+
+  @override
+  String get journalToggleEdit => 'Golygu';
+
+  @override
+  String get journalUseTemplate => 'Defnyddio templed';
+
+  @override
+  String get journalTemplateSessionLog => 'Cofnod sesiwn';
+
+  @override
+  String get journalTemplateLoreNote => 'Nodyn llên';
+
+  @override
+  String get journalTemplateCharacterArc => 'Arc cymeriad';
+
+  @override
+  String get journalTemplateSessionBody =>
+      '## Beth ddigwyddodd\n\n## Ysbail ac adnoddau\n\n## Camau nesaf\n';
+
+  @override
+  String get journalTemplateLoreBody => '## Llên\n\n';
+
+  @override
+  String get journalTemplateArcBody => '## Arc cymeriad\n\n';
 }

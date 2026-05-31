@@ -8,7 +8,7 @@ entries. It consolidates the long-standing idea sketched in `NEXT_STEPS.md`
 (item #6, "RPG Elements & Storytelling") into a current, implementable design
 reconciled with the live schema (DB v12).
 
-Status: **Phases 1–3 implemented.**
+Status: **Phases 1–4 implemented.**
 - Phase 1: migration 013, `lib/features/journal/`, Journal tab in
   `CharacterProgressDialog`, ZIP export/import, 7-locale strings, tests.
 - Phase 2: migration 014 — `characters.biography` (editable from the Journal
@@ -17,14 +17,17 @@ Status: **Phases 1–3 implemented.**
 - Phase 3: migration 015 — optional `quest_id` link and `image_path`
   screenshot per entry, plus a parchment/aged-paper theme on the journal
   surface.
+- Phase 4: Markdown rendering (`flutter_markdown_plus`) for entry bodies with a
+  lightweight formatting toolbar + live preview toggle; screenshots are now
+  copied into an app-managed `journal_images/` directory and bundled into the
+  ZIP backup (export + import remap paths); entry templates (session log, lore
+  note, character arc).
 
-**Deferred:** true Markdown rendering/editor for entry bodies. The Flutter
-team discontinued `flutter_markdown` in 2025; a maintained drop-in successor
-now exists (`flutter_markdown_plus`, see the expansion analysis below), so
-this is a ready-to-pick Phase 4 item rather than a blocked one. Cursive
-Google Fonts are likewise deferred to avoid a network font dependency; the
-parchment theme uses italics + warm tones instead. Journal screenshots are
-stored as local file-path links and are not yet bundled into the ZIP backup.
+**Deferred:** cursive Google Fonts (avoids a network font dependency; the
+parchment theme uses italics + warm tones instead). A full WYSIWYG rich-text
+editor (`flutter_quill`/`super_editor`) remains out of scope — the Markdown
+source + preview toggle covers the need without a heavier dependency or a
+custom document format.
 
 ---
 

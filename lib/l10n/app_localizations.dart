@@ -2075,6 +2075,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove screenshot'**
   String get journalRemoveImage;
+
+  /// Helper text noting the journal body supports Markdown
+  ///
+  /// In en, this message translates to:
+  /// **'Supports Markdown'**
+  String get journalMarkdownHint;
+
+  /// Tooltip for the bold formatting button
+  ///
+  /// In en, this message translates to:
+  /// **'Bold'**
+  String get journalFormatBold;
+
+  /// Tooltip for the italic formatting button
+  ///
+  /// In en, this message translates to:
+  /// **'Italic'**
+  String get journalFormatItalic;
+
+  /// Tooltip for the heading formatting button
+  ///
+  /// In en, this message translates to:
+  /// **'Heading'**
+  String get journalFormatHeading;
+
+  /// Tooltip for the bullet list formatting button
+  ///
+  /// In en, this message translates to:
+  /// **'Bullet list'**
+  String get journalFormatBulletList;
+
+  /// Button to preview the rendered Markdown body
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get journalTogglePreview;
+
+  /// Button to return from Markdown preview to editing
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get journalToggleEdit;
+
+  /// Button that opens the journal entry template menu
+  ///
+  /// In en, this message translates to:
+  /// **'Use template'**
+  String get journalUseTemplate;
+
+  /// Name of the session log journal template
+  ///
+  /// In en, this message translates to:
+  /// **'Session log'**
+  String get journalTemplateSessionLog;
+
+  /// Name of the lore note journal template
+  ///
+  /// In en, this message translates to:
+  /// **'Lore note'**
+  String get journalTemplateLoreNote;
+
+  /// Name of the character arc journal template
+  ///
+  /// In en, this message translates to:
+  /// **'Character arc'**
+  String get journalTemplateCharacterArc;
+
+  /// Prefilled Markdown body for the session log template
+  ///
+  /// In en, this message translates to:
+  /// **'## What happened\n\n## Loot & resources\n\n## Next steps\n'**
+  String get journalTemplateSessionBody;
+
+  /// Prefilled Markdown body for the lore note template
+  ///
+  /// In en, this message translates to:
+  /// **'## Lore\n\n'**
+  String get journalTemplateLoreBody;
+
+  /// Prefilled Markdown body for the character arc template
+  ///
+  /// In en, this message translates to:
+  /// **'## Character arc\n\n'**
+  String get journalTemplateArcBody;
 }
 
 class _AppLocalizationsDelegate

@@ -68,6 +68,82 @@ class ImageService {
     }
   }
 
+  /// Process and save a journal entry screenshot into an app-managed directory
+  /// so it can be bundled into ZIP backups. Aspect ratio is preserved and the
+  /// image is downscaled (max 1280px wide) and re-encoded as JPEG to keep
+  /// backups small. Returns the saved file path, or null if it failed.
+  Future<String?> saveJournalImage(String sourcePath, String entryId) async {
+    try {
+      final sourceFile = File(sourcePath);
+      if (!await sourceFile.exists()) {
+        debugPrint('Source file does not exist: $sourcePath');
+        return null;
+      }
+
+      final bytes = await sourceFile.readAsBytes();
+      final image = img.decodeImage(bytes);
+      if (image == null) {
+        debugPrint('Failed to decode image');
+        return null;
+      }
+
+      // Downscale only if wider than the cap; keep aspect ratio.
+      final processed = image.width > 1280
+          ? img.copyResize(
+              image,
+              width: 1280,
+              interpolation: img.Interpolation.cubic,
+            )
+          : image;
+
+      final jpeg = img.encodeJpg(processed, quality: 85);
+
+      final dir = await _getJournalImagesDirectory();
+      if (dir == null) return null;
+
+      final filePath = path.join(dir.path, '$entryId.jpg');
+      await File(filePath).writeAsBytes(jpeg);
+
+      return filePath;
+    } catch (e) {
+      debugPrint('Error saving journal image: $e');
+      return null;
+    }
+  }
+
+  /// Delete a journal entry screenshot.
+  Future<bool> deleteJournalImage(String? imagePath) async {
+    if (imagePath == null) return true;
+
+    try {
+      final file = File(imagePath);
+      if (await file.exists()) {
+        await file.delete();
+      }
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting journal image: $e');
+      return false;
+    }
+  }
+
+  /// Get the app-managed journal images directory.
+  Future<Directory?> _getJournalImagesDirectory() async {
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final journalDir = Directory(path.join(appDir.path, 'journal_images'));
+
+      if (!await journalDir.exists()) {
+        await journalDir.create(recursive: true);
+      }
+
+      return journalDir;
+    } catch (e) {
+      debugPrint('Error getting journal images directory: $e');
+      return null;
+    }
+  }
+
   /// Get portraits directory
   Future<Directory?> _getPortraitsDirectory() async {
     try {

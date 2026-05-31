@@ -1305,5 +1305,61 @@
   "journalRemoveImage": "Remove screenshot",
   "@journalRemoveImage": {
     "description": "Button to remove the attached screenshot"
+  },
+  "journalMarkdownHint": "Supports Markdown",
+  "@journalMarkdownHint": {
+    "description": "Helper text noting the journal body supports Markdown"
+  },
+  "journalFormatBold": "Bold",
+  "@journalFormatBold": {
+    "description": "Tooltip for the bold formatting button"
+  },
+  "journalFormatItalic": "Italic",
+  "@journalFormatItalic": {
+    "description": "Tooltip for the italic formatting button"
+  },
+  "journalFormatHeading": "Heading",
+  "@journalFormatHeading": {
+    "description": "Tooltip for the heading formatting button"
+  },
+  "journalFormatBulletList": "Bullet list",
+  "@journalFormatBulletList": {
+    "description": "Tooltip for the bullet list formatting button"
+  },
+  "journalTogglePreview": "Preview",
+  "@journalTogglePreview": {
+    "description": "Button to preview the rendered Markdown body"
+  },
+  "journalToggleEdit": "Edit",
+  "@journalToggleEdit": {
+    "description": "Button to return from Markdown preview to editing"
+  },
+  "journalUseTemplate": "Use template",
+  "@journalUseTemplate": {
+    "description": "Button that opens the journal entry template menu"
+  },
+  "journalTemplateSessionLog": "Session log",
+  "@journalTemplateSessionLog": {
+    "description": "Name of the session log journal template"
+  },
+  "journalTemplateLoreNote": "Lore note",
+  "@journalTemplateLoreNote": {
+    "description": "Name of the lore note journal template"
+  },
+  "journalTemplateCharacterArc": "Character arc",
+  "@journalTemplateCharacterArc": {
+    "description": "Name of the character arc journal template"
+  },
+  "journalTemplateSessionBody": "## What happened\n\n## Loot & resources\n\n## Next steps\n",
+  "@journalTemplateSessionBody": {
+    "description": "Prefilled Markdown body for the session log template"
+  },
+  "journalTemplateLoreBody": "## Lore\n\n",
+  "@journalTemplateLoreBody": {
+    "description": "Prefilled Markdown body for the lore note template"
+  },
+  "journalTemplateArcBody": "## Character arc\n\n",
+  "@journalTemplateArcBody": {
+    "description": "Prefilled Markdown body for the character arc template"
   }
 }

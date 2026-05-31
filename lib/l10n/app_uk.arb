@@ -280,5 +280,19 @@
   "journalEntryNoQuest": "Немає",
   "journalEntryImageLabel": "Знімок екрана",
   "journalAddImage": "Додати знімок",
-  "journalRemoveImage": "Видалити знімок"
+  "journalRemoveImage": "Видалити знімок",
+  "journalMarkdownHint": "Підтримує Markdown",
+  "journalFormatBold": "Жирний",
+  "journalFormatItalic": "Курсив",
+  "journalFormatHeading": "Заголовок",
+  "journalFormatBulletList": "Маркований список",
+  "journalTogglePreview": "Перегляд",
+  "journalToggleEdit": "Редагувати",
+  "journalUseTemplate": "Використати шаблон",
+  "journalTemplateSessionLog": "Журнал сесії",
+  "journalTemplateLoreNote": "Нотатка лору",
+  "journalTemplateCharacterArc": "Арка персонажа",
+  "journalTemplateSessionBody": "## Що сталося\n\n## Здобич і ресурси\n\n## Наступні кроки\n",
+  "journalTemplateLoreBody": "## Лор\n\n",
+  "journalTemplateArcBody": "## Арка персонажа\n\n"
 }

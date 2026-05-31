@@ -1070,4 +1070,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get journalRemoveImage => 'Remove screenshot';
+
+  @override
+  String get journalMarkdownHint => 'Supports Markdown';
+
+  @override
+  String get journalFormatBold => 'Bold';
+
+  @override
+  String get journalFormatItalic => 'Italic';
+
+  @override
+  String get journalFormatHeading => 'Heading';
+
+  @override
+  String get journalFormatBulletList => 'Bullet list';
+
+  @override
+  String get journalTogglePreview => 'Preview';
+
+  @override
+  String get journalToggleEdit => 'Edit';
+
+  @override
+  String get journalUseTemplate => 'Use template';
+
+  @override
+  String get journalTemplateSessionLog => 'Session log';
+
+  @override
+  String get journalTemplateLoreNote => 'Lore note';
+
+  @override
+  String get journalTemplateCharacterArc => 'Character arc';
+
+  @override
+  String get journalTemplateSessionBody =>
+      '## What happened\n\n## Loot & resources\n\n## Next steps\n';
+
+  @override
+  String get journalTemplateLoreBody => '## Lore\n\n';
+
+  @override
+  String get journalTemplateArcBody => '## Character arc\n\n';
 }

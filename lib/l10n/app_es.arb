@@ -280,5 +280,19 @@
   "journalEntryNoQuest": "Ninguna",
   "journalEntryImageLabel": "Captura de pantalla",
   "journalAddImage": "Añadir captura",
-  "journalRemoveImage": "Quitar captura"
+  "journalRemoveImage": "Quitar captura",
+  "journalMarkdownHint": "Admite Markdown",
+  "journalFormatBold": "Negrita",
+  "journalFormatItalic": "Cursiva",
+  "journalFormatHeading": "Encabezado",
+  "journalFormatBulletList": "Lista con viñetas",
+  "journalTogglePreview": "Vista previa",
+  "journalToggleEdit": "Editar",
+  "journalUseTemplate": "Usar plantilla",
+  "journalTemplateSessionLog": "Registro de sesión",
+  "journalTemplateLoreNote": "Nota de lore",
+  "journalTemplateCharacterArc": "Arco del personaje",
+  "journalTemplateSessionBody": "## Qué pasó\n\n## Botín y recursos\n\n## Próximos pasos\n",
+  "journalTemplateLoreBody": "## Lore\n\n",
+  "journalTemplateArcBody": "## Arco del personaje\n\n"
 }

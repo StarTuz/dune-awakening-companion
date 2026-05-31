@@ -1074,4 +1074,47 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get journalRemoveImage => 'Rimuovi screenshot';
+
+  @override
+  String get journalMarkdownHint => 'Supporta Markdown';
+
+  @override
+  String get journalFormatBold => 'Grassetto';
+
+  @override
+  String get journalFormatItalic => 'Corsivo';
+
+  @override
+  String get journalFormatHeading => 'Titolo';
+
+  @override
+  String get journalFormatBulletList => 'Elenco puntato';
+
+  @override
+  String get journalTogglePreview => 'Anteprima';
+
+  @override
+  String get journalToggleEdit => 'Modifica';
+
+  @override
+  String get journalUseTemplate => 'Usa modello';
+
+  @override
+  String get journalTemplateSessionLog => 'Registro sessione';
+
+  @override
+  String get journalTemplateLoreNote => 'Nota di lore';
+
+  @override
+  String get journalTemplateCharacterArc => 'Arco del personaggio';
+
+  @override
+  String get journalTemplateSessionBody =>
+      '## Cosa è successo\n\n## Bottino e risorse\n\n## Prossimi passi\n';
+
+  @override
+  String get journalTemplateLoreBody => '## Lore\n\n';
+
+  @override
+  String get journalTemplateArcBody => '## Arco del personaggio\n\n';
 }

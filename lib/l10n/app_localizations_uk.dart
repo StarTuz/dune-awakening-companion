@@ -1074,4 +1074,47 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get journalRemoveImage => 'Видалити знімок';
+
+  @override
+  String get journalMarkdownHint => 'Підтримує Markdown';
+
+  @override
+  String get journalFormatBold => 'Жирний';
+
+  @override
+  String get journalFormatItalic => 'Курсив';
+
+  @override
+  String get journalFormatHeading => 'Заголовок';
+
+  @override
+  String get journalFormatBulletList => 'Маркований список';
+
+  @override
+  String get journalTogglePreview => 'Перегляд';
+
+  @override
+  String get journalToggleEdit => 'Редагувати';
+
+  @override
+  String get journalUseTemplate => 'Використати шаблон';
+
+  @override
+  String get journalTemplateSessionLog => 'Журнал сесії';
+
+  @override
+  String get journalTemplateLoreNote => 'Нотатка лору';
+
+  @override
+  String get journalTemplateCharacterArc => 'Арка персонажа';
+
+  @override
+  String get journalTemplateSessionBody =>
+      '## Що сталося\n\n## Здобич і ресурси\n\n## Наступні кроки\n';
+
+  @override
+  String get journalTemplateLoreBody => '## Лор\n\n';
+
+  @override
+  String get journalTemplateArcBody => '## Арка персонажа\n\n';
 }
