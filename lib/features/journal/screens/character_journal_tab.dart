@@ -198,14 +198,17 @@ class _CharacterJournalTabState extends ConsumerState<CharacterJournalTab> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l10n.journalEditBiography),
-        content: TextField(
-          controller: controller,
-          maxLines: 6,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            labelText: l10n.journalBiographyTitle,
-            alignLabelWithHint: true,
-            border: const OutlineInputBorder(),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: TextField(
+            controller: controller,
+            maxLines: 6,
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration(
+              labelText: l10n.journalBiographyTitle,
+              alignLabelWithHint: true,
+              border: const OutlineInputBorder(),
+            ),
           ),
         ),
         actions: [
@@ -758,158 +761,161 @@ class _JournalEntryEditorDialogState
       title: Text(
         widget.existing == null ? l10n.journalNewEntry : l10n.journalEditEntry,
       ),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (widget.existing == null) ...[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: PopupMenuButton<JournalTemplate>(
-                  onSelected: _applyTemplate,
-                  itemBuilder: (context) => [
-                    for (final template in JournalTemplate.all(l10n))
-                      PopupMenuItem<JournalTemplate>(
-                        value: template,
-                        child: Text(template.label),
-                      ),
-                  ],
-                  child: Chip(
-                    avatar: const Icon(Icons.auto_awesome, size: 18),
-                    label: Text(l10n.journalUseTemplate),
+      content: SizedBox(
+        width: double.maxFinite,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (widget.existing == null) ...[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: PopupMenuButton<JournalTemplate>(
+                    onSelected: _applyTemplate,
+                    itemBuilder: (context) => [
+                      for (final template in JournalTemplate.all(l10n))
+                        PopupMenuItem<JournalTemplate>(
+                          value: template,
+                          child: Text(template.label),
+                        ),
+                    ],
+                    child: Chip(
+                      avatar: const Icon(Icons.auto_awesome, size: 18),
+                      label: Text(l10n.journalUseTemplate),
+                    ),
                   ),
+                ),
+                const SizedBox(height: 12),
+              ],
+              TextField(
+                controller: _titleController,
+                decoration: InputDecoration(
+                  labelText: l10n.journalEntryTitleLabel,
+                  errorText: _titleError,
+                ),
+                textCapitalization: TextCapitalization.sentences,
+              ),
+              const SizedBox(height: 12),
+              InputDecorator(
+                decoration: InputDecoration(
+                  labelText: l10n.journalEntryDateLabel,
+                  border: const OutlineInputBorder(),
+                  isDense: true,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(DateFormat.yMMMd().format(_entryDate)),
+                    TextButton.icon(
+                      onPressed: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate: _entryDate,
+                          firstDate: DateTime(2024),
+                          lastDate: DateTime(2100),
+                        );
+                        if (picked != null) {
+                          setState(() => _entryDate = picked);
+                        }
+                      },
+                      icon: const Icon(Icons.calendar_today, size: 18),
+                      label: Text(l10n.journalEntryDateLabel),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 12),
-            ],
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                labelText: l10n.journalEntryTitleLabel,
-                errorText: _titleError,
-              ),
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 12),
-            InputDecorator(
-              decoration: InputDecoration(
-                labelText: l10n.journalEntryDateLabel,
-                border: const OutlineInputBorder(),
-                isDense: true,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              _buildBodyEditor(l10n),
+              const SizedBox(height: 12),
+              Row(
                 children: [
-                  Text(DateFormat.yMMMd().format(_entryDate)),
-                  TextButton.icon(
-                    onPressed: () async {
-                      final picked = await showDatePicker(
-                        context: context,
-                        initialDate: _entryDate,
-                        firstDate: DateTime(2024),
-                        lastDate: DateTime(2100),
-                      );
-                      if (picked != null) {
-                        setState(() => _entryDate = picked);
-                      }
-                    },
-                    icon: const Icon(Icons.calendar_today, size: 18),
-                    label: Text(l10n.journalEntryDateLabel),
+                  Expanded(
+                    child: TextField(
+                      controller: _locationController,
+                      decoration: InputDecoration(
+                        labelText: l10n.journalEntryLocationLabel,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: TextField(
+                      controller: _moodController,
+                      decoration: InputDecoration(
+                        labelText: l10n.journalEntryMoodLabel,
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 12),
-            _buildBodyEditor(l10n),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _locationController,
-                    decoration: InputDecoration(
-                      labelText: l10n.journalEntryLocationLabel,
-                    ),
-                  ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _tagsController,
+                decoration: InputDecoration(
+                  labelText: l10n.journalEntryTagsLabel,
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: TextField(
-                    controller: _moodController,
-                    decoration: InputDecoration(
-                      labelText: l10n.journalEntryMoodLabel,
-                    ),
+              ),
+              if (widget.quests.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String?>(
+                  value: _questId,
+                  isExpanded: true,
+                  decoration: InputDecoration(
+                    labelText: l10n.journalEntryQuestLabel,
                   ),
+                  items: [
+                    DropdownMenuItem<String?>(
+                      value: null,
+                      child: Text(l10n.journalEntryNoQuest),
+                    ),
+                    ...widget.quests.map(
+                      (quest) => DropdownMenuItem<String?>(
+                        value: quest.id,
+                        child: Text(
+                          quest.title,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ],
+                  onChanged: (value) => setState(() => _questId = value),
                 ),
               ],
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: _tagsController,
-              decoration: InputDecoration(
-                labelText: l10n.journalEntryTagsLabel,
-              ),
-            ),
-            if (widget.quests.isNotEmpty) ...[
               const SizedBox(height: 12),
-              DropdownButtonFormField<String?>(
-                value: _questId,
-                isExpanded: true,
-                decoration: InputDecoration(
-                  labelText: l10n.journalEntryQuestLabel,
-                ),
-                items: [
-                  DropdownMenuItem<String?>(
-                    value: null,
-                    child: Text(l10n.journalEntryNoQuest),
-                  ),
-                  ...widget.quests.map(
-                    (quest) => DropdownMenuItem<String?>(
-                      value: quest.id,
-                      child: Text(
-                        quest.title,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+              if (_imagePath != null && _imagePath!.isNotEmpty) ...[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.file(
+                    File(_imagePath!),
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stack) => const SizedBox(
+                      height: 120,
+                      child: Center(child: Icon(Icons.broken_image_outlined)),
                     ),
                   ),
-                ],
-                onChanged: (value) => setState(() => _questId = value),
-              ),
-            ],
-            const SizedBox(height: 12),
-            if (_imagePath != null && _imagePath!.isNotEmpty) ...[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.file(
-                  File(_imagePath!),
-                  height: 120,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stack) => const SizedBox(
-                    height: 120,
-                    child: Center(child: Icon(Icons.broken_image_outlined)),
-                  ),
                 ),
-              ),
-              TextButton.icon(
-                onPressed: () => setState(() => _imagePath = null),
-                icon: const Icon(Icons.delete_outline),
-                label: Text(l10n.journalRemoveImage),
-              ),
-            ] else
-              OutlinedButton.icon(
-                onPressed: _savingImage ? null : _pickImage,
-                icon: _savingImage
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : const Icon(Icons.image_outlined),
-                label: Text(l10n.journalAddImage),
-              ),
-          ],
+                TextButton.icon(
+                  onPressed: () => setState(() => _imagePath = null),
+                  icon: const Icon(Icons.delete_outline),
+                  label: Text(l10n.journalRemoveImage),
+                ),
+              ] else
+                OutlinedButton.icon(
+                  onPressed: _savingImage ? null : _pickImage,
+                  icon: _savingImage
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.image_outlined),
+                  label: Text(l10n.journalAddImage),
+                ),
+            ],
+          ),
         ),
       ),
       actions: [
