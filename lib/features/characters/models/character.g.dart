@@ -16,6 +16,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       sietch: json['sietch'] as String,
       primaryClass: json['primaryClass'] as String?,
       portraitPath: json['portraitPath'] as String?,
+      biography: json['biography'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
@@ -30,6 +31,7 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'sietch': instance.sietch,
       'primaryClass': instance.primaryClass,
       'portraitPath': instance.portraitPath,
+      'biography': instance.biography,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
     };

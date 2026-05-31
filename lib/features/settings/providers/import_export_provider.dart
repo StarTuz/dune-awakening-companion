@@ -3,6 +3,7 @@ import '../../augmentations/providers/augmentation_provider.dart';
 import '../../blueprints/providers/blueprint_provider.dart';
 import '../../class_quests/providers/class_quest_provider.dart';
 import '../../factions/providers/faction_progress_provider.dart';
+import '../../journal/providers/journal_provider.dart';
 import '../../quest_journal/providers/quest_provider.dart';
 import '../../skills/providers/skill_provider.dart';
 import '../../specializations/providers/character_specialization_provider.dart';
@@ -22,6 +23,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
   final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   final classQuestRepo = ref.watch(classQuestRepositoryProvider);
   final skillRepo = ref.watch(characterSkillRepositoryProvider);
+  final journalRepo = ref.watch(journalRepositoryProvider);
   return ExportService(
     characterRepo,
     baseRepo,
@@ -32,6 +34,7 @@ final exportServiceProvider = Provider<ExportService>((ref) {
     blueprintRepository: blueprintRepo,
     classQuestRepository: classQuestRepo,
     characterSkillRepository: skillRepo,
+    journalRepository: journalRepo,
   );
 });
 
@@ -46,6 +49,7 @@ final importServiceProvider = Provider<ImportService>((ref) {
   final blueprintRepo = ref.watch(blueprintRepositoryProvider);
   final classQuestRepo = ref.watch(classQuestRepositoryProvider);
   final skillRepo = ref.watch(characterSkillRepositoryProvider);
+  final journalRepo = ref.watch(journalRepositoryProvider);
   return ImportService(
     characterRepo,
     baseRepo,
@@ -56,5 +60,6 @@ final importServiceProvider = Provider<ImportService>((ref) {
     blueprintRepository: blueprintRepo,
     classQuestRepository: classQuestRepo,
     characterSkillRepository: skillRepo,
+    journalRepository: journalRepo,
   );
 });

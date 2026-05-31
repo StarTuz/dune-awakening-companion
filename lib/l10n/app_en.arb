@@ -1193,5 +1193,117 @@
   "questReminderNotificationTitle": "Quest reminder",
   "@questReminderNotificationTitle": {
     "description": "OS notification title for quest reminder"
+  },
+  "journalTabTitle": "Journal",
+  "@journalTabTitle": {
+    "description": "Tab label for the character RPG journal"
+  },
+  "journalEmpty": "No journal entries yet. Tap + to write your first one.",
+  "@journalEmpty": {
+    "description": "Empty state for the character journal"
+  },
+  "journalNewEntry": "New Entry",
+  "@journalNewEntry": {
+    "description": "Button and dialog title for creating a journal entry"
+  },
+  "journalEditEntry": "Edit Entry",
+  "@journalEditEntry": {
+    "description": "Dialog title for editing a journal entry"
+  },
+  "journalEntryTitleLabel": "Title",
+  "@journalEntryTitleLabel": {
+    "description": "Label for the journal entry title field"
+  },
+  "journalEntryBodyLabel": "Entry",
+  "@journalEntryBodyLabel": {
+    "description": "Label for the journal entry body field"
+  },
+  "journalEntryTagsLabel": "Tags (comma separated)",
+  "@journalEntryTagsLabel": {
+    "description": "Label for the journal entry tags field"
+  },
+  "journalEntryDateLabel": "Date",
+  "@journalEntryDateLabel": {
+    "description": "Label for the journal entry date field"
+  },
+  "journalTitleRequired": "Title is required",
+  "@journalTitleRequired": {
+    "description": "Validation message when the journal title is empty"
+  },
+  "journalUntitled": "Untitled entry",
+  "@journalUntitled": {
+    "description": "Fallback title shown when a journal entry has no title"
+  },
+  "journalSavedSnack": "Journal entry saved",
+  "@journalSavedSnack": {
+    "description": "Snackbar confirmation after saving a journal entry"
+  },
+  "journalDeletedSnack": "Journal entry deleted",
+  "@journalDeletedSnack": {
+    "description": "Snackbar confirmation after deleting a journal entry"
+  },
+  "journalDeleteConfirmTitle": "Delete entry?",
+  "@journalDeleteConfirmTitle": {
+    "description": "Title of the journal entry delete confirmation dialog"
+  },
+  "journalDeleteConfirmMessage": "This journal entry will be permanently deleted.",
+  "@journalDeleteConfirmMessage": {
+    "description": "Body of the journal entry delete confirmation dialog"
+  },
+  "journalFilterAllTags": "All tags",
+  "@journalFilterAllTags": {
+    "description": "Dropdown option to show journal entries with any tag"
+  },
+  "journalBiographyTitle": "Biography",
+  "@journalBiographyTitle": {
+    "description": "Heading for the character biography section in the journal"
+  },
+  "journalBiographyEmpty": "No biography yet. Tap edit to describe this character.",
+  "@journalBiographyEmpty": {
+    "description": "Empty state for the character biography"
+  },
+  "journalEditBiography": "Edit biography",
+  "@journalEditBiography": {
+    "description": "Tooltip/title for editing the character biography"
+  },
+  "journalBiographySaved": "Biography saved",
+  "@journalBiographySaved": {
+    "description": "Snackbar confirmation after saving the biography"
+  },
+  "journalSearchHint": "Search entries",
+  "@journalSearchHint": {
+    "description": "Hint text for the journal entry search field"
+  },
+  "journalNoMatches": "No entries match your search.",
+  "@journalNoMatches": {
+    "description": "Empty state when search/tag filters exclude all entries"
+  },
+  "journalEntryLocationLabel": "Location",
+  "@journalEntryLocationLabel": {
+    "description": "Label for the optional journal entry location field"
+  },
+  "journalEntryMoodLabel": "Mood",
+  "@journalEntryMoodLabel": {
+    "description": "Label for the optional journal entry mood field"
+  },
+  "journalEntryQuestLabel": "Linked quest",
+  "@journalEntryQuestLabel": {
+    "description": "Label for linking a journal entry to a tracked quest"
+  },
+  "journalEntryNoQuest": "None",
+  "@journalEntryNoQuest": {
+    "description": "Dropdown option for no linked quest"
+  },
+  "journalEntryImageLabel": "Screenshot",
+  "@journalEntryImageLabel": {
+    "description": "Label for the optional journal entry screenshot"
+  },
+  "journalAddImage": "Add screenshot",
+  "@journalAddImage": {
+    "description": "Button to attach a screenshot to a journal entry"
+  },
+  "journalRemoveImage": "Remove screenshot",
+  "@journalRemoveImage": {
+    "description": "Button to remove the attached screenshot"
   }
 }

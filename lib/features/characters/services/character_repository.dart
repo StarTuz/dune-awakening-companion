@@ -71,6 +71,7 @@ class CharacterRepository {
       'sietch': character.sietch,
       'primary_class': character.primaryClass,
       'portraitPath': character.portraitPath,
+      'biography': character.biography,
       'created_at': character.createdAt.millisecondsSinceEpoch,
       'updated_at': character.updatedAt.millisecondsSinceEpoch,
     };
@@ -87,6 +88,7 @@ class CharacterRepository {
       sietch: map['sietch'] as String,
       primaryClass: map['primary_class'] as String?,
       portraitPath: map['portraitPath'] as String?,
+      biography: map['biography'] as String?,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updated_at'] as int),
     );

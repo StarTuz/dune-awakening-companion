@@ -1907,6 +1907,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Quest reminder'**
   String get questReminderNotificationTitle;
+
+  /// Tab label for the character RPG journal
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get journalTabTitle;
+
+  /// Empty state for the character journal
+  ///
+  /// In en, this message translates to:
+  /// **'No journal entries yet. Tap + to write your first one.'**
+  String get journalEmpty;
+
+  /// Button and dialog title for creating a journal entry
+  ///
+  /// In en, this message translates to:
+  /// **'New Entry'**
+  String get journalNewEntry;
+
+  /// Dialog title for editing a journal entry
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Entry'**
+  String get journalEditEntry;
+
+  /// Label for the journal entry title field
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get journalEntryTitleLabel;
+
+  /// Label for the journal entry body field
+  ///
+  /// In en, this message translates to:
+  /// **'Entry'**
+  String get journalEntryBodyLabel;
+
+  /// Label for the journal entry tags field
+  ///
+  /// In en, this message translates to:
+  /// **'Tags (comma separated)'**
+  String get journalEntryTagsLabel;
+
+  /// Label for the journal entry date field
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get journalEntryDateLabel;
+
+  /// Validation message when the journal title is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get journalTitleRequired;
+
+  /// Fallback title shown when a journal entry has no title
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled entry'**
+  String get journalUntitled;
+
+  /// Snackbar confirmation after saving a journal entry
+  ///
+  /// In en, this message translates to:
+  /// **'Journal entry saved'**
+  String get journalSavedSnack;
+
+  /// Snackbar confirmation after deleting a journal entry
+  ///
+  /// In en, this message translates to:
+  /// **'Journal entry deleted'**
+  String get journalDeletedSnack;
+
+  /// Title of the journal entry delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete entry?'**
+  String get journalDeleteConfirmTitle;
+
+  /// Body of the journal entry delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This journal entry will be permanently deleted.'**
+  String get journalDeleteConfirmMessage;
+
+  /// Dropdown option to show journal entries with any tag
+  ///
+  /// In en, this message translates to:
+  /// **'All tags'**
+  String get journalFilterAllTags;
+
+  /// Heading for the character biography section in the journal
+  ///
+  /// In en, this message translates to:
+  /// **'Biography'**
+  String get journalBiographyTitle;
+
+  /// Empty state for the character biography
+  ///
+  /// In en, this message translates to:
+  /// **'No biography yet. Tap edit to describe this character.'**
+  String get journalBiographyEmpty;
+
+  /// Tooltip/title for editing the character biography
+  ///
+  /// In en, this message translates to:
+  /// **'Edit biography'**
+  String get journalEditBiography;
+
+  /// Snackbar confirmation after saving the biography
+  ///
+  /// In en, this message translates to:
+  /// **'Biography saved'**
+  String get journalBiographySaved;
+
+  /// Hint text for the journal entry search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search entries'**
+  String get journalSearchHint;
+
+  /// Empty state when search/tag filters exclude all entries
+  ///
+  /// In en, this message translates to:
+  /// **'No entries match your search.'**
+  String get journalNoMatches;
+
+  /// Label for the optional journal entry location field
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get journalEntryLocationLabel;
+
+  /// Label for the optional journal entry mood field
+  ///
+  /// In en, this message translates to:
+  /// **'Mood'**
+  String get journalEntryMoodLabel;
+
+  /// Label for linking a journal entry to a tracked quest
+  ///
+  /// In en, this message translates to:
+  /// **'Linked quest'**
+  String get journalEntryQuestLabel;
+
+  /// Dropdown option for no linked quest
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get journalEntryNoQuest;
+
+  /// Label for the optional journal entry screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshot'**
+  String get journalEntryImageLabel;
+
+  /// Button to attach a screenshot to a journal entry
+  ///
+  /// In en, this message translates to:
+  /// **'Add screenshot'**
+  String get journalAddImage;
+
+  /// Button to remove the attached screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'Remove screenshot'**
+  String get journalRemoveImage;
 }
 
 class _AppLocalizationsDelegate

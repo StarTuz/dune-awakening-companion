@@ -38,7 +38,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.storage,
             title: l10n.databaseVersion,
-            subtitle: 'v12',
+            subtitle: 'v15',
           ),
           _buildInfoTile(
             icon: Icons.code,
@@ -233,7 +233,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: 8),
           Center(
             child: Text(
-              'v1.3.0-beta • ${l10n.databaseVersion} v12',
+              'v1.3.0-beta • ${l10n.databaseVersion} v15',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey[500],

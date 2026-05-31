@@ -992,4 +992,91 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Tagebuch';
+
+  @override
+  String get journalEmpty =>
+      'Noch keine Tagebucheinträge. Tippe auf +, um den ersten zu schreiben.';
+
+  @override
+  String get journalNewEntry => 'Neuer Eintrag';
+
+  @override
+  String get journalEditEntry => 'Eintrag bearbeiten';
+
+  @override
+  String get journalEntryTitleLabel => 'Titel';
+
+  @override
+  String get journalEntryBodyLabel => 'Eintrag';
+
+  @override
+  String get journalEntryTagsLabel => 'Schlagwörter (durch Kommas getrennt)';
+
+  @override
+  String get journalEntryDateLabel => 'Datum';
+
+  @override
+  String get journalTitleRequired => 'Titel ist erforderlich';
+
+  @override
+  String get journalUntitled => 'Eintrag ohne Titel';
+
+  @override
+  String get journalSavedSnack => 'Tagebucheintrag gespeichert';
+
+  @override
+  String get journalDeletedSnack => 'Tagebucheintrag gelöscht';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Eintrag löschen?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Dieser Tagebucheintrag wird dauerhaft gelöscht.';
+
+  @override
+  String get journalFilterAllTags => 'Alle Schlagwörter';
+
+  @override
+  String get journalBiographyTitle => 'Biografie';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Noch keine Biografie. Tippe auf Bearbeiten, um diesen Charakter zu beschreiben.';
+
+  @override
+  String get journalEditBiography => 'Biografie bearbeiten';
+
+  @override
+  String get journalBiographySaved => 'Biografie gespeichert';
+
+  @override
+  String get journalSearchHint => 'Einträge suchen';
+
+  @override
+  String get journalNoMatches => 'Keine Einträge entsprechen deiner Suche.';
+
+  @override
+  String get journalEntryLocationLabel => 'Ort';
+
+  @override
+  String get journalEntryMoodLabel => 'Stimmung';
+
+  @override
+  String get journalEntryQuestLabel => 'Verknüpfte Quest';
+
+  @override
+  String get journalEntryNoQuest => 'Keine';
+
+  @override
+  String get journalEntryImageLabel => 'Screenshot';
+
+  @override
+  String get journalAddImage => 'Screenshot hinzufügen';
+
+  @override
+  String get journalRemoveImage => 'Screenshot entfernen';
 }

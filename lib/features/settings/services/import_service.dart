@@ -16,6 +16,8 @@ import '../../characters/services/character_repository.dart';
 import '../../bases/services/base_repository.dart';
 import '../../factions/models/faction_progress.dart';
 import '../../factions/services/faction_progress_repository.dart';
+import '../../journal/models/journal_entry.dart';
+import '../../journal/services/journal_repository.dart';
 import '../../quest_journal/models/quest.dart';
 import '../../quest_journal/models/quest_step.dart';
 import '../../quest_journal/services/quest_repository.dart';
@@ -55,6 +57,7 @@ class ImportService {
   final BlueprintRepository? _blueprintRepository;
   final ClassQuestRepository? _classQuestRepository;
   final CharacterSkillRepository? _characterSkillRepository;
+  final JournalRepository? _journalRepository;
 
   ImportService(
     this._characterRepository,
@@ -66,13 +69,15 @@ class ImportService {
     BlueprintRepository? blueprintRepository,
     ClassQuestRepository? classQuestRepository,
     CharacterSkillRepository? characterSkillRepository,
+    JournalRepository? journalRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
         _questRepository = questRepository,
         _blueprintRepository = blueprintRepository,
         _classQuestRepository = classQuestRepository,
-        _characterSkillRepository = characterSkillRepository;
+        _characterSkillRepository = characterSkillRepository,
+        _journalRepository = journalRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -431,6 +436,15 @@ class ImportService {
       for (final item in items) {
         final skill = CharacterSkill.fromJson(item as Map<String, dynamic>);
         await characterSkillRepository.upsert(skill);
+      }
+    }
+
+    final journalRepository = _journalRepository;
+    if (journalRepository != null) {
+      final items = (data['journalEntries'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final entry = JournalEntry.fromJson(item as Map<String, dynamic>);
+        await journalRepository.upsert(entry);
       }
     }
   }

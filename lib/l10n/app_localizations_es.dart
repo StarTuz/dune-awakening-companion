@@ -991,4 +991,91 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Diario';
+
+  @override
+  String get journalEmpty =>
+      'Aún no hay entradas en el diario. Toca + para escribir la primera.';
+
+  @override
+  String get journalNewEntry => 'Nueva entrada';
+
+  @override
+  String get journalEditEntry => 'Editar entrada';
+
+  @override
+  String get journalEntryTitleLabel => 'Título';
+
+  @override
+  String get journalEntryBodyLabel => 'Entrada';
+
+  @override
+  String get journalEntryTagsLabel => 'Etiquetas (separadas por comas)';
+
+  @override
+  String get journalEntryDateLabel => 'Fecha';
+
+  @override
+  String get journalTitleRequired => 'El título es obligatorio';
+
+  @override
+  String get journalUntitled => 'Entrada sin título';
+
+  @override
+  String get journalSavedSnack => 'Entrada del diario guardada';
+
+  @override
+  String get journalDeletedSnack => 'Entrada del diario eliminada';
+
+  @override
+  String get journalDeleteConfirmTitle => '¿Eliminar entrada?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Esta entrada del diario se eliminará permanentemente.';
+
+  @override
+  String get journalFilterAllTags => 'Todas las etiquetas';
+
+  @override
+  String get journalBiographyTitle => 'Biografía';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Aún no hay biografía. Toca editar para describir a este personaje.';
+
+  @override
+  String get journalEditBiography => 'Editar biografía';
+
+  @override
+  String get journalBiographySaved => 'Biografía guardada';
+
+  @override
+  String get journalSearchHint => 'Buscar entradas';
+
+  @override
+  String get journalNoMatches => 'Ninguna entrada coincide con tu búsqueda.';
+
+  @override
+  String get journalEntryLocationLabel => 'Ubicación';
+
+  @override
+  String get journalEntryMoodLabel => 'Estado de ánimo';
+
+  @override
+  String get journalEntryQuestLabel => 'Misión vinculada';
+
+  @override
+  String get journalEntryNoQuest => 'Ninguna';
+
+  @override
+  String get journalEntryImageLabel => 'Captura de pantalla';
+
+  @override
+  String get journalAddImage => 'Añadir captura';
+
+  @override
+  String get journalRemoveImage => 'Quitar captura';
 }

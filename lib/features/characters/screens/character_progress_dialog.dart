@@ -1,3 +1,4 @@
+import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -11,6 +12,7 @@ import '../../class_quests/models/class_quest_progress.dart';
 import '../../class_quests/providers/class_quest_provider.dart';
 import '../../factions/models/faction_progress.dart';
 import '../../factions/providers/faction_progress_provider.dart';
+import '../../journal/screens/character_journal_tab.dart';
 import '../../skills/models/character_skill.dart';
 import '../../skills/models/skill_catalog.dart';
 import '../../skills/providers/skill_provider.dart';
@@ -27,19 +29,21 @@ class CharacterProgressDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final journalTabLabel = AppLocalizations.of(context)!.journalTabTitle;
     return DefaultTabController(
-      length: 5,
+      length: 6,
       child: Scaffold(
         appBar: AppBar(
           title: Text('${character.name} Progress'),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
             tabs: [
-              Tab(text: 'Specializations'),
-              Tab(text: 'Class Quests'),
-              Tab(text: 'Skill Planner'),
-              Tab(text: 'Factions'),
-              Tab(text: 'Augments'),
+              const Tab(text: 'Specializations'),
+              const Tab(text: 'Class Quests'),
+              const Tab(text: 'Skill Planner'),
+              const Tab(text: 'Factions'),
+              const Tab(text: 'Augments'),
+              Tab(text: journalTabLabel),
             ],
           ),
         ),
@@ -50,6 +54,7 @@ class CharacterProgressDialog extends ConsumerWidget {
             _SkillPlannerTab(character: character),
             _FactionProgressTab(character: character),
             _AugmentationsTab(character: character),
+            CharacterJournalTab(character: character),
           ],
         ),
       ),

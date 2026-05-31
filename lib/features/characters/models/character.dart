@@ -16,6 +16,7 @@ class Character implements BaseModel {
   final String sietch;
   final String? primaryClass;
   final String? portraitPath; // Path to character portrait image
+  final String? biography; // Short "about this ghola" blurb (RPG journal)
   @override
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -30,6 +31,7 @@ class Character implements BaseModel {
     required this.sietch,
     this.primaryClass,
     this.portraitPath,
+    this.biography,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -50,6 +52,7 @@ class Character implements BaseModel {
     String? sietch,
     String? primaryClass,
     String? portraitPath,
+    String? biography,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -63,6 +66,7 @@ class Character implements BaseModel {
       sietch: sietch ?? this.sietch,
       primaryClass: primaryClass ?? this.primaryClass,
       portraitPath: portraitPath ?? this.portraitPath,
+      biography: biography ?? this.biography,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

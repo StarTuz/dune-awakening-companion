@@ -14,6 +14,9 @@ import 'migrations/migration_009_add_blueprints.dart';
 import 'migrations/migration_010_add_blueprint_respawn_timer.dart';
 import 'migrations/migration_011_add_class_quests.dart';
 import 'migrations/migration_012_add_character_skills.dart';
+import 'migrations/migration_013_add_journal_entries.dart';
+import 'migrations/migration_014_add_journal_phase2.dart';
+import 'migrations/migration_015_add_journal_phase3.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -37,7 +40,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 12,
+      version: 15,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -103,6 +106,15 @@ class AppDatabase {
     if (version >= 12) {
       await Migration012AddCharacterSkills.up(db);
     }
+    if (version >= 13) {
+      await Migration013AddJournalEntries.up(db);
+    }
+    if (version >= 14) {
+      await Migration014AddJournalPhase2.up(db);
+    }
+    if (version >= 15) {
+      await Migration015AddJournalPhase3.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -139,6 +151,15 @@ class AppDatabase {
     if (oldVersion < 12) {
       await Migration012AddCharacterSkills.up(db);
     }
+    if (oldVersion < 13) {
+      await Migration013AddJournalEntries.up(db);
+    }
+    if (oldVersion < 14) {
+      await Migration014AddJournalPhase2.up(db);
+    }
+    if (oldVersion < 15) {
+      await Migration015AddJournalPhase3.up(db);
+    }
   }
 
   Future<void> initialize() async {
@@ -166,6 +187,7 @@ class AppDatabase {
       await txn.delete('quest_steps');
       await txn.delete('quests');
       await txn.delete('character_skills');
+      await txn.delete('journal_entries');
     });
   }
 }

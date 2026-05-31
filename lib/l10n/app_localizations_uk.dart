@@ -987,4 +987,91 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Щоденник';
+
+  @override
+  String get journalEmpty =>
+      'Записів у щоденнику ще немає. Натисніть +, щоб написати перший.';
+
+  @override
+  String get journalNewEntry => 'Новий запис';
+
+  @override
+  String get journalEditEntry => 'Редагувати запис';
+
+  @override
+  String get journalEntryTitleLabel => 'Заголовок';
+
+  @override
+  String get journalEntryBodyLabel => 'Запис';
+
+  @override
+  String get journalEntryTagsLabel => 'Теги (через кому)';
+
+  @override
+  String get journalEntryDateLabel => 'Дата';
+
+  @override
+  String get journalTitleRequired => 'Потрібен заголовок';
+
+  @override
+  String get journalUntitled => 'Запис без назви';
+
+  @override
+  String get journalSavedSnack => 'Запис щоденника збережено';
+
+  @override
+  String get journalDeletedSnack => 'Запис щоденника видалено';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Видалити запис?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Цей запис щоденника буде видалено назавжди.';
+
+  @override
+  String get journalFilterAllTags => 'Усі теги';
+
+  @override
+  String get journalBiographyTitle => 'Біографія';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Біографії ще немає. Натисніть «Редагувати», щоб описати цього персонажа.';
+
+  @override
+  String get journalEditBiography => 'Редагувати біографію';
+
+  @override
+  String get journalBiographySaved => 'Біографію збережено';
+
+  @override
+  String get journalSearchHint => 'Пошук записів';
+
+  @override
+  String get journalNoMatches => 'Немає записів, що відповідають пошуку.';
+
+  @override
+  String get journalEntryLocationLabel => 'Місце';
+
+  @override
+  String get journalEntryMoodLabel => 'Настрій';
+
+  @override
+  String get journalEntryQuestLabel => 'Пов\'язаний квест';
+
+  @override
+  String get journalEntryNoQuest => 'Немає';
+
+  @override
+  String get journalEntryImageLabel => 'Знімок екрана';
+
+  @override
+  String get journalAddImage => 'Додати знімок';
+
+  @override
+  String get journalRemoveImage => 'Видалити знімок';
 }

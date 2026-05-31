@@ -983,4 +983,91 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Journal';
+
+  @override
+  String get journalEmpty =>
+      'No journal entries yet. Tap + to write your first one.';
+
+  @override
+  String get journalNewEntry => 'New Entry';
+
+  @override
+  String get journalEditEntry => 'Edit Entry';
+
+  @override
+  String get journalEntryTitleLabel => 'Title';
+
+  @override
+  String get journalEntryBodyLabel => 'Entry';
+
+  @override
+  String get journalEntryTagsLabel => 'Tags (comma separated)';
+
+  @override
+  String get journalEntryDateLabel => 'Date';
+
+  @override
+  String get journalTitleRequired => 'Title is required';
+
+  @override
+  String get journalUntitled => 'Untitled entry';
+
+  @override
+  String get journalSavedSnack => 'Journal entry saved';
+
+  @override
+  String get journalDeletedSnack => 'Journal entry deleted';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Delete entry?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'This journal entry will be permanently deleted.';
+
+  @override
+  String get journalFilterAllTags => 'All tags';
+
+  @override
+  String get journalBiographyTitle => 'Biography';
+
+  @override
+  String get journalBiographyEmpty =>
+      'No biography yet. Tap edit to describe this character.';
+
+  @override
+  String get journalEditBiography => 'Edit biography';
+
+  @override
+  String get journalBiographySaved => 'Biography saved';
+
+  @override
+  String get journalSearchHint => 'Search entries';
+
+  @override
+  String get journalNoMatches => 'No entries match your search.';
+
+  @override
+  String get journalEntryLocationLabel => 'Location';
+
+  @override
+  String get journalEntryMoodLabel => 'Mood';
+
+  @override
+  String get journalEntryQuestLabel => 'Linked quest';
+
+  @override
+  String get journalEntryNoQuest => 'None';
+
+  @override
+  String get journalEntryImageLabel => 'Screenshot';
+
+  @override
+  String get journalAddImage => 'Add screenshot';
+
+  @override
+  String get journalRemoveImage => 'Remove screenshot';
 }

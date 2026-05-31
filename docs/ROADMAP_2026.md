@@ -42,6 +42,7 @@ Product:
 - **New-player / Hagga Basin research:** interactive regional map, POI toggles, sub-area IA — see `docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md` (assessment phase; not yet scoped for implementation).
 - Returning player flow (return packages, re-onboarding).
 - Advanced analytics dashboard (local-only summaries).
+- **Player RPG journal and notes:** per-character chronicle/journal with biography, tags, search, location/mood, quest links and screenshots — see `docs/RESEARCH_RPG_JOURNAL_NOTES.md` (Phases 1–3 implemented; markdown rendering deferred).
 
 ## Risks and Dependencies
 - CI changes should land before expanding tests to avoid slow feedback.

@@ -991,4 +991,91 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Dyddiadur';
+
+  @override
+  String get journalEmpty =>
+      'Dim cofnodion dyddiadur eto. Tapiwch + i ysgrifennu\'r cyntaf.';
+
+  @override
+  String get journalNewEntry => 'Cofnod Newydd';
+
+  @override
+  String get journalEditEntry => 'Golygu Cofnod';
+
+  @override
+  String get journalEntryTitleLabel => 'Teitl';
+
+  @override
+  String get journalEntryBodyLabel => 'Cofnod';
+
+  @override
+  String get journalEntryTagsLabel => 'Tagiau (wedi\'u gwahanu â chomas)';
+
+  @override
+  String get journalEntryDateLabel => 'Dyddiad';
+
+  @override
+  String get journalTitleRequired => 'Mae angen teitl';
+
+  @override
+  String get journalUntitled => 'Cofnod heb deitl';
+
+  @override
+  String get journalSavedSnack => 'Cofnod dyddiadur wedi\'i gadw';
+
+  @override
+  String get journalDeletedSnack => 'Cofnod dyddiadur wedi\'i ddileu';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Dileu cofnod?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Bydd y cofnod dyddiadur hwn yn cael ei ddileu\'n barhaol.';
+
+  @override
+  String get journalFilterAllTags => 'Pob tag';
+
+  @override
+  String get journalBiographyTitle => 'Bywgraffiad';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Dim bywgraffiad eto. Tapiwch golygu i ddisgrifio\'r cymeriad hwn.';
+
+  @override
+  String get journalEditBiography => 'Golygu bywgraffiad';
+
+  @override
+  String get journalBiographySaved => 'Bywgraffiad wedi\'i gadw';
+
+  @override
+  String get journalSearchHint => 'Chwilio cofnodion';
+
+  @override
+  String get journalNoMatches => 'Nid oes cofnodion yn cyfateb i\'ch chwiliad.';
+
+  @override
+  String get journalEntryLocationLabel => 'Lleoliad';
+
+  @override
+  String get journalEntryMoodLabel => 'Hwyl';
+
+  @override
+  String get journalEntryQuestLabel => 'Cwest cysylltiedig';
+
+  @override
+  String get journalEntryNoQuest => 'Dim';
+
+  @override
+  String get journalEntryImageLabel => 'Sgrinlun';
+
+  @override
+  String get journalAddImage => 'Ychwanegu sgrinlun';
+
+  @override
+  String get journalRemoveImage => 'Tynnu sgrinlun';
 }

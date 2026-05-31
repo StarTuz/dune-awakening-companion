@@ -992,4 +992,92 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Journal';
+
+  @override
+  String get journalEmpty =>
+      'Aucune entrée de journal pour l\'instant. Appuyez sur + pour en écrire une.';
+
+  @override
+  String get journalNewEntry => 'Nouvelle entrée';
+
+  @override
+  String get journalEditEntry => 'Modifier l\'entrée';
+
+  @override
+  String get journalEntryTitleLabel => 'Titre';
+
+  @override
+  String get journalEntryBodyLabel => 'Entrée';
+
+  @override
+  String get journalEntryTagsLabel => 'Étiquettes (séparées par des virgules)';
+
+  @override
+  String get journalEntryDateLabel => 'Date';
+
+  @override
+  String get journalTitleRequired => 'Le titre est obligatoire';
+
+  @override
+  String get journalUntitled => 'Entrée sans titre';
+
+  @override
+  String get journalSavedSnack => 'Entrée de journal enregistrée';
+
+  @override
+  String get journalDeletedSnack => 'Entrée de journal supprimée';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Supprimer l\'entrée ?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Cette entrée de journal sera définitivement supprimée.';
+
+  @override
+  String get journalFilterAllTags => 'Toutes les étiquettes';
+
+  @override
+  String get journalBiographyTitle => 'Biographie';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Aucune biographie pour l\'instant. Appuyez sur modifier pour décrire ce personnage.';
+
+  @override
+  String get journalEditBiography => 'Modifier la biographie';
+
+  @override
+  String get journalBiographySaved => 'Biographie enregistrée';
+
+  @override
+  String get journalSearchHint => 'Rechercher des entrées';
+
+  @override
+  String get journalNoMatches =>
+      'Aucune entrée ne correspond à votre recherche.';
+
+  @override
+  String get journalEntryLocationLabel => 'Lieu';
+
+  @override
+  String get journalEntryMoodLabel => 'Humeur';
+
+  @override
+  String get journalEntryQuestLabel => 'Quête liée';
+
+  @override
+  String get journalEntryNoQuest => 'Aucune';
+
+  @override
+  String get journalEntryImageLabel => 'Capture d\'écran';
+
+  @override
+  String get journalAddImage => 'Ajouter une capture';
+
+  @override
+  String get journalRemoveImage => 'Supprimer la capture';
 }

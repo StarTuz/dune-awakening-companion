@@ -987,4 +987,91 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalTabTitle => 'Diario';
+
+  @override
+  String get journalEmpty =>
+      'Ancora nessuna voce del diario. Tocca + per scriverne una.';
+
+  @override
+  String get journalNewEntry => 'Nuova voce';
+
+  @override
+  String get journalEditEntry => 'Modifica voce';
+
+  @override
+  String get journalEntryTitleLabel => 'Titolo';
+
+  @override
+  String get journalEntryBodyLabel => 'Voce';
+
+  @override
+  String get journalEntryTagsLabel => 'Etichette (separate da virgole)';
+
+  @override
+  String get journalEntryDateLabel => 'Data';
+
+  @override
+  String get journalTitleRequired => 'Il titolo è obbligatorio';
+
+  @override
+  String get journalUntitled => 'Voce senza titolo';
+
+  @override
+  String get journalSavedSnack => 'Voce del diario salvata';
+
+  @override
+  String get journalDeletedSnack => 'Voce del diario eliminata';
+
+  @override
+  String get journalDeleteConfirmTitle => 'Eliminare la voce?';
+
+  @override
+  String get journalDeleteConfirmMessage =>
+      'Questa voce del diario verrà eliminata definitivamente.';
+
+  @override
+  String get journalFilterAllTags => 'Tutte le etichette';
+
+  @override
+  String get journalBiographyTitle => 'Biografia';
+
+  @override
+  String get journalBiographyEmpty =>
+      'Ancora nessuna biografia. Tocca modifica per descrivere questo personaggio.';
+
+  @override
+  String get journalEditBiography => 'Modifica biografia';
+
+  @override
+  String get journalBiographySaved => 'Biografia salvata';
+
+  @override
+  String get journalSearchHint => 'Cerca voci';
+
+  @override
+  String get journalNoMatches => 'Nessuna voce corrisponde alla ricerca.';
+
+  @override
+  String get journalEntryLocationLabel => 'Luogo';
+
+  @override
+  String get journalEntryMoodLabel => 'Umore';
+
+  @override
+  String get journalEntryQuestLabel => 'Missione collegata';
+
+  @override
+  String get journalEntryNoQuest => 'Nessuna';
+
+  @override
+  String get journalEntryImageLabel => 'Screenshot';
+
+  @override
+  String get journalAddImage => 'Aggiungi screenshot';
+
+  @override
+  String get journalRemoveImage => 'Rimuovi screenshot';
 }
