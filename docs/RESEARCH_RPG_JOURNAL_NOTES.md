@@ -1,27 +1,15 @@
 # Player RPG Journal and Notes — Design Doc
 
-Last updated: 2026-05-30
+Last updated: 2026-06-05
 
-This document proposes a **per-character RPG journal and notes** feature: a place
-for players to chronicle their character's story, keep freeform notes, and tag
-entries. It consolidates the long-standing idea sketched in `NEXT_STEPS.md`
-(item #6, "RPG Elements & Storytelling") into a current, implementable design
-reconciled with the live schema (DB v12).
+This document describes the shipped **Character Chronicle** feature: a
+per-character RPG journal for biography, tagged entries, markdown bodies, and
+optional screenshots. It consolidates the long-standing idea from `NEXT_STEPS.md`
+(item #6, "RPG Elements & Storytelling").
 
-Status: **Phases 1–4 implemented.**
-- Phase 1: migration 013, `lib/features/journal/`, Journal tab in
-  `CharacterProgressDialog`, ZIP export/import, 7-locale strings, tests.
-- Phase 2: migration 014 — `characters.biography` (editable from the Journal
-  tab) plus optional `location`/`mood` per entry; entry search and tag
-  filter chips.
-- Phase 3: migration 015 — optional `quest_id` link and `image_path`
-  screenshot per entry, plus a parchment/aged-paper theme on the journal
-  surface.
-- Phase 4: Markdown rendering (`flutter_markdown_plus`) for entry bodies with a
-  lightweight formatting toolbar + live preview toggle; screenshots are now
-  copied into an app-managed `journal_images/` directory and bundled into the
-  ZIP backup (export + import remap paths); entry templates (session log, lore
-  note, character arc).
+Status: **Phases 1–4 implemented** in `lib/features/journal/` (Character Progress
+dialog → Chronicle tab). Migrations 013–015; export/import includes journal
+entries and bundled `journal_images/`.
 
 **Deferred:** cursive Google Fonts (avoids a network font dependency; the
 parchment theme uses italics + warm tones instead). A full WYSIWYG rich-text

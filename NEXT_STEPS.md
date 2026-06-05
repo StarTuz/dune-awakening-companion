@@ -1,9 +1,9 @@
 # 🚀 Next Steps for Dune Awakening Companion App
 
-**Last Updated:** May 19, 2026  
-**Current Version:** v1.3.0-beta  
-**Database Version:** v11  
-**Status:** Current app feature set is documented in `README.md`; this file keeps historical planning notes and future ideas.
+**Last Updated:** June 5, 2026  
+**Current Version:** v1.3.0-beta (`main`; unreleased calculator/chronicle work)  
+**Database Version:** v16  
+**Status:** Historical planning notes below. For **current** shipped features and roadmap, see `README.md`, `HANDOFF.md`, and `docs/ROADMAP_2026.md`.
 
 ---
 

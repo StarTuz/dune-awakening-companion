@@ -45,14 +45,14 @@ bash scripts/git/install-hooks.sh
 Feature-based modular layout under `lib/`:
 
 - `lib/core/` — cross-cutting: `database/` (sqflite + numbered migrations), `repositories/`, `services/` (notifications, alert checker, system tray), `providers/` (Riverpod), `models/`, `utils/`.
-- `lib/features/<feature>/` — self-contained module, typically with `models/`, `services/` (repositories), `providers/`, `screens/`, `widgets/`. Current features: `alerts`, `augmentations`, `bases`, `blueprints`, `characters`, `class_quests`, `dashboard`, `factions`, `quest_journal`, `servers`, `settings`, `skills`, `specializations`.
+- `lib/features/<feature>/` — self-contained module, typically with `models/`, `services/` (repositories), `providers/`, `screens/`, `widgets/`. Current features: `alerts`, `augmentations`, `base_calculator`, `bases`, `blueprints`, `characters`, `class_quests`, `dashboard`, `factions`, `journal`, `quest_journal`, `servers`, `settings`, `skills`, `specializations`.
 - `lib/shared/` — `navigation/` (adaptive side-rail on desktop, bottom nav on mobile), `theme/`, `widgets/`.
 - `lib/platform/system_tray/` — desktop-only tray integration.
 - `lib/l10n/` — ARB files for 7 locales (en, es, fr, de, uk, it, cy). `l10n.yaml` configures gen.
 
 **State management:** Riverpod (`flutter_riverpod` + `riverpod_annotation`). No raw singletons in UI.
 
-**Persistence:** SQLite via `sqflite` (mobile) / `sqflite_common_ffi` (desktop, auto-initialized in `AppDatabase._initDatabase`). Schema evolves through `migration_NNN_*.dart` files in `lib/core/database/migrations/` — each is imported and registered in `lib/core/database/app_database.dart`. **Bump the `version:` in `openDatabase` whenever you add a migration.** Current version: 12.
+**Persistence:** SQLite via `sqflite` (mobile) / `sqflite_common_ffi` (desktop, auto-initialized in `AppDatabase._initDatabase`). Schema evolves through `migration_NNN_*.dart` files in `lib/core/database/migrations/` — each is imported and registered in `lib/core/database/app_database.dart`. **Bump the `version:` in `openDatabase` whenever you add a migration.** Current version: 16.
 
 **Repository pattern is mandatory.** All DB access goes through repository classes (e.g. `BaseRepository`, `CharacterRepository`, `QuestRepository`). Providers/screens/services must never call `db.query` directly — Qodo Merge flags this in PR review.
 

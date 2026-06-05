@@ -1,8 +1,9 @@
 # 🏜️ Dune Awakening Companion App - Handoff Document
 
-**Date:** May 19, 2026  
-**Version:** v1.3.0-beta  
-**Status:** Release candidate / documentation cleanup  
+**Date:** June 5, 2026  
+**Version:** v1.3.0-beta (main; Base Calculator Phases 1–5 on branch)  
+**Database:** v16  
+**Status:** Release candidate — documentation sync for calculator, chronicle, and blueprints expansion  
 
 ---
 
@@ -29,6 +30,10 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 - ✅ Dashboard charts and analytics
 - ✅ Per-base notification overrides
 - ✅ Hagga Basin South blueprint/schematic tracker
+- ✅ Multi-region blueprint catalogs, filters, respawn timers
+- ✅ Class quests and skill planner
+- ✅ Character Chronicle (RPG journal with markdown, screenshots)
+- ✅ **Base Calculator** (build planner: power/materials, saved plans, share codes, optimization helpers)
 
 ---
 
@@ -47,7 +52,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 ```
 lib/
 ├── core/                    # Core services & infrastructure
-│   ├── database/           # SQLite + migrations (v11)
+│   ├── database/           # SQLite + migrations (v16)
 │   ├── models/             # Core data models
 │   ├── providers/          # Riverpod providers
 │   ├── repositories/       # Data access layer
@@ -58,6 +63,10 @@ lib/
 │   ├── bases/              # Base management
 │   ├── characters/         # Character management
 │   ├── dashboard/          # Overview screen + charts
+│   ├── base_calculator/    # Build planner (power, materials, plans, share)
+│   ├── journal/            # Character Chronicle (RPG journal)
+│   ├── skills/             # Skill rank planner
+│   ├── class_quests/       # Trainer quest paths
 │   ├── blueprints/         # Blueprint and schematic tracker
 │   ├── quest_journal/      # Quest and step tracking
 │   ├── specializations/    # Chapter 3 specialization progress
@@ -260,20 +269,24 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 
 ## 💾 Database
 
-### Version: 5
+### Version: 16
 
-### Tables
-- `characters` - id, name, region, serverType, serverName, sietch, portraitPath
-- `bases` - id, characterId, name, powerExpiresAt (tax columns from migration_003 still exist but are ignored)
-- `notification_history` - id, type, title, body, baseId, baseName, severity, sentAt, read
+### Core tables (non-exhaustive)
+- `characters`, `bases`, `servers` — core tracking
+- `notification_history` — alert history
+- `quests`, `quest_steps` — quest journal
+- `character_specializations`, `faction_progress`, `augmentations` — Chapter 3 progression
+- `blueprints` — per-character schematic progress
+- `character_class_quests`, `character_class_quest_steps`, `character_skills` — class progression
+- `journal_entries` — Character Chronicle
+- `base_calculator_plans` — saved Base Calculator builds (migration 016)
 
 ### Migrations
-Located in `lib/core/database/migrations/`
-- `migration_001_*` - Initial schema
-- `migration_002_*` - Add serverType
-- `migration_003_*` - Add tax fields (columns retained but no longer read/written — tax removed in Chapter 3)
-- `migration_004_*` - Add portraitPath
-- `migration_005_*` - Add notification_history table
+Located in `lib/core/database/migrations/` (001–016). Bump `version:` in
+`lib/core/database/app_database.dart` when adding a migration.
+
+Legacy note: migration_003 tax columns remain nullable but are unused (Chapter 3
+removed in-game taxes).
 
 ---
 
@@ -298,8 +311,8 @@ Located in `lib/core/database/migrations/`
 - **Push notifications:** Via `flutter_local_notifications`
 
 ### Notification Channels
-- `critical_alerts` - Power < 24h or tax defaulted
-- `warning_alerts` - Power < 48h or tax overdue
+- `critical_alerts` - Power < 24h
+- `warning_alerts` - Power < 48h
 - `app_messages` - General notifications
 
 ### Settings Persistence
@@ -358,6 +371,8 @@ All notification settings stored in `SharedPreferences`:
 | `docs/ENGINEERING_HOUSEKEEPING.md` | Engineering assessment & gaps |
 | `docs/ENGINEERING_TASKLIST.md` | Concrete engineering task list |
 | `docs/ROADMAP_2026.md` | Phased engineering + product roadmap |
+| `docs/RESEARCH_BASE_CALCULATOR.md` | Base Calculator phases, catalog sourcing, fuel rates |
+| `docs/RESEARCH_RPG_JOURNAL_NOTES.md` | Character Chronicle design |
 | `docs/SIGNING_GUIDE.md` | Release signing for all platforms |
 | `docs/RELEASE_CHECKLIST.md` | Pre-release checklist |
 | `docs/RELEASE_NOTES_TEMPLATE.md` | Standardized release notes template |
@@ -365,19 +380,25 @@ All notification settings stored in `SharedPreferences`:
 
 ---
 
-## 🎯 Future Roadmap (v1.1+)
+## 🎯 Future Roadmap
 
-### Polish Items
-- [x] Custom notification sounds (Sound on/off, Vibration on/off) ✅
-- [x] Quiet hours (customizable) ✅
-- [ ] Per-base notification overrides
+Most v1.1–v1.3 items below are **shipped**. See `README.md` roadmap and
+`docs/ROADMAP_2026.md` for current priorities (Hagga map research, catalog
+validation, optional cloud sync).
+
+### Polish Items — complete
+- [x] Custom notification sounds ✅
+- [x] Quiet hours ✅
+- [x] Per-base notification overrides ✅
 - [x] Notification history ✅
-- [x] Tray icon badge with alert count ✅
+- [x] Tray icon badge ✅
 
-### Major Features
-- [ ] **Quest Journal** - Track multi-step quests with notes
-- [ ] **Theme Customization** - Multiple Dune-inspired themes
-- [ ] **Dashboard Charts** - Analytics and visualizations
+### Major Features — complete on `main`
+- [x] Quest Journal ✅
+- [x] Theme customization ✅
+- [x] Dashboard charts ✅
+- [x] Base Calculator ✅
+- [x] Character Chronicle ✅
 
 ---
 
@@ -404,4 +425,4 @@ See `docs/CUSTOM_SOUNDS.md` for installation instructions.
 
 ---
 
-*Generated December 25, 2025*
+*Last updated June 5, 2026*

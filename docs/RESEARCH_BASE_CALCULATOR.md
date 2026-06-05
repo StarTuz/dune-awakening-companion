@@ -1,6 +1,7 @@
 # Base Calculator Research & Assessment
 
-Status: **Phase 5 implemented.** (assessment complete and audited, revision 2)
+Status: **All phases implemented (1–5).** See `lib/features/base_calculator/` and
+`README.md` for user-facing summary.
 
 This document assesses a local-first **Base Calculator** feature for the Dune
 Awakening Companion App. It uses the TCNO calculator shared by the user as the
@@ -208,6 +209,28 @@ Shipped:
 - Tests for optimizer, running cost, and preset catalog coverage.
 
 Deferred: spice/wind lubricant running costs until rates are audited in-game.
+
+---
+
+## Running fuel rates (Phase 5)
+
+The **Running fuel estimate** in the calculator models **ongoing upkeep**, not
+build materials and not net power.
+
+| Generator | Modeled? | Rate used | Notes |
+|-----------|----------|-----------|-------|
+| **Fuel-Powered Generator** | Yes | **1 Fuel Cell / hour / placed generator** | Community-sourced ([Method.gg](https://www.method.gg/dune-awakening/how-to-power-your-base-efficiently-in-dune-awakening), [TheGamer](https://www.thegamer.com/dune-awakening-sub-fief-base-power-how-to-guide/)). Code: `GeneratorRunningCost.fuelCellsPerHourPerFuelGenerator` in `lib/features/base_calculator/models/generator_running_cost.dart`. |
+| **Spice-Powered Generator** | No | — | Uses Spice-infused Fuel Cells; rate not audited in our catalog. |
+| **Wind Turbine (Omnidirectional / Directional)** | No | — | Uses lubricants (+ water mechanics in-game); not modeled as Fuel Cells. |
+
+**Formula:** `Fuel Cells = fuel_generator_count × hours × 1`
+
+**Important:** Fuel burns per **running generator over time**, independent of
+consumer load or net power headroom (see Audit Findings). Turning off fabricators
+does not reduce fuel use — turn off unused generators.
+
+All rates are marked **verify in-game** in the UI until a maintainer confirms
+them against the sub-fief console timer or patch notes.
 
 ---
 

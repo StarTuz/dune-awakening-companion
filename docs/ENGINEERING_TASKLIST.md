@@ -1,9 +1,9 @@
 # Engineering Task List
 
-Last updated: 2026-02-07
+Last updated: 2026-06-05
 
 This is a concrete task list derived from the housekeeping assessment.
-Status: **100% Complete**
+Status: **100% Complete** (baseline engineering gates). Test count grows with features — see `flutter test` / CI for current totals.
 
 ## CI/CD and Local Automation
 - [x] Add PR workflow: analyze + test + build.
@@ -17,8 +17,8 @@ Status: **100% Complete**
 - [x] Add widget tests for Dashboard, Characters, Alerts, Settings screens (6 widget test files).
 - [x] Add integration tests for character/base flow and import/export (3 integration test files).
 - [x] Define smoke tests for release gating.
-- [x] Add coverage reporting and thresholds (15% gate, currently 19.83%).
-- **Total: 71 tests passing across 19 test files.**
+- [x] Add coverage reporting and thresholds (15% gate; re-check in CI).
+- **Total:** 40 test files / ~296 tests (run `flutter test` for current count).
 
 ## Security and Pen-Test Readiness
 - [x] Add dependency audit step (`scripts/ci/deps_audit.sh`).

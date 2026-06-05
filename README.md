@@ -56,15 +56,34 @@ A cross-platform companion application for managing characters, bases, and power
 - **Quest Journal:** Track multi-step quests, contracts, notes, and repeatable objectives
 - **Quest Steps:** Mark progress step-by-step from a dedicated detail sheet
 - **Class Quests:** Track basic and advanced trainer unlock paths per character
+- **Skill Planner:** Track skill ranks per class tree
 - **Specializations:** Track all 5 Chapter 3 specialization trees up to 500 total levels
 - **Faction Progress:** Record ranks, contracts completed, and reputation progress
 - **Augmentations:** Track acquired augments, source bosses, slots, and equipped state
 
 ### 📐 Blueprints & Schematics
-- **Hagga Basin South slice:** Seeded checklist based on IGN's [Hagga Basin South unique schematics guide](https://www.ign.com/wikis/dune-awakening/All_Hagga_Basin_South_Unique_Schematics_and_Locations)
+- **Multi-region catalogs:** Hagga Basin South, Deep Desert, Shield Wall, and other guide-sourced regions (12 catalog files)
 - **Per-character progress:** Mark each blueprint locked/unlocked independently per character
 - **Source details:** Record category, source type, source/location, required materials, and notes
+- **Filters & search:** Filter by source, augment type, and discovery status
 - **Future-ready links:** Store optional quest and map-pin references for later journal/map integration
+
+### 🧮 Base Calculator
+Local-first **build planner** (separate from the power-countdown base tracker). See `docs/RESEARCH_BASE_CALCULATOR.md` for full design and data notes.
+
+- **Build math:** Power netting, material totals, Deep Desert 50% material discount, transport volume, hauling trips
+- **Catalog:** Utilities, fabricators, refineries, storage buildings, and hauling containers (community-sourced — verify in-game)
+- **Saved plans:** Name builds, optional character/base links, duplicate/delete, included in ZIP export/import (DB v16)
+- **Share:** Portable JSON files and compact `dac-v1` share codes for guild coordination
+- **Planning helpers:** Power deficit recommendations, fuel running-cost estimate, built-in templates (starter, Deep Desert refinery, crafting hub, guild haul)
+
+**Running fuel estimate:** models **Fuel-Powered Generator** only at **1 Fuel Cell per hour per placed generator** (community-sourced; not tied to net power or consumer load). Spice and wind-turbine lubricant upkeep are **not** estimated yet.
+
+### 📜 Character Chronicle
+Per-character RPG journal on the Character Progress dialog (see `docs/RESEARCH_RPG_JOURNAL_NOTES.md`).
+
+- Biography, markdown entries, tags, search, location/mood
+- Optional quest links and bundled screenshot backups in ZIP export/import
 
 ### 🔔 Smart Alert System
 - Automatic alerts for bases expiring soon
@@ -339,17 +358,19 @@ lib/
 | **[docs/SECURITY_CHECKLIST.md](./docs/SECURITY_CHECKLIST.md)** | Ongoing security review checklist |
 | **[docs/ROADMAP_2026.md](./docs/ROADMAP_2026.md)** | 2026 engineering + product roadmap |
 | **[docs/ENGINEERING_TASKLIST.md](./docs/ENGINEERING_TASKLIST.md)** | Engineering tasks (100% complete) |
+| **[docs/RESEARCH_BASE_CALCULATOR.md](./docs/RESEARCH_BASE_CALCULATOR.md)** | Base Calculator design, phases, catalog sourcing, fuel-rate notes |
+| **[docs/RESEARCH_RPG_JOURNAL_NOTES.md](./docs/RESEARCH_RPG_JOURNAL_NOTES.md)** | Character Chronicle / RPG journal feature design |
 
 ---
 
 ## Vision & product research
 
-Long-term companion vision includes **guided regional onboarding** (especially **Hagga Basin**) so new players don’t miss critical early beats—separate from the in-app **Quest Journal** (manual tracking) and from the **Adventure Journal / chronicles** brainstorm in `NEXT_STEPS.md`.
+Long-term companion vision includes **guided regional onboarding** (especially **Hagga Basin**) so new players don’t miss critical early beats—separate from the in-app **Quest Journal** (manual tracking) and the shipped **Character Chronicle** (player-authored journal).
 
 | Doc | Purpose |
 |-----|---------|
 | **[docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md](./docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md)** | Full **research / analysis / assessment** index for an interactive Hagga-style map (layers, sub-regions, risks, phases). Includes **internet research methodology** and **tiered source** notes. |
-| **[NEXT_STEPS.md](./NEXT_STEPS.md)** §7 *RPG Elements & Storytelling* | **Chronicles / adventure journal** brainstorm (`JournalEntry`, timeline, biography) — narrative layer; cross-linked from the Hagga doc. |
+| **[docs/RESEARCH_RPG_JOURNAL_NOTES.md](./docs/RESEARCH_RPG_JOURNAL_NOTES.md)** | Shipped Character Chronicle feature (biography, markdown entries, screenshots). |
 
 ---
 
@@ -366,7 +387,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.3.0-beta)
+### ✅ Completed (v1.3.0-beta on `main`; unreleased on tag)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
@@ -376,8 +397,8 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Export/Import data backups
 - [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
-- [x] Adaptive navigation
-- [x] Database v11 with migrations
+- [x] Adaptive navigation (7 tabs including Calculator)
+- [x] Database v16 with migrations
 - [x] Multi-language support (7 languages)
 - [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
 - [x] **Light/Dark Mode Toggle**
@@ -385,16 +406,22 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] **Quiet Hours & Notification Controls**
 - [x] **Notification History**
 - [x] **Quest Journal**
+- [x] **Character Chronicle** (RPG journal)
+- [x] **Class Quests & Skill Planner**
 - [x] **Specialization Tracker**
 - [x] **Faction Progress Tracker**
 - [x] **Augmentation Tracker**
 - [x] **Dashboard Charts & Analytics**
 - [x] **Per-base Notification Overrides**
-- [x] **Blueprints/Schematics Tracker** (Hagga Basin South first slice)
+- [x] **Blueprints/Schematics Tracker** (multi-region catalogs)
+- [x] **Base Calculator** (Phases 1–5: planner, saved plans, share codes, optimization helpers)
 
 ### 📋 Future Features
 
+- [ ] In-game validation pass for calculator catalog and fuel rates
+- [ ] Spice/wind-turbine running-cost rates in Base Calculator
 - [ ] Character Sorting (by server, urgency, name, last updated)
+- [ ] Hagga Basin interactive map (research phase — see `docs/RESEARCH_HAGGA_BASIN_NEW_PLAYER_MAP.md`)
 - [ ] Cloud Sync (optional, opt-in)
 
 ---
