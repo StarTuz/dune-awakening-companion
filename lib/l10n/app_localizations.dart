@@ -1911,13 +1911,13 @@ abstract class AppLocalizations {
   /// Tab label for the character RPG journal
   ///
   /// In en, this message translates to:
-  /// **'Journal'**
+  /// **'Chronicle'**
   String get journalTabTitle;
 
   /// Empty state for the character journal
   ///
   /// In en, this message translates to:
-  /// **'No journal entries yet. Tap + to write your first one.'**
+  /// **'No chronicle entries yet. Tap + to write your first one.'**
   String get journalEmpty;
 
   /// Button and dialog title for creating a journal entry
@@ -1971,13 +1971,13 @@ abstract class AppLocalizations {
   /// Snackbar confirmation after saving a journal entry
   ///
   /// In en, this message translates to:
-  /// **'Journal entry saved'**
+  /// **'Chronicle entry saved'**
   String get journalSavedSnack;
 
   /// Snackbar confirmation after deleting a journal entry
   ///
   /// In en, this message translates to:
-  /// **'Journal entry deleted'**
+  /// **'Chronicle entry deleted'**
   String get journalDeletedSnack;
 
   /// Title of the journal entry delete confirmation dialog
@@ -1989,7 +1989,7 @@ abstract class AppLocalizations {
   /// Body of the journal entry delete confirmation dialog
   ///
   /// In en, this message translates to:
-  /// **'This journal entry will be permanently deleted.'**
+  /// **'This chronicle entry will be permanently deleted.'**
   String get journalDeleteConfirmMessage;
 
   /// Dropdown option to show journal entries with any tag
@@ -2333,6 +2333,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show volumes'**
   String get baseCalculatorShowVolumes;
+
+  /// Title for the saved calculator plans sheet and app bar tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Saved plans'**
+  String get baseCalculatorSavedPlans;
+
+  /// Button to persist the current calculator selection
+  ///
+  /// In en, this message translates to:
+  /// **'Save plan'**
+  String get baseCalculatorSavePlan;
+
+  /// Hint shown when no saved plan is active
+  ///
+  /// In en, this message translates to:
+  /// **'Save your current build for later.'**
+  String get baseCalculatorSavePlanHint;
+
+  /// Label when a saved plan is loaded into the calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Editing: {name}'**
+  String baseCalculatorActivePlan(String name);
+
+  /// Menu action to load a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'Load'**
+  String get baseCalculatorLoadPlan;
+
+  /// Menu action to delete a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get baseCalculatorDeletePlan;
+
+  /// Menu action to duplicate a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get baseCalculatorDuplicatePlan;
+
+  /// Label for the saved plan name field
+  ///
+  /// In en, this message translates to:
+  /// **'Plan name'**
+  String get baseCalculatorPlanName;
+
+  /// Hint for the saved plan name field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Deep Desert refinery'**
+  String get baseCalculatorPlanNameHint;
+
+  /// Optional character link for a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'Character (optional)'**
+  String get baseCalculatorLinkCharacter;
+
+  /// Optional base link for a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'Base (optional)'**
+  String get baseCalculatorLinkBase;
+
+  /// No selection for optional dropdown fields
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get baseCalculatorNone;
+
+  /// Empty state in the saved plans sheet
+  ///
+  /// In en, this message translates to:
+  /// **'No saved plans yet.'**
+  String get baseCalculatorNoSavedPlans;
+
+  /// Snackbar after saving a calculator plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan saved'**
+  String get baseCalculatorPlanSaved;
+
+  /// Snackbar after deleting a calculator plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan deleted'**
+  String get baseCalculatorPlanDeleted;
+
+  /// Snackbar after duplicating a calculator plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan duplicated'**
+  String get baseCalculatorPlanDuplicated;
+
+  /// Snackbar after loading a calculator plan
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded \"{name}\"'**
+  String baseCalculatorPlanLoaded(String name);
+
+  /// Title of delete-plan confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plan?'**
+  String get baseCalculatorPlanDeleteConfirmTitle;
+
+  /// Body of delete-plan confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This saved plan will be permanently deleted.'**
+  String get baseCalculatorPlanDeleteConfirmMessage;
+
+  /// Save changes to the currently loaded plan
+  ///
+  /// In en, this message translates to:
+  /// **'Update plan'**
+  String get baseCalculatorUpdatePlan;
+
+  /// Save calculator state as a new plan
+  ///
+  /// In en, this message translates to:
+  /// **'Save as new'**
+  String get baseCalculatorSaveAsNew;
+
+  /// Subtitle showing how many build items a plan contains
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String baseCalculatorPlanItemCount(int count);
+
+  /// Fallback title for a plan with an empty name
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled plan'**
+  String get baseCalculatorUnnamedPlan;
+
+  /// Default name when duplicating a saved plan
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (copy)'**
+  String baseCalculatorPlanCopyName(String name);
 }
 
 class _AppLocalizationsDelegate

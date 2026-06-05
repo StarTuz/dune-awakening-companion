@@ -1,6 +1,6 @@
 # Base Calculator Research & Assessment
 
-Status: **Phase 1 implemented.** (assessment complete and audited, revision 2)
+Status: **Phase 3 implemented.** (assessment complete and audited, revision 2)
 
 This document assesses a local-first **Base Calculator** feature for the Dune
 Awakening Companion App. It uses the TCNO calculator shared by the user as the
@@ -170,23 +170,16 @@ Notes / deferred refinements:
 
 Original goal: match the most useful differentiator in TCNO/DuneCalc.
 
-### Phase 3: Saved Plans
+### Phase 3: Saved Plans — IMPLEMENTED
 
-Goal: make calculator results durable in the app.
+Shipped:
 
-- `base_calculator_plans` table via migration 016+.
-- Plan fields:
-  - `id`
-  - `character_id` nullable
-  - `base_id` nullable
-  - `name`
-  - `deep_desert_discount_enabled`
-  - encoded item quantities
-  - encoded storage quantities
-  - timestamps
-- Repository-only DB access.
-- Export/import support for saved plans.
-- Saved-plan list and duplicate/delete actions.
+- Migration 016 (`base_calculator_plans` table).
+- `BaseCalculatorPlan` model + `BaseCalculatorPlanRepository`.
+- Saved-plan sheet (load, duplicate, delete) and save/update dialog with optional
+  character/base links.
+- ZIP export/import includes `baseCalculatorPlans`.
+- Tests: migration smoke + model encode/decode.
 
 ### Phase 4: Shareable Configs
 

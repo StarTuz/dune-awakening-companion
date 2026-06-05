@@ -989,11 +989,11 @@ class AppLocalizationsUk extends AppLocalizations {
   String get questReminderNotificationTitle => 'Quest reminder';
 
   @override
-  String get journalTabTitle => 'Щоденник';
+  String get journalTabTitle => 'Хроніка';
 
   @override
   String get journalEmpty =>
-      'Записів у щоденнику ще немає. Натисніть +, щоб написати перший.';
+      'Записів у хроніці ще немає. Натисніть +, щоб написати перший.';
 
   @override
   String get journalNewEntry => 'Новий запис';
@@ -1020,17 +1020,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get journalUntitled => 'Запис без назви';
 
   @override
-  String get journalSavedSnack => 'Запис щоденника збережено';
+  String get journalSavedSnack => 'Запис хроніки збережено';
 
   @override
-  String get journalDeletedSnack => 'Запис щоденника видалено';
+  String get journalDeletedSnack => 'Запис хроніки видалено';
 
   @override
   String get journalDeleteConfirmTitle => 'Видалити запис?';
 
   @override
   String get journalDeleteConfirmMessage =>
-      'Цей запис щоденника буде видалено назавжди.';
+      'Цей запис хроніки буде видалено назавжди.';
 
   @override
   String get journalFilterAllTags => 'Усі теги';
@@ -1215,4 +1215,85 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get baseCalculatorShowVolumes => 'Показати об\'єми';
+
+  @override
+  String get baseCalculatorSavedPlans => 'Збережені плани';
+
+  @override
+  String get baseCalculatorSavePlan => 'Зберегти план';
+
+  @override
+  String get baseCalculatorSavePlanHint => 'Збережіть поточну збірку на потім.';
+
+  @override
+  String baseCalculatorActivePlan(String name) {
+    return 'Редагування: $name';
+  }
+
+  @override
+  String get baseCalculatorLoadPlan => 'Завантажити';
+
+  @override
+  String get baseCalculatorDeletePlan => 'Видалити';
+
+  @override
+  String get baseCalculatorDuplicatePlan => 'Дублювати';
+
+  @override
+  String get baseCalculatorPlanName => 'Назва плану';
+
+  @override
+  String get baseCalculatorPlanNameHint => 'напр. Рафінерія Глибокої Пустелі';
+
+  @override
+  String get baseCalculatorLinkCharacter => 'Персонаж (необов\'язково)';
+
+  @override
+  String get baseCalculatorLinkBase => 'База (необов\'язково)';
+
+  @override
+  String get baseCalculatorNone => 'Немає';
+
+  @override
+  String get baseCalculatorNoSavedPlans => 'Ще немає збережених планів.';
+
+  @override
+  String get baseCalculatorPlanSaved => 'План збережено';
+
+  @override
+  String get baseCalculatorPlanDeleted => 'План видалено';
+
+  @override
+  String get baseCalculatorPlanDuplicated => 'План дубльовано';
+
+  @override
+  String baseCalculatorPlanLoaded(String name) {
+    return 'Завантажено \"$name\"';
+  }
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmTitle => 'Видалити план?';
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmMessage =>
+      'Цей збережений план буде видалено назавжди.';
+
+  @override
+  String get baseCalculatorUpdatePlan => 'Оновити план';
+
+  @override
+  String get baseCalculatorSaveAsNew => 'Зберегти як новий';
+
+  @override
+  String baseCalculatorPlanItemCount(int count) {
+    return '$count предметів';
+  }
+
+  @override
+  String get baseCalculatorUnnamedPlan => 'План без назви';
+
+  @override
+  String baseCalculatorPlanCopyName(String name) {
+    return '$name (копія)';
+  }
 }

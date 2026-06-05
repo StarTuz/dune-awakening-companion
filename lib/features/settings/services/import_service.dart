@@ -17,6 +17,8 @@ import '../../bases/services/base_repository.dart';
 import '../../factions/models/faction_progress.dart';
 import '../../factions/services/faction_progress_repository.dart';
 import '../../journal/models/journal_entry.dart';
+import '../../base_calculator/models/base_calculator_plan.dart';
+import '../../base_calculator/services/base_calculator_plan_repository.dart';
 import '../../journal/services/journal_repository.dart';
 import '../../quest_journal/models/quest.dart';
 import '../../quest_journal/models/quest_step.dart';
@@ -58,6 +60,7 @@ class ImportService {
   final ClassQuestRepository? _classQuestRepository;
   final CharacterSkillRepository? _characterSkillRepository;
   final JournalRepository? _journalRepository;
+  final BaseCalculatorPlanRepository? _baseCalculatorPlanRepository;
 
   ImportService(
     this._characterRepository,
@@ -70,6 +73,7 @@ class ImportService {
     ClassQuestRepository? classQuestRepository,
     CharacterSkillRepository? characterSkillRepository,
     JournalRepository? journalRepository,
+    BaseCalculatorPlanRepository? baseCalculatorPlanRepository,
   })  : _specializationRepository = specializationRepository,
         _factionRepository = factionRepository,
         _augmentationRepository = augmentationRepository,
@@ -77,7 +81,8 @@ class ImportService {
         _blueprintRepository = blueprintRepository,
         _classQuestRepository = classQuestRepository,
         _characterSkillRepository = characterSkillRepository,
-        _journalRepository = journalRepository;
+        _journalRepository = journalRepository,
+        _baseCalculatorPlanRepository = baseCalculatorPlanRepository;
 
   /// Import data from ZIP or JSON file
   Future<ImportResult> importData(
@@ -472,6 +477,16 @@ class ImportService {
         }
         final entry = JournalEntry.fromJson(entryMap);
         await journalRepository.upsert(entry);
+      }
+    }
+
+    final planRepository = _baseCalculatorPlanRepository;
+    if (planRepository != null) {
+      final items =
+          (data['baseCalculatorPlans'] as List<dynamic>? ?? const []);
+      for (final item in items) {
+        final plan = BaseCalculatorPlan.fromJson(item as Map<String, dynamic>);
+        await planRepository.upsert(plan);
       }
     }
   }

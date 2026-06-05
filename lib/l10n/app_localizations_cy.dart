@@ -993,11 +993,11 @@ class AppLocalizationsCy extends AppLocalizations {
   String get questReminderNotificationTitle => 'Quest reminder';
 
   @override
-  String get journalTabTitle => 'Dyddiadur';
+  String get journalTabTitle => 'Cronicl';
 
   @override
   String get journalEmpty =>
-      'Dim cofnodion dyddiadur eto. Tapiwch + i ysgrifennu\'r cyntaf.';
+      'Dim cofnodion cronicl eto. Tapiwch + i ysgrifennu\'r cyntaf.';
 
   @override
   String get journalNewEntry => 'Cofnod Newydd';
@@ -1024,17 +1024,17 @@ class AppLocalizationsCy extends AppLocalizations {
   String get journalUntitled => 'Cofnod heb deitl';
 
   @override
-  String get journalSavedSnack => 'Cofnod dyddiadur wedi\'i gadw';
+  String get journalSavedSnack => 'Cofnod cronicl wedi\'i gadw';
 
   @override
-  String get journalDeletedSnack => 'Cofnod dyddiadur wedi\'i ddileu';
+  String get journalDeletedSnack => 'Cofnod cronicl wedi\'i ddileu';
 
   @override
   String get journalDeleteConfirmTitle => 'Dileu cofnod?';
 
   @override
   String get journalDeleteConfirmMessage =>
-      'Bydd y cofnod dyddiadur hwn yn cael ei ddileu\'n barhaol.';
+      'Bydd y cofnod cronicl hwn yn cael ei ddileu\'n barhaol.';
 
   @override
   String get journalFilterAllTags => 'Pob tag';
@@ -1219,4 +1219,86 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get baseCalculatorShowVolumes => 'Dangos cyfeintiau';
+
+  @override
+  String get baseCalculatorSavedPlans => 'Cynlluniau wedi\'u cadw';
+
+  @override
+  String get baseCalculatorSavePlan => 'Cadw cynllun';
+
+  @override
+  String get baseCalculatorSavePlanHint =>
+      'Cadwch eich adeilad presennol ar gyfer yn nes ymlaen.';
+
+  @override
+  String baseCalculatorActivePlan(String name) {
+    return 'Golygu: $name';
+  }
+
+  @override
+  String get baseCalculatorLoadPlan => 'Llwytho';
+
+  @override
+  String get baseCalculatorDeletePlan => 'Dileu';
+
+  @override
+  String get baseCalculatorDuplicatePlan => 'Dyblygu';
+
+  @override
+  String get baseCalculatorPlanName => 'Enw\'r cynllun';
+
+  @override
+  String get baseCalculatorPlanNameHint => 'e.e. Rafinerydd y Anialwch Dwfn';
+
+  @override
+  String get baseCalculatorLinkCharacter => 'Cymeriad (dewisol)';
+
+  @override
+  String get baseCalculatorLinkBase => 'Sefydlogfa (dewisol)';
+
+  @override
+  String get baseCalculatorNone => 'Dim';
+
+  @override
+  String get baseCalculatorNoSavedPlans => 'Dim cynlluniau wedi\'u cadw eto.';
+
+  @override
+  String get baseCalculatorPlanSaved => 'Cynllun wedi\'i gadw';
+
+  @override
+  String get baseCalculatorPlanDeleted => 'Cynllun wedi\'i ddileu';
+
+  @override
+  String get baseCalculatorPlanDuplicated => 'Cynllun wedi\'i ddyblygu';
+
+  @override
+  String baseCalculatorPlanLoaded(String name) {
+    return 'Wedi llwytho \"$name\"';
+  }
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmTitle => 'Dileu\'r cynllun?';
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmMessage =>
+      'Bydd y cynllun hwn wedi\'i gadw yn cael ei ddileu\'n barhaol.';
+
+  @override
+  String get baseCalculatorUpdatePlan => 'Diweddaru\'r cynllun';
+
+  @override
+  String get baseCalculatorSaveAsNew => 'Cadw fel un newydd';
+
+  @override
+  String baseCalculatorPlanItemCount(int count) {
+    return '$count eitem';
+  }
+
+  @override
+  String get baseCalculatorUnnamedPlan => 'Cynllun di-enw';
+
+  @override
+  String baseCalculatorPlanCopyName(String name) {
+    return '$name (copi)';
+  }
 }

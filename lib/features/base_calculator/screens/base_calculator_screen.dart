@@ -6,10 +6,13 @@ import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 import '../../../shared/theme/app_colors.dart';
 import '../models/base_calculator_catalog.dart';
 import '../models/base_calculator_item.dart';
+import '../models/base_calculator_state.dart';
 import '../models/base_calculator_summary.dart';
 import '../models/storage_catalog.dart';
 import '../models/storage_option.dart';
 import '../providers/base_calculator_provider.dart';
+import '../widgets/base_calculator_plans_sheet.dart';
+import '../widgets/base_calculator_save_plan_dialog.dart';
 
 String _formatVolume(double v) {
   final rounded = v.roundToDouble();
@@ -53,6 +56,11 @@ class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
       appBar: AppBar(
         title: Text(l10n.baseCalculatorTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.folder_open_outlined),
+            tooltip: l10n.baseCalculatorSavedPlans,
+            onPressed: () => showBaseCalculatorPlansSheet(context),
+          ),
           IconButton(
             icon: const Icon(Icons.restart_alt),
             tooltip: l10n.baseCalculatorResetAll,
@@ -141,7 +149,57 @@ class _ControlsAndSummary extends ConsumerWidget {
           showVolumes: showVolumes,
           onShowVolumesChanged: onShowVolumesChanged,
         ),
+        const SizedBox(height: 12),
+        _SavePlanBar(state: state),
       ],
+    );
+  }
+}
+
+class _SavePlanBar extends ConsumerWidget {
+  const _SavePlanBar({required this.state});
+
+  final BaseCalculatorState state;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final activeName = state.activePlanName;
+
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                activeName == null
+                    ? l10n.baseCalculatorSavePlanHint
+                    : l10n.baseCalculatorActivePlan(activeName),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: DuneColors.mutedText,
+                    ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(width: 8),
+            FilledButton.tonal(
+              onPressed: state.isPristine
+                  ? null
+                  : () => showBaseCalculatorSavePlanDialog(
+                        context: context,
+                        ref: ref,
+                        state: state,
+                        existingPlanId: state.activePlanId,
+                        initialName: state.activePlanName,
+                      ),
+              child: Text(l10n.baseCalculatorSavePlan),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

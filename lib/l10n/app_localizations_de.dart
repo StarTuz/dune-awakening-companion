@@ -994,11 +994,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get questReminderNotificationTitle => 'Quest reminder';
 
   @override
-  String get journalTabTitle => 'Tagebuch';
+  String get journalTabTitle => 'Chronik';
 
   @override
   String get journalEmpty =>
-      'Noch keine Tagebucheinträge. Tippe auf +, um den ersten zu schreiben.';
+      'Noch keine Chronikeinträge. Tippe auf +, um den ersten zu schreiben.';
 
   @override
   String get journalNewEntry => 'Neuer Eintrag';
@@ -1025,17 +1025,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get journalUntitled => 'Eintrag ohne Titel';
 
   @override
-  String get journalSavedSnack => 'Tagebucheintrag gespeichert';
+  String get journalSavedSnack => 'Chronikeintrag gespeichert';
 
   @override
-  String get journalDeletedSnack => 'Tagebucheintrag gelöscht';
+  String get journalDeletedSnack => 'Chronikeintrag gelöscht';
 
   @override
   String get journalDeleteConfirmTitle => 'Eintrag löschen?';
 
   @override
   String get journalDeleteConfirmMessage =>
-      'Dieser Tagebucheintrag wird dauerhaft gelöscht.';
+      'Dieser Chronikeintrag wird dauerhaft gelöscht.';
 
   @override
   String get journalFilterAllTags => 'Alle Schlagwörter';
@@ -1220,4 +1220,86 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get baseCalculatorShowVolumes => 'Volumen anzeigen';
+
+  @override
+  String get baseCalculatorSavedPlans => 'Gespeicherte Pläne';
+
+  @override
+  String get baseCalculatorSavePlan => 'Plan speichern';
+
+  @override
+  String get baseCalculatorSavePlanHint =>
+      'Speichere deinen aktuellen Bau für später.';
+
+  @override
+  String baseCalculatorActivePlan(String name) {
+    return 'Bearbeitung: $name';
+  }
+
+  @override
+  String get baseCalculatorLoadPlan => 'Laden';
+
+  @override
+  String get baseCalculatorDeletePlan => 'Löschen';
+
+  @override
+  String get baseCalculatorDuplicatePlan => 'Duplizieren';
+
+  @override
+  String get baseCalculatorPlanName => 'Planname';
+
+  @override
+  String get baseCalculatorPlanNameHint => 'z. B. Tiefwüsten-Raffinerie';
+
+  @override
+  String get baseCalculatorLinkCharacter => 'Charakter (optional)';
+
+  @override
+  String get baseCalculatorLinkBase => 'Basis (optional)';
+
+  @override
+  String get baseCalculatorNone => 'Keine';
+
+  @override
+  String get baseCalculatorNoSavedPlans => 'Noch keine gespeicherten Pläne.';
+
+  @override
+  String get baseCalculatorPlanSaved => 'Plan gespeichert';
+
+  @override
+  String get baseCalculatorPlanDeleted => 'Plan gelöscht';
+
+  @override
+  String get baseCalculatorPlanDuplicated => 'Plan dupliziert';
+
+  @override
+  String baseCalculatorPlanLoaded(String name) {
+    return '\"$name\" geladen';
+  }
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmTitle => 'Plan löschen?';
+
+  @override
+  String get baseCalculatorPlanDeleteConfirmMessage =>
+      'Dieser gespeicherte Plan wird dauerhaft gelöscht.';
+
+  @override
+  String get baseCalculatorUpdatePlan => 'Plan aktualisieren';
+
+  @override
+  String get baseCalculatorSaveAsNew => 'Als neu speichern';
+
+  @override
+  String baseCalculatorPlanItemCount(int count) {
+    return '$count Gegenstände';
+  }
+
+  @override
+  String get baseCalculatorUnnamedPlan => 'Unbenannter Plan';
+
+  @override
+  String baseCalculatorPlanCopyName(String name) {
+    return '$name (Kopie)';
+  }
 }

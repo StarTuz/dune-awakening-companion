@@ -1194,11 +1194,11 @@
   "@questReminderNotificationTitle": {
     "description": "OS notification title for quest reminder"
   },
-  "journalTabTitle": "Journal",
+  "journalTabTitle": "Chronicle",
   "@journalTabTitle": {
     "description": "Tab label for the character RPG journal"
   },
-  "journalEmpty": "No journal entries yet. Tap + to write your first one.",
+  "journalEmpty": "No chronicle entries yet. Tap + to write your first one.",
   "@journalEmpty": {
     "description": "Empty state for the character journal"
   },
@@ -1234,11 +1234,11 @@
   "@journalUntitled": {
     "description": "Fallback title shown when a journal entry has no title"
   },
-  "journalSavedSnack": "Journal entry saved",
+  "journalSavedSnack": "Chronicle entry saved",
   "@journalSavedSnack": {
     "description": "Snackbar confirmation after saving a journal entry"
   },
-  "journalDeletedSnack": "Journal entry deleted",
+  "journalDeletedSnack": "Chronicle entry deleted",
   "@journalDeletedSnack": {
     "description": "Snackbar confirmation after deleting a journal entry"
   },
@@ -1246,7 +1246,7 @@
   "@journalDeleteConfirmTitle": {
     "description": "Title of the journal entry delete confirmation dialog"
   },
-  "journalDeleteConfirmMessage": "This journal entry will be permanently deleted.",
+  "journalDeleteConfirmMessage": "This chronicle entry will be permanently deleted.",
   "@journalDeleteConfirmMessage": {
     "description": "Body of the journal entry delete confirmation dialog"
   },
@@ -1495,5 +1495,121 @@
   "baseCalculatorShowVolumes": "Show volumes",
   "@baseCalculatorShowVolumes": {
     "description": "Toggle to show per-material transport volume"
+  },
+  "baseCalculatorSavedPlans": "Saved plans",
+  "@baseCalculatorSavedPlans": {
+    "description": "Title for the saved calculator plans sheet and app bar tooltip"
+  },
+  "baseCalculatorSavePlan": "Save plan",
+  "@baseCalculatorSavePlan": {
+    "description": "Button to persist the current calculator selection"
+  },
+  "baseCalculatorSavePlanHint": "Save your current build for later.",
+  "@baseCalculatorSavePlanHint": {
+    "description": "Hint shown when no saved plan is active"
+  },
+  "baseCalculatorActivePlan": "Editing: {name}",
+  "@baseCalculatorActivePlan": {
+    "description": "Label when a saved plan is loaded into the calculator",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "baseCalculatorLoadPlan": "Load",
+  "@baseCalculatorLoadPlan": {
+    "description": "Menu action to load a saved plan"
+  },
+  "baseCalculatorDeletePlan": "Delete",
+  "@baseCalculatorDeletePlan": {
+    "description": "Menu action to delete a saved plan"
+  },
+  "baseCalculatorDuplicatePlan": "Duplicate",
+  "@baseCalculatorDuplicatePlan": {
+    "description": "Menu action to duplicate a saved plan"
+  },
+  "baseCalculatorPlanName": "Plan name",
+  "@baseCalculatorPlanName": {
+    "description": "Label for the saved plan name field"
+  },
+  "baseCalculatorPlanNameHint": "e.g. Deep Desert refinery",
+  "@baseCalculatorPlanNameHint": {
+    "description": "Hint for the saved plan name field"
+  },
+  "baseCalculatorLinkCharacter": "Character (optional)",
+  "@baseCalculatorLinkCharacter": {
+    "description": "Optional character link for a saved plan"
+  },
+  "baseCalculatorLinkBase": "Base (optional)",
+  "@baseCalculatorLinkBase": {
+    "description": "Optional base link for a saved plan"
+  },
+  "baseCalculatorNone": "None",
+  "@baseCalculatorNone": {
+    "description": "No selection for optional dropdown fields"
+  },
+  "baseCalculatorNoSavedPlans": "No saved plans yet.",
+  "@baseCalculatorNoSavedPlans": {
+    "description": "Empty state in the saved plans sheet"
+  },
+  "baseCalculatorPlanSaved": "Plan saved",
+  "@baseCalculatorPlanSaved": {
+    "description": "Snackbar after saving a calculator plan"
+  },
+  "baseCalculatorPlanDeleted": "Plan deleted",
+  "@baseCalculatorPlanDeleted": {
+    "description": "Snackbar after deleting a calculator plan"
+  },
+  "baseCalculatorPlanDuplicated": "Plan duplicated",
+  "@baseCalculatorPlanDuplicated": {
+    "description": "Snackbar after duplicating a calculator plan"
+  },
+  "baseCalculatorPlanLoaded": "Loaded \"{name}\"",
+  "@baseCalculatorPlanLoaded": {
+    "description": "Snackbar after loading a calculator plan",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "baseCalculatorPlanDeleteConfirmTitle": "Delete plan?",
+  "@baseCalculatorPlanDeleteConfirmTitle": {
+    "description": "Title of delete-plan confirmation dialog"
+  },
+  "baseCalculatorPlanDeleteConfirmMessage": "This saved plan will be permanently deleted.",
+  "@baseCalculatorPlanDeleteConfirmMessage": {
+    "description": "Body of delete-plan confirmation dialog"
+  },
+  "baseCalculatorUpdatePlan": "Update plan",
+  "@baseCalculatorUpdatePlan": {
+    "description": "Save changes to the currently loaded plan"
+  },
+  "baseCalculatorSaveAsNew": "Save as new",
+  "@baseCalculatorSaveAsNew": {
+    "description": "Save calculator state as a new plan"
+  },
+  "baseCalculatorPlanItemCount": "{count} items",
+  "@baseCalculatorPlanItemCount": {
+    "description": "Subtitle showing how many build items a plan contains",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "baseCalculatorUnnamedPlan": "Untitled plan",
+  "@baseCalculatorUnnamedPlan": {
+    "description": "Fallback title for a plan with an empty name"
+  },
+  "baseCalculatorPlanCopyName": "{name} (copy)",
+  "@baseCalculatorPlanCopyName": {
+    "description": "Default name when duplicating a saved plan",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }
