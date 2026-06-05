@@ -1611,5 +1611,49 @@
         "type": "String"
       }
     }
+  },
+  "baseCalculatorShare": "Share",
+  "@baseCalculatorShare": {
+    "description": "Share menu tooltip for exporting or importing plans"
+  },
+  "baseCalculatorCopyShareCode": "Copy share code",
+  "@baseCalculatorCopyShareCode": {
+    "description": "Copy a compact share string to the clipboard"
+  },
+  "baseCalculatorShareCodeCopied": "Share code copied",
+  "@baseCalculatorShareCodeCopied": {
+    "description": "Snackbar after copying a share code"
+  },
+  "baseCalculatorExportJson": "Export JSON",
+  "@baseCalculatorExportJson": {
+    "description": "Export a plan to a portable JSON file"
+  },
+  "baseCalculatorImportJson": "Import JSON",
+  "@baseCalculatorImportJson": {
+    "description": "Import a plan from a portable JSON file"
+  },
+  "baseCalculatorImportShareCode": "Paste share code",
+  "@baseCalculatorImportShareCode": {
+    "description": "Import a plan from a compact share string"
+  },
+  "baseCalculatorImportShareCodeTitle": "Import share code",
+  "@baseCalculatorImportShareCodeTitle": {
+    "description": "Title for the paste-share-code dialog"
+  },
+  "baseCalculatorImportShareCodeHint": "dac-v1;dd;i:fuel_powered_generator=2",
+  "@baseCalculatorImportShareCodeHint": {
+    "description": "Hint text for the share-code import field"
+  },
+  "baseCalculatorPlanExported": "Plan exported",
+  "@baseCalculatorPlanExported": {
+    "description": "Snackbar after exporting a plan JSON file"
+  },
+  "baseCalculatorPlanImported": "Plan imported",
+  "@baseCalculatorPlanImported": {
+    "description": "Snackbar after importing a shared plan"
+  },
+  "baseCalculatorShareCodeInvalid": "That share code or JSON file is not valid.",
+  "@baseCalculatorShareCodeInvalid": {
+    "description": "Error when a share code or import file cannot be parsed"
   }
 }

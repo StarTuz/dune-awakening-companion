@@ -135,6 +135,10 @@ class BaseCalculatorPlan implements BaseModel {
     );
   }
 
+  /// Decode a quantity map from JSON export/import or dynamic JSON values.
+  static Map<String, int> decodeQuantitiesMap(dynamic raw) =>
+      _decodeQuantities(raw);
+
   static Map<String, int> _decodeQuantities(dynamic raw) {
     if (raw == null) return const {};
     if (raw is Map<String, dynamic>) {

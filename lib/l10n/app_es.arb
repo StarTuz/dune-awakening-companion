@@ -347,5 +347,16 @@
   "baseCalculatorSaveAsNew": "Guardar como nuevo",
   "baseCalculatorPlanItemCount": "{count} objetos",
   "baseCalculatorUnnamedPlan": "Plan sin título",
-  "baseCalculatorPlanCopyName": "{name} (copia)"
+  "baseCalculatorPlanCopyName": "{name} (copia)",
+  "baseCalculatorShare": "Compartir",
+  "baseCalculatorCopyShareCode": "Copiar código",
+  "baseCalculatorShareCodeCopied": "Código copiado",
+  "baseCalculatorExportJson": "Exportar JSON",
+  "baseCalculatorImportJson": "Importar JSON",
+  "baseCalculatorImportShareCode": "Pegar código",
+  "baseCalculatorImportShareCodeTitle": "Importar código",
+  "baseCalculatorImportShareCodeHint": "dac-v1;dd;i:fuel_powered_generator=2",
+  "baseCalculatorPlanExported": "Plan exportado",
+  "baseCalculatorPlanImported": "Plan importado",
+  "baseCalculatorShareCodeInvalid": "Ese código o archivo JSON no es válido."
 }

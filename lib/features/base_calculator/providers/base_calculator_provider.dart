@@ -48,6 +48,10 @@ class BaseCalculatorNotifier extends StateNotifier<BaseCalculatorState> {
     state = plan.toCalculatorState();
   }
 
+  void loadState(BaseCalculatorState next) {
+    state = next;
+  }
+
   void markActivePlan(BaseCalculatorPlan plan) {
     state = state.copyWith(
       activePlanId: plan.id,

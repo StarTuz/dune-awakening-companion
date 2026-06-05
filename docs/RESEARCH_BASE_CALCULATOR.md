@@ -1,6 +1,6 @@
 # Base Calculator Research & Assessment
 
-Status: **Phase 3 implemented.** (assessment complete and audited, revision 2)
+Status: **Phase 4 implemented.** (assessment complete and audited, revision 2)
 
 This document assesses a local-first **Base Calculator** feature for the Dune
 Awakening Companion App. It uses the TCNO calculator shared by the user as the
@@ -181,17 +181,17 @@ Shipped:
 - ZIP export/import includes `baseCalculatorPlans`.
 - Tests: migration smoke + model encode/decode.
 
-### Phase 4: Shareable Configs
+### Phase 4: Shareable Configs — IMPLEMENTED
 
-Goal: support guild coordination without requiring a cloud backend.
+Shipped:
 
-- Local export/import JSON for a plan.
-- Optional short share string based on versioned item codes.
-- Optional URL-style config parameter inside the app later if desktop/mobile deep
-  links become worth the complexity.
+- `BaseCalculatorPortablePlan` JSON format (`dune-base-calculator-plan` v1).
+- `BaseCalculatorShareCodec` compact string (`dac-v1;dd;i:code=qty;s:code=qty;n:name`).
+- Per-plan and live-build actions: copy share code, export/import JSON, paste
+  share code (share menu on calculator + saved-plan sheet).
+- Unknown catalog codes are ignored on import; TCNO codes are **not** supported.
 
-Do not make TCNO's exact compact code format a compatibility guarantee unless we
-explicitly choose to import/export their configs.
+Deferred: URL/deep-link config parameters.
 
 ### Phase 5: Optimization Helpers
 

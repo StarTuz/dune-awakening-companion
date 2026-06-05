@@ -11,6 +11,8 @@ import '../models/base_calculator_plan.dart';
 import '../providers/base_calculator_plan_provider.dart';
 import '../providers/base_calculator_provider.dart';
 import 'base_calculator_save_plan_dialog.dart';
+import 'base_calculator_share_actions.dart';
+import 'base_calculator_share_dialog.dart';
 
 Future<void> showBaseCalculatorPlansSheet(BuildContext context) {
   return showModalBottomSheet<void>(
@@ -65,6 +67,29 @@ class _PlansSheet extends ConsumerWidget {
                         },
                   icon: const Icon(Icons.save_outlined),
                   label: Text(l10n.baseCalculatorSavePlan),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () => importBaseCalculatorPortableJson(
+                    context: context,
+                    ref: ref,
+                  ),
+                  icon: const Icon(Icons.upload_file_outlined),
+                  label: Text(l10n.baseCalculatorImportJson),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => showBaseCalculatorImportShareDialog(
+                    context: context,
+                    ref: ref,
+                  ),
+                  icon: const Icon(Icons.content_paste_go_outlined),
+                  label: Text(l10n.baseCalculatorImportShareCode),
                 ),
               ],
             ),
@@ -183,6 +208,14 @@ class _PlanTile extends ConsumerWidget {
             child: Text(l10n.baseCalculatorLoadPlan),
           ),
           PopupMenuItem(
+            value: _PlanAction.copyShare,
+            child: Text(l10n.baseCalculatorCopyShareCode),
+          ),
+          PopupMenuItem(
+            value: _PlanAction.exportJson,
+            child: Text(l10n.baseCalculatorExportJson),
+          ),
+          PopupMenuItem(
             value: _PlanAction.duplicate,
             child: Text(l10n.baseCalculatorDuplicatePlan),
           ),
@@ -212,6 +245,18 @@ class _PlanTile extends ConsumerWidget {
             SnackBar(content: Text(l10n.baseCalculatorPlanLoaded(plan.name))),
           );
         }
+      case _PlanAction.copyShare:
+        await copyBaseCalculatorShareCode(
+          context: context,
+          ref: ref,
+          portable: portableFromPlan(plan),
+        );
+      case _PlanAction.exportJson:
+        await exportBaseCalculatorPortableJson(
+          context: context,
+          ref: ref,
+          portable: portableFromPlan(plan),
+        );
       case _PlanAction.duplicate:
         await editor.duplicate(
           plan,
@@ -252,4 +297,4 @@ class _PlanTile extends ConsumerWidget {
   }
 }
 
-enum _PlanAction { load, duplicate, delete }
+enum _PlanAction { load, copyShare, exportJson, duplicate, delete }

@@ -13,6 +13,8 @@ import '../models/storage_option.dart';
 import '../providers/base_calculator_provider.dart';
 import '../widgets/base_calculator_plans_sheet.dart';
 import '../widgets/base_calculator_save_plan_dialog.dart';
+import '../widgets/base_calculator_share_actions.dart';
+import '../widgets/base_calculator_share_dialog.dart';
 
 String _formatVolume(double v) {
   final rounded = v.roundToDouble();
@@ -31,8 +33,36 @@ class BaseCalculatorScreen extends ConsumerStatefulWidget {
       _BaseCalculatorScreenState();
 }
 
+enum _ShareAction { copyCode, exportJson, importJson, importCode }
+
 class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
   bool _showVolumes = false;
+
+  Future<void> _handleShareAction(
+    BuildContext context,
+    WidgetRef ref,
+    _ShareAction action,
+    BaseCalculatorState state,
+  ) async {
+    switch (action) {
+      case _ShareAction.copyCode:
+        await copyBaseCalculatorShareCode(
+          context: context,
+          ref: ref,
+          portable: portableFromState(state),
+        );
+      case _ShareAction.exportJson:
+        await exportBaseCalculatorPortableJson(
+          context: context,
+          ref: ref,
+          portable: portableFromState(state),
+        );
+      case _ShareAction.importJson:
+        await importBaseCalculatorPortableJson(context: context, ref: ref);
+      case _ShareAction.importCode:
+        await showBaseCalculatorImportShareDialog(context: context, ref: ref);
+    }
+  }
 
   String _categoryLabel(AppLocalizations l10n, BaseCalculatorCategory c) {
     switch (c) {
@@ -56,6 +86,32 @@ class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
       appBar: AppBar(
         title: Text(l10n.baseCalculatorTitle),
         actions: [
+          PopupMenuButton<_ShareAction>(
+            tooltip: l10n.baseCalculatorShare,
+            icon: const Icon(Icons.ios_share_outlined),
+            onSelected: (action) => _handleShareAction(context, ref, action, state),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _ShareAction.copyCode,
+                enabled: !state.isPristine,
+                child: Text(l10n.baseCalculatorCopyShareCode),
+              ),
+              PopupMenuItem(
+                value: _ShareAction.exportJson,
+                enabled: !state.isPristine,
+                child: Text(l10n.baseCalculatorExportJson),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: _ShareAction.importJson,
+                child: Text(l10n.baseCalculatorImportJson),
+              ),
+              PopupMenuItem(
+                value: _ShareAction.importCode,
+                child: Text(l10n.baseCalculatorImportShareCode),
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.folder_open_outlined),
             tooltip: l10n.baseCalculatorSavedPlans,

@@ -2477,6 +2477,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name} (copy)'**
   String baseCalculatorPlanCopyName(String name);
+
+  /// Share menu tooltip for exporting or importing plans
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get baseCalculatorShare;
+
+  /// Copy a compact share string to the clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copy share code'**
+  String get baseCalculatorCopyShareCode;
+
+  /// Snackbar after copying a share code
+  ///
+  /// In en, this message translates to:
+  /// **'Share code copied'**
+  String get baseCalculatorShareCodeCopied;
+
+  /// Export a plan to a portable JSON file
+  ///
+  /// In en, this message translates to:
+  /// **'Export JSON'**
+  String get baseCalculatorExportJson;
+
+  /// Import a plan from a portable JSON file
+  ///
+  /// In en, this message translates to:
+  /// **'Import JSON'**
+  String get baseCalculatorImportJson;
+
+  /// Import a plan from a compact share string
+  ///
+  /// In en, this message translates to:
+  /// **'Paste share code'**
+  String get baseCalculatorImportShareCode;
+
+  /// Title for the paste-share-code dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Import share code'**
+  String get baseCalculatorImportShareCodeTitle;
+
+  /// Hint text for the share-code import field
+  ///
+  /// In en, this message translates to:
+  /// **'dac-v1;dd;i:fuel_powered_generator=2'**
+  String get baseCalculatorImportShareCodeHint;
+
+  /// Snackbar after exporting a plan JSON file
+  ///
+  /// In en, this message translates to:
+  /// **'Plan exported'**
+  String get baseCalculatorPlanExported;
+
+  /// Snackbar after importing a shared plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan imported'**
+  String get baseCalculatorPlanImported;
+
+  /// Error when a share code or import file cannot be parsed
+  ///
+  /// In en, this message translates to:
+  /// **'That share code or JSON file is not valid.'**
+  String get baseCalculatorShareCodeInvalid;
 }
 
 class _AppLocalizationsDelegate

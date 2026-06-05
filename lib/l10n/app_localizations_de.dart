@@ -1302,4 +1302,39 @@ class AppLocalizationsDe extends AppLocalizations {
   String baseCalculatorPlanCopyName(String name) {
     return '$name (Kopie)';
   }
+
+  @override
+  String get baseCalculatorShare => 'Teilen';
+
+  @override
+  String get baseCalculatorCopyShareCode => 'Code kopieren';
+
+  @override
+  String get baseCalculatorShareCodeCopied => 'Code kopiert';
+
+  @override
+  String get baseCalculatorExportJson => 'JSON exportieren';
+
+  @override
+  String get baseCalculatorImportJson => 'JSON importieren';
+
+  @override
+  String get baseCalculatorImportShareCode => 'Code einfügen';
+
+  @override
+  String get baseCalculatorImportShareCodeTitle => 'Code importieren';
+
+  @override
+  String get baseCalculatorImportShareCodeHint =>
+      'dac-v1;dd;i:fuel_powered_generator=2';
+
+  @override
+  String get baseCalculatorPlanExported => 'Plan exportiert';
+
+  @override
+  String get baseCalculatorPlanImported => 'Plan importiert';
+
+  @override
+  String get baseCalculatorShareCodeInvalid =>
+      'Dieser Code oder diese JSON-Datei ist ungültig.';
 }

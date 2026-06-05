@@ -347,5 +347,16 @@
   "baseCalculatorSaveAsNew": "Зберегти як новий",
   "baseCalculatorPlanItemCount": "{count} предметів",
   "baseCalculatorUnnamedPlan": "План без назви",
-  "baseCalculatorPlanCopyName": "{name} (копія)"
+  "baseCalculatorPlanCopyName": "{name} (копія)",
+  "baseCalculatorShare": "Поділитися",
+  "baseCalculatorCopyShareCode": "Копіювати код",
+  "baseCalculatorShareCodeCopied": "Код скопійовано",
+  "baseCalculatorExportJson": "Експорт JSON",
+  "baseCalculatorImportJson": "Імпорт JSON",
+  "baseCalculatorImportShareCode": "Вставити код",
+  "baseCalculatorImportShareCodeTitle": "Імпорт коду",
+  "baseCalculatorImportShareCodeHint": "dac-v1;dd;i:fuel_powered_generator=2",
+  "baseCalculatorPlanExported": "План експортовано",
+  "baseCalculatorPlanImported": "План імпортовано",
+  "baseCalculatorShareCodeInvalid": "Недійсний код або JSON-файл."
 }

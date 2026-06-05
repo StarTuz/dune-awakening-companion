@@ -1296,4 +1296,38 @@ class AppLocalizationsUk extends AppLocalizations {
   String baseCalculatorPlanCopyName(String name) {
     return '$name (копія)';
   }
+
+  @override
+  String get baseCalculatorShare => 'Поділитися';
+
+  @override
+  String get baseCalculatorCopyShareCode => 'Копіювати код';
+
+  @override
+  String get baseCalculatorShareCodeCopied => 'Код скопійовано';
+
+  @override
+  String get baseCalculatorExportJson => 'Експорт JSON';
+
+  @override
+  String get baseCalculatorImportJson => 'Імпорт JSON';
+
+  @override
+  String get baseCalculatorImportShareCode => 'Вставити код';
+
+  @override
+  String get baseCalculatorImportShareCodeTitle => 'Імпорт коду';
+
+  @override
+  String get baseCalculatorImportShareCodeHint =>
+      'dac-v1;dd;i:fuel_powered_generator=2';
+
+  @override
+  String get baseCalculatorPlanExported => 'План експортовано';
+
+  @override
+  String get baseCalculatorPlanImported => 'План імпортовано';
+
+  @override
+  String get baseCalculatorShareCodeInvalid => 'Недійсний код або JSON-файл.';
 }

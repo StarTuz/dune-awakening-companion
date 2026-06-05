@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/database/app_database.dart';
 import '../models/base_calculator_plan.dart';
+import '../models/base_calculator_portable_plan.dart';
 import '../models/base_calculator_state.dart';
 import '../services/base_calculator_plan_repository.dart';
 import 'base_calculator_provider.dart';
@@ -104,5 +105,11 @@ class BaseCalculatorPlanEditor {
 
   void loadIntoCalculator(BaseCalculatorPlan plan) {
     _ref.read(baseCalculatorProvider.notifier).loadPlan(plan);
+  }
+
+  void loadPortablePlan(BaseCalculatorPortablePlan portable) {
+    _ref.read(baseCalculatorProvider.notifier).loadState(
+          portable.toCalculatorState(),
+        );
   }
 }

@@ -1301,4 +1301,39 @@ class AppLocalizationsCy extends AppLocalizations {
   String baseCalculatorPlanCopyName(String name) {
     return '$name (copi)';
   }
+
+  @override
+  String get baseCalculatorShare => 'Rhannu';
+
+  @override
+  String get baseCalculatorCopyShareCode => 'Copïo cod';
+
+  @override
+  String get baseCalculatorShareCodeCopied => 'Cod wedi\'i gopïo';
+
+  @override
+  String get baseCalculatorExportJson => 'Allforio JSON';
+
+  @override
+  String get baseCalculatorImportJson => 'Mewnforio JSON';
+
+  @override
+  String get baseCalculatorImportShareCode => 'Gludo cod';
+
+  @override
+  String get baseCalculatorImportShareCodeTitle => 'Mewnforio cod';
+
+  @override
+  String get baseCalculatorImportShareCodeHint =>
+      'dac-v1;dd;i:fuel_powered_generator=2';
+
+  @override
+  String get baseCalculatorPlanExported => 'Cynllun wedi\'i allforio';
+
+  @override
+  String get baseCalculatorPlanImported => 'Cynllun wedi\'i fewnforio';
+
+  @override
+  String get baseCalculatorShareCodeInvalid =>
+      'Nid yw\'r cod neu ffeil JSON yn ddilys.';
 }
