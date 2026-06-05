@@ -1337,4 +1337,134 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get baseCalculatorShareCodeInvalid =>
       'Dieser Code oder diese JSON-Datei ist ungültig.';
+
+  @override
+  String get baseCalculatorOptimizationTitle => 'Planungshilfen';
+
+  @override
+  String get baseCalculatorOptimizationSubtitle =>
+      'Leistung, Treibstoff und Vorlagen';
+
+  @override
+  String get baseCalculatorPowerHelperTitle => 'Wie viel Leistung brauche ich?';
+
+  @override
+  String baseCalculatorPowerDeficitHint(int power) {
+    return 'Deinem Bau fehlen $power Leistung.';
+  }
+
+  @override
+  String baseCalculatorPowerSurplusHint(int power) {
+    return 'Du hast $power Leistung übrig.';
+  }
+
+  @override
+  String get baseCalculatorPowerBuffer => 'Sicherheitspuffer';
+
+  @override
+  String baseCalculatorPowerNeeded(int power) {
+    return '$power Leistung abdecken (inkl. Puffer).';
+  }
+
+  @override
+  String get baseCalculatorRecommendFewest => 'Wenigste Generatoren';
+
+  @override
+  String get baseCalculatorRecommendFuel => 'Nur Kraftstoffgeneratoren';
+
+  @override
+  String baseCalculatorRecommendationLine(
+      int quantity, String name, int power) {
+    return '$quantity× $name (+$power)';
+  }
+
+  @override
+  String get baseCalculatorAddRecommendation => 'Hinzufügen';
+
+  @override
+  String get baseCalculatorRunningCostTitle => 'Kraftstoffschätzung';
+
+  @override
+  String get baseCalculatorRunningCostPeriod => 'Planungszeitraum';
+
+  @override
+  String get baseCalculatorRunningCostPeriod1Day => '1 Tag (24 h)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod3Day => '3 Tage (72 h)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod7Day => '7 Tage (168 h)';
+
+  @override
+  String get baseCalculatorRunningCostNoFuelGens =>
+      'Keine Kraftstoffgeneratoren in diesem Bau.';
+
+  @override
+  String baseCalculatorRunningCostFuelGens(int count) {
+    return '$count Kraftstoffgeneratoren platziert';
+  }
+
+  @override
+  String baseCalculatorRunningCostFuelCells(int count) {
+    return '$count Brennstoffzellen';
+  }
+
+  @override
+  String get baseCalculatorRunningCostFuelNote =>
+      'Kraftstoff wird pro laufendem Generator verbraucht, nicht nach Verbrauch. Schalte ungenutzte Generatoren aus.';
+
+  @override
+  String get baseCalculatorVerifyRunningCost =>
+      'Community-Kraftstoffrate — im Spiel prüfen.';
+
+  @override
+  String get baseCalculatorPresetsTitle => 'Vorlagen';
+
+  @override
+  String get baseCalculatorApplyPreset => 'Anwenden';
+
+  @override
+  String get baseCalculatorPresetConfirmTitle => 'Aktuellen Bau ersetzen?';
+
+  @override
+  String get baseCalculatorPresetConfirmMessage =>
+      'Eine Vorlage ersetzt deine aktuellen Auswahlen.';
+
+  @override
+  String baseCalculatorPresetApplied(String name) {
+    return '\"$name\" angewendet';
+  }
+
+  @override
+  String get baseCalculatorPresetReplaceHint =>
+      'Eine Vorlage ersetzt den aktuellen Bau.';
+
+  @override
+  String get baseCalculatorPresetStarterCamp => 'Starterlager';
+
+  @override
+  String get baseCalculatorPresetStarterCampDesc =>
+      'Konsole, Basisstrom, Reparatur und Starterlager.';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefinery => 'Tiefwüsten-Raffinerie';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefineryDesc =>
+      '2× Generator, Windfalle und mittlere Spezienraffinerie mit Transport.';
+
+  @override
+  String get baseCalculatorPresetCraftingHub => 'Handwerkszentrum';
+
+  @override
+  String get baseCalculatorPresetCraftingHubDesc =>
+      'Fabrikatoren mit Windkraft und Kraftstoffreserve.';
+
+  @override
+  String get baseCalculatorPresetGuildHaul => 'Gildentransport';
+
+  @override
+  String get baseCalculatorPresetGuildHaulDesc =>
+      'Erz- und Chemieraffinerie mit Transportbehältern.';
 }

@@ -1330,4 +1330,136 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get baseCalculatorShareCodeInvalid => 'Недійсний код або JSON-файл.';
+
+  @override
+  String get baseCalculatorOptimizationTitle => 'Помічники планування';
+
+  @override
+  String get baseCalculatorOptimizationSubtitle =>
+      'Потужність, паливо та шаблони';
+
+  @override
+  String get baseCalculatorPowerHelperTitle =>
+      'Скільки потужності мені потрібно?';
+
+  @override
+  String baseCalculatorPowerDeficitHint(int power) {
+    return 'Вашій збірці не вистачає $power потужності.';
+  }
+
+  @override
+  String baseCalculatorPowerSurplusHint(int power) {
+    return 'У вас $power надлишкової генерації.';
+  }
+
+  @override
+  String get baseCalculatorPowerBuffer => 'Запас потужності';
+
+  @override
+  String baseCalculatorPowerNeeded(int power) {
+    return 'Покрити $power потужності (з запасом).';
+  }
+
+  @override
+  String get baseCalculatorRecommendFewest => 'Найменше генераторів';
+
+  @override
+  String get baseCalculatorRecommendFuel => 'Лише паливні генератори';
+
+  @override
+  String baseCalculatorRecommendationLine(
+      int quantity, String name, int power) {
+    return '$quantity× $name (+$power)';
+  }
+
+  @override
+  String get baseCalculatorAddRecommendation => 'Додати';
+
+  @override
+  String get baseCalculatorRunningCostTitle => 'Оцінка палива';
+
+  @override
+  String get baseCalculatorRunningCostPeriod => 'Період планування';
+
+  @override
+  String get baseCalculatorRunningCostPeriod1Day => '1 день (24 год)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod3Day => '3 дні (72 год)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod7Day => '7 днів (168 год)';
+
+  @override
+  String get baseCalculatorRunningCostNoFuelGens =>
+      'У цій збірці немає паливних генераторів.';
+
+  @override
+  String baseCalculatorRunningCostFuelGens(int count) {
+    return '$count паливних генераторів розміщено';
+  }
+
+  @override
+  String baseCalculatorRunningCostFuelCells(int count) {
+    return '$count паливних елементів';
+  }
+
+  @override
+  String get baseCalculatorRunningCostFuelNote =>
+      'Паливо споживається на кожен працюючий генератор, а не за навантаженням. Вимикайте непотрібні генератори.';
+
+  @override
+  String get baseCalculatorVerifyRunningCost =>
+      'Дані спільноти — перевірте в грі.';
+
+  @override
+  String get baseCalculatorPresetsTitle => 'Шаблони';
+
+  @override
+  String get baseCalculatorApplyPreset => 'Застосувати';
+
+  @override
+  String get baseCalculatorPresetConfirmTitle => 'Замінити поточну збірку?';
+
+  @override
+  String get baseCalculatorPresetConfirmMessage =>
+      'Застосування шаблону замінить поточні вибори.';
+
+  @override
+  String baseCalculatorPresetApplied(String name) {
+    return 'Застосовано \"$name\"';
+  }
+
+  @override
+  String get baseCalculatorPresetReplaceHint =>
+      'Застосування шаблону замінює поточну збірку.';
+
+  @override
+  String get baseCalculatorPresetStarterCamp => 'Стартовий табір';
+
+  @override
+  String get baseCalculatorPresetStarterCampDesc =>
+      'Консоль, базова енергія, ремонт і стартове сховище.';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefinery =>
+      'Рафінерія Глибокої Пустелі';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefineryDesc =>
+      '2× генератор, вітрозбірник і середня рафінерія спецій з транспортом.';
+
+  @override
+  String get baseCalculatorPresetCraftingHub => 'Центр крафту';
+
+  @override
+  String get baseCalculatorPresetCraftingHubDesc =>
+      'Фабрикатори з вітровою енергією та резервним паливом.';
+
+  @override
+  String get baseCalculatorPresetGuildHaul => 'Транспорт гільдії';
+
+  @override
+  String get baseCalculatorPresetGuildHaulDesc =>
+      'Рафінерія руди та хімікатів з транспортними контейнерами.';
 }

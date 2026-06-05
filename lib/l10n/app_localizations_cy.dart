@@ -1336,4 +1336,135 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get baseCalculatorShareCodeInvalid =>
       'Nid yw\'r cod neu ffeil JSON yn ddilys.';
+
+  @override
+  String get baseCalculatorOptimizationTitle => 'Cynorthwywyr cynllunio';
+
+  @override
+  String get baseCalculatorOptimizationSubtitle => 'Pŵer, tanwydd a thempledi';
+
+  @override
+  String get baseCalculatorPowerHelperTitle => 'Faint o bŵer sydd ei angen?';
+
+  @override
+  String baseCalculatorPowerDeficitHint(int power) {
+    return 'Mae $power o bŵer ar goll i\'ch adeilad.';
+  }
+
+  @override
+  String baseCalculatorPowerSurplusHint(int power) {
+    return 'Mae gennych $power o bŵer yn ar ôl.';
+  }
+
+  @override
+  String get baseCalculatorPowerBuffer => 'Byffer diogelwch';
+
+  @override
+  String baseCalculatorPowerNeeded(int power) {
+    return 'Cuddio $power o bŵer (gyda byffer).';
+  }
+
+  @override
+  String get baseCalculatorRecommendFewest => 'Ychydaf o weinyddwyr';
+
+  @override
+  String get baseCalculatorRecommendFuel => 'Generaduron tanwydd yn unig';
+
+  @override
+  String baseCalculatorRecommendationLine(
+      int quantity, String name, int power) {
+    return '$quantity× $name (+$power)';
+  }
+
+  @override
+  String get baseCalculatorAddRecommendation => 'Ychwanegu';
+
+  @override
+  String get baseCalculatorRunningCostTitle => 'Amcangyfrif tanwydd';
+
+  @override
+  String get baseCalculatorRunningCostPeriod => 'Cyfnod cynllunio';
+
+  @override
+  String get baseCalculatorRunningCostPeriod1Day => '1 diwrnod (24 awr)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod3Day => '3 diwrnod (72 awr)';
+
+  @override
+  String get baseCalculatorRunningCostPeriod7Day => '7 diwrnod (168 awr)';
+
+  @override
+  String get baseCalculatorRunningCostNoFuelGens =>
+      'Dim generaduron tanwydd yn yr adeilad hwn.';
+
+  @override
+  String baseCalculatorRunningCostFuelGens(int count) {
+    return '$count generadur tanwydd wedi\'u gosod';
+  }
+
+  @override
+  String baseCalculatorRunningCostFuelCells(int count) {
+    return '$count Celloedd Tanwydd';
+  }
+
+  @override
+  String get baseCalculatorRunningCostFuelNote =>
+      'Mae tanwydd yn cael ei ddefnyddio fesul generadur sy\'n rhedeg, nid yn ôl llwyth. Diffodd generaduron heb eu defnyddio.';
+
+  @override
+  String get baseCalculatorVerifyRunningCost =>
+      'Cyfradd cymunedol — gwiriwch yn y gêm.';
+
+  @override
+  String get baseCalculatorPresetsTitle => 'Templedi';
+
+  @override
+  String get baseCalculatorApplyPreset => 'Defnyddio';
+
+  @override
+  String get baseCalculatorPresetConfirmTitle =>
+      'Disodli\'r adeilad presennol?';
+
+  @override
+  String get baseCalculatorPresetConfirmMessage =>
+      'Bydd templed yn disodli\'ch dewisiadau presennol.';
+
+  @override
+  String baseCalculatorPresetApplied(String name) {
+    return 'Defnyddiwyd \"$name\"';
+  }
+
+  @override
+  String get baseCalculatorPresetReplaceHint =>
+      'Mae templed yn disodli\'r adeilad presennol.';
+
+  @override
+  String get baseCalculatorPresetStarterCamp => 'Gwersyll cychwyn';
+
+  @override
+  String get baseCalculatorPresetStarterCampDesc =>
+      'Consol, pŵer sylfaenol, atgyweirio a storio cychwyn.';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefinery =>
+      'Rafinerydd yr Anialwch Dwfn';
+
+  @override
+  String get baseCalculatorPresetDeepDesertRefineryDesc =>
+      '2× generadur, trap gwynt a rafinerydd sbeis canolig gyda chludo.';
+
+  @override
+  String get baseCalculatorPresetCraftingHub => 'Canol gwaith';
+
+  @override
+  String get baseCalculatorPresetCraftingHubDesc =>
+      'Fabrigwyr gyda phŵer gwynt a thanwydd wrth gefn.';
+
+  @override
+  String get baseCalculatorPresetGuildHaul => 'Cludo gildi';
+
+  @override
+  String get baseCalculatorPresetGuildHaulDesc =>
+      'Raffinio mwyn a chemegol gyda chynwyswyr cludo.';
 }

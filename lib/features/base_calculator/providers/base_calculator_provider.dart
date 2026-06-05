@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../models/base_calculator_optimizer.dart';
 import '../models/base_calculator_plan.dart';
+import '../models/base_calculator_presets.dart';
 import '../models/base_calculator_state.dart';
 
 class BaseCalculatorNotifier extends StateNotifier<BaseCalculatorState> {
@@ -61,6 +63,23 @@ class BaseCalculatorNotifier extends StateNotifier<BaseCalculatorState> {
 
   void reset() {
     state = const BaseCalculatorState();
+  }
+
+  void applyPreset(BaseCalculatorPreset preset) {
+    state = BaseCalculatorState(
+      quantities: Map<String, int>.from(preset.itemQuantities),
+      storageQuantities: Map<String, int>.from(preset.storageQuantities),
+      deepDesertDiscount: preset.deepDesertDiscount,
+    );
+  }
+
+  void addRecommendations(List<GeneratorRecommendation> recommendations) {
+    for (final recommendation in recommendations) {
+      setQuantity(
+        recommendation.code,
+        quantityFor(recommendation.code) + recommendation.quantity,
+      );
+    }
   }
 }
 

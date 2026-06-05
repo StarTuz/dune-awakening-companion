@@ -1655,5 +1655,161 @@
   "baseCalculatorShareCodeInvalid": "That share code or JSON file is not valid.",
   "@baseCalculatorShareCodeInvalid": {
     "description": "Error when a share code or import file cannot be parsed"
+  },
+  "baseCalculatorOptimizationTitle": "Planning helpers",
+  "@baseCalculatorOptimizationTitle": {
+    "description": "Expansion tile title for Phase 5 optimization tools"
+  },
+  "baseCalculatorOptimizationSubtitle": "Power sizing, fuel estimates, and templates",
+  "@baseCalculatorOptimizationSubtitle": {
+    "description": "Subtitle for the optimization expansion tile"
+  },
+  "baseCalculatorPowerHelperTitle": "How much power do I need?",
+  "@baseCalculatorPowerHelperTitle": {
+    "description": "Section title for deficit and generator recommendations"
+  },
+  "baseCalculatorPowerDeficitHint": "Your build is short {power} power.",
+  "@baseCalculatorPowerDeficitHint": {
+    "placeholders": {
+      "power": { "type": "int" }
+    }
+  },
+  "baseCalculatorPowerSurplusHint": "You have {power} spare generation.",
+  "@baseCalculatorPowerSurplusHint": {
+    "placeholders": {
+      "power": { "type": "int" }
+    }
+  },
+  "baseCalculatorPowerBuffer": "Safety buffer",
+  "@baseCalculatorPowerBuffer": {
+    "description": "Optional extra power to plan for"
+  },
+  "baseCalculatorPowerNeeded": "Cover {power} power (including buffer).",
+  "@baseCalculatorPowerNeeded": {
+    "placeholders": {
+      "power": { "type": "int" }
+    }
+  },
+  "baseCalculatorRecommendFewest": "Fewest generators",
+  "@baseCalculatorRecommendFewest": {
+    "description": "Recommendation strategy using the largest units first"
+  },
+  "baseCalculatorRecommendFuel": "Fuel generators only",
+  "@baseCalculatorRecommendFuel": {
+    "description": "Early-game recommendation using only fuel-powered generators"
+  },
+  "baseCalculatorRecommendationLine": "{quantity}× {name} (+{power})",
+  "@baseCalculatorRecommendationLine": {
+    "placeholders": {
+      "quantity": { "type": "int" },
+      "name": { "type": "String" },
+      "power": { "type": "int" }
+    }
+  },
+  "baseCalculatorAddRecommendation": "Add",
+  "@baseCalculatorAddRecommendation": {
+    "description": "Add a recommended generator quantity to the current build"
+  },
+  "baseCalculatorRunningCostTitle": "Running fuel estimate",
+  "@baseCalculatorRunningCostTitle": {
+    "description": "Section title for fueled generator upkeep"
+  },
+  "baseCalculatorRunningCostPeriod": "Planning period",
+  "@baseCalculatorRunningCostPeriod": {
+    "description": "Label for the running-cost time window dropdown"
+  },
+  "baseCalculatorRunningCostPeriod1Day": "1 day (24 h)",
+  "@baseCalculatorRunningCostPeriod1Day": {
+    "description": "Running-cost period option"
+  },
+  "baseCalculatorRunningCostPeriod3Day": "3 days (72 h)",
+  "@baseCalculatorRunningCostPeriod3Day": {
+    "description": "Running-cost period option"
+  },
+  "baseCalculatorRunningCostPeriod7Day": "7 days (168 h)",
+  "@baseCalculatorRunningCostPeriod7Day": {
+    "description": "Running-cost period option"
+  },
+  "baseCalculatorRunningCostNoFuelGens": "No fuel-powered generators in this build.",
+  "@baseCalculatorRunningCostNoFuelGens": {
+    "description": "Empty state when running-cost cannot be estimated"
+  },
+  "baseCalculatorRunningCostFuelGens": "{count} fuel-powered generators placed",
+  "@baseCalculatorRunningCostFuelGens": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "baseCalculatorRunningCostFuelCells": "{count} Fuel Cells",
+  "@baseCalculatorRunningCostFuelCells": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "baseCalculatorRunningCostFuelNote": "Fuel burns per running generator, not by consumer load. Turn off unused generators to save fuel.",
+  "@baseCalculatorRunningCostFuelNote": {
+    "description": "Explains that running-cost is not tied to net power"
+  },
+  "baseCalculatorVerifyRunningCost": "Community-sourced fuel rate — verify in-game.",
+  "@baseCalculatorVerifyRunningCost": {
+    "description": "Disclaimer for running-cost estimates"
+  },
+  "baseCalculatorPresetsTitle": "Templates",
+  "@baseCalculatorPresetsTitle": {
+    "description": "Section title for built-in build presets"
+  },
+  "baseCalculatorApplyPreset": "Apply",
+  "@baseCalculatorApplyPreset": {
+    "description": "Apply a template to the calculator"
+  },
+  "baseCalculatorPresetConfirmTitle": "Replace current build?",
+  "@baseCalculatorPresetConfirmTitle": {
+    "description": "Title when applying a template over an existing selection"
+  },
+  "baseCalculatorPresetConfirmMessage": "Applying a template will replace your current item and storage selections.",
+  "@baseCalculatorPresetConfirmMessage": {
+    "description": "Body when applying a template over an existing selection"
+  },
+  "baseCalculatorPresetApplied": "Applied \"{name}\"",
+  "@baseCalculatorPresetApplied": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "baseCalculatorPresetReplaceHint": "Applying a template replaces the current build.",
+  "@baseCalculatorPresetReplaceHint": {
+    "description": "Hint shown when the build is not pristine"
+  },
+  "baseCalculatorPresetStarterCamp": "Starter camp",
+  "@baseCalculatorPresetStarterCamp": {
+    "description": "Built-in template name"
+  },
+  "baseCalculatorPresetStarterCampDesc": "Console, basic power, repair, and starter storage.",
+  "@baseCalculatorPresetStarterCampDesc": {
+    "description": "Built-in template description"
+  },
+  "baseCalculatorPresetDeepDesertRefinery": "Deep Desert refinery",
+  "@baseCalculatorPresetDeepDesertRefinery": {
+    "description": "Built-in template name"
+  },
+  "baseCalculatorPresetDeepDesertRefineryDesc": "2× fuel gen, windtrap, and medium spice refinery with hauling.",
+  "@baseCalculatorPresetDeepDesertRefineryDesc": {
+    "description": "Built-in template description"
+  },
+  "baseCalculatorPresetCraftingHub": "Crafting hub",
+  "@baseCalculatorPresetCraftingHub": {
+    "description": "Built-in template name"
+  },
+  "baseCalculatorPresetCraftingHubDesc": "Fabricators with wind power and backup fuel generation.",
+  "@baseCalculatorPresetCraftingHubDesc": {
+    "description": "Built-in template description"
+  },
+  "baseCalculatorPresetGuildHaul": "Guild haul",
+  "@baseCalculatorPresetGuildHaul": {
+    "description": "Built-in template name"
+  },
+  "baseCalculatorPresetGuildHaulDesc": "Ore and chemical refining with hauling containers.",
+  "@baseCalculatorPresetGuildHaulDesc": {
+    "description": "Built-in template description"
   }
 }

@@ -14,6 +14,7 @@ import '../providers/base_calculator_provider.dart';
 import '../widgets/base_calculator_plans_sheet.dart';
 import '../widgets/base_calculator_save_plan_dialog.dart';
 import '../widgets/base_calculator_share_actions.dart';
+import '../widgets/base_calculator_optimization_panel.dart';
 import '../widgets/base_calculator_share_dialog.dart';
 
 String _formatVolume(double v) {
@@ -205,6 +206,8 @@ class _ControlsAndSummary extends ConsumerWidget {
           showVolumes: showVolumes,
           onShowVolumesChanged: onShowVolumesChanged,
         ),
+        const SizedBox(height: 12),
+        BaseCalculatorOptimizationPanel(state: state),
         const SizedBox(height: 12),
         _SavePlanBar(state: state),
       ],

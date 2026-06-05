@@ -2543,6 +2543,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'That share code or JSON file is not valid.'**
   String get baseCalculatorShareCodeInvalid;
+
+  /// Expansion tile title for Phase 5 optimization tools
+  ///
+  /// In en, this message translates to:
+  /// **'Planning helpers'**
+  String get baseCalculatorOptimizationTitle;
+
+  /// Subtitle for the optimization expansion tile
+  ///
+  /// In en, this message translates to:
+  /// **'Power sizing, fuel estimates, and templates'**
+  String get baseCalculatorOptimizationSubtitle;
+
+  /// Section title for deficit and generator recommendations
+  ///
+  /// In en, this message translates to:
+  /// **'How much power do I need?'**
+  String get baseCalculatorPowerHelperTitle;
+
+  /// No description provided for @baseCalculatorPowerDeficitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your build is short {power} power.'**
+  String baseCalculatorPowerDeficitHint(int power);
+
+  /// No description provided for @baseCalculatorPowerSurplusHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {power} spare generation.'**
+  String baseCalculatorPowerSurplusHint(int power);
+
+  /// Optional extra power to plan for
+  ///
+  /// In en, this message translates to:
+  /// **'Safety buffer'**
+  String get baseCalculatorPowerBuffer;
+
+  /// No description provided for @baseCalculatorPowerNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover {power} power (including buffer).'**
+  String baseCalculatorPowerNeeded(int power);
+
+  /// Recommendation strategy using the largest units first
+  ///
+  /// In en, this message translates to:
+  /// **'Fewest generators'**
+  String get baseCalculatorRecommendFewest;
+
+  /// Early-game recommendation using only fuel-powered generators
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel generators only'**
+  String get baseCalculatorRecommendFuel;
+
+  /// No description provided for @baseCalculatorRecommendationLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{quantity}× {name} (+{power})'**
+  String baseCalculatorRecommendationLine(int quantity, String name, int power);
+
+  /// Add a recommended generator quantity to the current build
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get baseCalculatorAddRecommendation;
+
+  /// Section title for fueled generator upkeep
+  ///
+  /// In en, this message translates to:
+  /// **'Running fuel estimate'**
+  String get baseCalculatorRunningCostTitle;
+
+  /// Label for the running-cost time window dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Planning period'**
+  String get baseCalculatorRunningCostPeriod;
+
+  /// Running-cost period option
+  ///
+  /// In en, this message translates to:
+  /// **'1 day (24 h)'**
+  String get baseCalculatorRunningCostPeriod1Day;
+
+  /// Running-cost period option
+  ///
+  /// In en, this message translates to:
+  /// **'3 days (72 h)'**
+  String get baseCalculatorRunningCostPeriod3Day;
+
+  /// Running-cost period option
+  ///
+  /// In en, this message translates to:
+  /// **'7 days (168 h)'**
+  String get baseCalculatorRunningCostPeriod7Day;
+
+  /// Empty state when running-cost cannot be estimated
+  ///
+  /// In en, this message translates to:
+  /// **'No fuel-powered generators in this build.'**
+  String get baseCalculatorRunningCostNoFuelGens;
+
+  /// No description provided for @baseCalculatorRunningCostFuelGens.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} fuel-powered generators placed'**
+  String baseCalculatorRunningCostFuelGens(int count);
+
+  /// No description provided for @baseCalculatorRunningCostFuelCells.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Fuel Cells'**
+  String baseCalculatorRunningCostFuelCells(int count);
+
+  /// Explains that running-cost is not tied to net power
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel burns per running generator, not by consumer load. Turn off unused generators to save fuel.'**
+  String get baseCalculatorRunningCostFuelNote;
+
+  /// Disclaimer for running-cost estimates
+  ///
+  /// In en, this message translates to:
+  /// **'Community-sourced fuel rate — verify in-game.'**
+  String get baseCalculatorVerifyRunningCost;
+
+  /// Section title for built-in build presets
+  ///
+  /// In en, this message translates to:
+  /// **'Templates'**
+  String get baseCalculatorPresetsTitle;
+
+  /// Apply a template to the calculator
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get baseCalculatorApplyPreset;
+
+  /// Title when applying a template over an existing selection
+  ///
+  /// In en, this message translates to:
+  /// **'Replace current build?'**
+  String get baseCalculatorPresetConfirmTitle;
+
+  /// Body when applying a template over an existing selection
+  ///
+  /// In en, this message translates to:
+  /// **'Applying a template will replace your current item and storage selections.'**
+  String get baseCalculatorPresetConfirmMessage;
+
+  /// No description provided for @baseCalculatorPresetApplied.
+  ///
+  /// In en, this message translates to:
+  /// **'Applied \"{name}\"'**
+  String baseCalculatorPresetApplied(String name);
+
+  /// Hint shown when the build is not pristine
+  ///
+  /// In en, this message translates to:
+  /// **'Applying a template replaces the current build.'**
+  String get baseCalculatorPresetReplaceHint;
+
+  /// Built-in template name
+  ///
+  /// In en, this message translates to:
+  /// **'Starter camp'**
+  String get baseCalculatorPresetStarterCamp;
+
+  /// Built-in template description
+  ///
+  /// In en, this message translates to:
+  /// **'Console, basic power, repair, and starter storage.'**
+  String get baseCalculatorPresetStarterCampDesc;
+
+  /// Built-in template name
+  ///
+  /// In en, this message translates to:
+  /// **'Deep Desert refinery'**
+  String get baseCalculatorPresetDeepDesertRefinery;
+
+  /// Built-in template description
+  ///
+  /// In en, this message translates to:
+  /// **'2× fuel gen, windtrap, and medium spice refinery with hauling.'**
+  String get baseCalculatorPresetDeepDesertRefineryDesc;
+
+  /// Built-in template name
+  ///
+  /// In en, this message translates to:
+  /// **'Crafting hub'**
+  String get baseCalculatorPresetCraftingHub;
+
+  /// Built-in template description
+  ///
+  /// In en, this message translates to:
+  /// **'Fabricators with wind power and backup fuel generation.'**
+  String get baseCalculatorPresetCraftingHubDesc;
+
+  /// Built-in template name
+  ///
+  /// In en, this message translates to:
+  /// **'Guild haul'**
+  String get baseCalculatorPresetGuildHaul;
+
+  /// Built-in template description
+  ///
+  /// In en, this message translates to:
+  /// **'Ore and chemical refining with hauling containers.'**
+  String get baseCalculatorPresetGuildHaulDesc;
 }
 
 class _AppLocalizationsDelegate

@@ -1,6 +1,6 @@
 # Base Calculator Research & Assessment
 
-Status: **Phase 4 implemented.** (assessment complete and audited, revision 2)
+Status: **Phase 5 implemented.** (assessment complete and audited, revision 2)
 
 This document assesses a local-first **Base Calculator** feature for the Dune
 Awakening Companion App. It uses the TCNO calculator shared by the user as the
@@ -193,17 +193,21 @@ Shipped:
 
 Deferred: URL/deep-link config parameters.
 
-### Phase 5: Optimization Helpers
+### Phase 5: Optimization Helpers — IMPLEMENTED
 
-Goal: higher-value planning once the basic catalog is trusted.
+Shipped:
 
-- "How much power do I need?" helper.
-- Generator recommendations for a target net power.
-- Running cost estimator for fuel/spice generators if reliable data is sourced.
-  Note: fuel burns at a constant rate per **running generator**, independent of
-  consumer load (see Audit Findings), so this must be modeled over time, not
-  from net power.
-- Presets/templates for common starter, Deep Desert, refinery, and guild builds.
+- `BaseCalculatorOptimizer` — deficit/surplus helpers and generator mixes
+  (fewest units + fuel-only).
+- `GeneratorRunningCost` — fuel-cell estimate per placed fuel generator over
+  1/3/7-day windows (1 cell / hour / generator; community-sourced).
+- `base_calculator_presets.dart` — starter camp, Deep Desert refinery (TCNO
+  sample), crafting hub, guild haul templates.
+- `BaseCalculatorOptimizationPanel` expansion tile in the calculator summary
+  column.
+- Tests for optimizer, running cost, and preset catalog coverage.
+
+Deferred: spice/wind lubricant running costs until rates are audited in-game.
 
 ---
 
