@@ -139,4 +139,46 @@ void main() {
     expect(find.byIcon(Icons.warning), findsOneWidget);
     expect(find.byIcon(Icons.notifications), findsOneWidget);
   });
+
+  testWidgets('shows closed-worlds stat when a character is on a closed world',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost', // closed in the migration
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('On closed worlds'), findsOneWidget);
+    expect(find.byIcon(Icons.public_off), findsOneWidget);
+  });
+
+  testWidgets('hides closed-worlds stat when all worlds survive',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis', // survivor
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('On closed worlds'), findsNothing);
+    expect(find.byIcon(Icons.public_off), findsNothing);
+  });
 }

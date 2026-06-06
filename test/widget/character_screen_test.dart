@@ -118,6 +118,75 @@ void main() {
     expect(find.textContaining('Self Hosted'), findsOneWidget);
   });
 
+  testWidgets('flags a character whose world closed in the migration',
+      (tester) async {
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost', // closing world
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('World closed'), findsOneWidget);
+  });
+
+  testWidgets('does not flag a character on a surviving world', (tester) async {
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis', // survivor
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('World closed'), findsNothing);
+  });
+
+  testWidgets(
+      'edit dialog opens in custom mode for an existing legacy/off-list world',
+      (tester) async {
+    // 'Octane' is the pre-correction spelling of the closing world 'Octans';
+    // it is no longer in the dropdown, so the dialog must fall back to the
+    // free-text custom field instead of crashing on a value-not-in-items.
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Feyd',
+            region: 'Europe',
+            serverType: 'Official',
+            world: 'Octane',
+            sietch: 'Giedi',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.edit));
+    await tester.pumpAndSettle();
+
+    // No exception thrown, and the custom-world field is shown pre-filled.
+    expect(tester.takeException(), isNull);
+    expect(find.text('Custom world'), findsOneWidget);
+    expect(find.widgetWithText(TextField, 'Octane'), findsOneWidget);
+  });
+
   testWidgets('shows FAB for adding new character', (tester) async {
     await tester.pumpWidget(buildCharacterScreen());
     await tester.pumpAndSettle();

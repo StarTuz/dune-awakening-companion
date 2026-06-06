@@ -1614,6 +1614,48 @@ abstract class AppLocalizations {
   /// **'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.'**
   String get mitLicenseBody;
 
+  /// Badge shown on a character whose world closed in the server migration
+  ///
+  /// In en, this message translates to:
+  /// **'World closed'**
+  String get characterClosedWorldBadge;
+
+  /// Tooltip explaining the closed-world badge
+  ///
+  /// In en, this message translates to:
+  /// **'This world closed in the 26 May 2026 server migration. Move your character to another world in-game — this is just a reminder.'**
+  String get characterClosedWorldTooltip;
+
+  /// Suffix appended to a world name in the picker when that world closed
+  ///
+  /// In en, this message translates to:
+  /// **'(closed)'**
+  String get characterWorldClosedSuffix;
+
+  /// Dropdown option that reveals a free-text field to type any world
+  ///
+  /// In en, this message translates to:
+  /// **'Other / custom world…'**
+  String get characterWorldCustomOption;
+
+  /// Label for the custom world text field
+  ///
+  /// In en, this message translates to:
+  /// **'Custom world'**
+  String get characterWorldCustomLabel;
+
+  /// Hint for the custom world text field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter any world name'**
+  String get characterWorldCustomHint;
+
+  /// Dashboard stat card: number of characters on worlds that closed
+  ///
+  /// In en, this message translates to:
+  /// **'On closed worlds'**
+  String get dashboardClosedWorldsTitle;
+
   /// Footer message
   ///
   /// In en, this message translates to:

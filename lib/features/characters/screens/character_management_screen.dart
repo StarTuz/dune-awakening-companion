@@ -54,8 +54,19 @@ class CharacterManagementScreen extends ConsumerWidget {
                             : null,
                       ),
                       title: Text(character.name),
-                      subtitle: Text(
-                          '${character.region} - $serverInfo - ${character.sietch}'),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                              '${character.region} - $serverInfo - ${character.sietch}'),
+                          if (AppConstants.isClosedWorld(character.world))
+                            const Padding(
+                              padding: EdgeInsets.only(top: 4),
+                              child: _ClosedWorldBadge(),
+                            ),
+                        ],
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -115,6 +126,72 @@ class CharacterManagementScreen extends ConsumerWidget {
     );
   }
 
+  // Sentinel dropdown value that switches the Official world picker into
+  // free-text entry, so a character can be recorded on any world (including
+  // ones not in the bundled list, e.g. after future migrations).
+  static const String _customWorldSentinel = '__custom_world__';
+
+  /// Official-server world picker: a per-region dropdown that marks closed
+  /// worlds and offers a "custom world" option revealing a free-text field.
+  Widget _buildOfficialWorldField({
+    required BuildContext context,
+    required String? region,
+    required List<String> availableWorlds,
+    required String? selectedWorld,
+    required bool customWorld,
+    required TextEditingController worldController,
+    required void Function(String?) onSelectWorld,
+    required void Function(bool useCustom) onUseCustom,
+  }) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DropdownButtonFormField<String>(
+          isExpanded: true,
+          decoration: const InputDecoration(labelText: 'World'),
+          value: customWorld ? _customWorldSentinel : selectedWorld,
+          items: [
+            ...availableWorlds.map((world) {
+              final label = AppConstants.isClosedWorld(world)
+                  ? '$world ${l10n.characterWorldClosedSuffix}'
+                  : world;
+              return DropdownMenuItem<String>(
+                value: world,
+                child: Text(label, overflow: TextOverflow.ellipsis),
+              );
+            }),
+            DropdownMenuItem<String>(
+              value: _customWorldSentinel,
+              child: Text(l10n.characterWorldCustomOption),
+            ),
+          ],
+          onChanged: region != null
+              ? (value) {
+                  if (value == _customWorldSentinel) {
+                    onUseCustom(true);
+                  } else {
+                    onUseCustom(false);
+                    onSelectWorld(value);
+                  }
+                }
+              : null,
+        ),
+        if (customWorld) ...[
+          const SizedBox(height: 12),
+          TextField(
+            controller: worldController,
+            decoration: InputDecoration(
+              labelText: l10n.characterWorldCustomLabel,
+              hintText: l10n.characterWorldCustomHint,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
   void _showAddDialog(BuildContext context, WidgetRef ref) {
     final nameController = TextEditingController();
     final worldController = TextEditingController();
@@ -125,6 +202,7 @@ class CharacterManagementScreen extends ConsumerWidget {
     String? selectedWorld;
     String? selectedPrimaryClass;
     List<String> availableWorlds = [];
+    bool customWorld = false;
     String? selectedPortraitPath; // Portrait path
 
     showDialog(
@@ -200,6 +278,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     setState(() {
                       selectedRegion = value;
                       selectedWorld = null;
+                      customWorld = false;
+                      worldController.clear();
                       availableWorlds = value != null
                           ? AppConstants.getWorldsForRegion(value)
                           : [];
@@ -225,6 +305,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                               ? AppConstants.serverTypeSelfHosted
                               : null;
                       selectedWorld = null;
+                      customWorld = false;
                       worldController.clear();
                     });
                   },
@@ -251,19 +332,19 @@ class CharacterManagementScreen extends ConsumerWidget {
                 ],
                 // Show world dropdown for Official, text field for other server types.
                 if (selectedServerType == AppConstants.serverTypeOfficial)
-                  DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(labelText: 'World'),
-                    value: selectedWorld,
-                    items:
-                        availableWorlds.map<DropdownMenuItem<String>>((world) {
-                      return DropdownMenuItem<String>(
-                        value: world,
-                        child: Text(world),
-                      );
-                    }).toList(),
-                    onChanged: selectedRegion != null
-                        ? (value) => setState(() => selectedWorld = value)
-                        : null,
+                  _buildOfficialWorldField(
+                    context: context,
+                    region: selectedRegion,
+                    availableWorlds: availableWorlds,
+                    selectedWorld: selectedWorld,
+                    customWorld: customWorld,
+                    worldController: worldController,
+                    onSelectWorld: (value) =>
+                        setState(() => selectedWorld = value),
+                    onUseCustom: (useCustom) => setState(() {
+                      customWorld = useCustom;
+                      if (!useCustom) worldController.clear();
+                    }),
                   )
                 else if (AppConstants.usesFreeformWorldName(selectedServerType))
                   TextField(
@@ -312,14 +393,19 @@ class CharacterManagementScreen extends ConsumerWidget {
               onPressed: () {
                 final isOfficial =
                     selectedServerType == AppConstants.serverTypeOfficial;
-                final worldValue =
-                    isOfficial ? selectedWorld : worldController.text;
+                final worldValue = isOfficial
+                    ? (customWorld
+                        ? worldController.text.trim()
+                        : selectedWorld)
+                    : worldController.text;
 
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
                     (isOfficial
-                        ? selectedWorld != null
+                        ? (customWorld
+                            ? worldController.text.trim().isNotEmpty
+                            : selectedWorld != null)
                         : (worldController.text.isNotEmpty &&
                             selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
@@ -351,8 +437,19 @@ class CharacterManagementScreen extends ConsumerWidget {
   void _showEditDialog(
       BuildContext context, WidgetRef ref, Character character) {
     final nameController = TextEditingController(text: character.name);
+    List<String> availableWorlds =
+        AppConstants.getWorldsForRegion(character.region);
+    final bool isOfficialInit =
+        character.serverType == AppConstants.serverTypeOfficial;
+    // Existing Official characters whose world is no longer in the bundled list
+    // (renamed/legacy spelling, or already off-list) open in custom mode so the
+    // strict dropdown never receives an out-of-list value.
+    bool customWorld =
+        isOfficialInit && !availableWorlds.contains(character.world);
+
     final worldController = TextEditingController(
-      text: AppConstants.usesFreeformWorldName(character.serverType)
+      text: AppConstants.usesFreeformWorldName(character.serverType) ||
+              customWorld
           ? character.world
           : '',
     );
@@ -362,12 +459,8 @@ class CharacterManagementScreen extends ConsumerWidget {
     String? selectedServerType = character.serverType;
     String? selectedProvider = character.provider;
     String? selectedWorld =
-        character.serverType == AppConstants.serverTypeOfficial
-            ? character.world
-            : null;
+        isOfficialInit && !customWorld ? character.world : null;
     String? selectedPrimaryClass = character.primaryClass;
-    List<String> availableWorlds =
-        AppConstants.getWorldsForRegion(character.region);
 
     // Portrait state - start with existing portrait
     String? selectedPortraitPath = character.portraitPath;
@@ -447,6 +540,8 @@ class CharacterManagementScreen extends ConsumerWidget {
                     setState(() {
                       selectedRegion = value;
                       selectedWorld = null;
+                      customWorld = false;
+                      worldController.clear();
                       availableWorlds = value != null
                           ? AppConstants.getWorldsForRegion(value)
                           : [];
@@ -472,6 +567,7 @@ class CharacterManagementScreen extends ConsumerWidget {
                               ? AppConstants.serverTypeSelfHosted
                               : null;
                       selectedWorld = null;
+                      customWorld = false;
                       worldController.clear();
                     });
                   },
@@ -496,19 +592,19 @@ class CharacterManagementScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                 ],
                 if (selectedServerType == AppConstants.serverTypeOfficial)
-                  DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(labelText: 'World'),
-                    value: selectedWorld,
-                    items:
-                        availableWorlds.map<DropdownMenuItem<String>>((world) {
-                      return DropdownMenuItem<String>(
-                        value: world,
-                        child: Text(world),
-                      );
-                    }).toList(),
-                    onChanged: selectedRegion != null
-                        ? (value) => setState(() => selectedWorld = value)
-                        : null,
+                  _buildOfficialWorldField(
+                    context: context,
+                    region: selectedRegion,
+                    availableWorlds: availableWorlds,
+                    selectedWorld: selectedWorld,
+                    customWorld: customWorld,
+                    worldController: worldController,
+                    onSelectWorld: (value) =>
+                        setState(() => selectedWorld = value),
+                    onUseCustom: (useCustom) => setState(() {
+                      customWorld = useCustom;
+                      if (!useCustom) worldController.clear();
+                    }),
                   )
                 else if (AppConstants.usesFreeformWorldName(selectedServerType))
                   TextField(
@@ -556,14 +652,19 @@ class CharacterManagementScreen extends ConsumerWidget {
               onPressed: () {
                 final isOfficial =
                     selectedServerType == AppConstants.serverTypeOfficial;
-                final worldValue =
-                    isOfficial ? selectedWorld : worldController.text;
+                final worldValue = isOfficial
+                    ? (customWorld
+                        ? worldController.text.trim()
+                        : selectedWorld)
+                    : worldController.text;
 
                 if (nameController.text.isNotEmpty &&
                     selectedRegion != null &&
                     selectedServerType != null &&
                     (isOfficial
-                        ? selectedWorld != null
+                        ? (customWorld
+                            ? worldController.text.trim().isNotEmpty
+                            : selectedWorld != null)
                         : (worldController.text.isNotEmpty &&
                             selectedProvider != null)) &&
                     sietchController.text.isNotEmpty) {
@@ -1106,6 +1207,44 @@ class CharacterManagementScreen extends ConsumerWidget {
             child: const Text('Delete'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Non-destructive notice shown on a character whose world closed in the
+/// 2026-05-26 server migration. See [AppConstants.isClosedWorld].
+class _ClosedWorldBadge extends StatelessWidget {
+  const _ClosedWorldBadge();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Tooltip(
+      message: l10n.characterClosedWorldTooltip,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(
+          color: DuneColors.warningPrimary.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: DuneColors.warningPrimary),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.warning_amber_rounded,
+                size: 14, color: DuneColors.warningPrimary),
+            const SizedBox(width: 4),
+            Text(
+              l10n.characterClosedWorldBadge,
+              style: const TextStyle(
+                color: DuneColors.warningPrimary,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

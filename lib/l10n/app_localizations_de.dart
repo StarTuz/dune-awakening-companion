@@ -843,6 +843,28 @@ class AppLocalizationsDe extends AppLocalizations {
       'Hiermit wird unentgeltlich jeder Person, die eine Kopie der Software und der zugehörigen Dokumentationsdateien (die \"Software\") erhält, die Erlaubnis erteilt, uneingeschränkt mit der Software zu handeln, einschließlich, aber nicht beschränkt auf das Recht, die Software zu verwenden, zu kopieren, zu ändern, zusammenzuführen, zu veröffentlichen, zu vertreiben, unterzulizenzieren und/oder Kopien der Software zu verkaufen, und Personen, denen die Software überlassen wird, dies zu gestatten, unter den folgenden Bedingungen:\n\nDer obige Urheberrechtshinweis und dieser Genehmigungshinweis müssen in allen Kopien oder wesentlichen Teilen der Software enthalten sein.\n\nDIE SOFTWARE WIRD \"WIE BESEHEN\" BEREITGESTELLT, OHNE JEGLICHE AUSDRÜCKLICHE ODER STILLSCHWEIGENDE GARANTIE, EINSCHLIESSLICH, ABER NICHT BESCHRÄNKT AUF DIE GEWÄHRLEISTUNG DER MARKTGÄNGIGKEIT, DER EIGNUNG FÜR EINEN BESTIMMTEN ZWECK UND DER NICHTVERLETZUNG VON RECHTEN DRITTER.';
 
   @override
+  String get characterClosedWorldBadge => 'Welt geschlossen';
+
+  @override
+  String get characterClosedWorldTooltip =>
+      'Diese Welt wurde bei der Server-Migration am 26. Mai 2026 geschlossen. Verschiebe deinen Charakter im Spiel auf eine andere Welt – dies ist nur eine Erinnerung.';
+
+  @override
+  String get characterWorldClosedSuffix => '(geschlossen)';
+
+  @override
+  String get characterWorldCustomOption => 'Andere / eigene Welt…';
+
+  @override
+  String get characterWorldCustomLabel => 'Eigene Welt';
+
+  @override
+  String get characterWorldCustomHint => 'Beliebigen Weltnamen eingeben';
+
+  @override
+  String get dashboardClosedWorldsTitle => 'Auf geschlossenen Welten';
+
+  @override
   String get madeWithLove => 'Mit ❤️ gemacht für Dune Awakening Spieler';
 
   @override

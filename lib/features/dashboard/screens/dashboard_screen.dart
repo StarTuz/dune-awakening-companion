@@ -7,6 +7,7 @@ import '../../characters/providers/character_provider.dart';
 import '../../characters/models/character.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../bases/models/base.dart';
+import '../../../core/utils/constants.dart';
 import '../../../shared/theme/app_colors.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
@@ -74,6 +75,8 @@ class _DashboardContent extends StatelessWidget {
           base.powerExpirationTime.difference(now).inMinutes / 60.0;
       return powerHours < base.effectiveCriticalThresholdHours;
     }).length;
+    final closedWorldCharacters =
+        characters.where((c) => AppConstants.isClosedWorld(c.world)).length;
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -109,6 +112,15 @@ class _DashboardContent extends StatelessWidget {
               icon: Icons.notifications,
               color: DuneColors.criticalPrimary,
             ),
+            if (closedWorldCharacters > 0) ...[
+              const SizedBox(height: 16),
+              _StatCard(
+                title: l10n.dashboardClosedWorldsTitle,
+                value: closedWorldCharacters.toString(),
+                icon: Icons.public_off,
+                color: DuneColors.warningPrimary,
+              ),
+            ],
             const SizedBox(height: 24),
             Text(
               'Characters by Region',

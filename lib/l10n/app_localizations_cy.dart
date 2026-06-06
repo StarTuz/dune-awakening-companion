@@ -841,6 +841,28 @@ class AppLocalizationsCy extends AppLocalizations {
       'Rhoddir caniatâd trwy hyn, yn rhad ac am ddim, i unrhyw berson sy\'n sicrhau copi o\'r feddalwedd hon a\'r ffeiliau dogfennaeth cysylltiedig (y \"Feddalwedd\"), i ymdrin â\'r Feddalwedd heb gyfyngiad, gan gynnwys heb gyfyngiad y hawliau i ddefnyddio, copïo, addasu, uno, cyhoeddi, dosbarthu, is-drwyddedu a/neu werthu copïau o\'r Feddalwedd, ac i ganiatáu i bersonau y darperir y Feddalwedd iddynt wneud hynny, yn ddarostyngedig i\'r amodau a ganlyn:\n\nBydd yr hysbysiad hawlfraint uchod a\'r hysbysiad caniatâd hwn yn cael eu cynnwys ym mhob copi neu rannau sylweddol o\'r Feddalwedd.\n\nDARPERIR Y FEDDALWEDD \"FEL Y MAE\", HEB WARANT O UNRHYW FATH, NAILL AI WEDI\'I MYNEGI NEU EI HYNGLYCH, GAN GYNNWYS OND HEB FOD YN GYFYNGEDIG I WARANTAU O FARCHNADWYEDD, FFITRWYDD AR GYFER PWRPAS ARBENNIG A HEB FOD YN TORRI HAWLFRAINT.';
 
   @override
+  String get characterClosedWorldBadge => 'Byd wedi cau';
+
+  @override
+  String get characterClosedWorldTooltip =>
+      'Caeodd y byd hwn yn ystod mudo gweinyddwyr 26 Mai 2026. Symudwch eich cymeriad i fyd arall yn y gêm — dim ond nodyn atgoffa yw hwn.';
+
+  @override
+  String get characterWorldClosedSuffix => '(ar gau)';
+
+  @override
+  String get characterWorldCustomOption => 'Arall / byd personol…';
+
+  @override
+  String get characterWorldCustomLabel => 'Byd personol';
+
+  @override
+  String get characterWorldCustomHint => 'Rhowch unrhyw enw byd';
+
+  @override
+  String get dashboardClosedWorldsTitle => 'Ar fydoedd sydd ar gau';
+
+  @override
   String get madeWithLove =>
       'Wedi\'i wneud gyda ❤️ ar gyfer chwaraewyr Dune Awakening';
 

@@ -838,6 +838,28 @@ class AppLocalizationsIt extends AppLocalizations {
       'Con la presente viene concesso, gratuitamente, a chiunque ottenga una copia di questo software e dei file di documentazione associati (il \"Software\"), di trattare il Software senza restrizioni, inclusi, senza limitazioni, i diritti di utilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in sublicenza e/o vendere copie del Software, e di consentire alle persone a cui viene fornito il Software di farlo, fatte salve le seguenti condizioni:\n\nL\'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutte le copie o parti sostanziali del Software.\n\nIL SOFTWARE VIENE FORNITO \"COSÌ COM\'È\", SENZA GARANZIA DI ALCUN TIPO, ESPLICITA O IMPLICITA, COMPRESE MA NON LIMITATE ALLE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE.';
 
   @override
+  String get characterClosedWorldBadge => 'Mondo chiuso';
+
+  @override
+  String get characterClosedWorldTooltip =>
+      'Questo mondo è stato chiuso durante la migrazione dei server del 26 maggio 2026. Sposta il tuo personaggio in un altro mondo nel gioco; questo è solo un promemoria.';
+
+  @override
+  String get characterWorldClosedSuffix => '(chiuso)';
+
+  @override
+  String get characterWorldCustomOption => 'Altro / mondo personalizzato…';
+
+  @override
+  String get characterWorldCustomLabel => 'Mondo personalizzato';
+
+  @override
+  String get characterWorldCustomHint => 'Inserisci un nome di mondo qualsiasi';
+
+  @override
+  String get dashboardClosedWorldsTitle => 'Su mondi chiusi';
+
+  @override
   String get madeWithLove => 'Fatto con ❤️ per i giocatori di Dune Awakening';
 
   @override

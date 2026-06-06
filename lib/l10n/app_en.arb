@@ -1101,6 +1101,34 @@
   "@mitLicenseBody": {
     "description": "Full text of the MIT license"
   },
+  "characterClosedWorldBadge": "World closed",
+  "@characterClosedWorldBadge": {
+    "description": "Badge shown on a character whose world closed in the server migration"
+  },
+  "characterClosedWorldTooltip": "This world closed in the 26 May 2026 server migration. Move your character to another world in-game — this is just a reminder.",
+  "@characterClosedWorldTooltip": {
+    "description": "Tooltip explaining the closed-world badge"
+  },
+  "characterWorldClosedSuffix": "(closed)",
+  "@characterWorldClosedSuffix": {
+    "description": "Suffix appended to a world name in the picker when that world closed"
+  },
+  "characterWorldCustomOption": "Other / custom world…",
+  "@characterWorldCustomOption": {
+    "description": "Dropdown option that reveals a free-text field to type any world"
+  },
+  "characterWorldCustomLabel": "Custom world",
+  "@characterWorldCustomLabel": {
+    "description": "Label for the custom world text field"
+  },
+  "characterWorldCustomHint": "Enter any world name",
+  "@characterWorldCustomHint": {
+    "description": "Hint for the custom world text field"
+  },
+  "dashboardClosedWorldsTitle": "On closed worlds",
+  "@dashboardClosedWorldsTitle": {
+    "description": "Dashboard stat card: number of characters on worlds that closed"
+  },
   "madeWithLove": "Made with ❤️ for Dune Awakening players",
   "@madeWithLove": {
     "description": "Footer message"
