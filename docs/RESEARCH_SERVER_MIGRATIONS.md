@@ -1,8 +1,9 @@
 # Server Migrations — Research & Assessment
 
-Status: **Phases 1–3b implemented.** (closed-world flagging + corrected world
+Status: **Phases 1–3c implemented.** (closed-world flagging + corrected world
 list, "(closed)" markers, custom-world entry, dashboard summary, tap-through to
-the official guide, dismissible per-character acknowledgement; non-destructive)
+the official guide, dismissible per-character acknowledgement, dashboard
+deep-link to a filtered character list; non-destructive)
 
 This document assesses surfacing Funcom's **server migration / world closures** in
 the companion app: flagging characters that live on a world which closed in the
@@ -114,8 +115,9 @@ closed-world character and not for a survivor.
   field is threaded through `copyWith` / `toJson`/`fromJson` (defaulting false
   for older backups) / repo `toMap`/`fromMap`, so it is durable and export-safe.
 
-## Deferred (Phase 3c)
+## Done in Phase 3c
 
-- **Dashboard deep-link / filtered list:** tap the "On closed worlds" stat to
-  jump to a filtered character list; needs new list-filter + navigation state,
-  so scoped as its own slice.
+- **Dashboard deep-link / filtered list:** the "On closed worlds" stat is
+  tappable — it sets `closedWorldCharacterFilterProvider` and switches to the
+  Characters tab, which then shows only characters on closed (unacknowledged)
+  worlds with a filter banner + Clear. Covered by widget tests on both screens.

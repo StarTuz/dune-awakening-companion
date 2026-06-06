@@ -863,6 +863,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get actionUndo => 'Annuler';
 
   @override
+  String get actionClear => 'Effacer';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Affichage des personnages sur des mondes fermés';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'Aucun personnage sur des mondes fermés.';
+
+  @override
   String get characterWorldClosedSuffix => '(fermé)';
 
   @override

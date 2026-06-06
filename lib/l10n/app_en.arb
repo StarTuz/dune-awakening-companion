@@ -1125,6 +1125,18 @@
   "@actionUndo": {
     "description": "Generic undo action label (e.g. snackbar action)"
   },
+  "actionClear": "Clear",
+  "@actionClear": {
+    "description": "Generic clear action label (e.g. clear a filter)"
+  },
+  "characterFilterClosedWorldsActive": "Showing characters on closed worlds",
+  "@characterFilterClosedWorldsActive": {
+    "description": "Banner shown when the character list is filtered to closed worlds"
+  },
+  "characterFilterClosedWorldsEmpty": "No characters on closed worlds.",
+  "@characterFilterClosedWorldsEmpty": {
+    "description": "Empty state when no characters match the closed-worlds filter"
+  },
   "characterWorldClosedSuffix": "(closed)",
   "@characterWorldClosedSuffix": {
     "description": "Suffix appended to a world name in the picker when that world closed"

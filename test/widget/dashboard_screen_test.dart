@@ -8,6 +8,7 @@ import 'package:dune_awakening_companion/features/bases/models/base.dart';
 import 'package:dune_awakening_companion/features/bases/providers/base_provider.dart';
 import 'package:dune_awakening_companion/features/bases/services/base_repository.dart';
 import 'package:dune_awakening_companion/features/dashboard/screens/dashboard_screen.dart';
+import 'package:dune_awakening_companion/shared/navigation/main_navigation.dart';
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
@@ -180,6 +181,33 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('On closed worlds'), findsNothing);
+  });
+
+  testWidgets(
+      'tapping the closed-worlds stat filters characters and switches '
+      'to the Characters tab', (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('On closed worlds'));
+    await tester.pumpAndSettle();
+
+    final container =
+        ProviderScope.containerOf(tester.element(find.byType(DashboardScreen)));
+    expect(container.read(closedWorldCharacterFilterProvider), isTrue);
+    expect(container.read(navigationIndexProvider), 1); // Characters tab
   });
 
   testWidgets('hides closed-worlds stat when all worlds survive',

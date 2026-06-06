@@ -861,6 +861,17 @@ class AppLocalizationsCy extends AppLocalizations {
   String get actionUndo => 'Dadwneud';
 
   @override
+  String get actionClear => 'Clirio';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Yn dangos cymeriadau ar fydoedd sydd ar gau';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'Dim cymeriadau ar fydoedd sydd ar gau.';
+
+  @override
   String get characterWorldClosedSuffix => '(ar gau)';
 
   @override

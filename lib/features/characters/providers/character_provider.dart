@@ -15,6 +15,11 @@ final charactersProvider =
   return CharacterNotifier(repository);
 });
 
+/// When true, the character list is filtered to characters on a closed
+/// migration world (and not yet acknowledged). Set from the dashboard
+/// "On closed worlds" stat; cleared from the filter banner on the list.
+final closedWorldCharacterFilterProvider = StateProvider<bool>((ref) => false);
+
 class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
   final CharacterRepository _repository;
 

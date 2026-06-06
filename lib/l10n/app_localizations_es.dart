@@ -863,6 +863,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get actionUndo => 'Deshacer';
 
   @override
+  String get actionClear => 'Borrar';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Mostrando personajes en mundos cerrados';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'No hay personajes en mundos cerrados.';
+
+  @override
   String get characterWorldClosedSuffix => '(cerrado)';
 
   @override

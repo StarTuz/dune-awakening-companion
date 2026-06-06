@@ -8,6 +8,7 @@ import '../../characters/models/character.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../bases/models/base.dart';
 import '../../../core/utils/constants.dart';
+import '../../../shared/navigation/main_navigation.dart';
 import '../../../shared/theme/app_colors.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
@@ -36,6 +37,11 @@ class DashboardScreen extends ConsumerWidget {
               characters: characters,
               bases: bases,
               l10n: l10n,
+              onClosedWorldsTap: () {
+                ref.read(closedWorldCharacterFilterProvider.notifier).state =
+                    true;
+                ref.read(navigationIndexProvider.notifier).state = 1;
+              },
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (error, stack) =>
@@ -54,11 +60,13 @@ class _DashboardContent extends StatelessWidget {
     required this.characters,
     required this.bases,
     required this.l10n,
+    required this.onClosedWorldsTap,
   });
 
   final List<Character> characters;
   final List<Base> bases;
   final AppLocalizations l10n;
+  final VoidCallback onClosedWorldsTap;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +129,7 @@ class _DashboardContent extends StatelessWidget {
                 value: closedWorldCharacters.toString(),
                 icon: Icons.public_off,
                 color: DuneColors.warningPrimary,
+                onTap: onClosedWorldsTap,
               ),
             ],
             const SizedBox(height: 24),
@@ -422,40 +431,52 @@ class _StatCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final VoidCallback? onTap;
 
   const _StatCard({
     required this.title,
     required this.value,
     required this.icon,
     required this.color,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 32),
-            const SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleMedium,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Icon(icon, color: color, size: 32),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      value,
+                      style:
+                          Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                color: color,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                  ],
                 ),
-                Text(
-                  value,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: color,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ],
-            ),
-          ],
+              ),
+              if (onTap != null)
+                Icon(Icons.chevron_right,
+                    color: Theme.of(context).disabledColor),
+            ],
+          ),
         ),
       ),
     );

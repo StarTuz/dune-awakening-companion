@@ -859,6 +859,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get actionUndo => 'Скасувати';
 
   @override
+  String get actionClear => 'Очистити';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Показано персонажів на закритих світах';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'Немає персонажів на закритих світах.';
+
+  @override
   String get characterWorldClosedSuffix => '(закрито)';
 
   @override

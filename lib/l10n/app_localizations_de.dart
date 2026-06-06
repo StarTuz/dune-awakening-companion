@@ -864,6 +864,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get actionUndo => 'Rückgängig';
 
   @override
+  String get actionClear => 'Zurücksetzen';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Charaktere auf geschlossenen Welten';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'Keine Charaktere auf geschlossenen Welten.';
+
+  @override
   String get characterWorldClosedSuffix => '(geschlossen)';
 
   @override

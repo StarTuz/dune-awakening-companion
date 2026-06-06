@@ -854,6 +854,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionUndo => 'Undo';
 
   @override
+  String get actionClear => 'Clear';
+
+  @override
+  String get characterFilterClosedWorldsActive =>
+      'Showing characters on closed worlds';
+
+  @override
+  String get characterFilterClosedWorldsEmpty =>
+      'No characters on closed worlds.';
+
+  @override
   String get characterWorldClosedSuffix => '(closed)';
 
   @override

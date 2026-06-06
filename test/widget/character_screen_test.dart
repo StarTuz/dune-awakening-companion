@@ -71,12 +71,15 @@ void main() {
 
   Widget buildCharacterScreen({
     List<Character> characters = const [],
+    bool closedWorldFilter = false,
   }) {
     return ProviderScope(
       overrides: [
         characterRepositoryProvider
             .overrideWithValue(_FakeCharacterRepo(characters)),
         baseRepositoryProvider.overrideWithValue(_FakeBaseRepo()),
+        if (closedWorldFilter)
+          closedWorldCharacterFilterProvider.overrideWith((ref) => true),
       ],
       child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -273,6 +276,45 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('Custom world'), findsOneWidget);
     expect(find.widgetWithText(TextField, 'Octane'), findsOneWidget);
+  });
+
+  testWidgets(
+      'closed-worlds filter shows only affected characters; Clear resets',
+      (tester) async {
+    await tester.pumpWidget(buildCharacterScreen(
+      closedWorldFilter: true,
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost', // closed
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+        Character(
+            id: 'c2',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis', // survivor
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Showing characters on closed worlds'), findsOneWidget);
+    expect(find.text('Stilgar'), findsOneWidget);
+    expect(find.text('Paul'), findsNothing);
+
+    await tester.tap(find.text('Clear'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Showing characters on closed worlds'), findsNothing);
+    expect(find.text('Paul'), findsOneWidget);
   });
 
   testWidgets('shows FAB for adding new character', (tester) async {

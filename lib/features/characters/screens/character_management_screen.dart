@@ -27,99 +27,124 @@ class CharacterManagementScreen extends ConsumerWidget {
         title: const Text('Character Management'),
       ),
       body: charactersAsync.when(
-        data: (characters) => characters.isEmpty
-            ? const Center(
-                child: Text('No characters yet. Add one to get started.'),
-              )
-            : ListView.builder(
-                itemCount: characters.length,
-                itemBuilder: (context, index) {
-                  final character = characters[index];
+        data: (allCharacters) {
+          final showClosedOnly = ref.watch(closedWorldCharacterFilterProvider);
+          final characters = showClosedOnly
+              ? allCharacters
+                  .where((c) =>
+                      AppConstants.isClosedWorld(c.world) &&
+                      !c.closedWorldAcknowledged)
+                  .toList()
+              : allCharacters;
+          return Column(
+            children: [
+              if (showClosedOnly)
+                _ClosedWorldFilterBanner(
+                  onClear: () => ref
+                      .read(closedWorldCharacterFilterProvider.notifier)
+                      .state = false,
+                ),
+              Expanded(
+                child: characters.isEmpty
+                    ? Center(
+                        child: Text(showClosedOnly
+                            ? l10n.characterFilterClosedWorldsEmpty
+                            : 'No characters yet. Add one to get started.'),
+                      )
+                    : ListView.builder(
+                        itemCount: characters.length,
+                        itemBuilder: (context, index) {
+                          final character = characters[index];
 
-                  final serverInfo = AppConstants.usesFreeformWorldName(
-                              character.serverType) &&
-                          character.provider != null
-                      ? '${character.provider} - ${character.world}'
-                      : character.world;
+                          final serverInfo = AppConstants.usesFreeformWorldName(
+                                      character.serverType) &&
+                                  character.provider != null
+                              ? '${character.provider} - ${character.world}'
+                              : character.world;
 
-                  return Card(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 28,
-                        backgroundImage: character.portraitPath != null
-                            ? FileImage(File(character.portraitPath!))
-                            : null,
-                        child: character.portraitPath == null
-                            ? const Icon(Icons.person, size: 32)
-                            : null,
-                      ),
-                      title: Text(character.name),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                              '${character.region} - $serverInfo - ${character.sietch}'),
-                          if (AppConstants.isClosedWorld(character.world) &&
-                              !character.closedWorldAcknowledged)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4),
-                              child: _ClosedWorldBadge(
-                                onDismiss: () => _dismissClosedWorld(
-                                    context, ref, character, l10n),
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 28,
+                                backgroundImage: character.portraitPath != null
+                                    ? FileImage(File(character.portraitPath!))
+                                    : null,
+                                child: character.portraitPath == null
+                                    ? const Icon(Icons.person, size: 32)
+                                    : null,
+                              ),
+                              title: Text(character.name),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      '${character.region} - $serverInfo - ${character.sietch}'),
+                                  if (AppConstants.isClosedWorld(
+                                          character.world) &&
+                                      !character.closedWorldAcknowledged)
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4),
+                                      child: _ClosedWorldBadge(
+                                        onDismiss: () => _dismissClosedWorld(
+                                            context, ref, character, l10n),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ElevatedButton.icon(
+                                    onPressed: () => _showBaseManagementDialog(
+                                        context, ref, character),
+                                    icon: const Icon(Icons.home_work, size: 18),
+                                    label: const Text('Bases'),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 8),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  ElevatedButton.icon(
+                                    onPressed: () => _showProgressDialog(
+                                      context,
+                                      character,
+                                    ),
+                                    icon: const Icon(Icons.insights, size: 18),
+                                    label: const Text('Progress'),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    color: DuneColors.primaryAccent,
+                                    onPressed: () => _showEditDialog(
+                                        context, ref, character),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    color: DuneColors.error,
+                                    onPressed: () => _showDeleteDialog(
+                                        context, ref, character),
+                                  ),
+                                ],
                               ),
                             ),
-                        ],
+                          );
+                        },
                       ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: () => _showBaseManagementDialog(
-                                context, ref, character),
-                            icon: const Icon(Icons.home_work, size: 18),
-                            label: const Text('Bases'),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          ElevatedButton.icon(
-                            onPressed: () => _showProgressDialog(
-                              context,
-                              character,
-                            ),
-                            icon: const Icon(Icons.insights, size: 18),
-                            label: const Text('Progress'),
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            color: DuneColors.primaryAccent,
-                            onPressed: () =>
-                                _showEditDialog(context, ref, character),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            color: DuneColors.error,
-                            onPressed: () =>
-                                _showDeleteDialog(context, ref, character),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
               ),
+            ],
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Text('Error: $error'),
@@ -1326,6 +1351,37 @@ class _ClosedWorldBadge extends StatelessWidget {
               ],
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Banner shown above the character list when filtered to closed-world
+/// characters (e.g. arrived via the dashboard "On closed worlds" stat).
+class _ClosedWorldFilterBanner extends StatelessWidget {
+  const _ClosedWorldFilterBanner({required this.onClear});
+
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Material(
+      color: DuneColors.warningPrimary.withOpacity(0.12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            const Icon(Icons.filter_alt,
+                size: 18, color: DuneColors.warningPrimary),
+            const SizedBox(width: 8),
+            Expanded(child: Text(l10n.characterFilterClosedWorldsActive)),
+            TextButton(
+              onPressed: onClear,
+              child: Text(l10n.actionClear),
+            ),
+          ],
         ),
       ),
     );

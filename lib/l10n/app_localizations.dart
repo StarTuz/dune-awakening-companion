@@ -1650,6 +1650,24 @@ abstract class AppLocalizations {
   /// **'Undo'**
   String get actionUndo;
 
+  /// Generic clear action label (e.g. clear a filter)
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get actionClear;
+
+  /// Banner shown when the character list is filtered to closed worlds
+  ///
+  /// In en, this message translates to:
+  /// **'Showing characters on closed worlds'**
+  String get characterFilterClosedWorldsActive;
+
+  /// Empty state when no characters match the closed-worlds filter
+  ///
+  /// In en, this message translates to:
+  /// **'No characters on closed worlds.'**
+  String get characterFilterClosedWorldsEmpty;
+
   /// Suffix appended to a world name in the picker when that world closed
   ///
   /// In en, this message translates to:
