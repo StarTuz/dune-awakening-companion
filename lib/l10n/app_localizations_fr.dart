@@ -850,6 +850,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce monde a fermé lors de la migration des serveurs du 26 mai 2026. Déplacez votre personnage vers un autre monde dans le jeu ; ceci n\'est qu\'un rappel.';
 
   @override
+  String get characterClosedWorldOpenFailed =>
+      'Impossible d\'ouvrir le guide de migration';
+
+  @override
   String get characterWorldClosedSuffix => '(fermé)';
 
   @override

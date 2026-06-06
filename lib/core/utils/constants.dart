@@ -306,6 +306,11 @@ class AppConstants {
     return regionWorlds[region] ?? [];
   }
 
+  /// Official guide for the server migration, opened from the closed-world
+  /// badge so players can read how to transfer their character/base.
+  static const String serverMigrationGuideUrl =
+      'https://duneawakening.com/news/server-migrations/';
+
   /// Worlds that closed in the Funcom server migration (live 2026-05-26).
   /// Source of truth: https://duneawakening.com/news/server-migrations/
   /// A character whose [Character.world] matches any of these (see

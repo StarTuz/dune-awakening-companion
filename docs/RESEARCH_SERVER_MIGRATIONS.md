@@ -1,7 +1,8 @@
 # Server Migrations — Research & Assessment
 
-Status: **Phases 1–2 implemented.** (closed-world flagging + corrected world
-list, "(closed)" markers, custom-world entry, dashboard summary; non-destructive)
+Status: **Phases 1–3a implemented.** (closed-world flagging + corrected world
+list, "(closed)" markers, custom-world entry, dashboard summary, tap-through to
+the official guide; non-destructive)
 
 This document assesses surfacing Funcom's **server migration / world closures** in
 the companion app: flagging characters that live on a world which closed in the
@@ -97,15 +98,19 @@ closed-world character and not for a survivor.
 
 ---
 
-## Deferred (Phase 2 / 3)
+## Done in Phase 3a
 
-- **Add-character UX:** correct `regionWorlds` spellings; keep closing worlds in
-  the dropdown marked `"(closed)"`; allow a custom typed world so any World can
-  be recorded ("allow anyone to add a new character to any world"). Optionally
-  make Official worlds free-text like Private/Self-Hosted.
-- **Dashboard summary:** "N characters on closed worlds" with deep-link.
-- **Tap-through to the guide:** add `url_launcher` and open the official
-  migration page from the badge.
-- **Dismiss/acknowledge per character:** would require migration 017 plus
-  `copyWith` / `toMap` / JSON threading; deliberately omitted to keep Phase 1
-  data-model-free.
+- **Tap-through to the guide:** the badge is an `InkWell` that opens
+  `AppConstants.serverMigrationGuideUrl` via `url_launcher`
+  (`LaunchMode.externalApplication`), with an `open_in_new` affordance and a
+  localized failure snackbar. Covered by a mocked-`UrlLauncherPlatform` test.
+
+## Deferred (Phase 3b / 3c)
+
+- **Dismiss/acknowledge per character (3b):** persistently silence the badge for
+  a migrated character. Recommended path is a `Character.closedWorldAcknowledged`
+  field → migration 017 + `copyWith` / `toJson` / `toMap` threading (durable and
+  export-safe), over a SharedPreferences id-set shortcut (lost on import).
+- **Dashboard deep-link / filtered list (3c):** tap the "On closed worlds" stat
+  to jump to a filtered character list; needs new list-filter + navigation
+  state, so scoped as its own slice.

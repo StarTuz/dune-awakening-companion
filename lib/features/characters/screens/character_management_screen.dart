@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/character.dart';
 import '../providers/character_provider.dart';
 import '../../bases/models/base.dart';
@@ -1217,33 +1218,61 @@ class CharacterManagementScreen extends ConsumerWidget {
 class _ClosedWorldBadge extends StatelessWidget {
   const _ClosedWorldBadge();
 
+  /// Opens Funcom's official migration guide in the system browser. Falls back
+  /// to a snackbar if the platform can't open a browser (e.g. missing handler).
+  Future<void> _openGuide(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final messenger = ScaffoldMessenger.of(context);
+    bool opened = false;
+    try {
+      opened = await launchUrl(
+        Uri.parse(AppConstants.serverMigrationGuideUrl),
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (_) {
+      opened = false;
+    }
+    if (!opened) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.characterClosedWorldOpenFailed)),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Tooltip(
       message: l10n.characterClosedWorldTooltip,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        decoration: BoxDecoration(
-          color: DuneColors.warningPrimary.withOpacity(0.15),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: DuneColors.warningPrimary),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.warning_amber_rounded,
-                size: 14, color: DuneColors.warningPrimary),
-            const SizedBox(width: 4),
-            Text(
-              l10n.characterClosedWorldBadge,
-              style: const TextStyle(
-                color: DuneColors.warningPrimary,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+      child: InkWell(
+        onTap: () => _openGuide(context),
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          decoration: BoxDecoration(
+            color: DuneColors.warningPrimary.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: DuneColors.warningPrimary),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.warning_amber_rounded,
+                  size: 14, color: DuneColors.warningPrimary),
+              const SizedBox(width: 4),
+              Text(
+                l10n.characterClosedWorldBadge,
+                style: const TextStyle(
+                  color: DuneColors.warningPrimary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 4),
+              const Icon(Icons.open_in_new,
+                  size: 12, color: DuneColors.warningPrimary),
+            ],
+          ),
         ),
       ),
     );

@@ -254,6 +254,7 @@
   "mitLicenseBody": "Se concede permiso por la presente, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el \"Software\"), para tratar con el Software sin restricción, incluyendo, sin limitación, los derechos de uso, copia, modificación, fusión, publicación, distribución, sublicencia y/o venta de copias del Software, y para permitir a las personas a quienes se les proporcione el Software hacerlo, con sujeción a las siguientes condiciones:\n\nEl aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.\n\nEL SOFTWARE SE PROPORCIONA \"TAL CUAL\", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO, PERO SIN LIMITARSE A, GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN.",
   "characterClosedWorldBadge": "Mundo cerrado",
   "characterClosedWorldTooltip": "Este mundo cerró en la migración de servidores del 26 de mayo de 2026. Mueve tu personaje a otro mundo en el juego; esto es solo un recordatorio.",
+  "characterClosedWorldOpenFailed": "No se pudo abrir la guía de migración",
   "characterWorldClosedSuffix": "(cerrado)",
   "characterWorldCustomOption": "Otro / mundo personalizado…",
   "characterWorldCustomLabel": "Mundo personalizado",

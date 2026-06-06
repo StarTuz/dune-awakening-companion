@@ -1626,6 +1626,12 @@ abstract class AppLocalizations {
   /// **'This world closed in the 26 May 2026 server migration. Move your character to another world in-game — this is just a reminder.'**
   String get characterClosedWorldTooltip;
 
+  /// Snackbar shown when the migration guide URL fails to open
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the migration guide'**
+  String get characterClosedWorldOpenFailed;
+
   /// Suffix appended to a world name in the picker when that world closed
   ///
   /// In en, this message translates to:

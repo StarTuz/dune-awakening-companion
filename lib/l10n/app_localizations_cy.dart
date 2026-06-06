@@ -848,6 +848,9 @@ class AppLocalizationsCy extends AppLocalizations {
       'Caeodd y byd hwn yn ystod mudo gweinyddwyr 26 Mai 2026. Symudwch eich cymeriad i fyd arall yn y gêm — dim ond nodyn atgoffa yw hwn.';
 
   @override
+  String get characterClosedWorldOpenFailed => 'Methwyd agor y canllaw mudo';
+
+  @override
   String get characterWorldClosedSuffix => '(ar gau)';
 
   @override

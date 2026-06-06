@@ -850,6 +850,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Welt wurde bei der Server-Migration am 26. Mai 2026 geschlossen. Verschiebe deinen Charakter im Spiel auf eine andere Welt – dies ist nur eine Erinnerung.';
 
   @override
+  String get characterClosedWorldOpenFailed =>
+      'Migrationsleitfaden konnte nicht geöffnet werden';
+
+  @override
   String get characterWorldClosedSuffix => '(geschlossen)';
 
   @override

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:url_launcher_platform_interface/link.dart';
+import 'package:url_launcher_platform_interface/url_launcher_platform_interface.dart';
+import 'package:dune_awakening_companion/core/utils/constants.dart';
 import 'package:dune_awakening_companion/features/characters/models/character.dart';
 import 'package:dune_awakening_companion/features/characters/providers/character_provider.dart';
 import 'package:dune_awakening_companion/features/characters/services/character_repository.dart';
@@ -43,6 +47,23 @@ class _FakeBaseRepo implements BaseRepository {
   Future<void> update(Base b) async {}
   @override
   Future<void> delete(String id) async {}
+}
+
+class _FakeUrlLauncher extends UrlLauncherPlatform
+    with MockPlatformInterfaceMixin {
+  final List<String> launched = [];
+
+  @override
+  LinkDelegate? get linkDelegate => null;
+
+  @override
+  Future<bool> canLaunch(String url) async => true;
+
+  @override
+  Future<bool> launchUrl(String url, LaunchOptions options) async {
+    launched.add(url);
+    return true;
+  }
 }
 
 void main() {
@@ -136,6 +157,33 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('World closed'), findsOneWidget);
+  });
+
+  testWidgets('tapping the closed-world badge opens the migration guide',
+      (tester) async {
+    final fakeLauncher = _FakeUrlLauncher();
+    UrlLauncherPlatform.instance = fakeLauncher;
+
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost', // closed world
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('World closed'));
+    await tester.pumpAndSettle();
+
+    expect(
+        fakeLauncher.launched, contains(AppConstants.serverMigrationGuideUrl));
   });
 
   testWidgets('does not flag a character on a surviving world', (tester) async {

@@ -1109,6 +1109,10 @@
   "@characterClosedWorldTooltip": {
     "description": "Tooltip explaining the closed-world badge"
   },
+  "characterClosedWorldOpenFailed": "Couldn't open the migration guide",
+  "@characterClosedWorldOpenFailed": {
+    "description": "Snackbar shown when the migration guide URL fails to open"
+  },
   "characterWorldClosedSuffix": "(closed)",
   "@characterWorldClosedSuffix": {
     "description": "Suffix appended to a world name in the picker when that world closed"
