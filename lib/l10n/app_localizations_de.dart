@@ -854,6 +854,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Migrationsleitfaden konnte nicht geöffnet werden';
 
   @override
+  String get characterClosedWorldDismiss => 'Ausblenden';
+
+  @override
+  String get characterClosedWorldDismissed =>
+      'Hinweis zur geschlossenen Welt ausgeblendet';
+
+  @override
+  String get actionUndo => 'Rückgängig';
+
+  @override
   String get characterWorldClosedSuffix => '(geschlossen)';
 
   @override

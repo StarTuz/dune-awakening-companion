@@ -1632,6 +1632,24 @@ abstract class AppLocalizations {
   /// **'Couldn\'t open the migration guide'**
   String get characterClosedWorldOpenFailed;
 
+  /// Tooltip for the button that dismisses the closed-world notice
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get characterClosedWorldDismiss;
+
+  /// Snackbar shown after dismissing the closed-world notice
+  ///
+  /// In en, this message translates to:
+  /// **'Closed-world reminder dismissed'**
+  String get characterClosedWorldDismissed;
+
+  /// Generic undo action label (e.g. snackbar action)
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get actionUndo;
+
   /// Suffix appended to a world name in the picker when that world closed
   ///
   /// In en, this message translates to:

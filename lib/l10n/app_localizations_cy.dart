@@ -851,6 +851,16 @@ class AppLocalizationsCy extends AppLocalizations {
   String get characterClosedWorldOpenFailed => 'Methwyd agor y canllaw mudo';
 
   @override
+  String get characterClosedWorldDismiss => 'Diystyru';
+
+  @override
+  String get characterClosedWorldDismissed =>
+      'Nodyn byd ar gau wedi\'i ddiystyru';
+
+  @override
+  String get actionUndo => 'Dadwneud';
+
+  @override
   String get characterWorldClosedSuffix => '(ar gau)';
 
   @override

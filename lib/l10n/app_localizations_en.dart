@@ -845,6 +845,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t open the migration guide';
 
   @override
+  String get characterClosedWorldDismiss => 'Dismiss';
+
+  @override
+  String get characterClosedWorldDismissed => 'Closed-world reminder dismissed';
+
+  @override
+  String get actionUndo => 'Undo';
+
+  @override
   String get characterWorldClosedSuffix => '(closed)';
 
   @override

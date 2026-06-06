@@ -854,6 +854,15 @@ class AppLocalizationsFr extends AppLocalizations {
       'Impossible d\'ouvrir le guide de migration';
 
   @override
+  String get characterClosedWorldDismiss => 'Ignorer';
+
+  @override
+  String get characterClosedWorldDismissed => 'Avis de monde fermé ignoré';
+
+  @override
+  String get actionUndo => 'Annuler';
+
+  @override
   String get characterWorldClosedSuffix => '(fermé)';
 
   @override

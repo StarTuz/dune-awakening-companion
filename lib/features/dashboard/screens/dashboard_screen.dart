@@ -75,8 +75,10 @@ class _DashboardContent extends StatelessWidget {
           base.powerExpirationTime.difference(now).inMinutes / 60.0;
       return powerHours < base.effectiveCriticalThresholdHours;
     }).length;
-    final closedWorldCharacters =
-        characters.where((c) => AppConstants.isClosedWorld(c.world)).length;
+    final closedWorldCharacters = characters
+        .where((c) =>
+            AppConstants.isClosedWorld(c.world) && !c.closedWorldAcknowledged)
+        .length;
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),

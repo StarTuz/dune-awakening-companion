@@ -1,8 +1,8 @@
 # Server Migrations — Research & Assessment
 
-Status: **Phases 1–3a implemented.** (closed-world flagging + corrected world
+Status: **Phases 1–3b implemented.** (closed-world flagging + corrected world
 list, "(closed)" markers, custom-world entry, dashboard summary, tap-through to
-the official guide; non-destructive)
+the official guide, dismissible per-character acknowledgement; non-destructive)
 
 This document assesses surfacing Funcom's **server migration / world closures** in
 the companion app: flagging characters that live on a world which closed in the
@@ -105,12 +105,17 @@ closed-world character and not for a survivor.
   (`LaunchMode.externalApplication`), with an `open_in_new` affordance and a
   localized failure snackbar. Covered by a mocked-`UrlLauncherPlatform` test.
 
-## Deferred (Phase 3b / 3c)
+## Done in Phase 3b
 
-- **Dismiss/acknowledge per character (3b):** persistently silence the badge for
-  a migrated character. Recommended path is a `Character.closedWorldAcknowledged`
-  field → migration 017 + `copyWith` / `toJson` / `toMap` threading (durable and
-  export-safe), over a SharedPreferences id-set shortcut (lost on import).
-- **Dashboard deep-link / filtered list (3c):** tap the "On closed worlds" stat
-  to jump to a filtered character list; needs new list-filter + navigation
-  state, so scoped as its own slice.
+- **Dismiss/acknowledge per character:** the badge has a `×` that sets
+  `Character.closedWorldAcknowledged` (migration 017, DB v17) via the repository,
+  with an Undo snackbar. Badge and dashboard count both respect the flag, and
+  editing a character to a *different* world resets the acknowledgement. The
+  field is threaded through `copyWith` / `toJson`/`fromJson` (defaulting false
+  for older backups) / repo `toMap`/`fromMap`, so it is durable and export-safe.
+
+## Deferred (Phase 3c)
+
+- **Dashboard deep-link / filtered list:** tap the "On closed worlds" stat to
+  jump to a filtered character list; needs new list-filter + navigation state,
+  so scoped as its own slice.

@@ -72,6 +72,7 @@ class CharacterRepository {
       'primary_class': character.primaryClass,
       'portraitPath': character.portraitPath,
       'biography': character.biography,
+      'closed_world_acknowledged': character.closedWorldAcknowledged ? 1 : 0,
       'created_at': character.createdAt.millisecondsSinceEpoch,
       'updated_at': character.updatedAt.millisecondsSinceEpoch,
     };
@@ -89,6 +90,8 @@ class CharacterRepository {
       primaryClass: map['primary_class'] as String?,
       portraitPath: map['portraitPath'] as String?,
       biography: map['biography'] as String?,
+      closedWorldAcknowledged:
+          (map['closed_world_acknowledged'] as int? ?? 0) == 1,
       createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at'] as int),
       updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updated_at'] as int),
     );

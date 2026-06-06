@@ -17,6 +17,11 @@ class Character implements BaseModel {
   final String? primaryClass;
   final String? portraitPath; // Path to character portrait image
   final String? biography; // Short "about this ghola" blurb (RPG journal)
+  // Whether the user has dismissed the "world closed" migration notice for this
+  // character (the world still reads closed; we just stop nagging). Defaults to
+  // false and tolerates being absent from older JSON backups / DB rows.
+  @JsonKey(defaultValue: false)
+  final bool closedWorldAcknowledged;
   @override
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -32,6 +37,7 @@ class Character implements BaseModel {
     this.primaryClass,
     this.portraitPath,
     this.biography,
+    this.closedWorldAcknowledged = false,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -53,6 +59,7 @@ class Character implements BaseModel {
     String? primaryClass,
     String? portraitPath,
     Object? biography = _unset,
+    bool? closedWorldAcknowledged,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -66,6 +73,8 @@ class Character implements BaseModel {
       sietch: sietch ?? this.sietch,
       primaryClass: primaryClass ?? this.primaryClass,
       portraitPath: portraitPath ?? this.portraitPath,
+      closedWorldAcknowledged:
+          closedWorldAcknowledged ?? this.closedWorldAcknowledged,
       // Sentinel lets callers clear the biography by passing `null` (a plain
       // `?? this.biography` would silently keep the old value).
       biography:

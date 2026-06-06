@@ -186,6 +186,46 @@ void main() {
         fakeLauncher.launched, contains(AppConstants.serverMigrationGuideUrl));
   });
 
+  testWidgets('closed-world badge shows a dismiss affordance', (tester) async {
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('World closed'), findsOneWidget);
+    expect(find.byIcon(Icons.close), findsOneWidget);
+  });
+
+  testWidgets('acknowledged closed world hides the badge', (tester) async {
+    await tester.pumpWidget(buildCharacterScreen(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost',
+            sietch: 'Tabr',
+            closedWorldAcknowledged: true,
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('World closed'), findsNothing);
+  });
+
   testWidgets('does not flag a character on a surviving world', (tester) async {
     await tester.pumpWidget(buildCharacterScreen(
       characters: [

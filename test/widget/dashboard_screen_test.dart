@@ -161,6 +161,27 @@ void main() {
     expect(find.byIcon(Icons.public_off), findsOneWidget);
   });
 
+  testWidgets('excludes acknowledged characters from the closed-worlds stat',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Stilgar',
+            region: 'Asia',
+            serverType: 'Official',
+            world: 'Bifrost', // closed, but acknowledged
+            sietch: 'Tabr',
+            closedWorldAcknowledged: true,
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('On closed worlds'), findsNothing);
+  });
+
   testWidgets('hides closed-worlds stat when all worlds survive',
       (tester) async {
     await tester.pumpWidget(buildDashboard(

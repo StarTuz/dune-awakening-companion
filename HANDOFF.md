@@ -2,7 +2,7 @@
 
 **Date:** June 5, 2026  
 **Version:** v1.3.0-beta (main; Base Calculator Phases 1–5 on branch)  
-**Database:** v16  
+**Database:** v17  
 **Status:** Release candidate — documentation sync for calculator, chronicle, and blueprints expansion  
 
 ---
@@ -52,7 +52,7 @@ The Dune Awakening Companion App is a **feature-complete** cross-platform applic
 ```
 lib/
 ├── core/                    # Core services & infrastructure
-│   ├── database/           # SQLite + migrations (v16)
+│   ├── database/           # SQLite + migrations (v17)
 │   ├── models/             # Core data models
 │   ├── providers/          # Riverpod providers
 │   ├── repositories/       # Data access layer
@@ -269,7 +269,7 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 
 ## 💾 Database
 
-### Version: 16
+### Version: 17
 
 ### Core tables (non-exhaustive)
 - `characters`, `bases`, `servers` — core tracking
@@ -280,9 +280,10 @@ The workflow expects `RELEASE_NOTES_vX.X.X.md` to exist for the tag being releas
 - `character_class_quests`, `character_class_quest_steps`, `character_skills` — class progression
 - `journal_entries` — Character Chronicle
 - `base_calculator_plans` — saved Base Calculator builds (migration 016)
+- `characters.closed_world_acknowledged` — dismissed server-migration notice (migration 017)
 
 ### Migrations
-Located in `lib/core/database/migrations/` (001–016). Bump `version:` in
+Located in `lib/core/database/migrations/` (001–017). Bump `version:` in
 `lib/core/database/app_database.dart` when adding a migration.
 
 Legacy note: migration_003 tax columns remain nullable but are unused (Chapter 3

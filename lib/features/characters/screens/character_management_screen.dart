@@ -20,6 +20,7 @@ class CharacterManagementScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final charactersAsync = ref.watch(charactersProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -61,10 +62,14 @@ class CharacterManagementScreen extends ConsumerWidget {
                         children: [
                           Text(
                               '${character.region} - $serverInfo - ${character.sietch}'),
-                          if (AppConstants.isClosedWorld(character.world))
-                            const Padding(
-                              padding: EdgeInsets.only(top: 4),
-                              child: _ClosedWorldBadge(),
+                          if (AppConstants.isClosedWorld(character.world) &&
+                              !character.closedWorldAcknowledged)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: _ClosedWorldBadge(
+                                onDismiss: () => _dismissClosedWorld(
+                                    context, ref, character, l10n),
+                              ),
                             ),
                         ],
                       ),
@@ -123,6 +128,33 @@ class CharacterManagementScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddDialog(context, ref),
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  /// Acknowledge (dismiss) the closed-world notice for [character], with an
+  /// Undo action. Non-destructive: only flips the acknowledgement flag.
+  void _dismissClosedWorld(BuildContext context, WidgetRef ref,
+      Character character, AppLocalizations l10n) {
+    ref.read(charactersProvider.notifier).updateCharacter(
+          character.copyWith(
+            closedWorldAcknowledged: true,
+            updatedAt: DateTime.now(),
+          ),
+        );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.characterClosedWorldDismissed),
+        action: SnackBarAction(
+          label: l10n.actionUndo,
+          onPressed: () =>
+              ref.read(charactersProvider.notifier).updateCharacter(
+                    character.copyWith(
+                      closedWorldAcknowledged: false,
+                      updatedAt: DateTime.now(),
+                    ),
+                  ),
+        ),
       ),
     );
   }
@@ -677,6 +709,11 @@ class CharacterManagementScreen extends ConsumerWidget {
                     world: worldValue,
                     sietch: sietchController.text,
                     primaryClass: selectedPrimaryClass,
+                    // Moving to a different world clears a previous dismissal so
+                    // the notice can re-appear if the new world is also closed.
+                    closedWorldAcknowledged: worldValue == character.world
+                        ? character.closedWorldAcknowledged
+                        : false,
                     updatedAt: DateTime.now(),
                   );
 
@@ -1216,7 +1253,11 @@ class CharacterManagementScreen extends ConsumerWidget {
 /// Non-destructive notice shown on a character whose world closed in the
 /// 2026-05-26 server migration. See [AppConstants.isClosedWorld].
 class _ClosedWorldBadge extends StatelessWidget {
-  const _ClosedWorldBadge();
+  const _ClosedWorldBadge({this.onDismiss});
+
+  /// When provided, renders a dismiss (×) affordance that acknowledges the
+  /// notice for this character.
+  final VoidCallback? onDismiss;
 
   /// Opens Funcom's official migration guide in the system browser. Falls back
   /// to a snackbar if the platform can't open a browser (e.g. missing handler).
@@ -1271,6 +1312,18 @@ class _ClosedWorldBadge extends StatelessWidget {
               const SizedBox(width: 4),
               const Icon(Icons.open_in_new,
                   size: 12, color: DuneColors.warningPrimary),
+              if (onDismiss != null) ...[
+                const SizedBox(width: 6),
+                Tooltip(
+                  message: l10n.characterClosedWorldDismiss,
+                  child: InkWell(
+                    onTap: onDismiss,
+                    borderRadius: BorderRadius.circular(10),
+                    child: const Icon(Icons.close,
+                        size: 13, color: DuneColors.warningPrimary),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

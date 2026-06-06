@@ -74,7 +74,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('1.3.0-beta'), findsOneWidget);
-    expect(find.text('v16'), findsAtLeastNWidgets(1));
+    expect(find.text('v17'), findsAtLeastNWidgets(1));
   });
 
   testWidgets('shows appearance section after scrolling', (tester) async {

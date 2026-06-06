@@ -18,6 +18,7 @@ import 'migrations/migration_013_add_journal_entries.dart';
 import 'migrations/migration_014_add_journal_phase2.dart';
 import 'migrations/migration_015_add_journal_phase3.dart';
 import 'migrations/migration_016_add_base_calculator_plans.dart';
+import 'migrations/migration_017_add_closed_world_ack.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
@@ -41,7 +42,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 16,
+      version: 17,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -119,6 +120,9 @@ class AppDatabase {
     if (version >= 16) {
       await Migration016AddBaseCalculatorPlans.up(db);
     }
+    if (version >= 17) {
+      await Migration017AddClosedWorldAck.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -166,6 +170,9 @@ class AppDatabase {
     }
     if (oldVersion < 16) {
       await Migration016AddBaseCalculatorPlans.up(db);
+    }
+    if (oldVersion < 17) {
+      await Migration017AddClosedWorldAck.up(db);
     }
   }
 

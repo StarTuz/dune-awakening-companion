@@ -1113,6 +1113,18 @@
   "@characterClosedWorldOpenFailed": {
     "description": "Snackbar shown when the migration guide URL fails to open"
   },
+  "characterClosedWorldDismiss": "Dismiss",
+  "@characterClosedWorldDismiss": {
+    "description": "Tooltip for the button that dismisses the closed-world notice"
+  },
+  "characterClosedWorldDismissed": "Closed-world reminder dismissed",
+  "@characterClosedWorldDismissed": {
+    "description": "Snackbar shown after dismissing the closed-world notice"
+  },
+  "actionUndo": "Undo",
+  "@actionUndo": {
+    "description": "Generic undo action label (e.g. snackbar action)"
+  },
   "characterWorldClosedSuffix": "(closed)",
   "@characterWorldClosedSuffix": {
     "description": "Suffix appended to a world name in the picker when that world closed"

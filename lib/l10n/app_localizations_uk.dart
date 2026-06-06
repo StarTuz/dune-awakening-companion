@@ -849,6 +849,16 @@ class AppLocalizationsUk extends AppLocalizations {
       'Не вдалося відкрити посібник з міграції';
 
   @override
+  String get characterClosedWorldDismiss => 'Сховати';
+
+  @override
+  String get characterClosedWorldDismissed =>
+      'Нагадування про закритий світ сховано';
+
+  @override
+  String get actionUndo => 'Скасувати';
+
+  @override
   String get characterWorldClosedSuffix => '(закрито)';
 
   @override
