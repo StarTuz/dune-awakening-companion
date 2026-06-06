@@ -66,7 +66,6 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
       );
       await _repository.create(base);
       _ref.invalidate(basesByCharacterProvider(characterId));
-      _ref.invalidate(basesProvider);
       _ref.invalidate(expiringBasesProvider);
       await _loadBases();
     } catch (e, stack) {
@@ -79,7 +78,6 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
       final updatedBase = base.copyWith(updatedAt: DateTime.now());
       await _repository.update(updatedBase);
       _ref.invalidate(basesByCharacterProvider(base.characterId));
-      _ref.invalidate(basesProvider);
       _ref.invalidate(expiringBasesProvider);
       await _loadBases();
     } catch (e, stack) {
@@ -91,7 +89,6 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
     try {
       await _repository.delete(id);
       _ref.invalidate(basesByCharacterProvider(characterId));
-      _ref.invalidate(basesProvider);
       _ref.invalidate(expiringBasesProvider);
       await _loadBases();
     } catch (e, stack) {
