@@ -30,10 +30,12 @@ void main() {
     await tester.scrollUntilVisible(
       haulingTitle,
       500,
-      scrollable: find.descendant(
-        of: find.byType(ListView),
-        matching: find.byType(Scrollable),
-      ).first,
+      scrollable: find
+          .descendant(
+            of: find.byType(ListView),
+            matching: find.byType(Scrollable),
+          )
+          .first,
     );
     await tester.tap(haulingTitle);
     await tester.pumpAndSettle();

@@ -165,7 +165,10 @@ class _PlanTile extends ConsumerWidget {
     final baseName = basesAsync.maybeWhen(
       data: (bases) {
         if (plan.baseId == null) return null;
-        return bases.where((b) => b.id == plan.baseId).map((b) => b.name).firstOrNull;
+        return bases
+            .where((b) => b.id == plan.baseId)
+            .map((b) => b.name)
+            .firstOrNull;
       },
       orElse: () => null,
     );

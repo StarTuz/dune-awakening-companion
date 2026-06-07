@@ -34,11 +34,11 @@ class BaseCalculatorPlan implements BaseModel {
     required this.updatedAt,
   });
 
-  int get totalItems => itemQuantities.values
-      .fold(0, (sum, qty) => sum + (qty > 0 ? qty : 0));
+  int get totalItems =>
+      itemQuantities.values.fold(0, (sum, qty) => sum + (qty > 0 ? qty : 0));
 
-  int get totalStorage => storageQuantities.values
-      .fold(0, (sum, qty) => sum + (qty > 0 ? qty : 0));
+  int get totalStorage =>
+      storageQuantities.values.fold(0, (sum, qty) => sum + (qty > 0 ? qty : 0));
 
   bool get isEmpty =>
       totalItems == 0 && totalStorage == 0 && !deepDesertDiscountEnabled;

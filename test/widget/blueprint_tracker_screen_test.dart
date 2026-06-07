@@ -155,7 +155,7 @@ void main() {
     // The text now appears in two places (header title + dropdown selected
     // value), so just assert it's present somewhere.
     expect(find.text('All Regions'), findsWidgets);
-    await searchFor(tester, "Kaleff");
+    await searchFor(tester, 'Kaleff');
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
     expect(find.text('0 / $catalogTotal collected'), findsOneWidget);
   });
@@ -195,7 +195,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await searchFor(tester, "Kaleff");
+    await searchFor(tester, 'Kaleff');
     expect(find.text("Kaleff's Drinker"), findsOneWidget);
     expect(find.text('1 / $catalogTotal collected'), findsOneWidget);
     expect(
@@ -240,7 +240,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await searchFor(tester, "Kaleff");
+    await searchFor(tester, 'Kaleff');
 
     expect(find.text('Respawn timer'), findsOneWidget);
     expect(find.textContaining('Respawns in'), findsNothing);
@@ -280,7 +280,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await searchFor(tester, "Kaleff");
+    await searchFor(tester, 'Kaleff');
 
     expect(find.textContaining('Respawns in'), findsOneWidget);
   });

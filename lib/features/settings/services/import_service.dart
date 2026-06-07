@@ -482,8 +482,7 @@ class ImportService {
 
     final planRepository = _baseCalculatorPlanRepository;
     if (planRepository != null) {
-      final items =
-          (data['baseCalculatorPlans'] as List<dynamic>? ?? const []);
+      final items = (data['baseCalculatorPlans'] as List<dynamic>? ?? const []);
       for (final item in items) {
         final plan = BaseCalculatorPlan.fromJson(item as Map<String, dynamic>);
         await planRepository.upsert(plan);

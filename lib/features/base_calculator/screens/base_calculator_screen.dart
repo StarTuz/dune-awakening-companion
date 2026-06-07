@@ -90,7 +90,8 @@ class _BaseCalculatorScreenState extends ConsumerState<BaseCalculatorScreen> {
           PopupMenuButton<_ShareAction>(
             tooltip: l10n.baseCalculatorShare,
             icon: const Icon(Icons.ios_share_outlined),
-            onSelected: (action) => _handleShareAction(context, ref, action, state),
+            onSelected: (action) =>
+                _handleShareAction(context, ref, action, state),
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: _ShareAction.copyCode,

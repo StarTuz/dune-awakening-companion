@@ -62,7 +62,8 @@ class BaseCalculatorShareCodec {
         continue;
       }
       if (segment.startsWith('s:')) {
-        storage.addAll(_decodeSegment(segment.substring(2), _isKnownStorageCode));
+        storage
+            .addAll(_decodeSegment(segment.substring(2), _isKnownStorageCode));
         continue;
       }
       if (segment.startsWith('n:')) {

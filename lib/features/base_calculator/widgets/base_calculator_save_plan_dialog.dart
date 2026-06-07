@@ -142,8 +142,8 @@ class _SavePlanDialogState extends ConsumerState<_SavePlanDialog> {
                     if (value == null ||
                         _baseId == null ||
                         !basesAsync.maybeWhen(
-                          data: (bases) => bases
-                              .any((b) => b.id == _baseId && b.characterId == value),
+                          data: (bases) => bases.any(
+                              (b) => b.id == _baseId && b.characterId == value),
                           orElse: () => false,
                         )) {
                       _baseId = null;
@@ -159,7 +159,9 @@ class _SavePlanDialogState extends ConsumerState<_SavePlanDialog> {
               data: (bases) {
                 final filtered = _characterId == null
                     ? bases
-                    : bases.where((b) => b.characterId == _characterId).toList();
+                    : bases
+                        .where((b) => b.characterId == _characterId)
+                        .toList();
                 return DropdownButtonFormField<String?>(
                   value: filtered.any((b) => b.id == _baseId) ? _baseId : null,
                   decoration: InputDecoration(

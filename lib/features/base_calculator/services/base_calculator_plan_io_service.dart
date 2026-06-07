@@ -28,7 +28,8 @@ class BaseCalculatorPlanIoService {
       );
       if (outputPath == null) return null;
 
-      final path = outputPath.endsWith('.json') ? outputPath : '$outputPath.json';
+      final path =
+          outputPath.endsWith('.json') ? outputPath : '$outputPath.json';
       final jsonString =
           const JsonEncoder.withIndent('  ').convert(plan.toJson());
       await File(path).writeAsString(jsonString);

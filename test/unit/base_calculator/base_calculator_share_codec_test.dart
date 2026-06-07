@@ -54,8 +54,7 @@ void main() {
       name: 'Guild haul',
       itemQuantities: {'fuel_powered_generator': 1},
     );
-    final restored =
-        BaseCalculatorPortablePlan.fromJson(original.toJson());
+    final restored = BaseCalculatorPortablePlan.fromJson(original.toJson());
     expect(restored.name, original.name);
     expect(restored.itemQuantities, original.itemQuantities);
     expect(restored.toJson()['format'], 'dune-base-calculator-plan');

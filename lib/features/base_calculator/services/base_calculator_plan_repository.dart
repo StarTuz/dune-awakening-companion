@@ -54,7 +54,8 @@ class BaseCalculatorPlanRepository {
       'base_id': plan.baseId,
       'name': plan.name,
       'deep_desert_discount_enabled': plan.deepDesertDiscountEnabled ? 1 : 0,
-      'item_quantities': BaseCalculatorPlan.encodeQuantities(plan.itemQuantities),
+      'item_quantities':
+          BaseCalculatorPlan.encodeQuantities(plan.itemQuantities),
       'storage_quantities':
           BaseCalculatorPlan.encodeQuantities(plan.storageQuantities),
       'created_at': plan.createdAt.millisecondsSinceEpoch,
@@ -70,8 +71,8 @@ class BaseCalculatorPlanRepository {
       name: map['name'] as String,
       deepDesertDiscountEnabled:
           (map['deep_desert_discount_enabled'] as int? ?? 0) == 1,
-      itemQuantities:
-          BaseCalculatorPlan.decodeQuantities(map['item_quantities'] as String?),
+      itemQuantities: BaseCalculatorPlan.decodeQuantities(
+          map['item_quantities'] as String?),
       storageQuantities: BaseCalculatorPlan.decodeQuantities(
         map['storage_quantities'] as String?,
       ),

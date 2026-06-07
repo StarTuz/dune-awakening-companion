@@ -34,7 +34,8 @@ class _BaseCalculatorOptimizationPanelState
       summary: summary,
       buffer: _powerBuffer,
     );
-    final fewest = BaseCalculatorOptimizer.recommendFewestGenerators(powerNeeded);
+    final fewest =
+        BaseCalculatorOptimizer.recommendFewestGenerators(powerNeeded);
     final fuelOnly =
         BaseCalculatorOptimizer.recommendFuelGenerators(powerNeeded);
     final runningCost = GeneratorRunningCost.estimateConsumption(
@@ -67,9 +68,10 @@ class _BaseCalculatorOptimizationPanelState
           _RunningCostSection(
             hours: _runningCostHours,
             runningCost: runningCost,
-            fuelGeneratorCount:
-                GeneratorRunningCost.countFuelGenerators(widget.state.quantities),
-            onHoursChanged: (value) => setState(() => _runningCostHours = value),
+            fuelGeneratorCount: GeneratorRunningCost.countFuelGenerators(
+                widget.state.quantities),
+            onHoursChanged: (value) =>
+                setState(() => _runningCostHours = value),
           ),
           const SizedBox(height: 12),
           _PresetsSection(
@@ -110,7 +112,9 @@ class _BaseCalculatorOptimizationPanelState
     ref.read(baseCalculatorProvider.notifier).applyPreset(preset);
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.baseCalculatorPresetApplied(_presetLabel(l10n, preset.id)))),
+      SnackBar(
+          content: Text(
+              l10n.baseCalculatorPresetApplied(_presetLabel(l10n, preset.id)))),
     );
   }
 
@@ -288,7 +292,8 @@ class _RunningCostSection extends StatelessWidget {
         const SizedBox(height: 8),
         DropdownButtonFormField<int>(
           value: hours,
-          decoration: InputDecoration(labelText: l10n.baseCalculatorRunningCostPeriod),
+          decoration:
+              InputDecoration(labelText: l10n.baseCalculatorRunningCostPeriod),
           items: [
             DropdownMenuItem(
               value: 24,
@@ -321,7 +326,8 @@ class _RunningCostSection extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           ...runningCost.entries.map(
-            (entry) => Text(l10n.baseCalculatorRunningCostFuelCells(entry.value)),
+            (entry) =>
+                Text(l10n.baseCalculatorRunningCostFuelCells(entry.value)),
           ),
         ],
         const SizedBox(height: 4),
