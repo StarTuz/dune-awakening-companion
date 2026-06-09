@@ -798,6 +798,13 @@ class AppLocalizationsCy extends AppLocalizations {
   String get test => 'Profi';
 
   @override
+  String get testNotificationTitle => '🔔 Hysbysiad prawf';
+
+  @override
+  String get testNotificationBody =>
+      'Mae hysbysiadau\'n gweithio! Cewch eich rhybuddio pan fydd pŵer canolfan yn rhedeg yn isel.';
+
+  @override
   String get copyrightNotices => 'Hysbysiadau Hawlfraint';
 
   @override

@@ -1542,6 +1542,18 @@ abstract class AppLocalizations {
   /// **'Test'**
   String get test;
 
+  /// Title of the test notification sent from settings
+  ///
+  /// In en, this message translates to:
+  /// **'🔔 Test notification'**
+  String get testNotificationTitle;
+
+  /// Body of the test notification sent from settings
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are working! You will be alerted when a base runs low on power.'**
+  String get testNotificationBody;
+
   /// Copyright notices section title
   ///
   /// In en, this message translates to:

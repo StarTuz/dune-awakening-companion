@@ -241,6 +241,8 @@
   "testNotification": "Тестове Сповіщення",
   "sendTestNotification": "Надіслати тестове сповіщення",
   "test": "Тестувати",
+  "testNotificationTitle": "🔔 Тестове сповіщення",
+  "testNotificationBody": "Сповіщення працюють! Ви отримаєте попередження, коли в базі закінчуватиметься енергія.",
   "copyrightNotices": "Зауваження щодо авторських прав",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Dune Awakening є торговою маркою Funcom. Усі права захищені.",

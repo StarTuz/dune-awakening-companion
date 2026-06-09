@@ -800,6 +800,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get test => 'Tester';
 
   @override
+  String get testNotificationTitle => '🔔 Notification de test';
+
+  @override
+  String get testNotificationBody =>
+      'Les notifications fonctionnent ! Vous serez alerté lorsqu\'une base manquera d\'énergie.';
+
+  @override
   String get copyrightNotices => 'Mentions de Droit d\'Auteur';
 
   @override

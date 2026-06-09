@@ -1053,6 +1053,14 @@
   "@test": {
     "description": "Test button label"
   },
+  "testNotificationTitle": "🔔 Test notification",
+  "@testNotificationTitle": {
+    "description": "Title of the test notification sent from settings"
+  },
+  "testNotificationBody": "Notifications are working! You will be alerted when a base runs low on power.",
+  "@testNotificationBody": {
+    "description": "Body of the test notification sent from settings"
+  },
   "copyrightNotices": "Copyright Notices",
   "@copyrightNotices": {
     "description": "Copyright notices section title"

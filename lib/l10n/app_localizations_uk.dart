@@ -795,6 +795,13 @@ class AppLocalizationsUk extends AppLocalizations {
   String get test => 'Тестувати';
 
   @override
+  String get testNotificationTitle => '🔔 Тестове сповіщення';
+
+  @override
+  String get testNotificationBody =>
+      'Сповіщення працюють! Ви отримаєте попередження, коли в базі закінчуватиметься енергія.';
+
+  @override
   String get copyrightNotices => 'Зауваження щодо авторських прав';
 
   @override

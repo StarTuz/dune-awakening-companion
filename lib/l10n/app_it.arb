@@ -241,6 +241,8 @@
   "testNotification": "Test Notifica",
   "sendTestNotification": "Invia una notifica di test",
   "test": "Test",
+  "testNotificationTitle": "🔔 Notifica di prova",
+  "testNotificationBody": "Le notifiche funzionano! Riceverai un avviso quando una base sta per rimanere senza energia.",
   "copyrightNotices": "Note sul Copyright",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Dune Awakening è un marchio di Funcom. Tutti i diritti riservati.",

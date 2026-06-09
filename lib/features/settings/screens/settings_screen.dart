@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../core/providers/notification_manager_provider.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/providers/notification_settings_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/accessibility_provider.dart';
@@ -1179,6 +1180,13 @@ class _NotificationSettingsWidget extends ConsumerWidget {
     );
 
     try {
+      // Send a real notification so the user can verify the system end-to-end,
+      // even when no base is currently below its alert threshold.
+      await NotificationService.instance.showSimpleNotification(
+        title: l10n.testNotificationTitle,
+        message: l10n.testNotificationBody,
+      );
+
       final manager = ref.read(notificationManagerProvider);
       await manager.checkNow();
 

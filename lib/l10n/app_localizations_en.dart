@@ -791,6 +791,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get test => 'Test';
 
   @override
+  String get testNotificationTitle => '🔔 Test notification';
+
+  @override
+  String get testNotificationBody =>
+      'Notifications are working! You will be alerted when a base runs low on power.';
+
+  @override
   String get copyrightNotices => 'Copyright Notices';
 
   @override

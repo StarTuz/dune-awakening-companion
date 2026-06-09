@@ -799,6 +799,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get test => 'Probar';
 
   @override
+  String get testNotificationTitle => '🔔 Notificación de prueba';
+
+  @override
+  String get testNotificationBody =>
+      '¡Las notificaciones funcionan! Recibirás una alerta cuando una base se quede sin energía.';
+
+  @override
   String get copyrightNotices => 'Avisos de Derechos de Autor';
 
   @override

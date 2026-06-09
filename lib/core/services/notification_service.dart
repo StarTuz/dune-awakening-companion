@@ -35,8 +35,9 @@ class NotificationService {
     debugPrint('[NotificationService] Initializing...');
 
     // Linux initialization
-    const linuxSettings = LinuxInitializationSettings(
+    final linuxSettings = LinuxInitializationSettings(
       defaultActionName: 'Open notification',
+      defaultIcon: AssetsLinuxIcon('assets/app_icon.png'),
     );
 
     // Windows initialization
@@ -47,7 +48,7 @@ class NotificationService {
       guid: 'd5e8a7b3-4c2f-4a1e-9d3b-6f8c2e1a5b7d',
     );
 
-    const initSettings = InitializationSettings(
+    final initSettings = InitializationSettings(
       android: androidSettings,
       iOS: iosSettings,
       linux: linuxSettings,
@@ -196,12 +197,21 @@ class NotificationService {
       presentSound: soundEnabled,
     );
 
-    const linuxDetails = LinuxNotificationDetails();
+    final linuxDetails = LinuxNotificationDetails(
+      sound: soundEnabled ? ThemeLinuxSound('message-new-instant') : null,
+      suppressSound: !soundEnabled,
+      urgency: importance == Importance.high
+          ? LinuxNotificationUrgency.critical
+          : LinuxNotificationUrgency.normal,
+    );
+
+    const windowsDetails = WindowsNotificationDetails();
 
     final details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
       linux: linuxDetails,
+      windows: windowsDetails,
     );
 
     try {
@@ -224,6 +234,8 @@ class NotificationService {
     required String message,
   }) async {
     // Always show simple notifications (bypass _notificationsEnabled check)
+    final soundEnabled = await NotificationSettings.getSoundEnabled();
+
     const androidDetails = AndroidNotificationDetails(
       'app_messages',
       'App Messages',
@@ -232,18 +244,24 @@ class NotificationService {
       priority: Priority.defaultPriority,
     );
 
-    const iosDetails = DarwinNotificationDetails(
+    final iosDetails = DarwinNotificationDetails(
       presentAlert: true,
       presentBadge: false,
-      presentSound: false,
+      presentSound: soundEnabled,
     );
 
-    const linuxDetails = LinuxNotificationDetails();
+    final linuxDetails = LinuxNotificationDetails(
+      sound: soundEnabled ? ThemeLinuxSound('message-new-instant') : null,
+      suppressSound: !soundEnabled,
+    );
 
-    const details = NotificationDetails(
+    const windowsDetails = WindowsNotificationDetails();
+
+    final details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
       linux: linuxDetails,
+      windows: windowsDetails,
     );
 
     // Use timestamp for unique ID so notifications don't replace each other
@@ -288,10 +306,13 @@ class NotificationService {
 
     const linuxDetails = LinuxNotificationDetails();
 
+    const windowsDetails = WindowsNotificationDetails();
+
     final details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
       linux: linuxDetails,
+      windows: windowsDetails,
     );
 
     final when = tz.TZDateTime.from(scheduledTime, tz.local);

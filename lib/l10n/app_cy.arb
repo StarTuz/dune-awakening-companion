@@ -241,6 +241,8 @@
   "testNotification": "Profi Hysbysiad",
   "sendTestNotification": "Anfon hysbysiad prawf",
   "test": "Profi",
+  "testNotificationTitle": "🔔 Hysbysiad prawf",
+  "testNotificationBody": "Mae hysbysiadau'n gweithio! Cewch eich rhybuddio pan fydd pŵer canolfan yn rhedeg yn isel.",
   "copyrightNotices": "Hysbysiadau Hawlfraint",
   "copyrightApp": "© 2025 Dune Awakening Companion App",
   "copyrightFuncom": "Mae Dune Awakening yn nod masnach Funcom. Cedwir pob hawl.",
