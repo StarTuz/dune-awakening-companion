@@ -21,7 +21,7 @@ class AppLocalizationsCy extends AppLocalizations {
   String get navAlerts => 'Rhybuddion';
 
   @override
-  String get navJournal => 'Journal';
+  String get navJournal => 'Dyddiadur';
 
   @override
   String get navSettings => 'Gosodiadau';
@@ -1037,6 +1037,12 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalQuestsTab => 'Cwestau';
+
+  @override
+  String get journalCharacterLabel => 'Cymeriad';
 
   @override
   String get journalTabTitle => 'Cronicl';

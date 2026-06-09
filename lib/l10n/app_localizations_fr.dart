@@ -1041,6 +1041,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get questReminderNotificationTitle => 'Quest reminder';
 
   @override
+  String get journalQuestsTab => 'Quêtes';
+
+  @override
+  String get journalCharacterLabel => 'Personnage';
+
+  @override
   String get journalTabTitle => 'Chronique';
 
   @override

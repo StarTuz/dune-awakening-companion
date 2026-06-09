@@ -21,7 +21,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navAlerts => 'Alertas';
 
   @override
-  String get navJournal => 'Journal';
+  String get navJournal => 'Diario';
 
   @override
   String get navSettings => 'Ajustes';
@@ -1038,6 +1038,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalQuestsTab => 'Misiones';
+
+  @override
+  String get journalCharacterLabel => 'Personaje';
 
   @override
   String get journalTabTitle => 'Crónica';

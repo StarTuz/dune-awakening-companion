@@ -1250,6 +1250,14 @@
   "@questReminderNotificationTitle": {
     "description": "OS notification title for quest reminder"
   },
+  "journalQuestsTab": "Quests",
+  "@journalQuestsTab": {
+    "description": "Journal hub tab label for the quest journal"
+  },
+  "journalCharacterLabel": "Character",
+  "@journalCharacterLabel": {
+    "description": "Label for the character picker on the Chronicle tab"
+  },
   "journalTabTitle": "Chronicle",
   "@journalTabTitle": {
     "description": "Tab label for the character RPG journal"

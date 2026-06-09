@@ -21,7 +21,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get navAlerts => 'Сповіщення';
 
   @override
-  String get navJournal => 'Journal';
+  String get navJournal => 'Журнал';
 
   @override
   String get navSettings => 'Налаштування';
@@ -1034,6 +1034,12 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get questReminderNotificationTitle => 'Quest reminder';
+
+  @override
+  String get journalQuestsTab => 'Завдання';
+
+  @override
+  String get journalCharacterLabel => 'Персонаж';
 
   @override
   String get journalTabTitle => 'Хроніка';

@@ -5,7 +5,7 @@ import '../../features/dashboard/screens/dashboard_screen.dart';
 import '../../features/blueprints/screens/blueprint_tracker_screen.dart';
 import '../../features/base_calculator/screens/base_calculator_screen.dart';
 import '../../features/characters/screens/character_management_screen.dart';
-import '../../features/quest_journal/screens/quest_journal_screen.dart';
+import '../../features/journal/screens/journal_hub_screen.dart';
 import '../../features/alerts/screens/alerts_screen.dart';
 import '../../features/alerts/providers/alert_provider.dart';
 import '../../features/bases/providers/base_provider.dart';
@@ -30,7 +30,7 @@ class MainNavigationScreen extends ConsumerWidget {
     final screens = [
       const DashboardScreen(),
       const CharacterManagementScreen(),
-      const QuestJournalScreen(),
+      const JournalHubScreen(),
       const BlueprintTrackerScreen(),
       const BaseCalculatorScreen(),
       const AlertsScreen(),

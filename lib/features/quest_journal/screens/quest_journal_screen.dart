@@ -11,7 +11,11 @@ import '../models/quest_step.dart';
 import '../providers/quest_provider.dart';
 
 class QuestJournalScreen extends ConsumerStatefulWidget {
-  const QuestJournalScreen({super.key});
+  const QuestJournalScreen({super.key, this.showAppBar = true});
+
+  /// Set false when embedded in a host that provides its own app bar
+  /// (e.g. the Journal hub's Quests tab).
+  final bool showAppBar;
 
   @override
   ConsumerState<QuestJournalScreen> createState() => _QuestJournalScreenState();
@@ -47,9 +51,11 @@ class _QuestJournalScreenState extends ConsumerState<QuestJournalScreen> {
         : ref.watch(questsByCharacterProvider(selectedCharacterId!));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.questJournalTitle),
-      ),
+      appBar: widget.showAppBar
+          ? AppBar(
+              title: Text(l10n.questJournalTitle),
+            )
+          : null,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

@@ -1992,6 +1992,18 @@ abstract class AppLocalizations {
   /// **'Quest reminder'**
   String get questReminderNotificationTitle;
 
+  /// Journal hub tab label for the quest journal
+  ///
+  /// In en, this message translates to:
+  /// **'Quests'**
+  String get journalQuestsTab;
+
+  /// Label for the character picker on the Chronicle tab
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get journalCharacterLabel;
+
   /// Tab label for the character RPG journal
   ///
   /// In en, this message translates to:
