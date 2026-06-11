@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dune_awakening_companion/core/utils/app_info.dart';
+import 'package:dune_awakening_companion/core/database/app_database.dart';
 import 'package:dune_awakening_companion/features/characters/providers/character_provider.dart';
 import 'package:dune_awakening_companion/features/characters/services/character_repository.dart';
 import 'package:dune_awakening_companion/features/characters/models/character.dart';
@@ -75,7 +76,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(AppInfo.version), findsOneWidget);
-    expect(find.text('v17'), findsAtLeastNWidgets(1));
+    expect(find.text('v${AppDatabase.schemaVersion}'), findsAtLeastNWidgets(1));
   });
 
   testWidgets('shows appearance section after scrolling', (tester) async {

@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Füge Charaktere hinzu, um Regions-Statistiken freizuschalten.",
   "dashboardAlertsEmptyHint": "Füge Basen hinzu, um Warn-Statistiken freizuschalten.",
   "dashboardRecentActivity": "Letzte Aktivität",
-  "dashboardRecentActivityEmpty": "Chronik-Einträge erscheinen hier, sobald du sie schreibst.",
+  "dashboardRecentActivityEmpty": "Deine Aktionen erscheinen hier, während du die App nutzt.",
   "chartLegendCritical": "Kritisch",
   "chartLegendWarning": "Warnung",
   "chartLegendSafe": "Sicher",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Menü einklappen",
   "navRailExpand": "Menü ausklappen",
   "railFieldTimerLabel": "Feldtimer",
-  "railBaseExpiryLabel": "Nächster Ablauf"
+  "railBaseExpiryLabel": "Nächster Ablauf",
+  "activityCharacterCreated": "Charakter {name} erstellt",
+  "activityCharacterDeleted": "Charakter {name} gelöscht",
+  "activityBaseCreated": "Basis {name} hinzugefügt",
+  "activityBaseDeleted": "Basis {name} entfernt",
+  "activityJournalEntry": "Chronik: {title}"
 }

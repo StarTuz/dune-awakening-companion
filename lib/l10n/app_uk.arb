@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Додайте персонажів, щоб розблокувати аналітику за регіонами.",
   "dashboardAlertsEmptyHint": "Додайте бази, щоб розблокувати аналітику сповіщень.",
   "dashboardRecentActivity": "Остання активність",
-  "dashboardRecentActivityEmpty": "Записи хроніки з'являтимуться тут, щойно ви їх створите.",
+  "dashboardRecentActivityEmpty": "Ваші дії з'являтимуться тут під час користування застосунком.",
   "chartLegendCritical": "Критично",
   "chartLegendWarning": "Попередження",
   "chartLegendSafe": "Безпечно",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Згорнути меню",
   "navRailExpand": "Розгорнути меню",
   "railFieldTimerLabel": "Польовий таймер",
-  "railBaseExpiryLabel": "Наступне закінчення"
+  "railBaseExpiryLabel": "Наступне закінчення",
+  "activityCharacterCreated": "Створено персонажа {name}",
+  "activityCharacterDeleted": "Видалено персонажа {name}",
+  "activityBaseCreated": "Додано базу {name}",
+  "activityBaseDeleted": "Видалено базу {name}",
+  "activityJournalEntry": "Хроніка: {title}"
 }

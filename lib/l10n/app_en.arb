@@ -1330,7 +1330,7 @@
   "@dashboardRecentActivity": {
     "description": "Dashboard panel title: latest Chronicle journal entries"
   },
-  "dashboardRecentActivityEmpty": "Chronicle entries will appear here as you write them.",
+  "dashboardRecentActivityEmpty": "Your actions will appear here as you use the app.",
   "@dashboardRecentActivityEmpty": {
     "description": "Empty state for the Recent Activity panel"
   },
@@ -2118,5 +2118,50 @@
   "railBaseExpiryLabel": "Next expiry",
   "@railBaseExpiryLabel": {
     "description": "Label for the soonest base power expiry shown in the navigation rail footer"
+  },
+  "activityCharacterCreated": "Created character {name}",
+  "@activityCharacterCreated": {
+    "description": "Recent activity row: a character was created",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activityCharacterDeleted": "Deleted character {name}",
+  "@activityCharacterDeleted": {
+    "description": "Recent activity row: a character was deleted",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activityBaseCreated": "Added base {name}",
+  "@activityBaseCreated": {
+    "description": "Recent activity row: a base was added",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activityBaseDeleted": "Removed base {name}",
+  "@activityBaseDeleted": {
+    "description": "Recent activity row: a base was removed",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "activityJournalEntry": "Chronicle: {title}",
+  "@activityJournalEntry": {
+    "description": "Recent activity row: a Chronicle entry was written",
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
   }
 }

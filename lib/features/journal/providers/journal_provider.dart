@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/models/activity_event.dart';
+import '../../../core/providers/activity_log_provider.dart';
+import '../../characters/providers/character_provider.dart';
 import '../models/journal_entry.dart';
 import '../services/journal_repository.dart';
 
@@ -34,6 +37,21 @@ class JournalEditor {
     await _repository.upsert(entry.copyWith(updatedAt: DateTime.now()));
     _ref.invalidate(characterJournalProvider(entry.characterId));
     _ref.invalidate(recentJournalEntriesProvider);
+    String? characterName;
+    final characters = _ref.read(charactersProvider).value;
+    if (characters != null) {
+      for (final c in characters) {
+        if (c.id == entry.characterId) {
+          characterName = c.name;
+          break;
+        }
+      }
+    }
+    await _ref.read(activityLoggerProvider).log(
+          ActivityEventType.journalEntryWritten,
+          entry.title,
+          characterName: characterName,
+        );
   }
 
   Future<void> delete(String id, String characterId) async {

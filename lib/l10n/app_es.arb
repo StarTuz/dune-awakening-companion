@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Añade personajes para desbloquear las analíticas por región.",
   "dashboardAlertsEmptyHint": "Añade bases para desbloquear las analíticas de alertas.",
   "dashboardRecentActivity": "Actividad reciente",
-  "dashboardRecentActivityEmpty": "Las entradas de la crónica aparecerán aquí a medida que las escribas.",
+  "dashboardRecentActivityEmpty": "Tus acciones aparecerán aquí mientras usas la aplicación.",
   "chartLegendCritical": "Crítico",
   "chartLegendWarning": "Advertencia",
   "chartLegendSafe": "Seguro",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Contraer menú",
   "navRailExpand": "Expandir menú",
   "railFieldTimerLabel": "Temporizador",
-  "railBaseExpiryLabel": "Próxima expiración"
+  "railBaseExpiryLabel": "Próxima expiración",
+  "activityCharacterCreated": "Personaje {name} creado",
+  "activityCharacterDeleted": "Personaje {name} eliminado",
+  "activityBaseCreated": "Base {name} añadida",
+  "activityBaseDeleted": "Base {name} eliminada",
+  "activityJournalEntry": "Crónica: {title}"
 }

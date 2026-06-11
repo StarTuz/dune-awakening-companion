@@ -8,8 +8,8 @@ import '../../characters/models/character.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../bases/models/base.dart';
 import '../../bases/screens/base_management_screen.dart';
-import '../../journal/models/journal_entry.dart';
-import '../../journal/providers/journal_provider.dart';
+import '../../../core/models/activity_event.dart';
+import '../../../core/providers/activity_log_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../shared/navigation/main_navigation.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -23,9 +23,9 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final charactersAsync = ref.watch(charactersProvider);
     final basesAsync = ref.watch(basesProvider);
-    final recentEntries = ref.watch(recentJournalEntriesProvider).maybeWhen(
-          data: (entries) => entries,
-          orElse: () => const <JournalEntry>[],
+    final recentEvents = ref.watch(recentActivityProvider).maybeWhen(
+          data: (events) => events,
+          orElse: () => const <ActivityEvent>[],
         );
     final l10n = AppLocalizations.of(context)!;
 
@@ -37,14 +37,14 @@ class DashboardScreen extends ConsumerWidget {
         onRefresh: () async {
           ref.invalidate(charactersProvider);
           ref.invalidate(basesProvider);
-          ref.invalidate(recentJournalEntriesProvider);
+          ref.invalidate(recentActivityProvider);
         },
         child: charactersAsync.when(
           data: (characters) => basesAsync.when(
             data: (bases) => _DashboardContent(
               characters: characters,
               bases: bases,
-              recentEntries: recentEntries,
+              recentEvents: recentEvents,
               l10n: l10n,
               onCharactersTap: () {
                 ref.read(navigationIndexProvider.notifier).state =
@@ -100,7 +100,7 @@ class _DashboardContent extends StatelessWidget {
   const _DashboardContent({
     required this.characters,
     required this.bases,
-    required this.recentEntries,
+    required this.recentEvents,
     required this.l10n,
     required this.onCharactersTap,
     required this.onBasesTap,
@@ -113,7 +113,7 @@ class _DashboardContent extends StatelessWidget {
 
   final List<Character> characters;
   final List<Base> bases;
-  final List<JournalEntry> recentEntries;
+  final List<ActivityEvent> recentEvents;
   final AppLocalizations l10n;
   final VoidCallback onCharactersTap;
   final VoidCallback onBasesTap;
@@ -233,10 +233,11 @@ class _DashboardContent extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             _RecentActivityCard(
-              entries: recentEntries,
-              characters: characters,
+              events: recentEvents,
               l10n: l10n,
-              onTap: onJournalTap,
+              onJournalTap: onJournalTap,
+              onCharactersTap: onCharactersTap,
+              onBasesTap: onBasesTap,
             ),
             const SizedBox(height: 24),
             Text(
@@ -319,29 +320,30 @@ class _DashboardContent extends StatelessWidget {
 
 class _RecentActivityCard extends StatelessWidget {
   const _RecentActivityCard({
-    required this.entries,
-    required this.characters,
+    required this.events,
     required this.l10n,
-    required this.onTap,
+    required this.onJournalTap,
+    required this.onCharactersTap,
+    required this.onBasesTap,
   });
 
-  final List<JournalEntry> entries;
-  final List<Character> characters;
+  final List<ActivityEvent> events;
   final AppLocalizations l10n;
-  final VoidCallback onTap;
+  final VoidCallback onJournalTap;
+  final VoidCallback onCharactersTap;
+  final VoidCallback onBasesTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    if (entries.isEmpty) {
+    if (events.isEmpty) {
       return Card(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Row(
             children: [
-              Icon(Icons.menu_book_outlined,
-                  color: theme.colorScheme.onSurfaceVariant),
+              Icon(Icons.history, color: theme.colorScheme.onSurfaceVariant),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -357,42 +359,105 @@ class _RecentActivityCard extends StatelessWidget {
       );
     }
 
-    final names = {for (final c in characters) c.id: c.name};
-    final materialL10n = MaterialLocalizations.of(context);
-
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
-          for (final entry in entries)
-            Builder(builder: (context) {
-              final name = names[entry.characterId] ?? '—';
-              final initial =
-                  name.isEmpty ? '?' : name.characters.first.toUpperCase();
-              return ListTile(
-                onTap: onTap,
-                leading: CircleAvatar(
-                  backgroundColor: DuneColors.primaryAccent.withOpacity(0.2),
-                  child: Text(
-                    initial,
-                    style: const TextStyle(color: DuneColors.primaryAccent),
-                  ),
+          for (final event in events)
+            ListTile(
+              onTap: _onTapFor(event.type),
+              leading: CircleAvatar(
+                backgroundColor: _colorFor(event.type).withOpacity(0.2),
+                child: Icon(
+                  _iconFor(event.type),
+                  size: 20,
+                  color: _colorFor(event.type),
                 ),
-                title: Text(
-                  entry.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Text(
-                  '$name • ${materialL10n.formatShortDate(entry.entryDate)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              );
-            }),
+              ),
+              title: Text(
+                _titleFor(event),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                _subtitleFor(context, event),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
         ],
       ),
     );
+  }
+
+  String _titleFor(ActivityEvent event) {
+    switch (event.type) {
+      case ActivityEventType.characterCreated:
+        return l10n.activityCharacterCreated(event.subject);
+      case ActivityEventType.characterDeleted:
+        return l10n.activityCharacterDeleted(event.subject);
+      case ActivityEventType.baseCreated:
+        return l10n.activityBaseCreated(event.subject);
+      case ActivityEventType.baseDeleted:
+        return l10n.activityBaseDeleted(event.subject);
+      case ActivityEventType.journalEntryWritten:
+        return l10n.activityJournalEntry(event.subject);
+    }
+  }
+
+  /// Same-day events show the time; older ones show the date.
+  String _subtitleFor(BuildContext context, ActivityEvent event) {
+    final materialL10n = MaterialLocalizations.of(context);
+    final now = DateTime.now();
+    final isToday = event.createdAt.year == now.year &&
+        event.createdAt.month == now.month &&
+        event.createdAt.day == now.day;
+    final when = isToday
+        ? materialL10n.formatTimeOfDay(TimeOfDay.fromDateTime(event.createdAt))
+        : materialL10n.formatShortDate(event.createdAt);
+    final name = event.characterName;
+    return name == null ? when : '$name \u2022 $when';
+  }
+
+  IconData _iconFor(ActivityEventType type) {
+    switch (type) {
+      case ActivityEventType.characterCreated:
+        return Icons.person_add_alt;
+      case ActivityEventType.characterDeleted:
+        return Icons.person_off_outlined;
+      case ActivityEventType.baseCreated:
+        return Icons.add_home_outlined;
+      case ActivityEventType.baseDeleted:
+        return Icons.home_outlined;
+      case ActivityEventType.journalEntryWritten:
+        return Icons.menu_book_outlined;
+    }
+  }
+
+  Color _colorFor(ActivityEventType type) {
+    switch (type) {
+      case ActivityEventType.characterCreated:
+      case ActivityEventType.journalEntryWritten:
+        return DuneColors.primaryAccent;
+      case ActivityEventType.baseCreated:
+        return DuneColors.secondaryAccent;
+      case ActivityEventType.characterDeleted:
+      case ActivityEventType.baseDeleted:
+        return DuneColors.criticalPrimary;
+    }
+  }
+
+  VoidCallback _onTapFor(ActivityEventType type) {
+    switch (type) {
+      case ActivityEventType.characterCreated:
+      case ActivityEventType.characterDeleted:
+        return onCharactersTap;
+      case ActivityEventType.baseCreated:
+      case ActivityEventType.baseDeleted:
+        return onBasesTap;
+      case ActivityEventType.journalEntryWritten:
+        return onJournalTap;
+    }
   }
 }
 

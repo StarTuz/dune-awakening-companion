@@ -1022,7 +1022,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get dashboardRecentActivityEmpty =>
-      'Le voci della cronaca appariranno qui man mano che le scrivi.';
+      'Le tue azioni appariranno qui mentre usi l\'app.';
 
   @override
   String get chartLegendCritical => 'Critico';
@@ -1694,4 +1694,29 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get railBaseExpiryLabel => 'Prossima scadenza';
+
+  @override
+  String activityCharacterCreated(String name) {
+    return 'Personaggio $name creato';
+  }
+
+  @override
+  String activityCharacterDeleted(String name) {
+    return 'Personaggio $name eliminato';
+  }
+
+  @override
+  String activityBaseCreated(String name) {
+    return 'Base $name aggiunta';
+  }
+
+  @override
+  String activityBaseDeleted(String name) {
+    return 'Base $name rimossa';
+  }
+
+  @override
+  String activityJournalEntry(String title) {
+    return 'Cronaca: $title';
+  }
 }

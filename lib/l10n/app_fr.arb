@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Ajoutez des personnages pour débloquer les statistiques par région.",
   "dashboardAlertsEmptyHint": "Ajoutez des bases pour débloquer les statistiques d'alertes.",
   "dashboardRecentActivity": "Activité récente",
-  "dashboardRecentActivityEmpty": "Les entrées de la chronique apparaîtront ici au fur et à mesure que vous les écrivez.",
+  "dashboardRecentActivityEmpty": "Vos actions apparaîtront ici au fil de votre utilisation.",
   "chartLegendCritical": "Critique",
   "chartLegendWarning": "Avertissement",
   "chartLegendSafe": "Sûr",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Réduire le menu",
   "navRailExpand": "Développer le menu",
   "railFieldTimerLabel": "Minuterie",
-  "railBaseExpiryLabel": "Prochaine expiration"
+  "railBaseExpiryLabel": "Prochaine expiration",
+  "activityCharacterCreated": "Personnage {name} créé",
+  "activityCharacterDeleted": "Personnage {name} supprimé",
+  "activityBaseCreated": "Base {name} ajoutée",
+  "activityBaseDeleted": "Base {name} supprimée",
+  "activityJournalEntry": "Chronique : {title}"
 }

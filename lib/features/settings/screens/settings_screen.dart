@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
+import '../../../core/database/app_database.dart';
 import '../../../core/providers/notification_manager_provider.dart';
 import '../../../core/utils/app_info.dart';
 import '../../../core/services/notification_service.dart';
@@ -42,7 +43,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.storage,
             title: l10n.databaseVersion,
-            subtitle: 'v17',
+            subtitle: 'v${AppDatabase.schemaVersion}',
           ),
           _buildInfoTile(
             icon: Icons.code,

@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Ychwanegwch gymeriadau i ddatgloi dadansoddeg rhanbarth.",
   "dashboardAlertsEmptyHint": "Ychwanegwch ganolfannau i ddatgloi dadansoddeg rhybuddion.",
   "dashboardRecentActivity": "Gweithgarwch diweddar",
-  "dashboardRecentActivityEmpty": "Bydd cofnodion y cronicl yn ymddangos yma wrth i chi eu hysgrifennu.",
+  "dashboardRecentActivityEmpty": "Bydd eich gweithredoedd yn ymddangos yma wrth i chi ddefnyddio'r ap.",
   "chartLegendCritical": "Critigol",
   "chartLegendWarning": "Rhybudd",
   "chartLegendSafe": "Diogel",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Crebachu'r ddewislen",
   "navRailExpand": "Ehangu'r ddewislen",
   "railFieldTimerLabel": "Amserydd maes",
-  "railBaseExpiryLabel": "Dirwyn nesaf"
+  "railBaseExpiryLabel": "Dirwyn nesaf",
+  "activityCharacterCreated": "Crëwyd cymeriad {name}",
+  "activityCharacterDeleted": "Dilëwyd cymeriad {name}",
+  "activityBaseCreated": "Ychwanegwyd canolfan {name}",
+  "activityBaseDeleted": "Tynnwyd canolfan {name}",
+  "activityJournalEntry": "Cronicl: {title}"
 }

@@ -1026,7 +1026,7 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get dashboardRecentActivityEmpty =>
-      'Bydd cofnodion y cronicl yn ymddangos yma wrth i chi eu hysgrifennu.';
+      'Bydd eich gweithredoedd yn ymddangos yma wrth i chi ddefnyddio\'r ap.';
 
   @override
   String get chartLegendCritical => 'Critigol';
@@ -1697,4 +1697,29 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get railBaseExpiryLabel => 'Dirwyn nesaf';
+
+  @override
+  String activityCharacterCreated(String name) {
+    return 'Crëwyd cymeriad $name';
+  }
+
+  @override
+  String activityCharacterDeleted(String name) {
+    return 'Dilëwyd cymeriad $name';
+  }
+
+  @override
+  String activityBaseCreated(String name) {
+    return 'Ychwanegwyd canolfan $name';
+  }
+
+  @override
+  String activityBaseDeleted(String name) {
+    return 'Tynnwyd canolfan $name';
+  }
+
+  @override
+  String activityJournalEntry(String title) {
+    return 'Cronicl: $title';
+  }
 }

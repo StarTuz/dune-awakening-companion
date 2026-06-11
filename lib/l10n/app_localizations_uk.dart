@@ -1022,7 +1022,7 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get dashboardRecentActivityEmpty =>
-      'Записи хроніки з\'являтимуться тут, щойно ви їх створите.';
+      'Ваші дії з\'являтимуться тут під час користування застосунком.';
 
   @override
   String get chartLegendCritical => 'Критично';
@@ -1691,4 +1691,29 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get railBaseExpiryLabel => 'Наступне закінчення';
+
+  @override
+  String activityCharacterCreated(String name) {
+    return 'Створено персонажа $name';
+  }
+
+  @override
+  String activityCharacterDeleted(String name) {
+    return 'Видалено персонажа $name';
+  }
+
+  @override
+  String activityBaseCreated(String name) {
+    return 'Додано базу $name';
+  }
+
+  @override
+  String activityBaseDeleted(String name) {
+    return 'Видалено базу $name';
+  }
+
+  @override
+  String activityJournalEntry(String title) {
+    return 'Хроніка: $title';
+  }
 }

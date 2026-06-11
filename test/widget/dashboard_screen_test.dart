@@ -8,9 +8,9 @@ import 'package:dune_awakening_companion/features/bases/models/base.dart';
 import 'package:dune_awakening_companion/features/bases/providers/base_provider.dart';
 import 'package:dune_awakening_companion/features/bases/services/base_repository.dart';
 import 'package:dune_awakening_companion/features/dashboard/screens/dashboard_screen.dart';
-import 'package:dune_awakening_companion/features/journal/models/journal_entry.dart';
-import 'package:dune_awakening_companion/features/journal/providers/journal_provider.dart';
-import 'package:dune_awakening_companion/features/journal/services/journal_repository.dart';
+import 'package:dune_awakening_companion/core/models/activity_event.dart';
+import 'package:dune_awakening_companion/core/providers/activity_log_provider.dart';
+import 'package:dune_awakening_companion/core/repositories/activity_log_repository.dart';
 import 'package:dune_awakening_companion/shared/navigation/main_navigation.dart';
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
@@ -59,20 +59,16 @@ class FakeBaseRepository implements BaseRepository {
   Future<void> delete(String id) async {}
 }
 
-class FakeJournalRepository implements JournalRepository {
-  final List<JournalEntry> data;
-  FakeJournalRepository([this.data = const []]);
+class FakeActivityLogRepository implements ActivityLogRepository {
+  final List<ActivityEvent> data;
+  FakeActivityLogRepository([this.data = const []]);
 
   @override
-  Future<List<JournalEntry>> getByCharacterId(String characterId) async =>
-      data.where((e) => e.characterId == characterId).toList();
-  @override
-  Future<List<JournalEntry>> getRecent({int limit = 5}) async =>
+  Future<List<ActivityEvent>> getRecent({int limit = 5}) async =>
       data.take(limit).toList();
   @override
-  Future<void> upsert(JournalEntry entry) async {}
-  @override
-  Future<void> delete(String id) async {}
+  Future<void> log(ActivityEventType type, String subject,
+      {String? characterName}) async {}
 }
 
 // ---------------------------------------------------------------------------
@@ -85,16 +81,16 @@ void main() {
   Widget buildDashboard({
     List<Character> characters = const [],
     List<Base> bases = const [],
-    List<JournalEntry> journalEntries = const [],
+    List<ActivityEvent> events = const [],
   }) {
     final charRepo = FakeCharacterRepository(characters);
     final baseRepo = FakeBaseRepository(bases);
-    final journalRepo = FakeJournalRepository(journalEntries);
+    final activityRepo = FakeActivityLogRepository(events);
     return ProviderScope(
       overrides: [
         characterRepositoryProvider.overrideWithValue(charRepo),
         baseRepositoryProvider.overrideWithValue(baseRepo),
-        journalRepositoryProvider.overrideWithValue(journalRepo),
+        activityLogRepositoryProvider.overrideWithValue(activityRepo),
       ],
       child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -253,83 +249,55 @@ void main() {
     expect(find.byIcon(Icons.public_off), findsNothing);
   });
 
-  testWidgets('shows empty hint when there are no journal entries',
+  testWidgets('shows empty hint when there is no recent activity',
       (tester) async {
     await tester.pumpWidget(buildDashboard());
     await tester.pumpAndSettle();
 
     expect(find.text('Recent Activity'), findsOneWidget);
     expect(
-      find.text('Chronicle entries will appear here as you write them.'),
+      find.text('Your actions will appear here as you use the app.'),
       findsOneWidget,
     );
   });
 
-  testWidgets('shows recent journal entries with character names',
+  testWidgets('shows recent activity events with character names',
       (tester) async {
     await tester.pumpWidget(buildDashboard(
-      characters: [
-        Character(
-            id: 'c1',
-            name: 'Paul',
-            region: 'NA',
-            serverType: 'Official',
-            world: 'Arrakis',
-            sietch: 'Tabr',
-            createdAt: now,
-            updatedAt: now),
-      ],
-      journalEntries: [
-        JournalEntry(
-          id: 'j1',
-          characterId: 'c1',
-          title: 'Found a spice field',
-          body: 'Huge deposit near the ridge.',
-          tags: const [],
-          entryDate: now,
+      events: [
+        ActivityEvent(
+          id: 'e1',
+          type: ActivityEventType.journalEntryWritten,
+          subject: 'Found a spice field',
+          characterName: 'Paul',
           createdAt: now,
-          updatedAt: now,
         ),
       ],
     ));
     await tester.pumpAndSettle();
 
-    expect(find.text('Found a spice field'), findsOneWidget);
+    expect(find.text('Chronicle: Found a spice field'), findsOneWidget);
     expect(find.textContaining('Paul •'), findsOneWidget);
   });
 
-  testWidgets('tapping a recent activity entry switches to the Journal tab',
+  testWidgets('tapping a Chronicle event switches to the Journal tab',
       (tester) async {
     await tester.pumpWidget(buildDashboard(
-      characters: [
-        Character(
-            id: 'c1',
-            name: 'Paul',
-            region: 'NA',
-            serverType: 'Official',
-            world: 'Arrakis',
-            sietch: 'Tabr',
-            createdAt: now,
-            updatedAt: now),
-      ],
-      journalEntries: [
-        JournalEntry(
-          id: 'j1',
-          characterId: 'c1',
-          title: 'Found a spice field',
-          body: '',
-          tags: const [],
-          entryDate: now,
+      events: [
+        ActivityEvent(
+          id: 'e1',
+          type: ActivityEventType.journalEntryWritten,
+          subject: 'Found a spice field',
+          characterName: 'Paul',
           createdAt: now,
-          updatedAt: now,
         ),
       ],
     ));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Found a spice field'));
+    await tester.ensureVisible(find.text('Chronicle: Found a spice field'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Found a spice field'));
+    await tester.tap(find.text('Chronicle: Found a spice field'));
     await tester.pumpAndSettle();
 
     final container =

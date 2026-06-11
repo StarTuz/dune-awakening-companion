@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/models/activity_event.dart';
+import '../../../core/providers/activity_log_provider.dart';
 import '../models/character.dart';
 import '../services/character_repository.dart';
 import 'package:uuid/uuid.dart';
@@ -12,7 +14,7 @@ final charactersProvider =
     StateNotifierProvider<CharacterNotifier, AsyncValue<List<Character>>>(
         (ref) {
   final repository = ref.watch(characterRepositoryProvider);
-  return CharacterNotifier(repository);
+  return CharacterNotifier(repository, ref);
 });
 
 /// When true, the character list is filtered to characters on a closed
@@ -22,8 +24,10 @@ final closedWorldCharacterFilterProvider = StateProvider<bool>((ref) => false);
 
 class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
   final CharacterRepository _repository;
+  final Ref _ref;
 
-  CharacterNotifier(this._repository) : super(const AsyncValue.loading()) {
+  CharacterNotifier(this._repository, this._ref)
+      : super(const AsyncValue.loading()) {
     _loadCharacters();
   }
 
@@ -61,6 +65,9 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
         updatedAt: DateTime.now(),
       );
       await _repository.create(character);
+      await _ref
+          .read(activityLoggerProvider)
+          .log(ActivityEventType.characterCreated, character.name);
       await _loadCharacters();
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
@@ -102,6 +109,9 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
         updatedAt: DateTime.now(),
       );
       await _repository.create(character);
+      await _ref
+          .read(activityLoggerProvider)
+          .log(ActivityEventType.characterCreated, character.name);
       await _loadCharacters();
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
@@ -172,6 +182,11 @@ class CharacterNotifier extends StateNotifier<AsyncValue<List<Character>>> {
       }
 
       await _repository.delete(id);
+      if (character != null) {
+        await _ref
+            .read(activityLoggerProvider)
+            .log(ActivityEventType.characterDeleted, character.name);
+      }
       await _loadCharacters();
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);

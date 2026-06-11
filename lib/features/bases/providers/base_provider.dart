@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/app_database.dart';
+import '../../../core/models/activity_event.dart';
+import '../../../core/providers/activity_log_provider.dart';
+import '../../characters/providers/character_provider.dart';
 import '../models/base.dart';
 import '../services/base_repository.dart';
 import 'package:uuid/uuid.dart';
@@ -65,6 +68,7 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
         updatedAt: DateTime.now(),
       );
       await _repository.create(base);
+      await _logActivity(ActivityEventType.baseCreated, name, characterId);
       _ref.invalidate(basesByCharacterProvider(characterId));
       _ref.invalidate(expiringBasesProvider);
       await _loadBases();
@@ -87,12 +91,36 @@ class BaseNotifier extends StateNotifier<AsyncValue<List<Base>>> {
 
   Future<void> deleteBase(String id, String characterId) async {
     try {
+      final base = await _repository.getById(id);
       await _repository.delete(id);
+      if (base != null) {
+        await _logActivity(
+            ActivityEventType.baseDeleted, base.name, characterId);
+      }
       _ref.invalidate(basesByCharacterProvider(characterId));
       _ref.invalidate(expiringBasesProvider);
       await _loadBases();
     } catch (e, stack) {
       state = AsyncValue.error(e, stack);
     }
+  }
+
+  /// Resolve the character's display name from already-loaded state; the
+  /// activity log stores a snapshot, so a miss just means a blank subtitle.
+  Future<void> _logActivity(
+      ActivityEventType type, String subject, String characterId) async {
+    String? characterName;
+    final characters = _ref.read(charactersProvider).value;
+    if (characters != null) {
+      for (final c in characters) {
+        if (c.id == characterId) {
+          characterName = c.name;
+          break;
+        }
+      }
+    }
+    await _ref
+        .read(activityLoggerProvider)
+        .log(type, subject, characterName: characterName);
   }
 }

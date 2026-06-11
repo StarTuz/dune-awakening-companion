@@ -307,7 +307,7 @@
   "dashboardRegionEmptyHint": "Aggiungi personaggi per sbloccare le statistiche per regione.",
   "dashboardAlertsEmptyHint": "Aggiungi basi per sbloccare le statistiche degli avvisi.",
   "dashboardRecentActivity": "Attività recente",
-  "dashboardRecentActivityEmpty": "Le voci della cronaca appariranno qui man mano che le scrivi.",
+  "dashboardRecentActivityEmpty": "Le tue azioni appariranno qui mentre usi l'app.",
   "chartLegendCritical": "Critico",
   "chartLegendWarning": "Avviso",
   "chartLegendSafe": "Sicuro",
@@ -463,5 +463,10 @@
   "navRailCollapse": "Comprimi menu",
   "navRailExpand": "Espandi menu",
   "railFieldTimerLabel": "Timer campo",
-  "railBaseExpiryLabel": "Prossima scadenza"
+  "railBaseExpiryLabel": "Prossima scadenza",
+  "activityCharacterCreated": "Personaggio {name} creato",
+  "activityCharacterDeleted": "Personaggio {name} eliminato",
+  "activityBaseCreated": "Base {name} aggiunta",
+  "activityBaseDeleted": "Base {name} rimossa",
+  "activityJournalEntry": "Cronaca: {title}"
 }

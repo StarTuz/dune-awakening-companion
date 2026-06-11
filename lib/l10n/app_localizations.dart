@@ -1953,7 +1953,7 @@ abstract class AppLocalizations {
   /// Empty state for the Recent Activity panel
   ///
   /// In en, this message translates to:
-  /// **'Chronicle entries will appear here as you write them.'**
+  /// **'Your actions will appear here as you use the app.'**
   String get dashboardRecentActivityEmpty;
 
   /// Chart legend label for bases in critical state
@@ -3179,6 +3179,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next expiry'**
   String get railBaseExpiryLabel;
+
+  /// Recent activity row: a character was created
+  ///
+  /// In en, this message translates to:
+  /// **'Created character {name}'**
+  String activityCharacterCreated(String name);
+
+  /// Recent activity row: a character was deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted character {name}'**
+  String activityCharacterDeleted(String name);
+
+  /// Recent activity row: a base was added
+  ///
+  /// In en, this message translates to:
+  /// **'Added base {name}'**
+  String activityBaseCreated(String name);
+
+  /// Recent activity row: a base was removed
+  ///
+  /// In en, this message translates to:
+  /// **'Removed base {name}'**
+  String activityBaseDeleted(String name);
+
+  /// Recent activity row: a Chronicle entry was written
+  ///
+  /// In en, this message translates to:
+  /// **'Chronicle: {title}'**
+  String activityJournalEntry(String title);
 }
 
 class _AppLocalizationsDelegate

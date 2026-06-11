@@ -19,10 +19,14 @@ import 'migrations/migration_014_add_journal_phase2.dart';
 import 'migrations/migration_015_add_journal_phase3.dart';
 import 'migrations/migration_016_add_base_calculator_plans.dart';
 import 'migrations/migration_017_add_closed_world_ack.dart';
+import 'migrations/migration_018_add_activity_events.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._internal();
   static Database? _database;
+
+  /// Current schema version — bump alongside each new migration.
+  static const schemaVersion = 18;
 
   AppDatabase._internal();
 
@@ -42,7 +46,7 @@ class AppDatabase {
     final dbPath = await _getDatabasePath();
     final db = await openDatabase(
       dbPath,
-      version: 17,
+      version: schemaVersion,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
       },
@@ -123,6 +127,9 @@ class AppDatabase {
     if (version >= 17) {
       await Migration017AddClosedWorldAck.up(db);
     }
+    if (version >= 18) {
+      await Migration018AddActivityEvents.up(db);
+    }
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -173,6 +180,9 @@ class AppDatabase {
     }
     if (oldVersion < 17) {
       await Migration017AddClosedWorldAck.up(db);
+    }
+    if (oldVersion < 18) {
+      await Migration018AddActivityEvents.up(db);
     }
   }
 
