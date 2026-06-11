@@ -24,6 +24,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get navJournal => 'Diario';
 
   @override
+  String get navFieldTimers => 'Timer campo';
+
+  @override
   String get navSettings => 'Impostazioni';
 
   @override
@@ -800,6 +803,111 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get testNotificationBody =>
       'Le notifiche funzionano! Riceverai un avviso quando una base sta per rimanere senza energia.';
+
+  @override
+  String get fieldTimerTitle => 'Timer da campo';
+
+  @override
+  String get fieldTimerSandHarvest => 'Finestra di raccolta sabbia';
+
+  @override
+  String get fieldTimerDisclaimer =>
+      'I tempi provengono dalla community e variano in base all\'equipaggiamento. Non sono dati ufficiali Funcom.';
+
+  @override
+  String get fieldTimerStart => 'Avvia timer';
+
+  @override
+  String get fieldTimerCancel => 'Annulla timer';
+
+  @override
+  String get fieldTimerRemaining => 'rimanente';
+
+  @override
+  String get fieldTimerKeepAppOpenHint =>
+      'Tieni l\'app aperta (minimizzare è OK) per sentire i pre-allarmi.';
+
+  @override
+  String get fieldTimerCustom => 'Personalizzato…';
+
+  @override
+  String get fieldTimerCustomDurationTitle => 'Durata personalizzata';
+
+  @override
+  String get fieldTimerCustomDurationLabel => 'Durata';
+
+  @override
+  String get fieldTimerMinutes => 'min';
+
+  @override
+  String fieldTimerNextCueIn(int stage, String time) {
+    return 'Prossimo pre-allarme (stadio $stage) tra $time';
+  }
+
+  @override
+  String get fieldTimerFiringTitle => 'Reimposta aggro ora';
+
+  @override
+  String get fieldTimerFiringBody =>
+      'Finestra di raccolta terminata. Raccogli il tuo sandcrawler.';
+
+  @override
+  String fieldTimerEscalationCount(int count) {
+    return 'Allarme ripetuto $count volta/e';
+  }
+
+  @override
+  String get fieldTimerResetAggro => 'Crawler raccolto — riavvia';
+
+  @override
+  String get fieldTimerEndRun => 'Fine corsa';
+
+  @override
+  String get fieldTimerPreset230 => '2:30';
+
+  @override
+  String get fieldTimerPreset300 => '3:00';
+
+  @override
+  String get fieldTimerPreset330 => '3:30';
+
+  @override
+  String get fieldTimerPreset400 => '4:00';
+
+  @override
+  String get fieldTimerSettingsSection => 'Timer da campo';
+
+  @override
+  String get fieldTimerDefaultDuration => 'Durata predefinita';
+
+  @override
+  String get fieldTimerPreAlarmCount => 'Numero pre-allarmi';
+
+  @override
+  String get fieldTimerPreAlarmSpacing => 'Spaziatura pre-allarmi';
+
+  @override
+  String get fieldTimerCueVolume => 'Volume segnale';
+
+  @override
+  String get fieldTimerTestAllCues => 'Testa tutti i pre-allarmi';
+
+  @override
+  String get fieldTimerBypassQuietHours => 'Consenti durante le ore silenziose';
+
+  @override
+  String get fieldTimerEscalationInterval => 'Intervallo escalation';
+
+  @override
+  String get fieldTimerCueStageHint =>
+      'Ogni pre-allarme è più urgente del precedente.';
+
+  @override
+  String get fieldTimerSeconds => 'sec';
+
+  @override
+  String get fieldTimerSoundsDocLink =>
+      'Come usare suoni segnale personalizzati';
 
   @override
   String get copyrightNotices => 'Note sul Copyright';

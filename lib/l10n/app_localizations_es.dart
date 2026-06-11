@@ -24,6 +24,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navJournal => 'Diario';
 
   @override
+  String get navFieldTimers => 'Temporizadores';
+
+  @override
   String get navSettings => 'Ajustes';
 
   @override
@@ -804,6 +807,111 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get testNotificationBody =>
       '¡Las notificaciones funcionan! Recibirás una alerta cuando una base se quede sin energía.';
+
+  @override
+  String get fieldTimerTitle => 'Temporizadores de campo';
+
+  @override
+  String get fieldTimerSandHarvest => 'Ventana de cosecha de arena';
+
+  @override
+  String get fieldTimerDisclaimer =>
+      'Los tiempos son de la comunidad y varían según el equipo. No son datos oficiales de Funcom.';
+
+  @override
+  String get fieldTimerStart => 'Iniciar temporizador';
+
+  @override
+  String get fieldTimerCancel => 'Cancelar temporizador';
+
+  @override
+  String get fieldTimerRemaining => 'restante';
+
+  @override
+  String get fieldTimerKeepAppOpenHint =>
+      'Mantén la app abierta (minimizar es correcto) para escuchar las alarmas previas.';
+
+  @override
+  String get fieldTimerCustom => 'Personalizado…';
+
+  @override
+  String get fieldTimerCustomDurationTitle => 'Duración personalizada';
+
+  @override
+  String get fieldTimerCustomDurationLabel => 'Duración';
+
+  @override
+  String get fieldTimerMinutes => 'min';
+
+  @override
+  String fieldTimerNextCueIn(int stage, String time) {
+    return 'Próxima pre-alarma (etapa $stage) en $time';
+  }
+
+  @override
+  String get fieldTimerFiringTitle => '¡Resetear aggro ahora!';
+
+  @override
+  String get fieldTimerFiringBody =>
+      'Ventana de cosecha agotada. Recoge tu sandcrawler.';
+
+  @override
+  String fieldTimerEscalationCount(int count) {
+    return 'Alerta repetida $count vez/veces';
+  }
+
+  @override
+  String get fieldTimerResetAggro => 'Crawler recogido — reiniciar';
+
+  @override
+  String get fieldTimerEndRun => 'Terminar pasada';
+
+  @override
+  String get fieldTimerPreset230 => '2:30';
+
+  @override
+  String get fieldTimerPreset300 => '3:00';
+
+  @override
+  String get fieldTimerPreset330 => '3:30';
+
+  @override
+  String get fieldTimerPreset400 => '4:00';
+
+  @override
+  String get fieldTimerSettingsSection => 'Temporizadores de campo';
+
+  @override
+  String get fieldTimerDefaultDuration => 'Duración predeterminada';
+
+  @override
+  String get fieldTimerPreAlarmCount => 'Número de pre-alarmas';
+
+  @override
+  String get fieldTimerPreAlarmSpacing => 'Espaciado de pre-alarmas';
+
+  @override
+  String get fieldTimerCueVolume => 'Volumen de señal';
+
+  @override
+  String get fieldTimerTestAllCues => 'Probar todas las pre-alarmas';
+
+  @override
+  String get fieldTimerBypassQuietHours => 'Permitir durante horas silenciosas';
+
+  @override
+  String get fieldTimerEscalationInterval => 'Intervalo de escalada';
+
+  @override
+  String get fieldTimerCueStageHint =>
+      'Cada pre-alarma suena más urgente que la anterior.';
+
+  @override
+  String get fieldTimerSeconds => 'seg';
+
+  @override
+  String get fieldTimerSoundsDocLink =>
+      'Cómo usar sonidos de señal personalizados';
 
   @override
   String get copyrightNotices => 'Avisos de Derechos de Autor';

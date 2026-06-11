@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../core/providers/notification_manager_provider.dart';
 import '../../../core/services/notification_service.dart';
+import '../../field_timers/providers/field_timer_provider.dart';
+import '../../field_timers/services/field_timer_settings.dart';
 import '../../../core/providers/notification_settings_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/providers/accessibility_provider.dart';
@@ -100,6 +102,12 @@ class SettingsScreen extends ConsumerWidget {
           // Notifications Section
           _buildSectionHeader(context, l10n.sectionNotifications),
           _buildNotificationSettings(context, ref),
+
+          const Divider(height: 32),
+
+          // Field Timers Section
+          _buildSectionHeader(context, l10n.fieldTimerSettingsSection),
+          _buildFieldTimerSettings(context, ref),
 
           const Divider(height: 32),
 
@@ -941,6 +949,152 @@ class SettingsScreen extends ConsumerWidget {
         ),
       );
     }
+  }
+
+  Widget _buildFieldTimerSettings(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final audio = ref.read(fieldTimerAudioServiceProvider);
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return FutureBuilder<Map<String, dynamic>>(
+          future: FieldTimerSettings.getAllSettings(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const SizedBox.shrink();
+            final settings = snapshot.data!;
+            final cueCount = settings['cueCount'] as int;
+            final spacingSec = settings['cueSpacingSeconds'] as int;
+            final volume = settings['cueVolume'] as double;
+            final escalationSec = settings['escalationIntervalSeconds'] as int;
+            final bypass = settings['bypassQuietHours'] as bool;
+
+            return Column(
+              children: [
+                // Cue count
+                ListTile(
+                  leading: const Icon(Icons.notifications_active_outlined),
+                  title: Text(l10n.fieldTimerPreAlarmCount),
+                  subtitle: Text(l10n.fieldTimerCueStageHint),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.remove),
+                        onPressed: cueCount > 0
+                            ? () async {
+                                await FieldTimerSettings.setCueCount(
+                                    cueCount - 1);
+                                setState(() {});
+                              }
+                            : null,
+                      ),
+                      Text('$cueCount',
+                          style: Theme.of(context).textTheme.titleMedium),
+                      IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: cueCount < 6
+                            ? () async {
+                                await FieldTimerSettings.setCueCount(
+                                    cueCount + 1);
+                                setState(() {});
+                              }
+                            : null,
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Cue spacing
+                ListTile(
+                  leading: const Icon(Icons.timer_outlined),
+                  title: Text(l10n.fieldTimerPreAlarmSpacing),
+                  trailing: DropdownButton<int>(
+                    value:
+                        [15, 30, 45, 60].contains(spacingSec) ? spacingSec : 30,
+                    items: [15, 30, 45, 60]
+                        .map((s) => DropdownMenuItem(
+                              value: s,
+                              child: Text('$s ${l10n.fieldTimerSeconds}'),
+                            ))
+                        .toList(),
+                    onChanged: (v) async {
+                      if (v != null) {
+                        await FieldTimerSettings.setCueSpacingSeconds(v);
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ),
+
+                // Cue volume
+                ListTile(
+                  leading: const Icon(Icons.volume_up_outlined),
+                  title: Text(l10n.fieldTimerCueVolume),
+                  subtitle: Slider(
+                    value: volume,
+                    min: 0,
+                    max: 1,
+                    divisions: 10,
+                    label: '${(volume * 100).round()}%',
+                    onChanged: (v) async {
+                      await audio.setVolume(v);
+                      setState(() {});
+                    },
+                  ),
+                ),
+
+                // Escalation interval
+                ListTile(
+                  leading: const Icon(Icons.repeat_outlined),
+                  title: Text(l10n.fieldTimerEscalationInterval),
+                  trailing: DropdownButton<int>(
+                    value: [10, 15, 20, 30].contains(escalationSec)
+                        ? escalationSec
+                        : 15,
+                    items: [10, 15, 20, 30]
+                        .map((s) => DropdownMenuItem(
+                              value: s,
+                              child: Text('$s ${l10n.fieldTimerSeconds}'),
+                            ))
+                        .toList(),
+                    onChanged: (v) async {
+                      if (v != null) {
+                        await FieldTimerSettings.setEscalationIntervalSeconds(
+                            v);
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ),
+
+                // Bypass quiet hours
+                SwitchListTile(
+                  secondary: const Icon(Icons.do_not_disturb_off_outlined),
+                  title: Text(l10n.fieldTimerBypassQuietHours),
+                  value: bypass,
+                  onChanged: (v) async {
+                    await FieldTimerSettings.setBypassQuietHours(v);
+                    setState(() {});
+                  },
+                ),
+
+                // Test all cues button
+                ListTile(
+                  leading:
+                      const Icon(Icons.play_circle_outline, color: Colors.blue),
+                  title: Text(l10n.fieldTimerTestAllCues),
+                  trailing: ElevatedButton.icon(
+                    onPressed: () => audio.testAllCues(cueCount),
+                    icon: const Icon(Icons.play_arrow, size: 18),
+                    label: Text(l10n.test),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 }
 

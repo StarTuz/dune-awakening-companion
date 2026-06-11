@@ -178,5 +178,15 @@ For now, the optional download keeps the app lightweight.
 
 ---
 
-*Last Updated: December 24, 2025*
+## Field Timer cue sounds (separate system)
+
+**Field Timers** (sand harvest windows, etc.) use **in-app pre-alarm beeps**, not
+OS notification sounds. Defaults are bundled `.wav` files; you can override them
+by filename in the app’s `field_timer_sounds` folder.
+
+See **`docs/FIELD_TIMER_SOUNDS.md`** for filenames, platform paths, and tips.
+
+---
+
+*Last updated: 2026-06-10*
 

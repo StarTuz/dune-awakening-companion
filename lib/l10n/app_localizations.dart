@@ -138,6 +138,12 @@ abstract class AppLocalizations {
   /// **'Journal'**
   String get navJournal;
 
+  /// Navigation label for Field Timers
+  ///
+  /// In en, this message translates to:
+  /// **'Field Timers'**
+  String get navFieldTimers;
+
   /// Navigation label for Settings
   ///
   /// In en, this message translates to:
@@ -1553,6 +1559,198 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications are working! You will be alerted when a base runs low on power.'**
   String get testNotificationBody;
+
+  /// Field Timers nav / screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Field Timers'**
+  String get fieldTimerTitle;
+
+  /// Section label for sand harvest presets
+  ///
+  /// In en, this message translates to:
+  /// **'Sand harvest window'**
+  String get fieldTimerSandHarvest;
+
+  /// Disclaimer shown on the idle screen
+  ///
+  /// In en, this message translates to:
+  /// **'Timing is community-sourced and varies by loadout. Not official Funcom data.'**
+  String get fieldTimerDisclaimer;
+
+  /// Start button label
+  ///
+  /// In en, this message translates to:
+  /// **'Start timer'**
+  String get fieldTimerStart;
+
+  /// Cancel button on the armed screen
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel timer'**
+  String get fieldTimerCancel;
+
+  /// Label below the countdown clock
+  ///
+  /// In en, this message translates to:
+  /// **'remaining'**
+  String get fieldTimerRemaining;
+
+  /// Hint about keeping app open for cue audio
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the app running (minimize OK) to hear pre-alarms.'**
+  String get fieldTimerKeepAppOpenHint;
+
+  /// Label for the custom duration chip
+  ///
+  /// In en, this message translates to:
+  /// **'Custom…'**
+  String get fieldTimerCustom;
+
+  /// Dialog title for custom duration picker
+  ///
+  /// In en, this message translates to:
+  /// **'Custom duration'**
+  String get fieldTimerCustomDurationTitle;
+
+  /// Input label in custom duration dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get fieldTimerCustomDurationLabel;
+
+  /// Suffix for minutes input
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get fieldTimerMinutes;
+
+  /// Hint showing when next cue fires
+  ///
+  /// In en, this message translates to:
+  /// **'Next pre-alarm (stage {stage}) in {time}'**
+  String fieldTimerNextCueIn(int stage, String time);
+
+  /// Heading on the firing screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reset aggro now'**
+  String get fieldTimerFiringTitle;
+
+  /// Body text on the firing screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sand harvest window elapsed. Pick up your sandcrawler.'**
+  String get fieldTimerFiringBody;
+
+  /// How many times the page has escalated
+  ///
+  /// In en, this message translates to:
+  /// **'Alert repeated {count} time(s)'**
+  String fieldTimerEscalationCount(int count);
+
+  /// Ack-and-restart button label
+  ///
+  /// In en, this message translates to:
+  /// **'Crawler picked up — restart'**
+  String get fieldTimerResetAggro;
+
+  /// Ack-and-end button label
+  ///
+  /// In en, this message translates to:
+  /// **'End run'**
+  String get fieldTimerEndRun;
+
+  /// Preset chip label
+  ///
+  /// In en, this message translates to:
+  /// **'2:30'**
+  String get fieldTimerPreset230;
+
+  /// Preset chip label
+  ///
+  /// In en, this message translates to:
+  /// **'3:00'**
+  String get fieldTimerPreset300;
+
+  /// Preset chip label
+  ///
+  /// In en, this message translates to:
+  /// **'3:30'**
+  String get fieldTimerPreset330;
+
+  /// Preset chip label
+  ///
+  /// In en, this message translates to:
+  /// **'4:00'**
+  String get fieldTimerPreset400;
+
+  /// Settings section heading
+  ///
+  /// In en, this message translates to:
+  /// **'Field Timers'**
+  String get fieldTimerSettingsSection;
+
+  /// Settings: default duration label
+  ///
+  /// In en, this message translates to:
+  /// **'Default duration'**
+  String get fieldTimerDefaultDuration;
+
+  /// Settings: number of pre-alarms
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-alarm count'**
+  String get fieldTimerPreAlarmCount;
+
+  /// Settings: spacing between pre-alarms
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-alarm spacing'**
+  String get fieldTimerPreAlarmSpacing;
+
+  /// Settings: cue volume slider label
+  ///
+  /// In en, this message translates to:
+  /// **'Cue volume'**
+  String get fieldTimerCueVolume;
+
+  /// Settings: test button label
+  ///
+  /// In en, this message translates to:
+  /// **'Test all pre-alarms'**
+  String get fieldTimerTestAllCues;
+
+  /// Settings: bypass DND toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Allow during quiet hours'**
+  String get fieldTimerBypassQuietHours;
+
+  /// Settings: how often to re-page after T=0
+  ///
+  /// In en, this message translates to:
+  /// **'Escalation interval'**
+  String get fieldTimerEscalationInterval;
+
+  /// Settings: hint under cue count slider
+  ///
+  /// In en, this message translates to:
+  /// **'Each pre-alarm sounds more urgent than the last.'**
+  String get fieldTimerCueStageHint;
+
+  /// Suffix for seconds
+  ///
+  /// In en, this message translates to:
+  /// **'sec'**
+  String get fieldTimerSeconds;
+
+  /// Link to custom sounds doc
+  ///
+  /// In en, this message translates to:
+  /// **'How to use custom cue sounds'**
+  String get fieldTimerSoundsDocLink;
 
   /// Copyright notices section title
   ///

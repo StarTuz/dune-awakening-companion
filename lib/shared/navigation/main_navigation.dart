@@ -2,10 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
-import '../../features/blueprints/screens/blueprint_tracker_screen.dart';
-import '../../features/base_calculator/screens/base_calculator_screen.dart';
 import '../../features/characters/screens/character_management_screen.dart';
 import '../../features/journal/screens/journal_hub_screen.dart';
+import '../../features/field_timers/screens/field_timer_screen.dart';
+import '../../features/blueprints/screens/blueprint_tracker_screen.dart';
+import '../../features/base_calculator/screens/base_calculator_screen.dart';
 import '../../features/alerts/screens/alerts_screen.dart';
 import '../../features/alerts/providers/alert_provider.dart';
 import '../../features/bases/providers/base_provider.dart';
@@ -16,6 +17,18 @@ import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
 // Provider to track current navigation index
 final navigationIndexProvider = StateProvider<int>((ref) => 0);
+
+// Nav indices — keep in sync with the screens list below.
+// 0 Dashboard | 1 Characters | 2 Journal | 3 FieldTimers |
+// 4 Blueprints | 5 Calculator | 6 Alerts | 7 Settings
+const navIndexDashboard = 0;
+const navIndexCharacters = 1;
+const navIndexJournal = 2;
+const navIndexFieldTimers = 3;
+const navIndexBlueprints = 4;
+const navIndexCalculator = 5;
+const navIndexAlerts = 6;
+const navIndexSettings = 7;
 
 class MainNavigationScreen extends ConsumerWidget {
   const MainNavigationScreen({super.key});
@@ -28,45 +41,37 @@ class MainNavigationScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final screens = [
-      const DashboardScreen(),
-      const CharacterManagementScreen(),
-      const JournalHubScreen(),
-      const BlueprintTrackerScreen(),
-      const BaseCalculatorScreen(),
-      const AlertsScreen(),
-      const SettingsScreen(),
+      const DashboardScreen(), // 0
+      const CharacterManagementScreen(), // 1
+      const JournalHubScreen(), // 2
+      const FieldTimerScreen(), // 3
+      const BlueprintTrackerScreen(), // 4
+      const BaseCalculatorScreen(), // 5
+      const AlertsScreen(), // 6
+      const SettingsScreen(), // 7
     ];
 
-    // Use NavigationRail for desktop, BottomNavigationBar for mobile
     final isDesktop =
         Platform.isLinux || Platform.isWindows || Platform.isMacOS;
 
-    // Get alert count
     final alertCount = activeAlertsAsync.maybeWhen(
       data: (alerts) => alerts.length,
       orElse: () => 0,
     );
 
-    // Calculate most urgent base severity for icon color
     Color? alertIconColor;
     basesAsync.whenData((bases) {
       if (bases.isEmpty) return;
-
-      // Find minimum hours remaining across all bases
       double minHours = double.infinity;
       for (final base in bases) {
         if (!base.notificationsEnabled) continue;
         final hours = base.hoursRemaining;
-        if (hours < minHours) {
-          minHours = hours;
-        }
+        if (hours < minHours) minHours = hours;
       }
-
-      // Color code: red < 24h, yellow < 48h
       if (minHours < 24) {
-        alertIconColor = DuneColors.criticalPrimary; // Red
+        alertIconColor = DuneColors.criticalPrimary;
       } else if (minHours < 48) {
-        alertIconColor = DuneColors.warningPrimary; // Yellow
+        alertIconColor = DuneColors.warningPrimary;
       }
     });
 
@@ -97,6 +102,11 @@ class MainNavigationScreen extends ConsumerWidget {
                   icon: const Icon(Icons.menu_book_outlined),
                   selectedIcon: const Icon(Icons.menu_book),
                   label: Text(l10n.navJournal),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.timer_outlined),
+                  selectedIcon: const Icon(Icons.timer),
+                  label: Text(l10n.navFieldTimers),
                 ),
                 const NavigationRailDestination(
                   icon: Icon(Icons.construction_outlined),
@@ -146,7 +156,6 @@ class MainNavigationScreen extends ConsumerWidget {
       );
     }
 
-    // Mobile layout with bottom navigation
     return Scaffold(
       body: IndexedStack(
         index: currentIndex,
@@ -169,6 +178,10 @@ class MainNavigationScreen extends ConsumerWidget {
           NavigationDestination(
             icon: const Icon(Icons.menu_book),
             label: l10n.navJournal,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.timer),
+            label: l10n.navFieldTimers,
           ),
           const NavigationDestination(
             icon: Icon(Icons.construction),

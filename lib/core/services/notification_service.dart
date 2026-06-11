@@ -127,6 +127,16 @@ class NotificationService {
       importance: Importance.defaultImportance,
     );
     await androidPlugin?.createNotificationChannel(questChannel);
+
+    const fieldTimerChannel = AndroidNotificationChannel(
+      'field_timers',
+      'Field Timers',
+      description: 'Urgent harvest-window alerts — page until acknowledged',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+    );
+    await androidPlugin?.createNotificationChannel(fieldTimerChannel);
   }
 
   /// Handle notification tap

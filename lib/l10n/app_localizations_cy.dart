@@ -24,6 +24,9 @@ class AppLocalizationsCy extends AppLocalizations {
   String get navJournal => 'Dyddiadur';
 
   @override
+  String get navFieldTimers => 'Amseryddion';
+
+  @override
   String get navSettings => 'Gosodiadau';
 
   @override
@@ -803,6 +806,111 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get testNotificationBody =>
       'Mae hysbysiadau\'n gweithio! Cewch eich rhybuddio pan fydd pŵer canolfan yn rhedeg yn isel.';
+
+  @override
+  String get fieldTimerTitle => 'Amseryddion maes';
+
+  @override
+  String get fieldTimerSandHarvest => 'Ffenestr cynaeafu tywod';
+
+  @override
+  String get fieldTimerDisclaimer =>
+      'Mae amseroedd yn dod o\'r gymuned ac yn amrywio yn ôl offer. Nid yw\'n ddata swyddogol Funcom.';
+
+  @override
+  String get fieldTimerStart => 'Cychwyn amserydd';
+
+  @override
+  String get fieldTimerCancel => 'Canslo amserydd';
+
+  @override
+  String get fieldTimerRemaining => 'yn weddill';
+
+  @override
+  String get fieldTimerKeepAppOpenHint =>
+      'Cadwch yr ap ar agor (lleihau yn iawn) i glywed rhybuddion.';
+
+  @override
+  String get fieldTimerCustom => 'Personol…';
+
+  @override
+  String get fieldTimerCustomDurationTitle => 'Hyd personol';
+
+  @override
+  String get fieldTimerCustomDurationLabel => 'Hyd';
+
+  @override
+  String get fieldTimerMinutes => 'mun';
+
+  @override
+  String fieldTimerNextCueIn(int stage, String time) {
+    return 'Rhybudd nesaf (cam $stage) ymhen $time';
+  }
+
+  @override
+  String get fieldTimerFiringTitle => 'Ailosod aggro nawr';
+
+  @override
+  String get fieldTimerFiringBody =>
+      'Ffenestr cynaeafu wedi dod i ben. Codwch eich sandcrawler.';
+
+  @override
+  String fieldTimerEscalationCount(int count) {
+    return 'Rhybudd wedi\'i ailadrodd $count gwaith';
+  }
+
+  @override
+  String get fieldTimerResetAggro => 'Crawler wedi\'i godi — ailgychwyn';
+
+  @override
+  String get fieldTimerEndRun => 'Gorffen y daith';
+
+  @override
+  String get fieldTimerPreset230 => '2:30';
+
+  @override
+  String get fieldTimerPreset300 => '3:00';
+
+  @override
+  String get fieldTimerPreset330 => '3:30';
+
+  @override
+  String get fieldTimerPreset400 => '4:00';
+
+  @override
+  String get fieldTimerSettingsSection => 'Amseryddion maes';
+
+  @override
+  String get fieldTimerDefaultDuration => 'Hyd rhagosodedig';
+
+  @override
+  String get fieldTimerPreAlarmCount => 'Nifer o rybuddion';
+
+  @override
+  String get fieldTimerPreAlarmSpacing => 'Bylchiad rhybuddion';
+
+  @override
+  String get fieldTimerCueVolume => 'Lefel sain arwydd';
+
+  @override
+  String get fieldTimerTestAllCues => 'Profi pob rhybudd';
+
+  @override
+  String get fieldTimerBypassQuietHours => 'Caniatáu yn ystod oriau tawel';
+
+  @override
+  String get fieldTimerEscalationInterval => 'Cyfwng uwchgyfeirio';
+
+  @override
+  String get fieldTimerCueStageHint =>
+      'Mae pob rhybudd yn fwy brys na\'r un blaenorol.';
+
+  @override
+  String get fieldTimerSeconds => 'eiliad';
+
+  @override
+  String get fieldTimerSoundsDocLink =>
+      'Sut i ddefnyddio synau arwydd personol';
 
   @override
   String get copyrightNotices => 'Hysbysiadau Hawlfraint';

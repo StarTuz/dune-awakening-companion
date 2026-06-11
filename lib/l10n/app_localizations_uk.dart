@@ -24,6 +24,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get navJournal => 'Журнал';
 
   @override
+  String get navFieldTimers => 'Польові таймери';
+
+  @override
   String get navSettings => 'Налаштування';
 
   @override
@@ -800,6 +803,109 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get testNotificationBody =>
       'Сповіщення працюють! Ви отримаєте попередження, коли в базі закінчуватиметься енергія.';
+
+  @override
+  String get fieldTimerTitle => 'Польові таймери';
+
+  @override
+  String get fieldTimerSandHarvest => 'Вікно збору піску';
+
+  @override
+  String get fieldTimerDisclaimer =>
+      'Час взято з спільноти і залежить від спорядження. Не офіційні дані Funcom.';
+
+  @override
+  String get fieldTimerStart => 'Запустити таймер';
+
+  @override
+  String get fieldTimerCancel => 'Скасувати таймер';
+
+  @override
+  String get fieldTimerRemaining => 'залишилось';
+
+  @override
+  String get fieldTimerKeepAppOpenHint =>
+      'Тримайте застосунок відкритим (згорнути можна), щоб чути сигнали.';
+
+  @override
+  String get fieldTimerCustom => 'Власний…';
+
+  @override
+  String get fieldTimerCustomDurationTitle => 'Власна тривалість';
+
+  @override
+  String get fieldTimerCustomDurationLabel => 'Тривалість';
+
+  @override
+  String get fieldTimerMinutes => 'хв';
+
+  @override
+  String fieldTimerNextCueIn(int stage, String time) {
+    return 'Наступний сигнал (рівень $stage) через $time';
+  }
+
+  @override
+  String get fieldTimerFiringTitle => 'Скинути аґро зараз';
+
+  @override
+  String get fieldTimerFiringBody => 'Вікно збору минуло. Підберіть пісковоз.';
+
+  @override
+  String fieldTimerEscalationCount(int count) {
+    return 'Сигнал повторено $count раз(ів)';
+  }
+
+  @override
+  String get fieldTimerResetAggro => 'Краулер підібрано — перезапустити';
+
+  @override
+  String get fieldTimerEndRun => 'Завершити заїзд';
+
+  @override
+  String get fieldTimerPreset230 => '2:30';
+
+  @override
+  String get fieldTimerPreset300 => '3:00';
+
+  @override
+  String get fieldTimerPreset330 => '3:30';
+
+  @override
+  String get fieldTimerPreset400 => '4:00';
+
+  @override
+  String get fieldTimerSettingsSection => 'Польові таймери';
+
+  @override
+  String get fieldTimerDefaultDuration => 'Тривалість за замовчуванням';
+
+  @override
+  String get fieldTimerPreAlarmCount => 'Кількість попереджень';
+
+  @override
+  String get fieldTimerPreAlarmSpacing => 'Інтервал між попередженнями';
+
+  @override
+  String get fieldTimerCueVolume => 'Гучність сигналів';
+
+  @override
+  String get fieldTimerTestAllCues => 'Перевірити всі сигнали';
+
+  @override
+  String get fieldTimerBypassQuietHours => 'Дозволити під час тихих годин';
+
+  @override
+  String get fieldTimerEscalationInterval => 'Інтервал ескалації';
+
+  @override
+  String get fieldTimerCueStageHint =>
+      'Кожен сигнал звучить наполегливіше попереднього.';
+
+  @override
+  String get fieldTimerSeconds => 'сек';
+
+  @override
+  String get fieldTimerSoundsDocLink => 'Як використовувати власні звуки';
 
   @override
   String get copyrightNotices => 'Зауваження щодо авторських прав';
