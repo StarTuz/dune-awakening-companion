@@ -336,4 +336,26 @@ void main() {
         ProviderScope.containerOf(tester.element(find.byType(DashboardScreen)));
     expect(container.read(navigationIndexProvider), navIndexJournal);
   });
+
+  testWidgets('quick actions are listed and navigate to Field Timers',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard());
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Quick Actions'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Start a field timer'), findsOneWidget);
+    expect(find.text('Manage bases'), findsOneWidget);
+    expect(find.text('Write a Chronicle entry'), findsOneWidget);
+
+    await tester.ensureVisible(find.text('Start a field timer'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Start a field timer'));
+    await tester.pumpAndSettle();
+
+    final container =
+        ProviderScope.containerOf(tester.element(find.byType(DashboardScreen)));
+    expect(container.read(navigationIndexProvider), navIndexFieldTimers);
+  });
 }

@@ -1276,6 +1276,22 @@
   "@chartLegendSafe": {
     "description": "Chart legend label for bases in safe state"
   },
+  "dashboardQuickActions": "Quick Actions",
+  "@dashboardQuickActions": {
+    "description": "Dashboard panel title: shortcut buttons for common tasks"
+  },
+  "dashboardActionStartTimer": "Start a field timer",
+  "@dashboardActionStartTimer": {
+    "description": "Quick action: jump to the Field Timers screen"
+  },
+  "dashboardActionManageBases": "Manage bases",
+  "@dashboardActionManageBases": {
+    "description": "Quick action: open the base management screen"
+  },
+  "dashboardActionWriteChronicle": "Write a Chronicle entry",
+  "@dashboardActionWriteChronicle": {
+    "description": "Quick action: jump to the Journal tab"
+  },
   "madeWithLove": "Made with ❤️ for Dune Awakening players",
   "@madeWithLove": {
     "description": "Footer message"

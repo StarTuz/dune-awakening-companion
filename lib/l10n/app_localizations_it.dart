@@ -1028,6 +1028,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get chartLegendSafe => 'Sicuro';
 
   @override
+  String get dashboardQuickActions => 'Azioni rapide';
+
+  @override
+  String get dashboardActionStartTimer => 'Avvia un timer da campo';
+
+  @override
+  String get dashboardActionManageBases => 'Gestisci le basi';
+
+  @override
+  String get dashboardActionWriteChronicle => 'Scrivi una voce di cronaca';
+
+  @override
   String get madeWithLove => 'Fatto con ❤️ per i giocatori di Dune Awakening';
 
   @override

@@ -1962,6 +1962,30 @@ abstract class AppLocalizations {
   /// **'Safe'**
   String get chartLegendSafe;
 
+  /// Dashboard panel title: shortcut buttons for common tasks
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get dashboardQuickActions;
+
+  /// Quick action: jump to the Field Timers screen
+  ///
+  /// In en, this message translates to:
+  /// **'Start a field timer'**
+  String get dashboardActionStartTimer;
+
+  /// Quick action: open the base management screen
+  ///
+  /// In en, this message translates to:
+  /// **'Manage bases'**
+  String get dashboardActionManageBases;
+
+  /// Quick action: jump to the Journal tab
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Chronicle entry'**
+  String get dashboardActionWriteChronicle;
+
   /// Footer message
   ///
   /// In en, this message translates to:

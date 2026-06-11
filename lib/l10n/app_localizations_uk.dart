@@ -1028,6 +1028,18 @@ class AppLocalizationsUk extends AppLocalizations {
   String get chartLegendSafe => 'Безпечно';
 
   @override
+  String get dashboardQuickActions => 'Швидкі дії';
+
+  @override
+  String get dashboardActionStartTimer => 'Запустити польовий таймер';
+
+  @override
+  String get dashboardActionManageBases => 'Керувати базами';
+
+  @override
+  String get dashboardActionWriteChronicle => 'Створити запис у хроніці';
+
+  @override
   String get madeWithLove => 'Зроблено з ❤️ для гравців Dune Awakening';
 
   @override

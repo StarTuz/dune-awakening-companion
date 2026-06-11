@@ -1032,6 +1032,18 @@ class AppLocalizationsCy extends AppLocalizations {
   String get chartLegendSafe => 'Diogel';
 
   @override
+  String get dashboardQuickActions => 'Gweithredoedd cyflym';
+
+  @override
+  String get dashboardActionStartTimer => 'Dechrau amserydd maes';
+
+  @override
+  String get dashboardActionManageBases => 'Rheoli canolfannau';
+
+  @override
+  String get dashboardActionWriteChronicle => 'Ysgrifennu cofnod cronicl';
+
+  @override
   String get madeWithLove =>
       'Wedi\'i wneud gyda ❤️ ar gyfer chwaraewyr Dune Awakening';
 

@@ -65,6 +65,10 @@ class DashboardScreen extends ConsumerWidget {
                 ref.read(navigationIndexProvider.notifier).state =
                     navIndexJournal;
               },
+              onFieldTimersTap: () {
+                ref.read(navigationIndexProvider.notifier).state =
+                    navIndexFieldTimers;
+              },
               onClosedWorldsTap: () {
                 ref.read(closedWorldCharacterFilterProvider.notifier).state =
                     true;
@@ -94,6 +98,7 @@ class _DashboardContent extends StatelessWidget {
     required this.onBasesTap,
     required this.onAlertsTap,
     required this.onJournalTap,
+    required this.onFieldTimersTap,
     required this.onClosedWorldsTap,
   });
 
@@ -105,6 +110,7 @@ class _DashboardContent extends StatelessWidget {
   final VoidCallback onBasesTap;
   final VoidCallback onAlertsTap;
   final VoidCallback onJournalTap;
+  final VoidCallback onFieldTimersTap;
   final VoidCallback onClosedWorldsTap;
 
   @override
@@ -209,6 +215,40 @@ class _DashboardContent extends StatelessWidget {
               characters: characters,
               l10n: l10n,
               onTap: onJournalTap,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              l10n.dashboardQuickActions,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.timer_outlined,
+                        color: DuneColors.cautionPrimary),
+                    title: Text(l10n.dashboardActionStartTimer),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: onFieldTimersTap,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.home_outlined,
+                        color: DuneColors.secondaryAccent),
+                    title: Text(l10n.dashboardActionManageBases),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: onBasesTap,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.edit_note,
+                        color: DuneColors.primaryAccent),
+                    title: Text(l10n.dashboardActionWriteChronicle),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: onJournalTap,
+                  ),
+                ],
+              ),
             ),
           ],
         );
