@@ -1298,6 +1298,10 @@
   "@dashboardActionWriteChronicle": {
     "description": "Quick action: jump to the Journal tab"
   },
+  "dashboardActionAddBase": "Add new base",
+  "@dashboardActionAddBase": {
+    "description": "Context menu action: open base management with the add dialog"
+  },
   "madeWithLove": "Made with ❤️ for Dune Awakening players",
   "@madeWithLove": {
     "description": "Footer message"

@@ -1998,6 +1998,12 @@ abstract class AppLocalizations {
   /// **'Write a Chronicle entry'**
   String get dashboardActionWriteChronicle;
 
+  /// Context menu action: open base management with the add dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Add new base'**
+  String get dashboardActionAddBase;
+
   /// Footer message
   ///
   /// In en, this message translates to:

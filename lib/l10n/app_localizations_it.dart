@@ -1046,6 +1046,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get dashboardActionWriteChronicle => 'Scrivi una voce di cronaca';
 
   @override
+  String get dashboardActionAddBase => 'Aggiungi nuova base';
+
+  @override
   String get madeWithLove => 'Fatto con ❤️ per i giocatori di Dune Awakening';
 
   @override

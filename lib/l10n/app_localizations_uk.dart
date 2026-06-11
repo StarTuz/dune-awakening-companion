@@ -1046,6 +1046,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get dashboardActionWriteChronicle => 'Створити запис у хроніці';
 
   @override
+  String get dashboardActionAddBase => 'Додати нову базу';
+
+  @override
   String get madeWithLove => 'Зроблено з ❤️ для гравців Dune Awakening';
 
   @override

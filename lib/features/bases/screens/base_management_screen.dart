@@ -6,13 +6,35 @@ import '../providers/base_provider.dart';
 import '../../characters/providers/character_provider.dart';
 import '../../../shared/theme/app_colors.dart';
 
-class BaseManagementScreen extends ConsumerWidget {
-  const BaseManagementScreen({super.key});
+class BaseManagementScreen extends ConsumerStatefulWidget {
+  const BaseManagementScreen({super.key, this.openAddDialog = false});
+
+  /// When true, the add-base dialog opens automatically once characters
+  /// have loaded (used by the dashboard's "Add new base" context action).
+  final bool openAddDialog;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BaseManagementScreen> createState() =>
+      _BaseManagementScreenState();
+}
+
+class _BaseManagementScreenState extends ConsumerState<BaseManagementScreen> {
+  bool _autoOpened = false;
+
+  @override
+  Widget build(BuildContext context) {
     final charactersAsync = ref.watch(charactersProvider);
     final basesAsync = ref.watch(basesProvider);
+
+    if (widget.openAddDialog && !_autoOpened) {
+      charactersAsync.whenData((characters) {
+        if (characters.isEmpty) return;
+        _autoOpened = true;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) _showAddDialog(context, ref, characters);
+        });
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(

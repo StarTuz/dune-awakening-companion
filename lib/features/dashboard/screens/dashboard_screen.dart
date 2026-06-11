@@ -57,6 +57,14 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                 );
               },
+              onAddBaseTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        const BaseManagementScreen(openAddDialog: true),
+                  ),
+                );
+              },
               onAlertsTap: () {
                 ref.read(navigationIndexProvider.notifier).state =
                     navIndexAlerts;
@@ -99,6 +107,7 @@ class _DashboardContent extends StatelessWidget {
     required this.onAlertsTap,
     required this.onJournalTap,
     required this.onFieldTimersTap,
+    required this.onAddBaseTap,
     required this.onClosedWorldsTap,
   });
 
@@ -111,6 +120,7 @@ class _DashboardContent extends StatelessWidget {
   final VoidCallback onAlertsTap;
   final VoidCallback onJournalTap;
   final VoidCallback onFieldTimersTap;
+  final VoidCallback onAddBaseTap;
   final VoidCallback onClosedWorldsTap;
 
   @override
@@ -147,6 +157,18 @@ class _DashboardContent extends StatelessWidget {
         icon: Icons.home,
         color: DuneColors.secondaryAccent,
         onTap: onBasesTap,
+        actions: [
+          _TileAction(
+            icon: Icons.home_outlined,
+            label: l10n.dashboardActionManageBases,
+            onSelected: onBasesTap,
+          ),
+          _TileAction(
+            icon: Icons.add_home_outlined,
+            label: l10n.dashboardActionAddBase,
+            onSelected: onAddBaseTap,
+          ),
+        ],
       ),
       _StatTile(
         title: l10n.expiringSoonTitle,
@@ -642,12 +664,27 @@ class _ChartLegendItem extends StatelessWidget {
   }
 }
 
-class _StatTile extends StatelessWidget {
+/// A context-menu action attached to a [_StatTile] (right-click on
+/// desktop, long-press on touch).
+class _TileAction {
+  const _TileAction({
+    required this.icon,
+    required this.label,
+    required this.onSelected,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onSelected;
+}
+
+class _StatTile extends StatefulWidget {
   final String title;
   final String value;
   final IconData icon;
   final Color color;
   final VoidCallback? onTap;
+  final List<_TileAction> actions;
 
   const _StatTile({
     required this.title,
@@ -655,18 +692,65 @@ class _StatTile extends StatelessWidget {
     required this.icon,
     required this.color,
     this.onTap,
+    this.actions = const [],
   });
+
+  @override
+  State<_StatTile> createState() => _StatTileState();
+}
+
+class _StatTileState extends State<_StatTile> {
+  bool _hovered = false;
+  Offset _menuPosition = Offset.zero;
+
+  Future<void> _showActionsMenu() async {
+    if (widget.actions.isEmpty) return;
+    final overlay =
+        Overlay.of(context).context.findRenderObject()! as RenderBox;
+    final action = await showMenu<_TileAction>(
+      context: context,
+      position: RelativeRect.fromRect(
+        _menuPosition & const Size(1, 1),
+        Offset.zero & overlay.size,
+      ),
+      items: [
+        for (final action in widget.actions)
+          PopupMenuItem<_TileAction>(
+            value: action,
+            child: Row(
+              children: [
+                Icon(action.icon, size: 20),
+                const SizedBox(width: 12),
+                Text(action.label),
+              ],
+            ),
+          ),
+      ],
+    );
+    action?.onSelected();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final hasActions = widget.actions.isNotEmpty;
     return Card(
+      elevation: _hovered ? 6 : null,
       color: Color.alphaBlend(
-        color.withOpacity(0.12),
+        widget.color.withOpacity(_hovered ? 0.18 : 0.12),
         theme.cardTheme.color ?? theme.colorScheme.surface,
       ),
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
+        onHover: (hovered) => setState(() => _hovered = hovered),
+        onTapDown: (details) => _menuPosition = details.globalPosition,
+        onSecondaryTapDown: hasActions
+            ? (details) {
+                _menuPosition = details.globalPosition;
+                _showActionsMenu();
+              }
+            : null,
+        onLongPress: hasActions ? _showActionsMenu : null,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -675,11 +759,11 @@ class _StatTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(icon, color: color, size: 20),
+                  Icon(widget.icon, color: widget.color, size: 20),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      title,
+                      widget.title,
                       style: theme.textTheme.bodyMedium,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -689,9 +773,9 @@ class _StatTile extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                value,
+                widget.value,
                 style: theme.textTheme.headlineMedium?.copyWith(
-                  color: color,
+                  color: widget.color,
                   fontWeight: FontWeight.bold,
                 ),
               ),

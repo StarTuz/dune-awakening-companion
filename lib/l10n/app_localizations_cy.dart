@@ -1050,6 +1050,9 @@ class AppLocalizationsCy extends AppLocalizations {
   String get dashboardActionWriteChronicle => 'Ysgrifennu cofnod cronicl';
 
   @override
+  String get dashboardActionAddBase => 'Ychwanegu canolfan newydd';
+
+  @override
   String get madeWithLove =>
       'Wedi\'i wneud gyda ❤️ ar gyfer chwaraewyr Dune Awakening';
 

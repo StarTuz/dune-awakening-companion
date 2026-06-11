@@ -337,6 +337,47 @@ void main() {
     expect(container.read(navigationIndexProvider), navIndexJournal);
   });
 
+  testWidgets('long-pressing the Bases tile shows the context menu',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard());
+    await tester.pumpAndSettle();
+
+    await tester.longPress(find.text('Bases'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add new base'), findsOneWidget);
+    // 'Manage bases' appears in the menu and in Quick Actions.
+    expect(find.text('Manage bases'), findsNWidgets(2));
+  });
+
+  testWidgets(
+      '"Add new base" context action opens base management with the add dialog',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.longPress(find.text('Bases'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Add new base'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Base Management'), findsOneWidget);
+    expect(find.text('Add Base'), findsWidgets); // auto-opened dialog
+  });
+
   testWidgets('quick actions are listed and navigate to Field Timers',
       (tester) async {
     await tester.pumpWidget(buildDashboard());
