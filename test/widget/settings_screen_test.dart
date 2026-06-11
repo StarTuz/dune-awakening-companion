@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:dune_awakening_companion/core/utils/app_info.dart';
 import 'package:dune_awakening_companion/features/characters/providers/character_provider.dart';
 import 'package:dune_awakening_companion/features/characters/services/character_repository.dart';
 import 'package:dune_awakening_companion/features/characters/models/character.dart';
@@ -73,7 +74,7 @@ void main() {
     await tester.pumpWidget(buildSettings());
     await tester.pumpAndSettle();
 
-    expect(find.text('1.3.0-beta'), findsOneWidget);
+    expect(find.text(AppInfo.version), findsOneWidget);
     expect(find.text('v17'), findsAtLeastNWidgets(1));
   });
 

@@ -1693,4 +1693,16 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get baseCalculatorPresetGuildHaulDesc =>
       'Raffinage de minerai et chimique avec conteneurs de transport.';
+
+  @override
+  String get navRailCollapse => 'Réduire le menu';
+
+  @override
+  String get navRailExpand => 'Développer le menu';
+
+  @override
+  String get railFieldTimerLabel => 'Minuterie';
+
+  @override
+  String get railBaseExpiryLabel => 'Prochaine expiration';
 }

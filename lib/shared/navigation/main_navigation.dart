@@ -12,6 +12,8 @@ import '../../features/alerts/providers/alert_provider.dart';
 import '../../features/bases/providers/base_provider.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../theme/app_colors.dart';
+import 'navigation_rail_footer.dart';
+import 'navigation_rail_settings.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
@@ -84,6 +86,7 @@ class MainNavigationScreen extends ConsumerWidget {
     });
 
     if (isDesktop) {
+      final railExpanded = ref.watch(navigationRailExpandedProvider);
       return Scaffold(
         body: Row(
           children: [
@@ -92,9 +95,23 @@ class MainNavigationScreen extends ConsumerWidget {
               onDestinationSelected: (index) {
                 ref.read(navigationIndexProvider.notifier).state = index;
               },
-              extended: true,
+              extended: railExpanded,
               labelType: NavigationRailLabelType.none,
               minExtendedWidth: 200,
+              trailing: Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: NavigationRailFooter(
+                    extended: railExpanded,
+                    onFieldTimerTap: () => ref
+                        .read(navigationIndexProvider.notifier)
+                        .state = navIndexFieldTimers,
+                    onBaseExpiryTap: () => ref
+                        .read(navigationIndexProvider.notifier)
+                        .state = navIndexAlerts,
+                  ),
+                ),
+              ),
               destinations: [
                 NavigationRailDestination(
                   icon: const Icon(Icons.dashboard_outlined),

@@ -125,8 +125,8 @@
   "errorLoadingHistory": "Fehler beim Laden des Verlaufs: {error}",
   "retry": "Wiederholen",
   "testAlerts": "Warnungen Testen",
-  "checkingAlerts": "Prüfe Warnungen...",
-  "checkComplete": "✅ Prüfung abgeschlossen! Benachrichtigungen gesendet, wenn Basen Aufmerksamkeit benötigen.",
+  "checkingAlerts": "Warnungen werden geprüft...",
+  "checkComplete": "✅ Prüfung abgeschlossen! Benachrichtigungen wurden gesendet, wenn Basen Aufmerksamkeit benötigen.",
   "importantDisclaimer": "Wichtiger Hinweis",
   "disclaimerText": "Dies ist eine inoffizielle, von Fans erstellte App. NICHT mit Funcom verbunden, gebilligt oder unterstützt. Funcom war nicht an der Entwicklung beteiligt. Dune Awakening ist eine Marke von Funcom. Dune und verwandte Elemente sind Marken von Herbert Properties LLC.",
   "acknowledgments": "Danksagungen",
@@ -169,8 +169,6 @@
   "powerMinutes": "Minuten",
   "errorCreatingCharacter": "Fehler beim Erstellen des Charakters: {error}",
   "errorAddingBase": "Fehler beim Hinzufügen der Basis: {error}",
-  "checkingAlerts": "Warnungen werden geprüft...",
-  "checkComplete": "✅ Prüfung abgeschlossen! Benachrichtigungen wurden gesendet, wenn Basen Aufmerksamkeit benötigen.",
   "errorCheckingAlerts": "❌ Fehler: {error}",
   "notificationsEnabledTitle": "🔔 Benachrichtigungen aktiviert",
   "notificationsDisabledTitle": "🔕 Benachrichtigungen deaktiviert",
@@ -461,5 +459,9 @@
   "baseCalculatorPresetCraftingHub": "Handwerkszentrum",
   "baseCalculatorPresetCraftingHubDesc": "Fabrikatoren mit Windkraft und Kraftstoffreserve.",
   "baseCalculatorPresetGuildHaul": "Gildentransport",
-  "baseCalculatorPresetGuildHaulDesc": "Erz- und Chemieraffinerie mit Transportbehältern."
+  "baseCalculatorPresetGuildHaulDesc": "Erz- und Chemieraffinerie mit Transportbehältern.",
+  "navRailCollapse": "Menü einklappen",
+  "navRailExpand": "Menü ausklappen",
+  "railFieldTimerLabel": "Feldtimer",
+  "railBaseExpiryLabel": "Nächster Ablauf"
 }

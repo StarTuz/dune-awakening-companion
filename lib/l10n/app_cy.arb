@@ -126,7 +126,7 @@
   "retry": "Ailgynnig",
   "testAlerts": "Profi Rhybuddion",
   "checkingAlerts": "Yn gwirio rhybuddion...",
-  "checkComplete": "✅ Gwirio wedi'i gwblhau! Hysbysiadau wedi'u hanfon os oes angen sylw ar ganolfannau.",
+  "checkComplete": "✅ Wedi gorffen gwirio! Anfonwyd hysbysiadau os oes angen sylw ar fasau.",
   "importantDisclaimer": "Ymwadiad Pwysig",
   "disclaimerText": "Ap answyddogol yw hwn a grëwyd gan gefnogwyr. NID yw'n gysylltiedig â, wedi'i gymeradwyo gan, na'i gefnogi gan Funcom. Nid oedd gan Funcom unrhyw fewnbwn yn y datblygiad. Mae Dune Awakening yn nod masnach Funcom. Mae Dune ac elfennau cysylltiedig yn nodau masnach Herbert Properties LLC.",
   "acknowledgments": "Diolchiadau",
@@ -169,8 +169,6 @@
   "powerMinutes": "Munudau",
   "errorCreatingCharacter": "Gwall wrth greu cymeriad: {error}",
   "errorAddingBase": "Gwall wrth ychwanegu sylfaen: {error}",
-  "checkingAlerts": "Yn gwirio rhybuddion...",
-  "checkComplete": "✅ Wedi gorffen gwirio! Anfonwyd hysbysiadau os oes angen sylw ar fasau.",
   "errorCheckingAlerts": "❌ Gwall: {error}",
   "notificationsEnabledTitle": "🔔 Hysbysiadau wedi'u galluogi",
   "notificationsDisabledTitle": "🔕 Hysbysiadau wedi'u hanalluogi",
@@ -461,5 +459,9 @@
   "baseCalculatorPresetCraftingHub": "Canol gwaith",
   "baseCalculatorPresetCraftingHubDesc": "Fabrigwyr gyda phŵer gwynt a thanwydd wrth gefn.",
   "baseCalculatorPresetGuildHaul": "Cludo gildi",
-  "baseCalculatorPresetGuildHaulDesc": "Raffinio mwyn a chemegol gyda chynwyswyr cludo."
+  "baseCalculatorPresetGuildHaulDesc": "Raffinio mwyn a chemegol gyda chynwyswyr cludo.",
+  "navRailCollapse": "Crebachu'r ddewislen",
+  "navRailExpand": "Ehangu'r ddewislen",
+  "railFieldTimerLabel": "Amserydd maes",
+  "railBaseExpiryLabel": "Dirwyn nesaf"
 }

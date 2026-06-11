@@ -3155,6 +3155,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ore and chemical refining with hauling containers.'**
   String get baseCalculatorPresetGuildHaulDesc;
+
+  /// Tooltip for the button that collapses the desktop navigation rail to icons only
+  ///
+  /// In en, this message translates to:
+  /// **'Collapse menu'**
+  String get navRailCollapse;
+
+  /// Tooltip for the button that expands the desktop navigation rail to show labels
+  ///
+  /// In en, this message translates to:
+  /// **'Expand menu'**
+  String get navRailExpand;
+
+  /// Label for the running field timer countdown in the navigation rail footer
+  ///
+  /// In en, this message translates to:
+  /// **'Field timer'**
+  String get railFieldTimerLabel;
+
+  /// Label for the soonest base power expiry shown in the navigation rail footer
+  ///
+  /// In en, this message translates to:
+  /// **'Next expiry'**
+  String get railBaseExpiryLabel;
 }
 
 class _AppLocalizationsDelegate

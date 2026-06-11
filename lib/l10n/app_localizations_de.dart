@@ -1686,4 +1686,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get baseCalculatorPresetGuildHaulDesc =>
       'Erz- und Chemieraffinerie mit Transportbehältern.';
+
+  @override
+  String get navRailCollapse => 'Menü einklappen';
+
+  @override
+  String get navRailExpand => 'Menü ausklappen';
+
+  @override
+  String get railFieldTimerLabel => 'Feldtimer';
+
+  @override
+  String get railBaseExpiryLabel => 'Nächster Ablauf';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:file_picker/file_picker.dart';
 import '../../../core/providers/notification_manager_provider.dart';
+import '../../../core/utils/app_info.dart';
 import '../../../core/services/notification_service.dart';
 import '../../field_timers/providers/field_timer_provider.dart';
 import '../../field_timers/services/field_timer_settings.dart';
@@ -36,7 +37,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildInfoTile(
             icon: Icons.info_outline,
             title: l10n.version,
-            subtitle: '1.3.0-beta',
+            subtitle: AppInfo.version,
           ),
           _buildInfoTile(
             icon: Icons.storage,

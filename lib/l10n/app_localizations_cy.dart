@@ -1685,4 +1685,16 @@ class AppLocalizationsCy extends AppLocalizations {
   @override
   String get baseCalculatorPresetGuildHaulDesc =>
       'Raffinio mwyn a chemegol gyda chynwyswyr cludo.';
+
+  @override
+  String get navRailCollapse => 'Crebachu\'r ddewislen';
+
+  @override
+  String get navRailExpand => 'Ehangu\'r ddewislen';
+
+  @override
+  String get railFieldTimerLabel => 'Amserydd maes';
+
+  @override
+  String get railBaseExpiryLabel => 'Dirwyn nesaf';
 }

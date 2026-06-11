@@ -169,8 +169,6 @@
   "powerMinutes": "Хвилини",
   "errorCreatingCharacter": "Помилка створення персонажа: {error}",
   "errorAddingBase": "Помилка додавання бази: {error}",
-  "checkingAlerts": "Перевірка сповіщень...",
-  "checkComplete": "✅ Перевірку завершено! Сповіщення надіслано, якщо бази потребують уваги.",
   "errorCheckingAlerts": "❌ Помилка: {error}",
   "notificationsEnabledTitle": "🔔 Сповіщення увімкнено",
   "notificationsDisabledTitle": "🔕 Сповіщення вимкнено",
@@ -461,5 +459,9 @@
   "baseCalculatorPresetCraftingHub": "Центр крафту",
   "baseCalculatorPresetCraftingHubDesc": "Фабрикатори з вітровою енергією та резервним паливом.",
   "baseCalculatorPresetGuildHaul": "Транспорт гільдії",
-  "baseCalculatorPresetGuildHaulDesc": "Рафінерія руди та хімікатів з транспортними контейнерами."
+  "baseCalculatorPresetGuildHaulDesc": "Рафінерія руди та хімікатів з транспортними контейнерами.",
+  "navRailCollapse": "Згорнути меню",
+  "navRailExpand": "Розгорнути меню",
+  "railFieldTimerLabel": "Польовий таймер",
+  "railBaseExpiryLabel": "Наступне закінчення"
 }

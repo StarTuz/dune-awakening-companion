@@ -1689,4 +1689,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get baseCalculatorPresetGuildHaulDesc =>
       'Refinería de mineral y química con contenedores de transporte.';
+
+  @override
+  String get navRailCollapse => 'Contraer menú';
+
+  @override
+  String get navRailExpand => 'Expandir menú';
+
+  @override
+  String get railFieldTimerLabel => 'Temporizador';
+
+  @override
+  String get railBaseExpiryLabel => 'Próxima expiración';
 }

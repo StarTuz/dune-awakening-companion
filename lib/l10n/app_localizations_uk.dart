@@ -1679,4 +1679,16 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get baseCalculatorPresetGuildHaulDesc =>
       'Рафінерія руди та хімікатів з транспортними контейнерами.';
+
+  @override
+  String get navRailCollapse => 'Згорнути меню';
+
+  @override
+  String get navRailExpand => 'Розгорнути меню';
+
+  @override
+  String get railFieldTimerLabel => 'Польовий таймер';
+
+  @override
+  String get railBaseExpiryLabel => 'Наступне закінчення';
 }

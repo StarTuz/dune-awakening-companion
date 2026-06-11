@@ -21,9 +21,13 @@
     "description": "Navigation label for Quest Journal"
   },
   "navFieldTimers": "Field Timers",
-  "@navFieldTimers": { "description": "Navigation label for Field Timers" },
+  "@navFieldTimers": {
+    "description": "Navigation label for Field Timers"
+  },
   "navBlueprints": "Blueprints",
-  "@navBlueprints": { "description": "Navigation label for Blueprints" },
+  "@navBlueprints": {
+    "description": "Navigation label for Blueprints"
+  },
   "navMore": "More",
   "@navMore": {
     "description": "Mobile bottom-nav label for the overflow destinations sheet"
@@ -508,11 +512,11 @@
   },
   "checkingAlerts": "Checking for alerts...",
   "@checkingAlerts": {
-    "description": "Checking alerts message"
+    "description": "Snack bar message when checking alerts"
   },
   "checkComplete": "✅ Check complete! Notifications sent if bases need attention.",
   "@checkComplete": {
-    "description": "Test notification success message"
+    "description": "Snack bar message when alert check completes"
   },
   "importantDisclaimer": "Important Disclaimer",
   "@importantDisclaimer": {
@@ -951,14 +955,6 @@
       }
     }
   },
-  "checkingAlerts": "Checking for alerts...",
-  "@checkingAlerts": {
-    "description": "Snack bar message when checking alerts"
-  },
-  "checkComplete": "✅ Check complete! Notifications sent if bases need attention.",
-  "@checkComplete": {
-    "description": "Snack bar message when alert check completes"
-  },
   "errorCheckingAlerts": "❌ Error: {error}",
   "@errorCheckingAlerts": {
     "description": "Error message when checking alerts",
@@ -1070,78 +1066,146 @@
     "description": "Body of the test notification sent from settings"
   },
   "fieldTimerTitle": "Field Timers",
-  "@fieldTimerTitle": { "description": "Field Timers nav / screen title" },
+  "@fieldTimerTitle": {
+    "description": "Field Timers nav / screen title"
+  },
   "fieldTimerSandHarvest": "Sand harvest window",
-  "@fieldTimerSandHarvest": { "description": "Section label for sand harvest presets" },
+  "@fieldTimerSandHarvest": {
+    "description": "Section label for sand harvest presets"
+  },
   "fieldTimerDisclaimer": "Timing is community-sourced and varies by loadout. Not official Funcom data.",
-  "@fieldTimerDisclaimer": { "description": "Disclaimer shown on the idle screen" },
+  "@fieldTimerDisclaimer": {
+    "description": "Disclaimer shown on the idle screen"
+  },
   "fieldTimerStart": "Start timer",
-  "@fieldTimerStart": { "description": "Start button label" },
+  "@fieldTimerStart": {
+    "description": "Start button label"
+  },
   "fieldTimerCancel": "Cancel timer",
-  "@fieldTimerCancel": { "description": "Cancel button on the armed screen" },
+  "@fieldTimerCancel": {
+    "description": "Cancel button on the armed screen"
+  },
   "fieldTimerRemaining": "remaining",
-  "@fieldTimerRemaining": { "description": "Label below the countdown clock" },
+  "@fieldTimerRemaining": {
+    "description": "Label below the countdown clock"
+  },
   "fieldTimerKeepAppOpenHint": "Keep the app running (minimize OK) to hear pre-alarms.",
-  "@fieldTimerKeepAppOpenHint": { "description": "Hint about keeping app open for cue audio" },
+  "@fieldTimerKeepAppOpenHint": {
+    "description": "Hint about keeping app open for cue audio"
+  },
   "fieldTimerCustom": "Custom…",
-  "@fieldTimerCustom": { "description": "Label for the custom duration chip" },
+  "@fieldTimerCustom": {
+    "description": "Label for the custom duration chip"
+  },
   "fieldTimerCustomDurationTitle": "Custom duration",
-  "@fieldTimerCustomDurationTitle": { "description": "Dialog title for custom duration picker" },
+  "@fieldTimerCustomDurationTitle": {
+    "description": "Dialog title for custom duration picker"
+  },
   "fieldTimerCustomDurationLabel": "Duration",
-  "@fieldTimerCustomDurationLabel": { "description": "Input label in custom duration dialog" },
+  "@fieldTimerCustomDurationLabel": {
+    "description": "Input label in custom duration dialog"
+  },
   "fieldTimerMinutes": "min",
-  "@fieldTimerMinutes": { "description": "Suffix for minutes input" },
+  "@fieldTimerMinutes": {
+    "description": "Suffix for minutes input"
+  },
   "fieldTimerNextCueIn": "Next pre-alarm (stage {stage}) in {time}",
   "@fieldTimerNextCueIn": {
     "description": "Hint showing when next cue fires",
     "placeholders": {
-      "stage": { "type": "int" },
-      "time": { "type": "String" }
+      "stage": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
     }
   },
   "fieldTimerFiringTitle": "Reset aggro now",
-  "@fieldTimerFiringTitle": { "description": "Heading on the firing screen" },
+  "@fieldTimerFiringTitle": {
+    "description": "Heading on the firing screen"
+  },
   "fieldTimerFiringBody": "Sand harvest window elapsed. Pick up your sandcrawler.",
-  "@fieldTimerFiringBody": { "description": "Body text on the firing screen" },
+  "@fieldTimerFiringBody": {
+    "description": "Body text on the firing screen"
+  },
   "fieldTimerEscalationCount": "Alert repeated {count} time(s)",
   "@fieldTimerEscalationCount": {
     "description": "How many times the page has escalated",
-    "placeholders": { "count": { "type": "int" } }
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "fieldTimerResetAggro": "Crawler picked up — restart",
-  "@fieldTimerResetAggro": { "description": "Ack-and-restart button label" },
+  "@fieldTimerResetAggro": {
+    "description": "Ack-and-restart button label"
+  },
   "fieldTimerEndRun": "End run",
-  "@fieldTimerEndRun": { "description": "Ack-and-end button label" },
+  "@fieldTimerEndRun": {
+    "description": "Ack-and-end button label"
+  },
   "fieldTimerPreset230": "2:30",
-  "@fieldTimerPreset230": { "description": "Preset chip label" },
+  "@fieldTimerPreset230": {
+    "description": "Preset chip label"
+  },
   "fieldTimerPreset300": "3:00",
-  "@fieldTimerPreset300": { "description": "Preset chip label" },
+  "@fieldTimerPreset300": {
+    "description": "Preset chip label"
+  },
   "fieldTimerPreset330": "3:30",
-  "@fieldTimerPreset330": { "description": "Preset chip label" },
+  "@fieldTimerPreset330": {
+    "description": "Preset chip label"
+  },
   "fieldTimerPreset400": "4:00",
-  "@fieldTimerPreset400": { "description": "Preset chip label" },
+  "@fieldTimerPreset400": {
+    "description": "Preset chip label"
+  },
   "fieldTimerSettingsSection": "Field Timers",
-  "@fieldTimerSettingsSection": { "description": "Settings section heading" },
+  "@fieldTimerSettingsSection": {
+    "description": "Settings section heading"
+  },
   "fieldTimerDefaultDuration": "Default duration",
-  "@fieldTimerDefaultDuration": { "description": "Settings: default duration label" },
+  "@fieldTimerDefaultDuration": {
+    "description": "Settings: default duration label"
+  },
   "fieldTimerPreAlarmCount": "Pre-alarm count",
-  "@fieldTimerPreAlarmCount": { "description": "Settings: number of pre-alarms" },
+  "@fieldTimerPreAlarmCount": {
+    "description": "Settings: number of pre-alarms"
+  },
   "fieldTimerPreAlarmSpacing": "Pre-alarm spacing",
-  "@fieldTimerPreAlarmSpacing": { "description": "Settings: spacing between pre-alarms" },
+  "@fieldTimerPreAlarmSpacing": {
+    "description": "Settings: spacing between pre-alarms"
+  },
   "fieldTimerCueVolume": "Cue volume",
-  "@fieldTimerCueVolume": { "description": "Settings: cue volume slider label" },
+  "@fieldTimerCueVolume": {
+    "description": "Settings: cue volume slider label"
+  },
   "fieldTimerTestAllCues": "Test all pre-alarms",
-  "@fieldTimerTestAllCues": { "description": "Settings: test button label" },
+  "@fieldTimerTestAllCues": {
+    "description": "Settings: test button label"
+  },
   "fieldTimerBypassQuietHours": "Allow during quiet hours",
-  "@fieldTimerBypassQuietHours": { "description": "Settings: bypass DND toggle" },
+  "@fieldTimerBypassQuietHours": {
+    "description": "Settings: bypass DND toggle"
+  },
   "fieldTimerEscalationInterval": "Escalation interval",
-  "@fieldTimerEscalationInterval": { "description": "Settings: how often to re-page after T=0" },
+  "@fieldTimerEscalationInterval": {
+    "description": "Settings: how often to re-page after T=0"
+  },
   "fieldTimerCueStageHint": "Each pre-alarm sounds more urgent than the last.",
-  "@fieldTimerCueStageHint": { "description": "Settings: hint under cue count slider" },
+  "@fieldTimerCueStageHint": {
+    "description": "Settings: hint under cue count slider"
+  },
   "fieldTimerSeconds": "sec",
-  "@fieldTimerSeconds": { "description": "Suffix for seconds" },
+  "@fieldTimerSeconds": {
+    "description": "Suffix for seconds"
+  },
   "fieldTimerSoundsDocLink": "How to use custom cue sounds",
-  "@fieldTimerSoundsDocLink": { "description": "Link to custom sounds doc" },
+  "@fieldTimerSoundsDocLink": {
+    "description": "Link to custom sounds doc"
+  },
   "copyrightNotices": "Copyright Notices",
   "@copyrightNotices": {
     "description": "Copyright notices section title"
@@ -1880,13 +1944,17 @@
   "baseCalculatorPowerDeficitHint": "Your build is short {power} power.",
   "@baseCalculatorPowerDeficitHint": {
     "placeholders": {
-      "power": { "type": "int" }
+      "power": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorPowerSurplusHint": "You have {power} spare generation.",
   "@baseCalculatorPowerSurplusHint": {
     "placeholders": {
-      "power": { "type": "int" }
+      "power": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorPowerBuffer": "Safety buffer",
@@ -1896,7 +1964,9 @@
   "baseCalculatorPowerNeeded": "Cover {power} power (including buffer).",
   "@baseCalculatorPowerNeeded": {
     "placeholders": {
-      "power": { "type": "int" }
+      "power": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorRecommendFewest": "Fewest generators",
@@ -1910,9 +1980,15 @@
   "baseCalculatorRecommendationLine": "{quantity}× {name} (+{power})",
   "@baseCalculatorRecommendationLine": {
     "placeholders": {
-      "quantity": { "type": "int" },
-      "name": { "type": "String" },
-      "power": { "type": "int" }
+      "quantity": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      },
+      "power": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorAddRecommendation": "Add",
@@ -1946,13 +2022,17 @@
   "baseCalculatorRunningCostFuelGens": "{count} fuel-powered generators placed",
   "@baseCalculatorRunningCostFuelGens": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorRunningCostFuelCells": "{count} Fuel Cells",
   "@baseCalculatorRunningCostFuelCells": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "baseCalculatorRunningCostFuelNote": "Fuel burns per running generator, not by consumer load. Turn off unused generators to save fuel.",
@@ -1982,7 +2062,9 @@
   "baseCalculatorPresetApplied": "Applied \"{name}\"",
   "@baseCalculatorPresetApplied": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "baseCalculatorPresetReplaceHint": "Applying a template replaces the current build.",
@@ -2020,5 +2102,21 @@
   "baseCalculatorPresetGuildHaulDesc": "Ore and chemical refining with hauling containers.",
   "@baseCalculatorPresetGuildHaulDesc": {
     "description": "Built-in template description"
+  },
+  "navRailCollapse": "Collapse menu",
+  "@navRailCollapse": {
+    "description": "Tooltip for the button that collapses the desktop navigation rail to icons only"
+  },
+  "navRailExpand": "Expand menu",
+  "@navRailExpand": {
+    "description": "Tooltip for the button that expands the desktop navigation rail to show labels"
+  },
+  "railFieldTimerLabel": "Field timer",
+  "@railFieldTimerLabel": {
+    "description": "Label for the running field timer countdown in the navigation rail footer"
+  },
+  "railBaseExpiryLabel": "Next expiry",
+  "@railBaseExpiryLabel": {
+    "description": "Label for the soonest base power expiry shown in the navigation rail footer"
   }
 }

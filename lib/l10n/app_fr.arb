@@ -126,7 +126,7 @@
   "retry": "Réessayer",
   "testAlerts": "Tester les Alertes",
   "checkingAlerts": "Vérification des alertes...",
-  "checkComplete": "✅ Vérification terminée ! Notifications envoyées si des bases nécessitent une attention.",
+  "checkComplete": "✅ Vérification terminée ! Des notifications ont été envoyées si des bases nécessitent une attention.",
   "importantDisclaimer": "Avertissement Important",
   "disclaimerText": "Ceci est une application non officielle créée par des fans. NON affiliée, approuvée ou soutenue par Funcom. Funcom n'a pas participé au développement. Dune Awakening est une marque de Funcom. Dune et les éléments associés sont des marques de Herbert Properties LLC.",
   "acknowledgments": "Remerciements",
@@ -169,8 +169,6 @@
   "powerMinutes": "Minutes",
   "errorCreatingCharacter": "Erreur lors de la création du personnage : {error}",
   "errorAddingBase": "Erreur lors de l'ajout de la base : {error}",
-  "checkingAlerts": "Vérification des alertes...",
-  "checkComplete": "✅ Vérification terminée ! Des notifications ont été envoyées si des bases nécessitent une attention.",
   "errorCheckingAlerts": "❌ Erreur : {error}",
   "notificationsEnabledTitle": "🔔 Notifications activées",
   "notificationsDisabledTitle": "🔕 Notifications désactivées",
@@ -461,5 +459,9 @@
   "baseCalculatorPresetCraftingHub": "Hub d'artisanat",
   "baseCalculatorPresetCraftingHubDesc": "Fabricateurs avec éolienne et carburant de secours.",
   "baseCalculatorPresetGuildHaul": "Transport de guilde",
-  "baseCalculatorPresetGuildHaulDesc": "Raffinage de minerai et chimique avec conteneurs de transport."
+  "baseCalculatorPresetGuildHaulDesc": "Raffinage de minerai et chimique avec conteneurs de transport.",
+  "navRailCollapse": "Réduire le menu",
+  "navRailExpand": "Développer le menu",
+  "railFieldTimerLabel": "Minuterie",
+  "railBaseExpiryLabel": "Prochaine expiration"
 }
