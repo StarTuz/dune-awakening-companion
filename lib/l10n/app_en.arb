@@ -22,6 +22,12 @@
   },
   "navFieldTimers": "Field Timers",
   "@navFieldTimers": { "description": "Navigation label for Field Timers" },
+  "navBlueprints": "Blueprints",
+  "@navBlueprints": { "description": "Navigation label for Blueprints" },
+  "navMore": "More",
+  "@navMore": {
+    "description": "Mobile bottom-nav label for the overflow destinations sheet"
+  },
   "navSettings": "Settings",
   "@navSettings": {
     "description": "Navigation label for Settings"

@@ -27,6 +27,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get navFieldTimers => 'Польові таймери';
 
   @override
+  String get navBlueprints => 'Креслення';
+
+  @override
+  String get navMore => 'Більше';
+
+  @override
   String get navSettings => 'Налаштування';
 
   @override

@@ -27,6 +27,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navFieldTimers => 'Temporizadores';
 
   @override
+  String get navBlueprints => 'Planos';
+
+  @override
+  String get navMore => 'Más';
+
+  @override
   String get navSettings => 'Ajustes';
 
   @override

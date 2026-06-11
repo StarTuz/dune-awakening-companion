@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
@@ -30,6 +30,13 @@ const navIndexCalculator = 5;
 const navIndexAlerts = 6;
 const navIndexSettings = 7;
 
+/// Mobile bottom nav shows the first four destinations plus "More";
+/// any screen index past Field Timers highlights the More slot.
+const mobileMoreSlot = 4;
+
+int mobileNavSelectedIndex(int currentIndex) =>
+    currentIndex < mobileMoreSlot ? currentIndex : mobileMoreSlot;
+
 class MainNavigationScreen extends ConsumerWidget {
   const MainNavigationScreen({super.key});
 
@@ -51,8 +58,9 @@ class MainNavigationScreen extends ConsumerWidget {
       const SettingsScreen(), // 7
     ];
 
-    final isDesktop =
-        Platform.isLinux || Platform.isWindows || Platform.isMacOS;
+    final isDesktop = defaultTargetPlatform == TargetPlatform.linux ||
+        defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.macOS;
 
     final alertCount = activeAlertsAsync.maybeWhen(
       data: (alerts) => alerts.length,
@@ -108,10 +116,10 @@ class MainNavigationScreen extends ConsumerWidget {
                   selectedIcon: const Icon(Icons.timer),
                   label: Text(l10n.navFieldTimers),
                 ),
-                const NavigationRailDestination(
-                  icon: Icon(Icons.construction_outlined),
-                  selectedIcon: Icon(Icons.construction),
-                  label: Text('Blueprints'),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.construction_outlined),
+                  selectedIcon: const Icon(Icons.construction),
+                  label: Text(l10n.navBlueprints),
                 ),
                 NavigationRailDestination(
                   icon: const Icon(Icons.calculate_outlined),
@@ -162,9 +170,19 @@ class MainNavigationScreen extends ConsumerWidget {
         children: screens,
       ),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
+        selectedIndex: mobileNavSelectedIndex(currentIndex),
         onDestinationSelected: (index) {
-          ref.read(navigationIndexProvider.notifier).state = index;
+          if (index < mobileMoreSlot) {
+            ref.read(navigationIndexProvider.notifier).state = index;
+          } else {
+            showModalBottomSheet<void>(
+              context: context,
+              builder: (_) => MoreNavigationSheet(
+                alertCount: alertCount,
+                alertIconColor: alertIconColor,
+              ),
+            );
+          }
         },
         destinations: [
           NavigationDestination(
@@ -183,16 +201,59 @@ class MainNavigationScreen extends ConsumerWidget {
             icon: const Icon(Icons.timer),
             label: l10n.navFieldTimers,
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.construction),
-            label: 'Blueprints',
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.calculate),
-            label: l10n.navCalculator,
-          ),
           NavigationDestination(
             icon: Badge(
+              label: Text('$alertCount'),
+              isLabelVisible: alertCount > 0,
+              child: Icon(
+                Icons.more_horiz,
+                color: alertIconColor,
+              ),
+            ),
+            label: l10n.navMore,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Bottom sheet listing the overflow destinations on mobile.
+class MoreNavigationSheet extends ConsumerWidget {
+  const MoreNavigationSheet({
+    super.key,
+    required this.alertCount,
+    this.alertIconColor,
+  });
+
+  final int alertCount;
+  final Color? alertIconColor;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
+    void goTo(int index) {
+      Navigator.of(context).pop();
+      ref.read(navigationIndexProvider.notifier).state = index;
+    }
+
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.construction),
+            title: Text(l10n.navBlueprints),
+            onTap: () => goTo(navIndexBlueprints),
+          ),
+          ListTile(
+            leading: const Icon(Icons.calculate),
+            title: Text(l10n.navCalculator),
+            onTap: () => goTo(navIndexCalculator),
+          ),
+          ListTile(
+            leading: Badge(
               label: Text('$alertCount'),
               isLabelVisible: alertCount > 0,
               child: Icon(
@@ -200,11 +261,13 @@ class MainNavigationScreen extends ConsumerWidget {
                 color: alertIconColor,
               ),
             ),
-            label: l10n.navAlerts,
+            title: Text(l10n.navAlerts),
+            onTap: () => goTo(navIndexAlerts),
           ),
-          NavigationDestination(
-            icon: const Icon(Icons.settings),
-            label: l10n.navSettings,
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: Text(l10n.navSettings),
+            onTap: () => goTo(navIndexSettings),
           ),
         ],
       ),

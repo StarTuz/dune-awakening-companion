@@ -27,6 +27,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get navFieldTimers => 'Timer campo';
 
   @override
+  String get navBlueprints => 'Progetti';
+
+  @override
+  String get navMore => 'Altro';
+
+  @override
   String get navSettings => 'Impostazioni';
 
   @override

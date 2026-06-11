@@ -144,6 +144,18 @@ abstract class AppLocalizations {
   /// **'Field Timers'**
   String get navFieldTimers;
 
+  /// Navigation label for Blueprints
+  ///
+  /// In en, this message translates to:
+  /// **'Blueprints'**
+  String get navBlueprints;
+
+  /// Mobile bottom-nav label for the overflow destinations sheet
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get navMore;
+
   /// Navigation label for Settings
   ///
   /// In en, this message translates to:

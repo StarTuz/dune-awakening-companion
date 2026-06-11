@@ -27,6 +27,12 @@ class AppLocalizationsCy extends AppLocalizations {
   String get navFieldTimers => 'Amseryddion';
 
   @override
+  String get navBlueprints => 'Glasbrintiau';
+
+  @override
+  String get navMore => 'Mwy';
+
+  @override
   String get navSettings => 'Gosodiadau';
 
   @override

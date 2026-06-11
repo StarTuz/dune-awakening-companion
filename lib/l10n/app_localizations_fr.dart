@@ -27,6 +27,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navFieldTimers => 'Minuteries';
 
   @override
+  String get navBlueprints => 'Plans';
+
+  @override
+  String get navMore => 'Plus';
+
+  @override
   String get navSettings => 'Paramètres';
 
   @override
