@@ -7,6 +7,9 @@ import '../../characters/providers/character_provider.dart';
 import '../../characters/models/character.dart';
 import '../../bases/providers/base_provider.dart';
 import '../../bases/models/base.dart';
+import '../../bases/screens/base_management_screen.dart';
+import '../../journal/models/journal_entry.dart';
+import '../../journal/providers/journal_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../shared/navigation/main_navigation.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -20,6 +23,10 @@ class DashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final charactersAsync = ref.watch(charactersProvider);
     final basesAsync = ref.watch(basesProvider);
+    final recentEntries = ref.watch(recentJournalEntriesProvider).maybeWhen(
+          data: (entries) => entries,
+          orElse: () => const <JournalEntry>[],
+        );
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -30,17 +37,39 @@ class DashboardScreen extends ConsumerWidget {
         onRefresh: () async {
           ref.invalidate(charactersProvider);
           ref.invalidate(basesProvider);
+          ref.invalidate(recentJournalEntriesProvider);
         },
         child: charactersAsync.when(
           data: (characters) => basesAsync.when(
             data: (bases) => _DashboardContent(
               characters: characters,
               bases: bases,
+              recentEntries: recentEntries,
               l10n: l10n,
+              onCharactersTap: () {
+                ref.read(navigationIndexProvider.notifier).state =
+                    navIndexCharacters;
+              },
+              onBasesTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const BaseManagementScreen(),
+                  ),
+                );
+              },
+              onAlertsTap: () {
+                ref.read(navigationIndexProvider.notifier).state =
+                    navIndexAlerts;
+              },
+              onJournalTap: () {
+                ref.read(navigationIndexProvider.notifier).state =
+                    navIndexJournal;
+              },
               onClosedWorldsTap: () {
                 ref.read(closedWorldCharacterFilterProvider.notifier).state =
                     true;
-                ref.read(navigationIndexProvider.notifier).state = 1;
+                ref.read(navigationIndexProvider.notifier).state =
+                    navIndexCharacters;
               },
             ),
             loading: () => const Center(child: CircularProgressIndicator()),
@@ -59,13 +88,23 @@ class _DashboardContent extends StatelessWidget {
   const _DashboardContent({
     required this.characters,
     required this.bases,
+    required this.recentEntries,
     required this.l10n,
+    required this.onCharactersTap,
+    required this.onBasesTap,
+    required this.onAlertsTap,
+    required this.onJournalTap,
     required this.onClosedWorldsTap,
   });
 
   final List<Character> characters;
   final List<Base> bases;
+  final List<JournalEntry> recentEntries;
   final AppLocalizations l10n;
+  final VoidCallback onCharactersTap;
+  final VoidCallback onBasesTap;
+  final VoidCallback onAlertsTap;
+  final VoidCallback onJournalTap;
   final VoidCallback onClosedWorldsTap;
 
   @override
@@ -88,81 +127,218 @@ class _DashboardContent extends StatelessWidget {
             AppConstants.isClosedWorld(c.world) && !c.closedWorldAcknowledged)
         .length;
 
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+    final tiles = <Widget>[
+      _StatTile(
+        title: l10n.charactersTitle,
+        value: characters.length.toString(),
+        icon: Icons.person,
+        color: DuneColors.primaryAccent,
+        onTap: onCharactersTap,
+      ),
+      _StatTile(
+        title: l10n.basesTitle,
+        value: bases.length.toString(),
+        icon: Icons.home,
+        color: DuneColors.secondaryAccent,
+        onTap: onBasesTap,
+      ),
+      _StatTile(
+        title: l10n.expiringSoonTitle,
+        value: expiringSoon.toString(),
+        icon: Icons.warning,
+        color: DuneColors.warningPrimary,
+        onTap: onAlertsTap,
+      ),
+      _StatTile(
+        title: l10n.activeAlertsTitle,
+        value: criticalBases.toString(),
+        icon: Icons.notifications,
+        color: DuneColors.criticalPrimary,
+        onTap: onAlertsTap,
+      ),
+      if (closedWorldCharacters > 0)
+        _StatTile(
+          title: l10n.dashboardClosedWorldsTitle,
+          value: closedWorldCharacters.toString(),
+          icon: Icons.public_off,
+          color: DuneColors.warningPrimary,
+          onTap: onClosedWorldsTap,
+        ),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= 840;
+        final tileColumns = constraints.maxWidth >= 600 ? 4 : 2;
+
+        final charts = Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _StatCard(
-              title: l10n.charactersTitle,
-              value: characters.length.toString(),
-              icon: Icons.person,
-              color: DuneColors.primaryAccent,
-            ),
-            const SizedBox(height: 16),
-            _StatCard(
-              title: l10n.basesTitle,
-              value: bases.length.toString(),
-              icon: Icons.home,
-              color: DuneColors.secondaryAccent,
-            ),
-            const SizedBox(height: 16),
-            _StatCard(
-              title: l10n.expiringSoonTitle,
-              value: expiringSoon.toString(),
-              icon: Icons.warning,
-              color: DuneColors.warningPrimary,
-            ),
-            const SizedBox(height: 16),
-            _StatCard(
-              title: l10n.activeAlertsTitle,
-              value: criticalBases.toString(),
-              icon: Icons.notifications,
-              color: DuneColors.criticalPrimary,
-            ),
-            if (closedWorldCharacters > 0) ...[
-              const SizedBox(height: 16),
-              _StatCard(
-                title: l10n.dashboardClosedWorldsTitle,
-                value: closedWorldCharacters.toString(),
-                icon: Icons.public_off,
-                color: DuneColors.warningPrimary,
-                onTap: onClosedWorldsTap,
-              ),
-            ],
-            const SizedBox(height: 24),
             Text(
-              'Characters by Region',
+              l10n.dashboardCharactersByRegion,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 12),
             SizedBox(
               height: 280,
-              child: _RegionChart(characters: characters),
+              child: _RegionChart(characters: characters, l10n: l10n),
             ),
             const SizedBox(height: 24),
             Text(
-              'Base Alert Distribution',
+              l10n.dashboardAlertDistribution,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 12),
             SizedBox(
               height: 300,
-              child: _AlertDistributionChart(bases: bases),
+              child: _AlertDistributionChart(bases: bases, l10n: l10n),
             ),
           ],
+        );
+
+        final activity = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.dashboardRecentActivity,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            _RecentActivityCard(
+              entries: recentEntries,
+              characters: characters,
+              l10n: l10n,
+              onTap: onJournalTap,
+            ),
+          ],
+        );
+
+        return SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GridView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: tileColumns,
+                    mainAxisExtent: 104,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                  ),
+                  children: tiles,
+                ),
+                const SizedBox(height: 24),
+                if (isWide)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 3, child: charts),
+                      const SizedBox(width: 16),
+                      Expanded(flex: 2, child: activity),
+                    ],
+                  )
+                else ...[
+                  charts,
+                  const SizedBox(height: 24),
+                  activity,
+                ],
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _RecentActivityCard extends StatelessWidget {
+  const _RecentActivityCard({
+    required this.entries,
+    required this.characters,
+    required this.l10n,
+    required this.onTap,
+  });
+
+  final List<JournalEntry> entries;
+  final List<Character> characters;
+  final AppLocalizations l10n;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    if (entries.isEmpty) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Row(
+            children: [
+              Icon(Icons.menu_book_outlined,
+                  color: theme.colorScheme.onSurfaceVariant),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  l10n.dashboardRecentActivityEmpty,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+      );
+    }
+
+    final names = {for (final c in characters) c.id: c.name};
+    final materialL10n = MaterialLocalizations.of(context);
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          for (final entry in entries)
+            Builder(builder: (context) {
+              final name = names[entry.characterId] ?? '—';
+              final initial =
+                  name.isEmpty ? '?' : name.characters.first.toUpperCase();
+              return ListTile(
+                onTap: onTap,
+                leading: CircleAvatar(
+                  backgroundColor: DuneColors.primaryAccent.withOpacity(0.2),
+                  child: Text(
+                    initial,
+                    style: const TextStyle(color: DuneColors.primaryAccent),
+                  ),
+                ),
+                title: Text(
+                  entry.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                subtitle: Text(
+                  '$name • ${materialL10n.formatShortDate(entry.entryDate)}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              );
+            }),
+        ],
       ),
     );
   }
 }
 
 class _RegionChart extends StatelessWidget {
-  const _RegionChart({required this.characters});
+  const _RegionChart({required this.characters, required this.l10n});
 
   final List<Character> characters;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -175,8 +351,7 @@ class _RegionChart extends StatelessWidget {
       ..sort((a, b) => a.key.compareTo(b.key));
 
     if (entries.isEmpty) {
-      return const Center(
-          child: Text('Add characters to unlock region analytics.'));
+      return Center(child: Text(l10n.dashboardRegionEmptyHint));
     }
 
     final maxVal = entries.map((e) => e.value).reduce(math.max);
@@ -271,9 +446,10 @@ class _RegionChart extends StatelessWidget {
 }
 
 class _AlertDistributionChart extends StatelessWidget {
-  const _AlertDistributionChart({required this.bases});
+  const _AlertDistributionChart({required this.bases, required this.l10n});
 
   final List<Base> bases;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -295,7 +471,7 @@ class _AlertDistributionChart extends StatelessWidget {
     }
 
     if (bases.isEmpty) {
-      return const Center(child: Text('Add bases to unlock alert analytics.'));
+      return Center(child: Text(l10n.dashboardAlertsEmptyHint));
     }
 
     const ringRadius = 64.0;
@@ -372,17 +548,17 @@ class _AlertDistributionChart extends StatelessWidget {
               children: [
                 _ChartLegendItem(
                   color: DuneColors.criticalPrimary,
-                  label: 'Critical',
+                  label: l10n.chartLegendCritical,
                   value: critical,
                 ),
                 _ChartLegendItem(
                   color: DuneColors.warningPrimary,
-                  label: 'Warning',
+                  label: l10n.chartLegendWarning,
                   value: warning,
                 ),
                 _ChartLegendItem(
                   color: DuneColors.secondaryAccent,
-                  label: 'Safe',
+                  label: l10n.chartLegendSafe,
                   value: safe,
                 ),
               ],
@@ -426,14 +602,14 @@ class _ChartLegendItem extends StatelessWidget {
   }
 }
 
-class _StatCard extends StatelessWidget {
+class _StatTile extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
   final Color color;
   final VoidCallback? onTap;
 
-  const _StatCard({
+  const _StatTile({
     required this.title,
     required this.value,
     required this.icon,
@@ -443,38 +619,42 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
+      color: Color.alphaBlend(
+        color.withOpacity(0.12),
+        theme.cardTheme.color ?? theme.colorScheme.surface,
+      ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: color, size: 32),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
+              Row(
+                children: [
+                  Icon(icon, color: color, size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
                       title,
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Text(
-                      value,
-                      style:
-                          Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                color: color,
-                                fontWeight: FontWeight.bold,
-                              ),
-                    ),
-                  ],
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Text(
+                value,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              if (onTap != null)
-                Icon(Icons.chevron_right,
-                    color: Theme.of(context).disabledColor),
             ],
           ),
         ),

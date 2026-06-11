@@ -1240,6 +1240,42 @@
   "@dashboardClosedWorldsTitle": {
     "description": "Dashboard stat card: number of characters on worlds that closed"
   },
+  "dashboardCharactersByRegion": "Characters by Region",
+  "@dashboardCharactersByRegion": {
+    "description": "Dashboard chart title: bar chart of characters per region"
+  },
+  "dashboardAlertDistribution": "Base Alert Distribution",
+  "@dashboardAlertDistribution": {
+    "description": "Dashboard chart title: pie chart of base alert states"
+  },
+  "dashboardRegionEmptyHint": "Add characters to unlock region analytics.",
+  "@dashboardRegionEmptyHint": {
+    "description": "Empty state shown in place of the region chart"
+  },
+  "dashboardAlertsEmptyHint": "Add bases to unlock alert analytics.",
+  "@dashboardAlertsEmptyHint": {
+    "description": "Empty state shown in place of the alert distribution chart"
+  },
+  "dashboardRecentActivity": "Recent Activity",
+  "@dashboardRecentActivity": {
+    "description": "Dashboard panel title: latest Chronicle journal entries"
+  },
+  "dashboardRecentActivityEmpty": "Chronicle entries will appear here as you write them.",
+  "@dashboardRecentActivityEmpty": {
+    "description": "Empty state for the Recent Activity panel"
+  },
+  "chartLegendCritical": "Critical",
+  "@chartLegendCritical": {
+    "description": "Chart legend label for bases in critical state"
+  },
+  "chartLegendWarning": "Warning",
+  "@chartLegendWarning": {
+    "description": "Chart legend label for bases in warning state"
+  },
+  "chartLegendSafe": "Safe",
+  "@chartLegendSafe": {
+    "description": "Chart legend label for bases in safe state"
+  },
   "madeWithLove": "Made with ❤️ for Dune Awakening players",
   "@madeWithLove": {
     "description": "Footer message"

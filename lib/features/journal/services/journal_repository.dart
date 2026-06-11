@@ -19,6 +19,16 @@ class JournalRepository {
     return maps.map(_fromMap).toList();
   }
 
+  Future<List<JournalEntry>> getRecent({int limit = 5}) async {
+    final db = await _database.database;
+    final maps = await db.query(
+      'journal_entries',
+      orderBy: 'entry_date DESC, created_at DESC',
+      limit: limit,
+    );
+    return maps.map(_fromMap).toList();
+  }
+
   Future<void> upsert(JournalEntry entry) async {
     final db = await _database.database;
     await db.insert(

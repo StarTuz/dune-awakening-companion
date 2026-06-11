@@ -14,6 +14,12 @@ final characterJournalProvider =
   return repository.getByCharacterId(characterId);
 });
 
+final recentJournalEntriesProvider =
+    FutureProvider<List<JournalEntry>>((ref) async {
+  final repository = ref.watch(journalRepositoryProvider);
+  return repository.getRecent();
+});
+
 final journalEditorProvider = Provider((ref) {
   return JournalEditor(ref.watch(journalRepositoryProvider), ref);
 });
@@ -27,10 +33,12 @@ class JournalEditor {
   Future<void> save(JournalEntry entry) async {
     await _repository.upsert(entry.copyWith(updatedAt: DateTime.now()));
     _ref.invalidate(characterJournalProvider(entry.characterId));
+    _ref.invalidate(recentJournalEntriesProvider);
   }
 
   Future<void> delete(String id, String characterId) async {
     await _repository.delete(id);
     _ref.invalidate(characterJournalProvider(characterId));
+    _ref.invalidate(recentJournalEntriesProvider);
   }
 }

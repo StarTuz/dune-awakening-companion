@@ -1005,6 +1005,36 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dashboardClosedWorldsTitle => 'Auf geschlossenen Welten';
 
   @override
+  String get dashboardCharactersByRegion => 'Charaktere nach Region';
+
+  @override
+  String get dashboardAlertDistribution => 'Verteilung der Basis-Warnungen';
+
+  @override
+  String get dashboardRegionEmptyHint =>
+      'Füge Charaktere hinzu, um Regions-Statistiken freizuschalten.';
+
+  @override
+  String get dashboardAlertsEmptyHint =>
+      'Füge Basen hinzu, um Warn-Statistiken freizuschalten.';
+
+  @override
+  String get dashboardRecentActivity => 'Letzte Aktivität';
+
+  @override
+  String get dashboardRecentActivityEmpty =>
+      'Chronik-Einträge erscheinen hier, sobald du sie schreibst.';
+
+  @override
+  String get chartLegendCritical => 'Kritisch';
+
+  @override
+  String get chartLegendWarning => 'Warnung';
+
+  @override
+  String get chartLegendSafe => 'Sicher';
+
+  @override
   String get madeWithLove => 'Mit ❤️ gemacht für Dune Awakening Spieler';
 
   @override

@@ -1908,6 +1908,60 @@ abstract class AppLocalizations {
   /// **'On closed worlds'**
   String get dashboardClosedWorldsTitle;
 
+  /// Dashboard chart title: bar chart of characters per region
+  ///
+  /// In en, this message translates to:
+  /// **'Characters by Region'**
+  String get dashboardCharactersByRegion;
+
+  /// Dashboard chart title: pie chart of base alert states
+  ///
+  /// In en, this message translates to:
+  /// **'Base Alert Distribution'**
+  String get dashboardAlertDistribution;
+
+  /// Empty state shown in place of the region chart
+  ///
+  /// In en, this message translates to:
+  /// **'Add characters to unlock region analytics.'**
+  String get dashboardRegionEmptyHint;
+
+  /// Empty state shown in place of the alert distribution chart
+  ///
+  /// In en, this message translates to:
+  /// **'Add bases to unlock alert analytics.'**
+  String get dashboardAlertsEmptyHint;
+
+  /// Dashboard panel title: latest Chronicle journal entries
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Activity'**
+  String get dashboardRecentActivity;
+
+  /// Empty state for the Recent Activity panel
+  ///
+  /// In en, this message translates to:
+  /// **'Chronicle entries will appear here as you write them.'**
+  String get dashboardRecentActivityEmpty;
+
+  /// Chart legend label for bases in critical state
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get chartLegendCritical;
+
+  /// Chart legend label for bases in warning state
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get chartLegendWarning;
+
+  /// Chart legend label for bases in safe state
+  ///
+  /// In en, this message translates to:
+  /// **'Safe'**
+  String get chartLegendSafe;
+
   /// Footer message
   ///
   /// In en, this message translates to:

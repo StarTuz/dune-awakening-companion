@@ -8,6 +8,9 @@ import 'package:dune_awakening_companion/features/bases/models/base.dart';
 import 'package:dune_awakening_companion/features/bases/providers/base_provider.dart';
 import 'package:dune_awakening_companion/features/bases/services/base_repository.dart';
 import 'package:dune_awakening_companion/features/dashboard/screens/dashboard_screen.dart';
+import 'package:dune_awakening_companion/features/journal/models/journal_entry.dart';
+import 'package:dune_awakening_companion/features/journal/providers/journal_provider.dart';
+import 'package:dune_awakening_companion/features/journal/services/journal_repository.dart';
 import 'package:dune_awakening_companion/shared/navigation/main_navigation.dart';
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
@@ -56,6 +59,22 @@ class FakeBaseRepository implements BaseRepository {
   Future<void> delete(String id) async {}
 }
 
+class FakeJournalRepository implements JournalRepository {
+  final List<JournalEntry> data;
+  FakeJournalRepository([this.data = const []]);
+
+  @override
+  Future<List<JournalEntry>> getByCharacterId(String characterId) async =>
+      data.where((e) => e.characterId == characterId).toList();
+  @override
+  Future<List<JournalEntry>> getRecent({int limit = 5}) async =>
+      data.take(limit).toList();
+  @override
+  Future<void> upsert(JournalEntry entry) async {}
+  @override
+  Future<void> delete(String id) async {}
+}
+
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
@@ -66,13 +85,16 @@ void main() {
   Widget buildDashboard({
     List<Character> characters = const [],
     List<Base> bases = const [],
+    List<JournalEntry> journalEntries = const [],
   }) {
     final charRepo = FakeCharacterRepository(characters);
     final baseRepo = FakeBaseRepository(bases);
+    final journalRepo = FakeJournalRepository(journalEntries);
     return ProviderScope(
       overrides: [
         characterRepositoryProvider.overrideWithValue(charRepo),
         baseRepositoryProvider.overrideWithValue(baseRepo),
+        journalRepositoryProvider.overrideWithValue(journalRepo),
       ],
       child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -229,5 +251,89 @@ void main() {
 
     expect(find.text('On closed worlds'), findsNothing);
     expect(find.byIcon(Icons.public_off), findsNothing);
+  });
+
+  testWidgets('shows empty hint when there are no journal entries',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard());
+    await tester.pumpAndSettle();
+
+    expect(find.text('Recent Activity'), findsOneWidget);
+    expect(
+      find.text('Chronicle entries will appear here as you write them.'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('shows recent journal entries with character names',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+      journalEntries: [
+        JournalEntry(
+          id: 'j1',
+          characterId: 'c1',
+          title: 'Found a spice field',
+          body: 'Huge deposit near the ridge.',
+          tags: const [],
+          entryDate: now,
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Found a spice field'), findsOneWidget);
+    expect(find.textContaining('Paul •'), findsOneWidget);
+  });
+
+  testWidgets('tapping a recent activity entry switches to the Journal tab',
+      (tester) async {
+    await tester.pumpWidget(buildDashboard(
+      characters: [
+        Character(
+            id: 'c1',
+            name: 'Paul',
+            region: 'NA',
+            serverType: 'Official',
+            world: 'Arrakis',
+            sietch: 'Tabr',
+            createdAt: now,
+            updatedAt: now),
+      ],
+      journalEntries: [
+        JournalEntry(
+          id: 'j1',
+          characterId: 'c1',
+          title: 'Found a spice field',
+          body: '',
+          tags: const [],
+          entryDate: now,
+          createdAt: now,
+          updatedAt: now,
+        ),
+      ],
+    ));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Found a spice field'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Found a spice field'));
+    await tester.pumpAndSettle();
+
+    final container =
+        ProviderScope.containerOf(tester.element(find.byType(DashboardScreen)));
+    expect(container.read(navigationIndexProvider), navIndexJournal);
   });
 }

@@ -998,6 +998,36 @@ class AppLocalizationsUk extends AppLocalizations {
   String get dashboardClosedWorldsTitle => 'На закритих світах';
 
   @override
+  String get dashboardCharactersByRegion => 'Персонажі за регіоном';
+
+  @override
+  String get dashboardAlertDistribution => 'Розподіл сповіщень баз';
+
+  @override
+  String get dashboardRegionEmptyHint =>
+      'Додайте персонажів, щоб розблокувати аналітику за регіонами.';
+
+  @override
+  String get dashboardAlertsEmptyHint =>
+      'Додайте бази, щоб розблокувати аналітику сповіщень.';
+
+  @override
+  String get dashboardRecentActivity => 'Остання активність';
+
+  @override
+  String get dashboardRecentActivityEmpty =>
+      'Записи хроніки з\'являтимуться тут, щойно ви їх створите.';
+
+  @override
+  String get chartLegendCritical => 'Критично';
+
+  @override
+  String get chartLegendWarning => 'Попередження';
+
+  @override
+  String get chartLegendSafe => 'Безпечно';
+
+  @override
   String get madeWithLove => 'Зроблено з ❤️ для гравців Dune Awakening';
 
   @override

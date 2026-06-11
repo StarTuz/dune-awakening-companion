@@ -1002,6 +1002,36 @@ class AppLocalizationsCy extends AppLocalizations {
   String get dashboardClosedWorldsTitle => 'Ar fydoedd sydd ar gau';
 
   @override
+  String get dashboardCharactersByRegion => 'Cymeriadau yn ôl rhanbarth';
+
+  @override
+  String get dashboardAlertDistribution => 'Dosbarthiad rhybuddion canolfannau';
+
+  @override
+  String get dashboardRegionEmptyHint =>
+      'Ychwanegwch gymeriadau i ddatgloi dadansoddeg rhanbarth.';
+
+  @override
+  String get dashboardAlertsEmptyHint =>
+      'Ychwanegwch ganolfannau i ddatgloi dadansoddeg rhybuddion.';
+
+  @override
+  String get dashboardRecentActivity => 'Gweithgarwch diweddar';
+
+  @override
+  String get dashboardRecentActivityEmpty =>
+      'Bydd cofnodion y cronicl yn ymddangos yma wrth i chi eu hysgrifennu.';
+
+  @override
+  String get chartLegendCritical => 'Critigol';
+
+  @override
+  String get chartLegendWarning => 'Rhybudd';
+
+  @override
+  String get chartLegendSafe => 'Diogel';
+
+  @override
   String get madeWithLove =>
       'Wedi\'i wneud gyda ❤️ ar gyfer chwaraewyr Dune Awakening';
 
