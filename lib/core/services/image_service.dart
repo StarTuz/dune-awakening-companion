@@ -161,6 +161,94 @@ class ImageService {
     }
   }
 
+  /// Filename of the user's custom app emblem inside the emblem directory.
+  static const emblemFilename = 'custom_emblem.png';
+
+  /// Process and save a custom app emblem. Aspect ratio is preserved, the
+  /// long edge is capped at 512px, and the result is re-encoded as PNG so
+  /// transparency survives. Returns the saved file path, or null if failed.
+  Future<String?> saveEmblem(String sourcePath) async {
+    try {
+      final sourceFile = File(sourcePath);
+      if (!await sourceFile.exists()) {
+        debugPrint('Source file does not exist: $sourcePath');
+        return null;
+      }
+
+      final bytes = await sourceFile.readAsBytes();
+      final image = img.decodeImage(bytes);
+      if (image == null) {
+        debugPrint('Failed to decode image');
+        return null;
+      }
+
+      final processed = image.width < 512 && image.height < 512
+          ? image
+          : img.copyResize(
+              image,
+              width: image.width >= image.height ? 512 : null,
+              height: image.height > image.width ? 512 : null,
+              interpolation: img.Interpolation.cubic,
+            );
+
+      final png = img.encodePng(processed);
+
+      final dir = await _getEmblemDirectory();
+      if (dir == null) return null;
+
+      final filePath = path.join(dir.path, emblemFilename);
+      await File(filePath).writeAsBytes(png);
+
+      return filePath;
+    } catch (e) {
+      debugPrint('Error saving emblem: $e');
+      return null;
+    }
+  }
+
+  /// Delete the custom emblem so the bundled default shows again.
+  Future<bool> deleteEmblem() async {
+    try {
+      final emblemPath = await getEmblemPath();
+      if (emblemPath != null) {
+        await File(emblemPath).delete();
+      }
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting emblem: $e');
+      return false;
+    }
+  }
+
+  /// Path of the saved custom emblem, or null when none exists.
+  Future<String?> getEmblemPath() async {
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final filePath = path.join(appDir.path, 'emblem', emblemFilename);
+      return await File(filePath).exists() ? filePath : null;
+    } catch (e) {
+      debugPrint('Error checking emblem path: $e');
+      return null;
+    }
+  }
+
+  /// Get the app-managed emblem directory.
+  Future<Directory?> _getEmblemDirectory() async {
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final emblemDir = Directory(path.join(appDir.path, 'emblem'));
+
+      if (!await emblemDir.exists()) {
+        await emblemDir.create(recursive: true);
+      }
+
+      return emblemDir;
+    } catch (e) {
+      debugPrint('Error getting emblem directory: $e');
+      return null;
+    }
+  }
+
   /// Validate image file
   Future<bool> isValidImage(String filePath) async {
     try {

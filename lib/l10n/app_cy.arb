@@ -468,5 +468,9 @@
   "activityCharacterDeleted": "Dilëwyd cymeriad {name}",
   "activityBaseCreated": "Ychwanegwyd canolfan {name}",
   "activityBaseDeleted": "Tynnwyd canolfan {name}",
-  "activityJournalEntry": "Cronicl: {title}"
+  "activityJournalEntry": "Cronicl: {title}",
+  "settingsEmblem": "Arwyddlun yr ap",
+  "settingsEmblemDesc": "Dewiswch arwyddlun personol ar gyfer y rheilen lywio",
+  "settingsEmblemReset": "Adfer yr arwyddlun rhagosodedig",
+  "settingsEmblemInvalid": "Methu defnyddio'r ddelwedd honno"
 }

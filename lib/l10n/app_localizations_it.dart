@@ -1719,4 +1719,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Cronaca: $title';
   }
+
+  @override
+  String get settingsEmblem => 'Emblema dell\'app';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Scegli un emblema personalizzato per la barra di navigazione';
+
+  @override
+  String get settingsEmblemReset => 'Ripristina l\'emblema predefinito';
+
+  @override
+  String get settingsEmblemInvalid => 'Impossibile usare questa immagine';
 }

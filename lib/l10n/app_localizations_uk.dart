@@ -1716,4 +1716,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Хроніка: $title';
   }
+
+  @override
+  String get settingsEmblem => 'Емблема застосунку';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Виберіть власну емблему для панелі навігації';
+
+  @override
+  String get settingsEmblemReset => 'Відновити стандартну емблему';
+
+  @override
+  String get settingsEmblemInvalid => 'Не вдалося використати це зображення';
 }

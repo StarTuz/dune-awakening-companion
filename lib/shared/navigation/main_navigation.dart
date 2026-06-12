@@ -13,6 +13,7 @@ import '../../features/bases/providers/base_provider.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../theme/app_colors.dart';
 import 'navigation_rail_footer.dart';
+import 'navigation_rail_emblem.dart';
 import 'navigation_rail_settings.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
@@ -98,6 +99,11 @@ class MainNavigationScreen extends ConsumerWidget {
               extended: railExpanded,
               labelType: NavigationRailLabelType.none,
               minExtendedWidth: 200,
+              leading: NavigationRailEmblem(
+                extended: railExpanded,
+                onTap: () =>
+                    ref.read(navigationIndexProvider.notifier).state = 0,
+              ),
               trailing: Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,

@@ -1730,4 +1730,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Chronique : $title';
   }
+
+  @override
+  String get settingsEmblem => 'Emblème de l\'application';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Choisissez un emblème personnalisé pour le rail de navigation';
+
+  @override
+  String get settingsEmblemReset => 'Restaurer l\'emblème par défaut';
+
+  @override
+  String get settingsEmblemInvalid => 'Impossible d\'utiliser cette image';
 }

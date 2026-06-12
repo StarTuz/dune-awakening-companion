@@ -1722,4 +1722,17 @@ class AppLocalizationsCy extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Cronicl: $title';
   }
+
+  @override
+  String get settingsEmblem => 'Arwyddlun yr ap';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Dewiswch arwyddlun personol ar gyfer y rheilen lywio';
+
+  @override
+  String get settingsEmblemReset => 'Adfer yr arwyddlun rhagosodedig';
+
+  @override
+  String get settingsEmblemInvalid => 'Methu defnyddio\'r ddelwedd honno';
 }

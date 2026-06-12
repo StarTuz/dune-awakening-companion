@@ -468,5 +468,9 @@
   "activityCharacterDeleted": "Charakter {name} gelöscht",
   "activityBaseCreated": "Basis {name} hinzugefügt",
   "activityBaseDeleted": "Basis {name} entfernt",
-  "activityJournalEntry": "Chronik: {title}"
+  "activityJournalEntry": "Chronik: {title}",
+  "settingsEmblem": "App-Emblem",
+  "settingsEmblemDesc": "Wähle ein eigenes Emblem für die Navigationsleiste",
+  "settingsEmblemReset": "Standard-Emblem wiederherstellen",
+  "settingsEmblemInvalid": "Dieses Bild konnte nicht verwendet werden"
 }

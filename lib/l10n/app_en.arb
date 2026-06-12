@@ -2163,5 +2163,21 @@
         "type": "String"
       }
     }
+  },
+  "settingsEmblem": "App emblem",
+  "@settingsEmblem": {
+    "description": "Settings row title: customize the app emblem"
+  },
+  "settingsEmblemDesc": "Choose a custom emblem for the navigation rail",
+  "@settingsEmblemDesc": {
+    "description": "Settings row subtitle for the custom emblem picker"
+  },
+  "settingsEmblemReset": "Restore default emblem",
+  "@settingsEmblemReset": {
+    "description": "Tooltip for the button restoring the default emblem"
+  },
+  "settingsEmblemInvalid": "Could not use that image",
+  "@settingsEmblemInvalid": {
+    "description": "Snackbar shown when a picked emblem image cannot be processed"
   }
 }

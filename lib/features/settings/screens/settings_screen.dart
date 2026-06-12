@@ -10,6 +10,7 @@ import '../../field_timers/providers/field_timer_provider.dart';
 import '../../field_timers/services/field_timer_settings.dart';
 import '../../../core/providers/notification_settings_provider.dart';
 import '../../../core/providers/theme_provider.dart';
+import '../../../core/providers/emblem_provider.dart';
 import '../../../core/providers/accessibility_provider.dart';
 import '../providers/import_export_provider.dart';
 import '../services/import_service.dart';
@@ -63,6 +64,7 @@ class SettingsScreen extends ConsumerWidget {
           _buildSectionHeader(context, l10n.sectionAppearance),
           _buildThemeToggle(context, ref),
           _buildFactionSelector(context, ref),
+          _buildEmblemSetting(context, ref),
 
           const Divider(height: 32),
 
@@ -738,6 +740,51 @@ class SettingsScreen extends ConsumerWidget {
     }
   }
 
+  Widget _buildEmblemSetting(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final emblem = ref.watch(emblemProvider);
+
+    return ListTile(
+      leading: SizedBox(
+        width: 40,
+        height: 40,
+        child: emblem.isCustom
+            ? Image.file(
+                File(emblem.customPath!),
+                key: ValueKey('settings-emblem-${emblem.revision}'),
+                fit: BoxFit.contain,
+              )
+            : Image.asset('assets/emblem/jerboa.png', fit: BoxFit.contain),
+      ),
+      title: Text(l10n.settingsEmblem),
+      subtitle: Text(l10n.settingsEmblemDesc),
+      trailing: emblem.isCustom
+          ? IconButton(
+              icon: const Icon(Icons.restore),
+              tooltip: l10n.settingsEmblemReset,
+              onPressed: () => ref.read(emblemProvider.notifier).reset(),
+            )
+          : null,
+      onTap: () async {
+        final result = await FilePicker.platform.pickFiles(
+          type: FileType.image,
+          allowMultiple: false,
+        );
+        final picked = result?.files.single.path;
+        if (picked == null) return;
+        final ok = await ref.read(emblemProvider.notifier).setCustom(picked);
+        if (!ok && context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.settingsEmblemInvalid),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+    );
+  }
+
   Future<void> _handleImport(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
     try {
@@ -917,6 +964,7 @@ class SettingsScreen extends ConsumerWidget {
         ref.invalidate(charactersProvider);
         ref.invalidate(basesProvider);
         ref.invalidate(questsProvider);
+        await ref.read(emblemProvider.notifier).refresh();
 
         if (!context.mounted) return;
         final portraitMsg = result.portraitsImported > 0

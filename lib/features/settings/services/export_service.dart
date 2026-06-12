@@ -15,6 +15,9 @@ import '../../base_calculator/services/base_calculator_plan_repository.dart';
 import '../../journal/services/journal_repository.dart';
 import '../../quest_journal/services/quest_repository.dart';
 import '../../skills/services/character_skill_repository.dart';
+import '../../../core/database/app_database.dart';
+import '../../../core/services/image_service.dart';
+import '../../../core/utils/app_info.dart';
 import '../../specializations/services/character_specialization_repository.dart';
 
 class ExportService {
@@ -188,11 +191,25 @@ class ExportService {
         return json;
       }).toList();
 
+      // Bundle the custom app emblem (if set) so backups restore branding.
+      final emblemPath = await ImageService().getEmblemPath();
+      if (emblemPath != null) {
+        final emblemFile = File(emblemPath);
+        if (await emblemFile.exists()) {
+          final emblemBytes = await emblemFile.readAsBytes();
+          archive.addFile(ArchiveFile(
+            'emblem/${ImageService.emblemFilename}',
+            emblemBytes.length,
+            emblemBytes,
+          ));
+        }
+      }
+
       // Create JSON data
       final exportData = {
-        'version': '1.3.0-beta',
+        'version': AppInfo.version,
         'exportDate': DateTime.now().toIso8601String(),
-        'databaseVersion': 16,
+        'databaseVersion': AppDatabase.schemaVersion,
         'format': 'zip',
         'characters': exportCharacters,
         'bases': bases.map((b) => b.toJson()).toList(),

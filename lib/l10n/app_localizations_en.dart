@@ -1710,4 +1710,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Chronicle: $title';
   }
+
+  @override
+  String get settingsEmblem => 'App emblem';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Choose a custom emblem for the navigation rail';
+
+  @override
+  String get settingsEmblemReset => 'Restore default emblem';
+
+  @override
+  String get settingsEmblemInvalid => 'Could not use that image';
 }

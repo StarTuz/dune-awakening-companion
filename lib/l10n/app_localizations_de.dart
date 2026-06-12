@@ -1723,4 +1723,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String activityJournalEntry(String title) {
     return 'Chronik: $title';
   }
+
+  @override
+  String get settingsEmblem => 'App-Emblem';
+
+  @override
+  String get settingsEmblemDesc =>
+      'Wähle ein eigenes Emblem für die Navigationsleiste';
+
+  @override
+  String get settingsEmblemReset => 'Standard-Emblem wiederherstellen';
+
+  @override
+  String get settingsEmblemInvalid =>
+      'Dieses Bild konnte nicht verwendet werden';
 }

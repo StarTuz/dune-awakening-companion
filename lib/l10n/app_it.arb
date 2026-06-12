@@ -468,5 +468,9 @@
   "activityCharacterDeleted": "Personaggio {name} eliminato",
   "activityBaseCreated": "Base {name} aggiunta",
   "activityBaseDeleted": "Base {name} rimossa",
-  "activityJournalEntry": "Cronaca: {title}"
+  "activityJournalEntry": "Cronaca: {title}",
+  "settingsEmblem": "Emblema dell'app",
+  "settingsEmblemDesc": "Scegli un emblema personalizzato per la barra di navigazione",
+  "settingsEmblemReset": "Ripristina l'emblema predefinito",
+  "settingsEmblemInvalid": "Impossibile usare questa immagine"
 }

@@ -3209,6 +3209,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chronicle: {title}'**
   String activityJournalEntry(String title);
+
+  /// Settings row title: customize the app emblem
+  ///
+  /// In en, this message translates to:
+  /// **'App emblem'**
+  String get settingsEmblem;
+
+  /// Settings row subtitle for the custom emblem picker
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a custom emblem for the navigation rail'**
+  String get settingsEmblemDesc;
+
+  /// Tooltip for the button restoring the default emblem
+  ///
+  /// In en, this message translates to:
+  /// **'Restore default emblem'**
+  String get settingsEmblemReset;
+
+  /// Snackbar shown when a picked emblem image cannot be processed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not use that image'**
+  String get settingsEmblemInvalid;
 }
 
 class _AppLocalizationsDelegate

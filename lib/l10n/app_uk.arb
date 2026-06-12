@@ -468,5 +468,9 @@
   "activityCharacterDeleted": "Видалено персонажа {name}",
   "activityBaseCreated": "Додано базу {name}",
   "activityBaseDeleted": "Видалено базу {name}",
-  "activityJournalEntry": "Хроніка: {title}"
+  "activityJournalEntry": "Хроніка: {title}",
+  "settingsEmblem": "Емблема застосунку",
+  "settingsEmblemDesc": "Виберіть власну емблему для панелі навігації",
+  "settingsEmblemReset": "Відновити стандартну емблему",
+  "settingsEmblemInvalid": "Не вдалося використати це зображення"
 }

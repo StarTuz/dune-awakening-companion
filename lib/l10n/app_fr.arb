@@ -468,5 +468,9 @@
   "activityCharacterDeleted": "Personnage {name} supprimé",
   "activityBaseCreated": "Base {name} ajoutée",
   "activityBaseDeleted": "Base {name} supprimée",
-  "activityJournalEntry": "Chronique : {title}"
+  "activityJournalEntry": "Chronique : {title}",
+  "settingsEmblem": "Emblème de l'application",
+  "settingsEmblemDesc": "Choisissez un emblème personnalisé pour le rail de navigation",
+  "settingsEmblemReset": "Restaurer l'emblème par défaut",
+  "settingsEmblemInvalid": "Impossible d'utiliser cette image"
 }

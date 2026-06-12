@@ -182,6 +182,14 @@ class ImportService {
           await outFile.writeAsBytes(file.content as List<int>);
 
           journalImageMappings[file.name] = newPath;
+        } else if (file.name.startsWith('emblem/') && file.isFile) {
+          // Restore the custom app emblem.
+          final emblemDir = Directory(path.join(appDir.path, 'emblem'));
+          if (!await emblemDir.exists()) {
+            await emblemDir.create(recursive: true);
+          }
+          final newPath = path.join(emblemDir.path, path.basename(file.name));
+          await File(newPath).writeAsBytes(file.content as List<int>);
         }
       }
 
