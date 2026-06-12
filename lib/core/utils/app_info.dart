@@ -4,6 +4,6 @@
 class AppInfo {
   AppInfo._();
 
-  static const version = '1.4.0-beta';
-  static const build = '28';
+  static const version = '1.4.0';
+  static const build = '29';
 }
