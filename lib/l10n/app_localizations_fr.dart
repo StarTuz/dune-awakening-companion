@@ -1750,4 +1750,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get fieldTimerCueBody =>
       'Pré-alarme — le risque de signe de ver augmente.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Les alarmes en arrière-plan sont bloquées. Autorisez « Alarmes et rappels » pour que les signaux sonnent écran éteint.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Autoriser';
 }

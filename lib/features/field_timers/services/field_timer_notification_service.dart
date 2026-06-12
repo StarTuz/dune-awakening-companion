@@ -65,17 +65,48 @@ class FieldTimerNotificationService {
     _initialized = true;
   }
 
-  /// Whether this platform relies on the pre-scheduled OS timeline for all
-  /// timer audio (true on Android). When true the in-app service must NOT
-  /// also play sounds or show duplicate notifications.
-  bool get ownsTimeline => !kIsWeb && Platform.isAndroid;
+  /// Whether this platform can hand the timer timeline to the OS (Android).
+  bool get supportsOsTimeline => !kIsWeb && Platform.isAndroid;
+
+  AndroidFlutterLocalNotificationsPlugin? get _android =>
+      _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+
+  /// Whether exact alarm-clock scheduling is currently permitted.
+  ///
+  /// Android 12/13 deny SCHEDULE_EXACT_ALARM by default — the user must
+  /// enable "Alarms & reminders" in system settings. Android 14+ auto-grants
+  /// via USE_EXACT_ALARM. Without it, alarmClock scheduling throws.
+  Future<bool> canScheduleExactAlarms() async {
+    if (!supportsOsTimeline) return false;
+    try {
+      return await _android?.canScheduleExactNotifications() ?? false;
+    } catch (e) {
+      debugPrint('[FieldTimerNotification] exact-alarm check failed: $e');
+      return false;
+    }
+  }
+
+  /// Open the system "Alarms & reminders" grant flow (Android 12/13).
+  Future<bool> requestExactAlarmsPermission() async {
+    if (!supportsOsTimeline) return false;
+    try {
+      return await _android?.requestExactAlarmsPermission() ?? false;
+    } catch (e) {
+      debugPrint('[FieldTimerNotification] exact-alarm request failed: $e');
+      return false;
+    }
+  }
 
   /// Pre-schedule the full timer timeline as exact alarm-clock wakeups:
   /// each unfired cue at its offset, the page at T=0, and
   /// [_maxScheduledEscalations] escalation repeats after it.
   ///
-  /// Android only — no-op elsewhere. Call from arm(); [cancelAll] on ack.
-  Future<void> scheduleTimeline({
+  /// Returns true only if exact alarms are permitted and every entry was
+  /// scheduled — the caller must keep in-app audio alive otherwise. When
+  /// exact alarms are denied, entries are still scheduled inexactly as a
+  /// best-effort backstop (may be delayed by Doze), but this returns false.
+  Future<bool> scheduleTimeline({
     required Duration totalDuration,
     required List<FieldTimerCue> cues,
     required int escalationIntervalSeconds,
@@ -84,10 +115,16 @@ class FieldTimerNotificationService {
     required String pageTitle,
     required String pageBody,
   }) async {
-    if (!ownsTimeline) return;
+    if (!supportsOsTimeline) return false;
+
+    final exact = await canScheduleExactAlarms();
+    final mode = exact
+        ? AndroidScheduleMode.alarmClock
+        : AndroidScheduleMode.inexactAllowWhileIdle;
 
     final now = tz.TZDateTime.now(tz.local);
     final firesAt = now.add(totalDuration);
+    var failures = 0;
 
     // Pre-alarm cues, each on its own stage channel (stage sound baked in).
     var cueIndex = 0;
@@ -95,39 +132,49 @@ class FieldTimerNotificationService {
       cueIndex++;
       final when = firesAt.subtract(cue.offsetFromEnd);
       if (!when.isAfter(now)) continue;
-      await _schedule(
+      if (!await _schedule(
         id: _cueNotificationIdBase + cueIndex,
         title: cueTitle,
         body: cueBody,
         when: when,
         details: _cueDetails(cue.stage),
-      );
+        mode: mode,
+      )) {
+        failures++;
+      }
     }
 
     // T=0 page.
-    await _schedule(
+    if (!await _schedule(
       id: _baseNotificationId,
       title: pageTitle,
       body: pageBody,
       when: firesAt,
       details: _pageDetails(),
-    );
+      mode: mode,
+    )) {
+      failures++;
+    }
 
     // Escalation repeats.
     for (var i = 1; i <= _maxScheduledEscalations; i++) {
-      await _schedule(
+      if (!await _schedule(
         id: _baseNotificationId + i,
         title: pageTitle,
         body: pageBody,
         when: firesAt.add(Duration(seconds: escalationIntervalSeconds * i)),
         details: _pageDetails(),
-      );
+        mode: mode,
+      )) {
+        failures++;
+      }
     }
 
+    final armed = exact && failures == 0;
     debugPrint(
         '[FieldTimerNotification] Timeline scheduled: ${cues.length} cues, '
-        'page at $firesAt, $_maxScheduledEscalations escalations every '
-        '${escalationIntervalSeconds}s');
+        'page at $firesAt, exact=$exact, failures=$failures, armed=$armed');
+    return armed;
   }
 
   /// Fire the T=0 page notification (and each escalation repeat).
@@ -160,12 +207,13 @@ class FieldTimerNotificationService {
 
   // ── Internal ──────────────────────────────────────────────────────────
 
-  Future<void> _schedule({
+  Future<bool> _schedule({
     required int id,
     required String title,
     required String body,
     required tz.TZDateTime when,
     required NotificationDetails details,
+    required AndroidScheduleMode mode,
   }) async {
     try {
       await _plugin.zonedSchedule(
@@ -174,11 +222,13 @@ class FieldTimerNotificationService {
         body,
         when,
         details,
-        androidScheduleMode: AndroidScheduleMode.alarmClock,
+        androidScheduleMode: mode,
         payload: 'field_timer',
       );
+      return true;
     } catch (e) {
       debugPrint('[FieldTimerNotification] Schedule error id=$id: $e');
+      return false;
     }
   }
 

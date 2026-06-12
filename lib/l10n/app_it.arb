@@ -474,5 +474,7 @@
   "settingsEmblemReset": "Ripristina l'emblema predefinito",
   "settingsEmblemInvalid": "Impossibile usare questa immagine",
   "fieldTimerCueTitle": "La finestra di raccolta si sta chiudendo",
-  "fieldTimerCueBody": "Pre-allarme — il rischio di segni del verme aumenta."
+  "fieldTimerCueBody": "Pre-allarme — il rischio di segni del verme aumenta.",
+  "fieldTimerExactAlarmWarning": "Le sveglie in background sono bloccate. Consenti “Sveglie e promemoria” perché i segnali suonino a schermo spento.",
+  "fieldTimerExactAlarmGrant": "Consenti"
 }

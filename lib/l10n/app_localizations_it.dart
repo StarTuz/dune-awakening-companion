@@ -1739,4 +1739,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get fieldTimerCueBody =>
       'Pre-allarme — il rischio di segni del verme aumenta.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Le sveglie in background sono bloccate. Consenti “Sveglie e promemoria” perché i segnali suonino a schermo spento.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Consenti';
 }

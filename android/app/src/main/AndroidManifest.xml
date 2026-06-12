@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <!-- API 33+ auto-granted variant; allows alarm-clock wakeups without user prompt -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- Full-screen field-timer page over the lock screen (Android 14+) -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <application
         android:label="dune_awakening_companion"
         android:name="${applicationName}"

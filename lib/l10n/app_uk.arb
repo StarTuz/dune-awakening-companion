@@ -474,5 +474,7 @@
   "settingsEmblemReset": "Відновити стандартну емблему",
   "settingsEmblemInvalid": "Не вдалося використати це зображення",
   "fieldTimerCueTitle": "Вікно збору закривається",
-  "fieldTimerCueBody": "Попередній сигнал — ризик появи черва зростає."
+  "fieldTimerCueBody": "Попередній сигнал — ризик появи черва зростає.",
+  "fieldTimerExactAlarmWarning": "Фонові будильники заблоковано. Дозвольте «Будильники та нагадування», щоб сигнали лунали з вимкненим екраном.",
+  "fieldTimerExactAlarmGrant": "Дозволити"
 }

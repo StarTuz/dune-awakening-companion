@@ -1746,4 +1746,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get fieldTimerCueBody =>
       'Aviso previo: el riesgo de señal de gusano aumenta.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Las alarmas en segundo plano están bloqueadas. Permite “Alarmas y recordatorios” para que los avisos suenen con la pantalla apagada.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Permitir';
 }

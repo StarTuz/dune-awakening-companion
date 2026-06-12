@@ -1736,4 +1736,11 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get fieldTimerCueBody =>
       'Попередній сигнал — ризик появи черва зростає.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Фонові будильники заблоковано. Дозвольте «Будильники та нагадування», щоб сигнали лунали з вимкненим екраном.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Дозволити';
 }

@@ -3245,6 +3245,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pre-alarm cue — wormsign risk rising.'**
   String get fieldTimerCueBody;
+
+  /// Banner shown when Android exact-alarm permission is denied
+  ///
+  /// In en, this message translates to:
+  /// **'Background alarms are blocked. Allow “Alarms & reminders” so cues sound with the screen off.'**
+  String get fieldTimerExactAlarmWarning;
+
+  /// Button opening the system Alarms & reminders grant flow
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get fieldTimerExactAlarmGrant;
 }
 
 class _AppLocalizationsDelegate

@@ -474,5 +474,7 @@
   "settingsEmblemReset": "Standard-Emblem wiederherstellen",
   "settingsEmblemInvalid": "Dieses Bild konnte nicht verwendet werden",
   "fieldTimerCueTitle": "Erntefenster schließt sich",
-  "fieldTimerCueBody": "Voralarm — Wurmzeichen-Risiko steigt."
+  "fieldTimerCueBody": "Voralarm — Wurmzeichen-Risiko steigt.",
+  "fieldTimerExactAlarmWarning": "Hintergrund-Alarme sind blockiert. Erlaube „Wecker und Erinnerungen“, damit Signale bei ausgeschaltetem Bildschirm ertönen.",
+  "fieldTimerExactAlarmGrant": "Erlauben"
 }

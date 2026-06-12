@@ -1741,4 +1741,11 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get fieldTimerCueBody => 'Rhag-larwm — risg arwydd mwydyn yn codi.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Mae larymau cefndir wedi\'u rhwystro. Caniatewch “Larymau a nodiadau atgoffa” fel bod ciwiau\'n seinio gyda\'r sgrin i ffwrdd.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Caniatáu';
 }

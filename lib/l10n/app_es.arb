@@ -474,5 +474,7 @@
   "settingsEmblemReset": "Restaurar emblema predeterminado",
   "settingsEmblemInvalid": "No se pudo usar esa imagen",
   "fieldTimerCueTitle": "La ventana de cosecha se cierra",
-  "fieldTimerCueBody": "Aviso previo: el riesgo de señal de gusano aumenta."
+  "fieldTimerCueBody": "Aviso previo: el riesgo de señal de gusano aumenta.",
+  "fieldTimerExactAlarmWarning": "Las alarmas en segundo plano están bloqueadas. Permite “Alarmas y recordatorios” para que los avisos suenen con la pantalla apagada.",
+  "fieldTimerExactAlarmGrant": "Permitir"
 }

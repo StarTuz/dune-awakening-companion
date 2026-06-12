@@ -14,7 +14,12 @@ class FieldTimerScreen extends ConsumerStatefulWidget {
   ConsumerState<FieldTimerScreen> createState() => _FieldTimerScreenState();
 }
 
-class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen> {
+class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen>
+    with WidgetsBindingObserver {
+  /// Whether exact "Alarms & reminders" scheduling is granted (Android).
+  /// null = not yet checked or not applicable (non-Android).
+  bool? _exactAlarmsGranted;
+
   /// Custom duration the user is editing (null = using preset).
   Duration? _customDuration;
 
@@ -23,6 +28,38 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen> {
 
   Duration get _activeDuration =>
       _customDuration ?? sandHarvestPresets[_selectedPresetIndex].duration;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _checkExactAlarms();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Re-check after the user returns from the system settings grant flow.
+    if (state == AppLifecycleState.resumed) _checkExactAlarms();
+  }
+
+  Future<void> _checkExactAlarms() async {
+    final service = ref.read(fieldTimerNotificationServiceProvider);
+    if (!service.supportsOsTimeline) return;
+    final granted = await service.canScheduleExactAlarms();
+    if (mounted) setState(() => _exactAlarmsGranted = granted);
+  }
+
+  Future<void> _requestExactAlarms() async {
+    final service = ref.read(fieldTimerNotificationServiceProvider);
+    await service.requestExactAlarmsPermission();
+    await _checkExactAlarms();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,26 +80,53 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen> {
       appBar: AppBar(
         title: Text(l10n.fieldTimerTitle),
       ),
-      body: switch (session.state) {
-        FieldTimerState.idle => _IdleBody(
-            selectedPresetIndex: _selectedPresetIndex,
-            customDuration: _customDuration,
-            onPresetSelected: (i) => setState(() {
-              _selectedPresetIndex = i;
-              _customDuration = null;
-            }),
-            onCustomDuration: (d) => setState(() => _customDuration = d),
-            onStart: _arm,
-          ),
-        FieldTimerState.armed =>
-          _ArmedBody(session: session, onCancel: _cancel),
-        FieldTimerState.firing => _FiringBody(
-            session: session,
-            onRestart: _restart,
-            onEnd: _end,
-          ),
-      },
+      body: Column(
+        children: [
+          if (_exactAlarmsGranted == false)
+            MaterialBanner(
+              backgroundColor: Theme.of(context).colorScheme.errorContainer,
+              leading: Icon(
+                Icons.alarm_off,
+                color: Theme.of(context).colorScheme.onErrorContainer,
+              ),
+              content: Text(
+                l10n.fieldTimerExactAlarmWarning,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onErrorContainer,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: _requestExactAlarms,
+                  child: Text(l10n.fieldTimerExactAlarmGrant),
+                ),
+              ],
+            ),
+          Expanded(child: _buildSessionBody(session, l10n)),
+        ],
+      ),
     );
+  }
+
+  Widget _buildSessionBody(FieldTimerSession session, AppLocalizations l10n) {
+    return switch (session.state) {
+      FieldTimerState.idle => _IdleBody(
+          selectedPresetIndex: _selectedPresetIndex,
+          customDuration: _customDuration,
+          onPresetSelected: (i) => setState(() {
+            _selectedPresetIndex = i;
+            _customDuration = null;
+          }),
+          onCustomDuration: (d) => setState(() => _customDuration = d),
+          onStart: _arm,
+        ),
+      FieldTimerState.armed => _ArmedBody(session: session, onCancel: _cancel),
+      FieldTimerState.firing => _FiringBody(
+          session: session,
+          onRestart: _restart,
+          onEnd: _end,
+        ),
+    };
   }
 
   Future<void> _arm() async {

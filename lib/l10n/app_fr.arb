@@ -474,5 +474,7 @@
   "settingsEmblemReset": "Restaurer l'emblème par défaut",
   "settingsEmblemInvalid": "Impossible d'utiliser cette image",
   "fieldTimerCueTitle": "La fenêtre de récolte se referme",
-  "fieldTimerCueBody": "Pré-alarme — le risque de signe de ver augmente."
+  "fieldTimerCueBody": "Pré-alarme — le risque de signe de ver augmente.",
+  "fieldTimerExactAlarmWarning": "Les alarmes en arrière-plan sont bloquées. Autorisez « Alarmes et rappels » pour que les signaux sonnent écran éteint.",
+  "fieldTimerExactAlarmGrant": "Autoriser"
 }

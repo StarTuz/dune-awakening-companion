@@ -23,6 +23,11 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
   Timer? _tickTimer;
   Timer? _escalationTimer;
 
+  /// True only when the OS accepted the full exact-alarm timeline at arm().
+  /// While false the in-app audio + notification path stays fully active —
+  /// silent failure of the scheduled path must never mean silence.
+  bool _osTimelineArmed = false;
+
   // Localised strings injected before arm() so the service doesn't need context.
   String _firingTitle = 'Reset aggro now';
   String _firingBody = 'Sand harvest window elapsed. Pick up your sandcrawler.';
@@ -73,7 +78,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     // the app is killed.
     final escalationSeconds =
         await FieldTimerSettings.getEscalationIntervalSeconds();
-    await _notifications.scheduleTimeline(
+    _osTimelineArmed = await _notifications.scheduleTimeline(
       totalDuration: duration,
       cues: cues,
       escalationIntervalSeconds: escalationSeconds,
@@ -112,6 +117,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
   Future<void> cancel() async {
     _tickTimer?.cancel();
     _tickTimer = null;
+    _osTimelineArmed = false;
     await _clearEscalation();
     await _notifications.cancelAll();
     await _audio.stopAll();
@@ -165,18 +171,18 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
 
   void _dispatchCue(int stage) {
     debugPrint('[FieldTimer] Cue stage $stage');
-    // When the OS owns the timeline (Android), the scheduled notification
-    // plays the cue sound — playing in-app too would double it.
-    if (!_notifications.ownsTimeline) {
+    // When the OS timeline is verified armed (Android), the scheduled
+    // notification plays the cue sound — playing in-app too would double it.
+    if (!_osTimelineArmed) {
       _audio.playCueStage(stage);
     }
   }
 
   void _onFired() {
     debugPrint('[FieldTimer] FIRED — sending page');
-    if (!_notifications.ownsTimeline) {
-      // Page + escalations were pre-scheduled at arm time on Android; on
-      // other platforms the in-app timer drives them.
+    if (!_osTimelineArmed) {
+      // Page + escalations were pre-scheduled at arm time when the OS
+      // timeline armed; otherwise the in-app timer drives them.
       _audio.playPage();
       _notifications.showTimerFired(
         title: _firingTitle,
@@ -205,7 +211,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     final count = state.escalationCount + 1;
     state = state.copyWith(escalationCount: count);
     debugPrint('[FieldTimer] Escalation #$count');
-    if (!_notifications.ownsTimeline) {
+    if (!_osTimelineArmed) {
       _audio.playPage();
       _notifications.showTimerFired(
         title: _firingTitle,

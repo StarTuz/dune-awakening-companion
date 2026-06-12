@@ -1729,4 +1729,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fieldTimerCueBody => 'Pre-alarm cue — wormsign risk rising.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Background alarms are blocked. Allow “Alarms & reminders” so cues sound with the screen off.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Allow';
 }

@@ -1743,4 +1743,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fieldTimerCueBody => 'Voralarm — Wurmzeichen-Risiko steigt.';
+
+  @override
+  String get fieldTimerExactAlarmWarning =>
+      'Hintergrund-Alarme sind blockiert. Erlaube „Wecker und Erinnerungen“, damit Signale bei ausgeschaltetem Bildschirm ertönen.';
+
+  @override
+  String get fieldTimerExactAlarmGrant => 'Erlauben';
 }
