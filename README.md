@@ -5,7 +5,7 @@ A cross-platform companion application for managing characters, bases, and power
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-blue)](https://github.com/StarTuz/dune-awakening-companion)
 [![Flutter](https://img.shields.io/badge/flutter-3.38-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.0--beta-orange)](https://github.com/StarTuz/dune-awakening-companion/releases)
+[![Version](https://img.shields.io/badge/version-1.4.0--beta-orange)](https://github.com/StarTuz/dune-awakening-companion/releases)
 
 > ⚠️ **Disclaimer:** This is an unofficial, fan-made companion app. NOT affiliated with, endorsed by, or supported by Funcom.
 
@@ -96,9 +96,10 @@ Per-character RPG journal on the Character Progress dialog (see `docs/RESEARCH_R
   - One-tap navigation to manage bases
 
 ### 📊 Dashboard Overview
-- Real-time statistics from database
-- Character and base counts
-- Expiring Soon and Active Alerts counts
+- **Responsive tile grid** — stat tiles for characters, bases, expiring soon, active alerts
+- Tile context menus (right-click / long-press) with quick-action deep-links (e.g. open Add Base dialog directly from the tile)
+- **Quick Actions card** for one-tap navigation to common tasks
+- **Recent Activity feed** — auto-logged events (characters created/deleted, bases added/removed, journal entries) with typed icons and tap-to-navigate rows
 - Region chart for character distribution
 - Alert distribution chart for base urgency
 - Pull-to-refresh support
@@ -125,8 +126,8 @@ Per-character RPG journal on the Character Progress dialog (see `docs/RESEARCH_R
   - 🟣 **Smuggler** - Purple & bronze (Shadow Traders)
 - **Light/Dark Mode:** Toggle between Desert Day and Desert Night
 - **Adaptive Navigation:**
-  - Desktop: Side navigation rail
-  - Mobile: Bottom navigation bar
+  - Desktop: Side navigation rail with collapsible live-status footer (field timer countdown, next base expiry)
+  - Mobile: Bottom navigation bar (5 destinations + More sheet)
 
 ### ♿ Accessibility
 - **Text Size:** Slider from Small → Medium → Large → Extra Large
@@ -205,22 +206,17 @@ sudo dnf install fuse
    cd dune-awakening-companion
    ```
 
-2. **Switch to Beta branch**
-   ```bash
-   git checkout Beta
-   ```
-
-3. **Install dependencies**
+2. **Install dependencies**
    ```bash
    flutter pub get
    ```
 
-4. **Generate code**
+3. **Generate code**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-5. **Run the app**
+4. **Run the app**
    ```bash
    # Desktop (Linux)
    flutter run -d linux
@@ -303,7 +299,7 @@ sudo dnf install fuse
 ```
 lib/
 ├── core/                       # Core functionality
-│   ├── database/              # SQLite + migrations (v11)
+│   ├── database/              # SQLite + migrations (v18)
 │   ├── services/              # Notifications, system tray, images
 │   ├── providers/             # Riverpod providers
 │   └── utils/                 # Constants, helpers
@@ -387,7 +383,7 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 
 ## 🔮 Roadmap
 
-### ✅ Completed (v1.3.0-beta on `main`; unreleased on tag)
+### ✅ Completed (v1.4.0-beta+28)
 
 - [x] Multi-character management
 - [x] Unlimited base tracking
@@ -397,8 +393,8 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] Export/Import data backups
 - [x] Alert system (<48h warning, <24h critical)
 - [x] Notifications & System Tray
-- [x] Adaptive navigation (7 tabs including Calculator)
-- [x] Database v16 with migrations
+- [x] Adaptive navigation (desktop rail + mobile bottom nav)
+- [x] Database v18 with migrations
 - [x] Multi-language support (7 languages)
 - [x] **5 Faction Themes** (Desert, Atreides, Harkonnen, Fremen, Smuggler)
 - [x] **Light/Dark Mode Toggle**
@@ -406,15 +402,19 @@ Full research and sources: `docs/CHAPTER3_RESEARCH.md`.
 - [x] **Quiet Hours & Notification Controls**
 - [x] **Notification History**
 - [x] **Quest Journal**
+- [x] **Journal Hub** (top-level Chronicle + Quest Journal navigator)
 - [x] **Character Chronicle** (RPG journal)
 - [x] **Class Quests & Skill Planner**
 - [x] **Specialization Tracker**
 - [x] **Faction Progress Tracker**
 - [x] **Augmentation Tracker**
+- [x] **Dashboard tile grid** with Quick Actions and stat tile context menus
+- [x] **Recent Activity feed** (auto event log — characters, bases, journal entries)
 - [x] **Dashboard Charts & Analytics**
 - [x] **Per-base Notification Overrides**
 - [x] **Blueprints/Schematics Tracker** (multi-region catalogs)
 - [x] **Base Calculator** (Phases 1–5: planner, saved plans, share codes, optimization helpers)
+- [x] **Desktop rail footer** (collapsible, live field-timer + base-expiry status)
 
 ### 📋 Future Features
 
@@ -481,7 +481,7 @@ Use at your own risk.
 - 🌟 **Dune Awakening community** for game mechanics research
 - 💙 **Flutter team** for the amazing framework
 - ⚡ **Riverpod** for powerful state management
-- 🤖 Created within **Google Antigravity IDE** with Claude Sonnet 4.5
+- 🤖 Created within **VS Code** with Claude Sonnet 4.6 via Claude Code
 
 ---
 
