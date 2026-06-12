@@ -14,11 +14,20 @@ import 'field_timer_settings.dart';
 /// Lifecycle: Idle → Armed (tick every 1 s; cue dispatch) → Firing (escalation)
 ///            → Idle (via ackEnd) or Armed (via ackRestart).
 class FieldTimerService extends StateNotifier<FieldTimerSession> {
-  FieldTimerService(this._audio, this._notifications)
-      : super(const FieldTimerSession.idle());
+  FieldTimerService(this._audio, this._notifications,
+      {DateTime Function()? now})
+      : _now = now ?? DateTime.now,
+        super(const FieldTimerSession.idle());
 
   final FieldTimerAudioService _audio;
   final FieldTimerNotificationService _notifications;
+
+  /// Injectable wall clock (overridable in tests).
+  final DateTime Function() _now;
+
+  /// Wall-clock anchor set at arm(); elapsed is always re-derived from this
+  /// so the countdown stays correct across power-save isolate freezes.
+  DateTime? _armedAt;
 
   Timer? _tickTimer;
   Timer? _escalationTimer;
@@ -70,6 +79,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
       escalationCount: 0,
     );
 
+    _armedAt = _now();
     _startTick();
 
     // On Android, hand the entire timeline to the OS as exact alarm-clock
@@ -114,10 +124,15 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     debugPrint('[FieldTimer] Ended by user');
   }
 
+  /// Run one tick immediately (test hook for the wall-clock catch-up path).
+  @visibleForTesting
+  void debugTick() => _tick();
+
   Future<void> cancel() async {
     _tickTimer?.cancel();
     _tickTimer = null;
     _osTimelineArmed = false;
+    _armedAt = null;
     await _clearEscalation();
     await _notifications.cancelAll();
     await _audio.stopAll();
@@ -140,18 +155,32 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
 
   void _tick() {
     if (!state.isArmed) return;
+    final anchor = _armedAt;
+    if (anchor == null) return;
 
-    final newElapsed = state.elapsed + const Duration(seconds: 1);
+    // Re-derive elapsed from the wall clock instead of counting ticks:
+    // power save / Doze freezes this isolate, and tick counting would lag
+    // reality by the length of the freeze. Anchoring snaps the countdown
+    // (and the fallback audio path) back to true remaining time.
+    var newElapsed = _now().difference(anchor);
+    if (newElapsed > state.totalDuration) newElapsed = state.totalDuration;
     final remaining = state.totalDuration - newElapsed;
 
-    // Dispatch any cues whose offset has been crossed.
+    // Mark every crossed cue, but play only the most urgent newly crossed
+    // stage so a catch-up after suspension doesn't fire a barrage of sounds.
+    int? stageToPlay;
     final updatedCues = state.cues.map((cue) {
       if (!cue.fired && remaining <= cue.offsetFromEnd) {
-        _dispatchCue(cue.stage);
+        if (stageToPlay == null || cue.stage > stageToPlay!) {
+          stageToPlay = cue.stage;
+        }
         return cue.copyWith(fired: true);
       }
       return cue;
     }).toList();
+    if (stageToPlay != null) {
+      _dispatchCue(stageToPlay!);
+    }
 
     if (remaining <= Duration.zero) {
       // T=0: transition to firing

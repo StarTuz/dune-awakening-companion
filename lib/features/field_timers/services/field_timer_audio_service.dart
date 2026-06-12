@@ -14,7 +14,11 @@ import 'field_timer_settings.dart';
 class FieldTimerAudioService {
   FieldTimerAudioService();
 
-  final AudioPlayer _player = AudioPlayer();
+  AudioPlayer? _playerInstance;
+
+  /// Created on first use so constructing the service (e.g. in tests or
+  /// fakes) doesn't touch the audioplayers platform channel.
+  AudioPlayer get _player => _playerInstance ??= AudioPlayer();
 
   /// Folder name within app documents where user overrides live.
   static const _overrideFolderName = 'field_timer_sounds';
@@ -102,7 +106,7 @@ class FieldTimerAudioService {
   }
 
   Future<void> dispose() async {
-    await _player.dispose();
+    await _playerInstance?.dispose();
   }
 
   // ── Internals ──────────────────────────────────────────────────────────
