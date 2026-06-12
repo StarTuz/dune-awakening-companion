@@ -3233,6 +3233,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not use that image'**
   String get settingsEmblemInvalid;
+
+  /// Notification title for pre-alarm cue stages
+  ///
+  /// In en, this message translates to:
+  /// **'Harvest window closing'**
+  String get fieldTimerCueTitle;
+
+  /// Notification body for pre-alarm cue stages
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-alarm cue — wormsign risk rising.'**
+  String get fieldTimerCueBody;
 }
 
 class _AppLocalizationsDelegate

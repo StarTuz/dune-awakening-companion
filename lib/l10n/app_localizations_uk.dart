@@ -1729,4 +1729,11 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get settingsEmblemInvalid => 'Не вдалося використати це зображення';
+
+  @override
+  String get fieldTimerCueTitle => 'Вікно збору закривається';
+
+  @override
+  String get fieldTimerCueBody =>
+      'Попередній сигнал — ризик появи черва зростає.';
 }

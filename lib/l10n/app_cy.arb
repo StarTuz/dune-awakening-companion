@@ -472,5 +472,7 @@
   "settingsEmblem": "Arwyddlun yr ap",
   "settingsEmblemDesc": "Dewiswch arwyddlun personol ar gyfer y rheilen lywio",
   "settingsEmblemReset": "Adfer yr arwyddlun rhagosodedig",
-  "settingsEmblemInvalid": "Methu defnyddio'r ddelwedd honno"
+  "settingsEmblemInvalid": "Methu defnyddio'r ddelwedd honno",
+  "fieldTimerCueTitle": "Ffenestr gynaeafu yn cau",
+  "fieldTimerCueBody": "Rhag-larwm — risg arwydd mwydyn yn codi."
 }

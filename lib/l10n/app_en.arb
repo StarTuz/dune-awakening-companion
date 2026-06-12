@@ -2179,5 +2179,13 @@
   "settingsEmblemInvalid": "Could not use that image",
   "@settingsEmblemInvalid": {
     "description": "Snackbar shown when a picked emblem image cannot be processed"
+  },
+  "fieldTimerCueTitle": "Harvest window closing",
+  "fieldTimerCueBody": "Pre-alarm cue — wormsign risk rising.",
+  "@fieldTimerCueTitle": {
+    "description": "Notification title for pre-alarm cue stages"
+  },
+  "@fieldTimerCueBody": {
+    "description": "Notification body for pre-alarm cue stages"
   }
 }

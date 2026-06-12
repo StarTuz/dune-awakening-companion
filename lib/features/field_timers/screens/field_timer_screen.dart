@@ -34,6 +34,8 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen> {
       ref.read(fieldTimerProvider.notifier).setNotificationStrings(
             l10n.fieldTimerFiringTitle,
             l10n.fieldTimerFiringBody,
+            cueTitle: l10n.fieldTimerCueTitle,
+            cueBody: l10n.fieldTimerCueBody,
           );
     });
 

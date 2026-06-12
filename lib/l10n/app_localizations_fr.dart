@@ -1743,4 +1743,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsEmblemInvalid => 'Impossible d\'utiliser cette image';
+
+  @override
+  String get fieldTimerCueTitle => 'La fenêtre de récolte se referme';
+
+  @override
+  String get fieldTimerCueBody =>
+      'Pré-alarme — le risque de signe de ver augmente.';
 }

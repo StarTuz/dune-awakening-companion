@@ -128,17 +128,38 @@ class NotificationService {
     );
     await androidPlugin?.createNotificationChannel(questChannel);
 
-    const fieldTimerChannel = AndroidNotificationChannel(
-      'field_timers_alarm',
-      'Field Timers (Alarm)',
+    // Field timer channels: one per cue stage plus the T=0 page, each with
+    // its cue audio baked in as the channel sound (Android raw resource).
+    // The OS plays these itself when a scheduled alarm fires — no app code
+    // runs at delivery time, so they work with the screen off and the app
+    // dead. All use the alarm stream so silent/DND modes don't mute them.
+    for (var stage = 1; stage <= 4; stage++) {
+      await androidPlugin?.createNotificationChannel(
+        AndroidNotificationChannel(
+          'field_timer_cue_$stage',
+          'Field Timer cue $stage',
+          description:
+              'Pre-alarm cue stage $stage before the harvest window closes',
+          importance: Importance.high,
+          playSound: true,
+          sound: RawResourceAndroidNotificationSound('cue_stage_$stage'),
+          enableVibration: true,
+          audioAttributesUsage: AudioAttributesUsage.alarm,
+        ),
+      );
+    }
+    const fieldTimerPageChannel = AndroidNotificationChannel(
+      'field_timer_page',
+      'Field Timer page',
       description:
-          'Urgent harvest-window alerts — alarm stream, fires when screen off',
+          'Harvest window closed — pages until acknowledged, fires when screen off',
       importance: Importance.max,
       playSound: true,
+      sound: RawResourceAndroidNotificationSound('cue_page'),
       enableVibration: true,
       audioAttributesUsage: AudioAttributesUsage.alarm,
     );
-    await androidPlugin?.createNotificationChannel(fieldTimerChannel);
+    await androidPlugin?.createNotificationChannel(fieldTimerPageChannel);
   }
 
   /// Handle notification tap

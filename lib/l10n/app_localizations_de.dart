@@ -1737,4 +1737,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingsEmblemInvalid =>
       'Dieses Bild konnte nicht verwendet werden';
+
+  @override
+  String get fieldTimerCueTitle => 'Erntefenster schließt sich';
+
+  @override
+  String get fieldTimerCueBody => 'Voralarm — Wurmzeichen-Risiko steigt.';
 }

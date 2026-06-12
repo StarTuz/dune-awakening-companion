@@ -26,10 +26,15 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
   // Localised strings injected before arm() so the service doesn't need context.
   String _firingTitle = 'Reset aggro now';
   String _firingBody = 'Sand harvest window elapsed. Pick up your sandcrawler.';
+  String _cueTitle = 'Harvest window closing';
+  String _cueBody = 'Pre-alarm cue — wormsign risk rising.';
 
-  void setNotificationStrings(String title, String body) {
+  void setNotificationStrings(String title, String body,
+      {String? cueTitle, String? cueBody}) {
     _firingTitle = title;
     _firingBody = body;
+    if (cueTitle != null) _cueTitle = cueTitle;
+    if (cueBody != null) _cueBody = cueBody;
   }
 
   // ── Public API ─────────────────────────────────────────────────────────
@@ -61,6 +66,23 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     );
 
     _startTick();
+
+    // On Android, hand the entire timeline to the OS as exact alarm-clock
+    // wakeups (cues + page + escalations). The Dart timer below only drives
+    // the on-screen countdown; audio fires even if the phone is asleep or
+    // the app is killed.
+    final escalationSeconds =
+        await FieldTimerSettings.getEscalationIntervalSeconds();
+    await _notifications.scheduleTimeline(
+      totalDuration: duration,
+      cues: cues,
+      escalationIntervalSeconds: escalationSeconds,
+      cueTitle: _cueTitle,
+      cueBody: _cueBody,
+      pageTitle: _firingTitle,
+      pageBody: _firingBody,
+    );
+
     debugPrint(
         '[FieldTimer] Armed for ${duration.inSeconds}s, $count cues at ${spacing.inSeconds}s spacing');
   }
@@ -143,31 +165,26 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
 
   void _dispatchCue(int stage) {
     debugPrint('[FieldTimer] Cue stage $stage');
-    _audio.playCueStage(stage);
+    // When the OS owns the timeline (Android), the scheduled notification
+    // plays the cue sound — playing in-app too would double it.
+    if (!_notifications.ownsTimeline) {
+      _audio.playCueStage(stage);
+    }
   }
 
   void _onFired() {
     debugPrint('[FieldTimer] FIRED — sending page');
-    _audio.playPage();
-    _notifications.showTimerFired(
-      title: _firingTitle,
-      body: _firingBody,
-      escalationCount: 0,
-    );
-    // Pre-schedule exact-alarm wakeup notifications so escalation pages fire
-    // even when the screen is off and the Dart isolate is throttled.
-    _scheduleBackgroundEscalations();
+    if (!_notifications.ownsTimeline) {
+      // Page + escalations were pre-scheduled at arm time on Android; on
+      // other platforms the in-app timer drives them.
+      _audio.playPage();
+      _notifications.showTimerFired(
+        title: _firingTitle,
+        body: _firingBody,
+        escalationCount: 0,
+      );
+    }
     _startEscalation();
-  }
-
-  Future<void> _scheduleBackgroundEscalations() async {
-    final intervalSeconds =
-        await FieldTimerSettings.getEscalationIntervalSeconds();
-    await _notifications.scheduleEscalations(
-      intervalSeconds: intervalSeconds,
-      title: _firingTitle,
-      body: _firingBody,
-    );
   }
 
   Future<void> _startEscalation() async {
@@ -188,12 +205,14 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     final count = state.escalationCount + 1;
     state = state.copyWith(escalationCount: count);
     debugPrint('[FieldTimer] Escalation #$count');
-    _audio.playPage();
-    _notifications.showTimerFired(
-      title: _firingTitle,
-      body: _firingBody,
-      escalationCount: count,
-    );
+    if (!_notifications.ownsTimeline) {
+      _audio.playPage();
+      _notifications.showTimerFired(
+        title: _firingTitle,
+        body: _firingBody,
+        escalationCount: count,
+      );
+    }
   }
 
   Future<void> _clearEscalation() async {

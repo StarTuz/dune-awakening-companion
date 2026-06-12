@@ -1723,4 +1723,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsEmblemInvalid => 'Could not use that image';
+
+  @override
+  String get fieldTimerCueTitle => 'Harvest window closing';
+
+  @override
+  String get fieldTimerCueBody => 'Pre-alarm cue — wormsign risk rising.';
 }

@@ -472,5 +472,7 @@
   "settingsEmblem": "Емблема застосунку",
   "settingsEmblemDesc": "Виберіть власну емблему для панелі навігації",
   "settingsEmblemReset": "Відновити стандартну емблему",
-  "settingsEmblemInvalid": "Не вдалося використати це зображення"
+  "settingsEmblemInvalid": "Не вдалося використати це зображення",
+  "fieldTimerCueTitle": "Вікно збору закривається",
+  "fieldTimerCueBody": "Попередній сигнал — ризик появи черва зростає."
 }

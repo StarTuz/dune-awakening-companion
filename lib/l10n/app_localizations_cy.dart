@@ -1735,4 +1735,10 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get settingsEmblemInvalid => 'Methu defnyddio\'r ddelwedd honno';
+
+  @override
+  String get fieldTimerCueTitle => 'Ffenestr gynaeafu yn cau';
+
+  @override
+  String get fieldTimerCueBody => 'Rhag-larwm — risg arwydd mwydyn yn codi.';
 }

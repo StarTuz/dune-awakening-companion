@@ -472,5 +472,7 @@
   "settingsEmblem": "App-Emblem",
   "settingsEmblemDesc": "Wähle ein eigenes Emblem für die Navigationsleiste",
   "settingsEmblemReset": "Standard-Emblem wiederherstellen",
-  "settingsEmblemInvalid": "Dieses Bild konnte nicht verwendet werden"
+  "settingsEmblemInvalid": "Dieses Bild konnte nicht verwendet werden",
+  "fieldTimerCueTitle": "Erntefenster schließt sich",
+  "fieldTimerCueBody": "Voralarm — Wurmzeichen-Risiko steigt."
 }

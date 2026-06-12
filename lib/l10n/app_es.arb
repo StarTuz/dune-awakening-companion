@@ -472,5 +472,7 @@
   "settingsEmblem": "Emblema de la aplicación",
   "settingsEmblemDesc": "Elige un emblema personalizado para la barra de navegación",
   "settingsEmblemReset": "Restaurar emblema predeterminado",
-  "settingsEmblemInvalid": "No se pudo usar esa imagen"
+  "settingsEmblemInvalid": "No se pudo usar esa imagen",
+  "fieldTimerCueTitle": "La ventana de cosecha se cierra",
+  "fieldTimerCueBody": "Aviso previo: el riesgo de señal de gusano aumenta."
 }

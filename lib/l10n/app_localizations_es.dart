@@ -1739,4 +1739,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsEmblemInvalid => 'No se pudo usar esa imagen';
+
+  @override
+  String get fieldTimerCueTitle => 'La ventana de cosecha se cierra';
+
+  @override
+  String get fieldTimerCueBody =>
+      'Aviso previo: el riesgo de señal de gusano aumenta.';
 }

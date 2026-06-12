@@ -472,5 +472,7 @@
   "settingsEmblem": "Emblema dell'app",
   "settingsEmblemDesc": "Scegli un emblema personalizzato per la barra di navigazione",
   "settingsEmblemReset": "Ripristina l'emblema predefinito",
-  "settingsEmblemInvalid": "Impossibile usare questa immagine"
+  "settingsEmblemInvalid": "Impossibile usare questa immagine",
+  "fieldTimerCueTitle": "La finestra di raccolta si sta chiudendo",
+  "fieldTimerCueBody": "Pre-allarme — il rischio di segni del verme aumenta."
 }

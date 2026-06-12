@@ -4,22 +4,34 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-/// Handles OS notifications for the Field Timer T=0 page and escalation repeats.
+import '../models/field_timer_preset.dart';
+
+/// Handles OS notifications for the Field Timer.
 ///
-/// Uses a dedicated `field_timers` channel with max importance so the page
-/// cannot be silenced by quiet-hours settings (controlled by the bypass toggle).
-/// Does NOT handle pre-alarm cues — those use [FieldTimerAudioService] directly.
+/// On Android the **entire timeline is pre-scheduled at arm time** via
+/// [scheduleTimeline]: every pre-alarm cue, the T=0 page, and all escalation
+/// repeats become exact `AlarmManager.setAlarmClock()` wakeups. The cue audio
+/// is baked into per-stage notification channels (alarm stream, raw-resource
+/// sounds), so the OS plays the sound itself — nothing depends on the Dart
+/// isolate being alive. Screen off, Doze, app swiped away: the alarms still
+/// fire. This is the PagerDuty model.
+///
+/// On other platforms the in-app Dart timer + FieldTimerAudioService handle
+/// audio (desktops don't suspend the way phones do) and this service only
+/// shows the immediate T=0 / escalation notifications.
 class FieldTimerNotificationService {
   FieldTimerNotificationService();
 
-  static const _channelId = 'field_timers_alarm';
-  static const _channelName = 'Field Timers (Alarm)';
+  static const _pageChannelId = 'field_timer_page';
+  static const _pageChannelName = 'Field Timer page';
 
-  // Maximum number of escalation alarms pre-scheduled at T=0.
+  // Maximum number of escalation alarms pre-scheduled at arm time.
   static const _maxScheduledEscalations = 20;
 
-  // Use a fixed ID range that doesn't overlap with base/quest notification IDs.
+  // Use fixed ID ranges that don't overlap with base/quest notification IDs.
+  // Page: 900000. Escalations: 900001-900020. Cues: 900101-900110.
   static const _baseNotificationId = 900000;
+  static const _cueNotificationIdBase = 900100;
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
@@ -53,65 +65,81 @@ class FieldTimerNotificationService {
     _initialized = true;
   }
 
+  /// Whether this platform relies on the pre-scheduled OS timeline for all
+  /// timer audio (true on Android). When true the in-app service must NOT
+  /// also play sounds or show duplicate notifications.
+  bool get ownsTimeline => !kIsWeb && Platform.isAndroid;
+
+  /// Pre-schedule the full timer timeline as exact alarm-clock wakeups:
+  /// each unfired cue at its offset, the page at T=0, and
+  /// [_maxScheduledEscalations] escalation repeats after it.
+  ///
+  /// Android only — no-op elsewhere. Call from arm(); [cancelAll] on ack.
+  Future<void> scheduleTimeline({
+    required Duration totalDuration,
+    required List<FieldTimerCue> cues,
+    required int escalationIntervalSeconds,
+    required String cueTitle,
+    required String cueBody,
+    required String pageTitle,
+    required String pageBody,
+  }) async {
+    if (!ownsTimeline) return;
+
+    final now = tz.TZDateTime.now(tz.local);
+    final firesAt = now.add(totalDuration);
+
+    // Pre-alarm cues, each on its own stage channel (stage sound baked in).
+    var cueIndex = 0;
+    for (final cue in cues) {
+      cueIndex++;
+      final when = firesAt.subtract(cue.offsetFromEnd);
+      if (!when.isAfter(now)) continue;
+      await _schedule(
+        id: _cueNotificationIdBase + cueIndex,
+        title: cueTitle,
+        body: cueBody,
+        when: when,
+        details: _cueDetails(cue.stage),
+      );
+    }
+
+    // T=0 page.
+    await _schedule(
+      id: _baseNotificationId,
+      title: pageTitle,
+      body: pageBody,
+      when: firesAt,
+      details: _pageDetails(),
+    );
+
+    // Escalation repeats.
+    for (var i = 1; i <= _maxScheduledEscalations; i++) {
+      await _schedule(
+        id: _baseNotificationId + i,
+        title: pageTitle,
+        body: pageBody,
+        when: firesAt.add(Duration(seconds: escalationIntervalSeconds * i)),
+        details: _pageDetails(),
+      );
+    }
+
+    debugPrint(
+        '[FieldTimerNotification] Timeline scheduled: ${cues.length} cues, '
+        'page at $firesAt, $_maxScheduledEscalations escalations every '
+        '${escalationIntervalSeconds}s');
+  }
+
   /// Fire the T=0 page notification (and each escalation repeat).
+  /// Used on platforms where the in-app timer drives the timeline.
   Future<void> showTimerFired({
     required String title,
     required String body,
     required int escalationCount,
   }) async {
     final id = _baseNotificationId + escalationCount;
-    await _show(id: id, title: title, body: body);
-  }
-
-  /// Cancel all field-timer notifications (called on ack).
-  Future<void> cancelAll() async {
-    // Cancel up to a generous range of escalation IDs.
-    for (var i = 0; i < 200; i++) {
-      await _plugin.cancel(_baseNotificationId + i);
-    }
-  }
-
-  /// Pre-schedule [_maxScheduledEscalations] escalation notifications as exact
-  /// AlarmManager wakeups so they fire even with the screen off.
-  ///
-  /// Call at T=0. On ack, [cancelAll] removes any that haven't fired yet.
-  Future<void> scheduleEscalations({
-    required int intervalSeconds,
-    required String title,
-    required String body,
-  }) async {
-    if (!Platform.isAndroid) return;
-    final now = tz.TZDateTime.now(tz.local);
-    for (var i = 1; i <= _maxScheduledEscalations; i++) {
-      final when = now.add(Duration(seconds: intervalSeconds * i));
-      final id = _baseNotificationId + i;
-      try {
-        await _plugin.zonedSchedule(
-          id,
-          title,
-          body,
-          when,
-          _buildDetails(escalationCount: i),
-          androidScheduleMode: AndroidScheduleMode.alarmClock,
-          payload: 'field_timer',
-        );
-      } catch (e) {
-        debugPrint('[FieldTimerNotification] Schedule error id=$id: $e');
-      }
-    }
-    debugPrint(
-        '[FieldTimerNotification] Scheduled $_maxScheduledEscalations escalations at ${intervalSeconds}s intervals');
-  }
-
-  // ── Internal ──────────────────────────────────────────────────────────
-
-  Future<void> _show({
-    required int id,
-    required String title,
-    required String body,
-  }) async {
     try {
-      await _plugin.show(id, title, body, _buildDetails(),
+      await _plugin.show(id, title, body, _pageDetails(),
           payload: 'field_timer');
       debugPrint('[FieldTimerNotification] Showed notification id=$id');
     } catch (e) {
@@ -119,19 +147,72 @@ class FieldTimerNotificationService {
     }
   }
 
-  NotificationDetails _buildDetails({int escalationCount = 0}) {
+  /// Cancel every shown and pending field-timer notification (called on ack
+  /// and on arm, so a re-armed timer starts from a clean slate).
+  Future<void> cancelAll() async {
+    for (var i = 0; i <= _maxScheduledEscalations; i++) {
+      await _plugin.cancel(_baseNotificationId + i);
+    }
+    for (var i = 1; i <= 10; i++) {
+      await _plugin.cancel(_cueNotificationIdBase + i);
+    }
+  }
+
+  // ── Internal ──────────────────────────────────────────────────────────
+
+  Future<void> _schedule({
+    required int id,
+    required String title,
+    required String body,
+    required tz.TZDateTime when,
+    required NotificationDetails details,
+  }) async {
+    try {
+      await _plugin.zonedSchedule(
+        id,
+        title,
+        body,
+        when,
+        details,
+        androidScheduleMode: AndroidScheduleMode.alarmClock,
+        payload: 'field_timer',
+      );
+    } catch (e) {
+      debugPrint('[FieldTimerNotification] Schedule error id=$id: $e');
+    }
+  }
+
+  NotificationDetails _cueDetails(int stage) {
+    final effectiveStage = stage.clamp(1, 4);
     final androidDetails = AndroidNotificationDetails(
-      _channelId,
-      _channelName,
-      channelDescription: 'Urgent harvest-window alerts — alarm stream',
+      'field_timer_cue_$effectiveStage',
+      'Field Timer cue $effectiveStage',
+      channelDescription:
+          'Pre-alarm cue stage $effectiveStage before the harvest window closes',
+      importance: Importance.high,
+      priority: Priority.high,
+      ticker: 'Field Timer cue',
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('cue_stage_$effectiveStage'),
+      enableVibration: true,
+      audioAttributesUsage: AudioAttributesUsage.alarm,
+    );
+    return NotificationDetails(android: androidDetails);
+  }
+
+  NotificationDetails _pageDetails() {
+    final androidDetails = AndroidNotificationDetails(
+      _pageChannelId,
+      _pageChannelName,
+      channelDescription:
+          'Harvest window closed — pages until acknowledged, fires when screen off',
       importance: Importance.max,
       priority: Priority.max,
       ticker: 'Field Timer',
       playSound: true,
+      sound: const RawResourceAndroidNotificationSound('cue_page'),
       enableVibration: true,
       fullScreenIntent: Platform.isAndroid,
-      // Route through the Android alarm audio stream so the alert fires even
-      // when the phone is in silent / DND mode with the screen off.
       audioAttributesUsage: AudioAttributesUsage.alarm,
     );
 
