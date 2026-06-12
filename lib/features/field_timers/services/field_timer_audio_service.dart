@@ -40,6 +40,18 @@ class FieldTimerAudioService {
   Future<void> initialize() async {
     _volume = await FieldTimerSettings.getCueVolume();
     await _player.setVolume(_volume);
+    // On Android, route through the alarm stream so audio plays when the
+    // screen is off and the phone is in silent / DND mode.
+    if (Platform.isAndroid) {
+      await _player.setAudioContext(AudioContext(
+        android: const AudioContextAndroid(
+          contentType: AndroidContentType.sonification,
+          usageType: AndroidUsageType.alarm,
+          audioFocus: AndroidAudioFocus.gainTransientMayDuck,
+          stayAwake: true,
+        ),
+      ));
+    }
   }
 
   Future<void> setVolume(double volume) async {

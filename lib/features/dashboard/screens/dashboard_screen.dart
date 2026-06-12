@@ -13,6 +13,10 @@ import '../../../core/providers/activity_log_provider.dart';
 import '../../../core/utils/constants.dart';
 import '../../../shared/navigation/main_navigation.dart';
 import '../../../shared/theme/app_colors.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import '../../../core/providers/emblem_provider.dart';
+import '../../../shared/navigation/navigation_rail_emblem.dart';
 
 import 'package:dune_awakening_companion/l10n/app_localizations.dart';
 
@@ -30,9 +34,7 @@ class DashboardScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.dashboardTitle),
-      ),
+      appBar: _DashboardAppBar(l10n: l10n),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.invalidate(charactersProvider);
@@ -91,6 +93,59 @@ class DashboardScreen extends ConsumerWidget {
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stack) => Center(child: Text('${l10n.error}: $error')),
         ),
+      ),
+    );
+  }
+}
+
+/// AppBar that shows the Jerboa emblem as a leading widget on mobile.
+/// On desktop the emblem lives in the NavigationRail; no duplication needed.
+class _DashboardAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  const _DashboardAppBar({required this.l10n});
+
+  final AppLocalizations l10n;
+
+  static bool get _isDesktop =>
+      defaultTargetPlatform == TargetPlatform.linux ||
+      defaultTargetPlatform == TargetPlatform.windows ||
+      defaultTargetPlatform == TargetPlatform.macOS;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (_isDesktop) {
+      return AppBar(title: Text(l10n.dashboardTitle));
+    }
+
+    final emblem = ref.watch(emblemProvider);
+    final Widget emblemWidget = emblem.isCustom
+        ? Image.file(
+            File(emblem.customPath!),
+            key: ValueKey('appbar-emblem-${emblem.revision}'),
+            width: 32,
+            height: 32,
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => Image.asset(
+              NavigationRailEmblem.defaultAsset,
+              width: 32,
+              height: 32,
+              fit: BoxFit.contain,
+            ),
+          )
+        : Image.asset(
+            NavigationRailEmblem.defaultAsset,
+            width: 32,
+            height: 32,
+            fit: BoxFit.contain,
+          );
+
+    return AppBar(
+      title: Text(l10n.dashboardTitle),
+      leading: Padding(
+        padding: const EdgeInsets.all(10),
+        child: emblemWidget,
       ),
     );
   }

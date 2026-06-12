@@ -154,7 +154,20 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
       body: _firingBody,
       escalationCount: 0,
     );
+    // Pre-schedule exact-alarm wakeup notifications so escalation pages fire
+    // even when the screen is off and the Dart isolate is throttled.
+    _scheduleBackgroundEscalations();
     _startEscalation();
+  }
+
+  Future<void> _scheduleBackgroundEscalations() async {
+    final intervalSeconds =
+        await FieldTimerSettings.getEscalationIntervalSeconds();
+    await _notifications.scheduleEscalations(
+      intervalSeconds: intervalSeconds,
+      title: _firingTitle,
+      body: _firingBody,
+    );
   }
 
   Future<void> _startEscalation() async {

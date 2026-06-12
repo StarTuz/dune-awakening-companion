@@ -129,12 +129,14 @@ class NotificationService {
     await androidPlugin?.createNotificationChannel(questChannel);
 
     const fieldTimerChannel = AndroidNotificationChannel(
-      'field_timers',
-      'Field Timers',
-      description: 'Urgent harvest-window alerts — page until acknowledged',
+      'field_timers_alarm',
+      'Field Timers (Alarm)',
+      description:
+          'Urgent harvest-window alerts — alarm stream, fires when screen off',
       importance: Importance.max,
       playSound: true,
       enableVibration: true,
+      audioAttributesUsage: AudioAttributesUsage.alarm,
     );
     await androidPlugin?.createNotificationChannel(fieldTimerChannel);
   }
