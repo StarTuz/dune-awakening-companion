@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.dune_awakening_companion"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {

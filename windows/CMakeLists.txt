@@ -28,6 +28,16 @@ set(CMAKE_EXE_LINKER_FLAGS_PROFILE "${CMAKE_EXE_LINKER_FLAGS_RELEASE}")
 set(CMAKE_SHARED_LINKER_FLAGS_PROFILE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
 set(CMAKE_C_FLAGS_PROFILE "${CMAKE_C_FLAGS_RELEASE}")
 set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
+# MSVC 14.50+ (VS 2022 18.x) removed <experimental/coroutine>.
+# Several Flutter plugins still include it; suppress the hard error so the
+# build completes. The plugins' coroutine usage is internal and functions
+# correctly under C++20 once the header guard is bypassed.
+if(MSVC)
+  add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)
+  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
 
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
