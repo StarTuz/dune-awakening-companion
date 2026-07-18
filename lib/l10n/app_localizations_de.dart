@@ -1750,4 +1750,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get fieldTimerExactAlarmGrant => 'Erlauben';
+
+  @override
+  String get fieldTimerStopButton => 'Alarm stoppen';
+
+  @override
+  String get fieldTimerBatteryWarning =>
+      'Die Akku-Optimierung kann Timer im Hintergrund beenden. Nimm die App aus, damit Alarme immer ertönen.';
+
+  @override
+  String get fieldTimerBatteryGrant => 'Ausnehmen';
 }

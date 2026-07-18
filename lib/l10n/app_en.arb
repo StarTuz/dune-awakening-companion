@@ -2195,5 +2195,17 @@
   },
   "@fieldTimerExactAlarmGrant": {
     "description": "Button opening the system Alarms & reminders grant flow"
+  },
+  "fieldTimerStopButton": "Stop alarm",
+  "@fieldTimerStopButton": {
+    "description": "Stop button on the ringing alarm notification"
+  },
+  "fieldTimerBatteryWarning": "Battery optimization can kill timers in the background. Exempt the app so alarms always fire.",
+  "@fieldTimerBatteryWarning": {
+    "description": "Banner warning that battery optimization may kill background timers"
+  },
+  "fieldTimerBatteryGrant": "Exempt",
+  "@fieldTimerBatteryGrant": {
+    "description": "Button requesting battery-optimization exemption"
   }
 }

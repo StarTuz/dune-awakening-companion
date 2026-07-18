@@ -1743,4 +1743,14 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get fieldTimerExactAlarmGrant => 'Дозволити';
+
+  @override
+  String get fieldTimerStopButton => 'Зупинити будильник';
+
+  @override
+  String get fieldTimerBatteryWarning =>
+      'Оптимізація батареї може зупиняти таймери у фоні. Зробіть виняток для застосунку, щоб будильники завжди спрацьовували.';
+
+  @override
+  String get fieldTimerBatteryGrant => 'Дозволити';
 }

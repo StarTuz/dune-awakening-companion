@@ -9,6 +9,7 @@ import 'package:dune_awakening_companion/features/field_timers/models/field_time
 import 'package:dune_awakening_companion/features/field_timers/providers/field_timer_provider.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_audio_service.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_notification_service.dart';
+import 'package:dune_awakening_companion/features/field_timers/services/field_timer_os_alarm_service.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_service.dart';
 import 'package:dune_awakening_companion/shared/navigation/navigation_rail_footer.dart';
 import 'package:dune_awakening_companion/shared/navigation/navigation_rail_settings.dart';
@@ -38,7 +39,8 @@ class FakeBaseRepository implements BaseRepository {
 /// Exposes the protected [state] setter so tests can pin a session.
 class FakeFieldTimerService extends FieldTimerService {
   FakeFieldTimerService(this.session)
-      : super(FieldTimerAudioService(), FieldTimerNotificationService());
+      : super(FieldTimerAudioService(), FieldTimerNotificationService(),
+            FieldTimerOsAlarmService());
 
   final FieldTimerSession session;
 

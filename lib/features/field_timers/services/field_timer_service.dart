@@ -7,6 +7,7 @@ import '../models/field_timer_preset.dart';
 import '../models/field_timer_session.dart';
 import 'field_timer_audio_service.dart';
 import 'field_timer_notification_service.dart';
+import 'field_timer_os_alarm_service.dart';
 import 'field_timer_settings.dart';
 
 /// State machine for one field timer session.
@@ -14,13 +15,14 @@ import 'field_timer_settings.dart';
 /// Lifecycle: Idle → Armed (tick every 1 s; cue dispatch) → Firing (escalation)
 ///            → Idle (via ackEnd) or Armed (via ackRestart).
 class FieldTimerService extends StateNotifier<FieldTimerSession> {
-  FieldTimerService(this._audio, this._notifications,
+  FieldTimerService(this._audio, this._notifications, this._osAlarms,
       {DateTime Function()? now})
       : _now = now ?? DateTime.now,
         super(const FieldTimerSession.idle());
 
   final FieldTimerAudioService _audio;
   final FieldTimerNotificationService _notifications;
+  final FieldTimerOsAlarmService _osAlarms;
 
   /// Injectable wall clock (overridable in tests).
   final DateTime Function() _now;
@@ -42,13 +44,15 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
   String _firingBody = 'Sand harvest window elapsed. Pick up your sandcrawler.';
   String _cueTitle = 'Harvest window closing';
   String _cueBody = 'Pre-alarm cue — wormsign risk rising.';
+  String _stopButtonLabel = 'Stop';
 
   void setNotificationStrings(String title, String body,
-      {String? cueTitle, String? cueBody}) {
+      {String? cueTitle, String? cueBody, String? stopButtonLabel}) {
     _firingTitle = title;
     _firingBody = body;
     if (cueTitle != null) _cueTitle = cueTitle;
     if (cueBody != null) _cueBody = cueBody;
+    if (stopButtonLabel != null) _stopButtonLabel = stopButtonLabel;
   }
 
   // ── Public API ─────────────────────────────────────────────────────────
@@ -82,20 +86,19 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     _armedAt = _now();
     _startTick();
 
-    // On Android, hand the entire timeline to the OS as exact alarm-clock
-    // wakeups (cues + page + escalations). The Dart timer below only drives
-    // the on-screen countdown; audio fires even if the phone is asleep or
-    // the app is killed.
-    final escalationSeconds =
-        await FieldTimerSettings.getEscalationIntervalSeconds();
-    _osTimelineArmed = await _notifications.scheduleTimeline(
+    // On Android, hand the timeline to native alarms: AlarmManager wakes a
+    // foreground service that plays the audio itself (screen off, Doze, app
+    // killed — all covered). The Dart timer below only drives the UI. The
+    // T=0 page loops until stopped, so no escalation repeats are needed.
+    _osTimelineArmed = await _osAlarms.scheduleTimeline(
       totalDuration: duration,
       cues: cues,
-      escalationIntervalSeconds: escalationSeconds,
       cueTitle: _cueTitle,
       cueBody: _cueBody,
       pageTitle: _firingTitle,
       pageBody: _firingBody,
+      stopButtonLabel: _stopButtonLabel,
+      volume: await FieldTimerSettings.getCueVolume(),
     );
 
     debugPrint(
@@ -114,6 +117,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
         : const Duration(seconds: 30);
     await _clearEscalation();
     await _notifications.cancelAll();
+    await _osAlarms.cancelAll();
     await _audio.stopAll();
     await arm(duration, cueCount: cueCount, cueSpacing: spacing);
     debugPrint('[FieldTimer] Restarted');
@@ -135,6 +139,7 @@ class FieldTimerService extends StateNotifier<FieldTimerSession> {
     _armedAt = null;
     await _clearEscalation();
     await _notifications.cancelAll();
+    await _osAlarms.cancelAll();
     await _audio.stopAll();
     state = const FieldTimerSession.idle();
   }

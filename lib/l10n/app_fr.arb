@@ -476,5 +476,8 @@
   "fieldTimerCueTitle": "La fenêtre de récolte se referme",
   "fieldTimerCueBody": "Pré-alarme — le risque de signe de ver augmente.",
   "fieldTimerExactAlarmWarning": "Les alarmes en arrière-plan sont bloquées. Autorisez « Alarmes et rappels » pour que les signaux sonnent écran éteint.",
-  "fieldTimerExactAlarmGrant": "Autoriser"
+  "fieldTimerExactAlarmGrant": "Autoriser",
+  "fieldTimerStopButton": "Arrêter l'alarme",
+  "fieldTimerBatteryWarning": "L'optimisation de la batterie peut tuer les minuteurs en arrière-plan. Exemptez l'application pour que les alarmes sonnent toujours.",
+  "fieldTimerBatteryGrant": "Exempter"
 }

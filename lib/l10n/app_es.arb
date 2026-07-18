@@ -476,5 +476,8 @@
   "fieldTimerCueTitle": "La ventana de cosecha se cierra",
   "fieldTimerCueBody": "Aviso previo: el riesgo de señal de gusano aumenta.",
   "fieldTimerExactAlarmWarning": "Las alarmas en segundo plano están bloqueadas. Permite “Alarmas y recordatorios” para que los avisos suenen con la pantalla apagada.",
-  "fieldTimerExactAlarmGrant": "Permitir"
+  "fieldTimerExactAlarmGrant": "Permitir",
+  "fieldTimerStopButton": "Detener alarma",
+  "fieldTimerBatteryWarning": "La optimización de batería puede cerrar los temporizadores en segundo plano. Exime la aplicación para que las alarmas siempre suenen.",
+  "fieldTimerBatteryGrant": "Eximir"
 }

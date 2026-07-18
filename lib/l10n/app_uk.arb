@@ -476,5 +476,8 @@
   "fieldTimerCueTitle": "Вікно збору закривається",
   "fieldTimerCueBody": "Попередній сигнал — ризик появи черва зростає.",
   "fieldTimerExactAlarmWarning": "Фонові будильники заблоковано. Дозвольте «Будильники та нагадування», щоб сигнали лунали з вимкненим екраном.",
-  "fieldTimerExactAlarmGrant": "Дозволити"
+  "fieldTimerExactAlarmGrant": "Дозволити",
+  "fieldTimerStopButton": "Зупинити будильник",
+  "fieldTimerBatteryWarning": "Оптимізація батареї може зупиняти таймери у фоні. Зробіть виняток для застосунку, щоб будильники завжди спрацьовували.",
+  "fieldTimerBatteryGrant": "Дозволити"
 }

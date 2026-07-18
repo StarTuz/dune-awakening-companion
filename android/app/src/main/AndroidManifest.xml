@@ -5,10 +5,16 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- Re-register scheduled quest reminders after a device reboot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- Schedule exact alarm wakeups for field-timer escalation pages (screen off) -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <!-- API 33+ auto-granted variant; allows alarm-clock wakeups without user prompt -->
+    <!-- Exact alarm wakeups for the field-timer timeline. USE_EXACT_ALARM is
+         auto-granted for alarm-clock use cases; deliberately NOT declaring
+         SCHEDULE_EXACT_ALARM alongside it (documented source of confusion). -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- alarm package: foreground service that plays timer audio (screen off / app killed) -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- Let the user exempt the app from battery optimization (OEM kill protection) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <!-- Full-screen field-timer page over the lock screen (Android 14+) -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <application
@@ -52,6 +58,8 @@
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
             </intent-filter>
         </receiver>
+        <!-- alarm package: warns the user if they kill the app while a timer is armed -->
+        <service android:name="com.gdelataillade.alarm.services.NotificationOnKillService"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

@@ -3257,6 +3257,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Allow'**
   String get fieldTimerExactAlarmGrant;
+
+  /// Stop button on the ringing alarm notification
+  ///
+  /// In en, this message translates to:
+  /// **'Stop alarm'**
+  String get fieldTimerStopButton;
+
+  /// Banner warning that battery optimization may kill background timers
+  ///
+  /// In en, this message translates to:
+  /// **'Battery optimization can kill timers in the background. Exempt the app so alarms always fire.'**
+  String get fieldTimerBatteryWarning;
+
+  /// Button requesting battery-optimization exemption
+  ///
+  /// In en, this message translates to:
+  /// **'Exempt'**
+  String get fieldTimerBatteryGrant;
 }
 
 class _AppLocalizationsDelegate

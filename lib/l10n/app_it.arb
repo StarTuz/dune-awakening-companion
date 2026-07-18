@@ -476,5 +476,8 @@
   "fieldTimerCueTitle": "La finestra di raccolta si sta chiudendo",
   "fieldTimerCueBody": "Pre-allarme — il rischio di segni del verme aumenta.",
   "fieldTimerExactAlarmWarning": "Le sveglie in background sono bloccate. Consenti “Sveglie e promemoria” perché i segnali suonino a schermo spento.",
-  "fieldTimerExactAlarmGrant": "Consenti"
+  "fieldTimerExactAlarmGrant": "Consenti",
+  "fieldTimerStopButton": "Ferma la sveglia",
+  "fieldTimerBatteryWarning": "L'ottimizzazione della batteria può terminare i timer in background. Esenta l'app perché le sveglie suonino sempre.",
+  "fieldTimerBatteryGrant": "Esenta"
 }

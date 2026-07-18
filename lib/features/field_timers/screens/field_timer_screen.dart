@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../l10n/app_localizations.dart';
 import '../../../shared/theme/app_colors.dart';
@@ -19,6 +20,10 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen>
   /// Whether exact "Alarms & reminders" scheduling is granted (Android).
   /// null = not yet checked or not applicable (non-Android).
   bool? _exactAlarmsGranted;
+
+  /// Whether the app is exempt from battery optimization (Android).
+  /// OEM battery managers force-stop non-exempt apps, which cancels alarms.
+  bool? _batteryExemptionGranted;
 
   /// Custom duration the user is editing (null = using preset).
   Duration? _customDuration;
@@ -52,7 +57,18 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen>
     final service = ref.read(fieldTimerNotificationServiceProvider);
     if (!service.supportsOsTimeline) return;
     final granted = await service.canScheduleExactAlarms();
-    if (mounted) setState(() => _exactAlarmsGranted = granted);
+    final batteryExempt = await Permission.ignoreBatteryOptimizations.isGranted;
+    if (mounted) {
+      setState(() {
+        _exactAlarmsGranted = granted;
+        _batteryExemptionGranted = batteryExempt;
+      });
+    }
+  }
+
+  Future<void> _requestBatteryExemption() async {
+    await Permission.ignoreBatteryOptimizations.request();
+    await _checkExactAlarms();
   }
 
   Future<void> _requestExactAlarms() async {
@@ -73,6 +89,7 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen>
             l10n.fieldTimerFiringBody,
             cueTitle: l10n.fieldTimerCueTitle,
             cueBody: l10n.fieldTimerCueBody,
+            stopButtonLabel: l10n.fieldTimerStopButton,
           );
     });
 
@@ -99,6 +116,26 @@ class _FieldTimerScreenState extends ConsumerState<FieldTimerScreen>
                 TextButton(
                   onPressed: _requestExactAlarms,
                   child: Text(l10n.fieldTimerExactAlarmGrant),
+                ),
+              ],
+            ),
+          if (_batteryExemptionGranted == false)
+            MaterialBanner(
+              backgroundColor: Theme.of(context).colorScheme.errorContainer,
+              leading: Icon(
+                Icons.battery_alert,
+                color: Theme.of(context).colorScheme.onErrorContainer,
+              ),
+              content: Text(
+                l10n.fieldTimerBatteryWarning,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onErrorContainer,
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: _requestBatteryExemption,
+                  child: Text(l10n.fieldTimerBatteryGrant),
                 ),
               ],
             ),

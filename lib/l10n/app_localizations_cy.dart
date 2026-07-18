@@ -1748,4 +1748,14 @@ class AppLocalizationsCy extends AppLocalizations {
 
   @override
   String get fieldTimerExactAlarmGrant => 'Caniatáu';
+
+  @override
+  String get fieldTimerStopButton => 'Stopio\'r larwm';
+
+  @override
+  String get fieldTimerBatteryWarning =>
+      'Gall optimeiddio batri ladd amseryddion yn y cefndir. Eithriwch yr ap fel bod larymau bob amser yn canu.';
+
+  @override
+  String get fieldTimerBatteryGrant => 'Eithrio';
 }

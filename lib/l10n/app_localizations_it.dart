@@ -1746,4 +1746,14 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fieldTimerExactAlarmGrant => 'Consenti';
+
+  @override
+  String get fieldTimerStopButton => 'Ferma la sveglia';
+
+  @override
+  String get fieldTimerBatteryWarning =>
+      'L\'ottimizzazione della batteria può terminare i timer in background. Esenta l\'app perché le sveglie suonino sempre.';
+
+  @override
+  String get fieldTimerBatteryGrant => 'Esenta';
 }

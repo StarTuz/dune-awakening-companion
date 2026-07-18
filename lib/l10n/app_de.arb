@@ -476,5 +476,8 @@
   "fieldTimerCueTitle": "Erntefenster schließt sich",
   "fieldTimerCueBody": "Voralarm — Wurmzeichen-Risiko steigt.",
   "fieldTimerExactAlarmWarning": "Hintergrund-Alarme sind blockiert. Erlaube „Wecker und Erinnerungen“, damit Signale bei ausgeschaltetem Bildschirm ertönen.",
-  "fieldTimerExactAlarmGrant": "Erlauben"
+  "fieldTimerExactAlarmGrant": "Erlauben",
+  "fieldTimerStopButton": "Alarm stoppen",
+  "fieldTimerBatteryWarning": "Die Akku-Optimierung kann Timer im Hintergrund beenden. Nimm die App aus, damit Alarme immer ertönen.",
+  "fieldTimerBatteryGrant": "Ausnehmen"
 }

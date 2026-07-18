@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dune_awakening_companion/features/field_timers/models/field_timer_preset.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_audio_service.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_notification_service.dart';
+import 'package:dune_awakening_companion/features/field_timers/services/field_timer_os_alarm_service.dart';
 import 'package:dune_awakening_companion/features/field_timers/services/field_timer_service.dart';
 
 class _FakeAudioService extends FieldTimerAudioService {
@@ -29,18 +29,6 @@ class _FakeAudioService extends FieldTimerAudioService {
 class _FakeNotificationService extends FieldTimerNotificationService {
   @override
   Future<void> initialize() async {}
-
-  @override
-  Future<bool> scheduleTimeline({
-    required Duration totalDuration,
-    required List<FieldTimerCue> cues,
-    required int escalationIntervalSeconds,
-    required String cueTitle,
-    required String cueBody,
-    required String pageTitle,
-    required String pageBody,
-  }) async =>
-      false; // OS timeline never arms in tests — in-app path stays active.
 
   @override
   Future<void> showTimerFired({
@@ -71,6 +59,7 @@ void main() {
     return FieldTimerService(
       audio,
       _FakeNotificationService(),
+      FieldTimerOsAlarmService(),
       now: () => fakeNow,
     );
   }
